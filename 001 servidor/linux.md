@@ -10,3 +10,8 @@ useradd nombre_usuario
 
 
 find ./ 
+
+curl -o apex.zip https://download.oracle.com/otn_software/apex/apex-latest.zip
+
+unzip file.zip -d /dir
+
