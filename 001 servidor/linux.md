@@ -1,6 +1,104 @@
-instrucciones linux
+# Sistema Operativo 
 
-sudo dnf update
+USB Booteable: Rufus v4.1
+
+iso: [Rocky-8.8-x86_64-dvd1]
+
+## Particiones de disco
+### DISCO 1 - SDD 120G 
+-  sda
+  - sda1 :: 
+    - /boot :  1.0 G
+  - sda2
+    - /root : 70.0 G
+    - swap  :  5.9 G
+    - /home : 35.0 G
+
+### DISCO 2 - HDD 1000G
+/fra : 240.0 G  -- BACKUP RMAN
+/loa : 240.0 G  -- CARPETAS COMPARTIDAS
+/??? : 240.0 G  -- ANEXOS AL SISTEMA
+/??? : 240.0 G  -- DISPONIBLE
+
+### Directorios
+/opt
+/home
+
+## Configuracion
+### Desactivación de hugepages transparentes
+THP está habilitado por defecto en Red Hat Enterprise Linux 8. 
+
+Compruebe el estado actual del THP:
+```
+# cat /sys/kernel/mm/transparent_hugepage/enabled
+```
+Desactivar el THP:
+```
+# echo never > /sys/kernel/mm/transparent_hugepage/enabled
+```
+
+### Habilitar Conecciones LAN
+se habilito desde el icono de inicio
+> ip 192.168.0.21
+
+
+### Instalar Actualizaciones 
+```
+# dnf update
+```
+
+### Servicios 
+#### Cockpit - Terminal web para administrador - puerto 9090
+``` 
+# dnf install cockpit
+# systemctl enable --now cockpit.socket
+# firewall-cmd --permanent --zone=public --add-service=cockpit
+# firewall-cmd --reload
+```
+### Firewall
+tutorial para configurar [firewall]
+
+Abrir los puertos
+```
+# firewall-cmd --zone=public --add-port=1521/tcp
+# firewall-cmd --zone=public --add-port=8080/tcp
+# firewall-cmd --runtime-to-permanent
+```
+Comprobar resultado
+```
+# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp3s0
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports: 1521/tcp 8080/tcp
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
+```
+
+### NTFS
+```
+# yum install epel-release
+# yum install ntfs-3g
+
+mkdir /mnt/win
+
+mount -t ntfs-3g /dev/sdb1 /mnt/win
+
+umount /mnt/win
+```
+
+
+
+
+## referencias
 
 dnf search nombre_paquete
 
@@ -8,10 +106,17 @@ systemctl start nombre_servicio
 
 useradd nombre_usuario
 
+### Buscar Archivos en el disco
+> find ./ 
 
-find ./ 
-
+### descargar archivo
+```
 curl -o apex.zip https://download.oracle.com/otn_software/apex/apex-latest.zip
+```
 
+### Descomprimir
+```
 unzip file.zip -d /dir
-
+```
+[Rocky-8.8-x86_64-dvd1]: https://docs.rockylinux.org/guides/8_6_installation/
+[Firewall]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos

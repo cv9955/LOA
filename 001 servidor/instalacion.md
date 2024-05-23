@@ -212,7 +212,7 @@ SharedServers = 5
 ### Configurando Shell
 ```
 $ /etc/profile.d/cav.sh
-export ORACLE_SID=XE
+export ORACLE_SID=ORCL
 export ORACLE_BASE=/opt/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/21c/dbhomeXE
 export PATH="$PATH:$ORACLE_HOME/bin:$ORACLE_BASE/ords/bin"
@@ -224,6 +224,14 @@ export PATH="$PATH:$ORACLE_HOME/bin:$ORACLE_BASE/ords/bin"
 $ /etc/oratab
 XE:/opt/oracle/product/21c/dbhomeXE:Y
 ```
+## Oracle XE auto start
+> no arranca al reiniciar el pc.. el servicio esta ON
+> sqlplus  idle estado
+> startup funcion pero el listener no lo toma
+> oraenv [XE]
+> /etc/oratab XE:/opt/oracle/product/21c/dbhomeXE:Y
+> 
+> no entiendo por que no arranca todavia
 
 ### carpeta dbs
 /opt/oracle/dbs $ ls -l 
@@ -526,14 +534,7 @@ XE =
 
 
 
-## Oracle XE auto start
-> no arranca al reiniciar el pc.. el servicio esta ON
-> sqlplus  idle estado
-> startup funcion pero el listener no lo toma
-> oraenv [XE]
-> /etc/oratab XE:/opt/oracle/product/21c/dbhomeXE:Y
-> 
-> no entiendo por que no arranca todavia
+
 
 
 ## SQLPLUS
@@ -715,7 +716,34 @@ WantedBy=multi-user.target
 
 # journalctl -u ords.service -f
 ```
+## Situacion
+[ok] Rocky
+[] Oracle - funciona pero no arranca al inicio
+[ok] Apex
+[ok] ORDS
 
+
+## Problemas 
+### No arranca la BD .. 
+
+SYS@XE >
+XE
+
+SYS@XE >select sys_context('userenv', 'server_host') from dual;
+rocky8
+
+jdbc:oracle:thin:@<server_host>:1521:<instance_name>
+
+SYS@XE >select sys_context('userenv','db_name') from dual;
+orcl
+
+SYS@XE >select ora_database_name from dual;
+ORCL
+
+SYS@XE >select * from global_name;
+ORCL
+
+alter system set instance_name='ORCL' scope=spfile;
 
 
 ## Problemas resueltos
@@ -742,6 +770,12 @@ SELINUXTYPE=targeted
 
 ### nombre de la BD y el ORACLE_SID
 > puse nombre db= orcl y SID = XE, algo no funciona bien
+db_name                              string      orcl
+db_unique_name                       string      orcl
+global_names                         boolean     FALSE
+instance_name                        string      XE
+service_names                        string      orcl
+
 
 ### error al instalar ORDS
 > se complico al usar usuario system.. tuve que generar el archivo de claves */opt/oracle/dbs/hc_XE.dat* ingresando nueva clave para sys con *orapwd*
@@ -758,9 +792,9 @@ SELINUXTYPE=targeted
 
 ## referencias
 [Rocky8]: https://docs.rockylinux.org/guides/8_6_installation/
+[Firewall]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos
 [Oracle21c-preinstall]: https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm 
 [Oracle21c]: oracle-database-xe-21c-1.0-1.ol8.x86_64.rpm
-[Firewall]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos
 [Apex]:https://download.oracle.com/otn_software/apex/apex-latest.zip
 [Ords]:https://download.oracle.com/otn_software/java/ords/ords-latest.zip
 [jdk17]:https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
