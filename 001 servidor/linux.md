@@ -46,6 +46,13 @@ se habilito desde el icono de inicio
 ```
 # dnf update
 ```
+### SELINUX
+> no arraca el servicio ORDS
+```
+/etc/selinux # getenforce
+/etc/selinux # setenforce Permissive
+/etc/selinux # nano config 
+```
 
 ### Servicios 
 #### Cockpit - Terminal web para administrador - puerto 9090
@@ -82,19 +89,37 @@ public (active)
   icmp-blocks:
   rich rules:
 ```
+## JAVA JDK17
+```
+# curl -o jdk17.rpm https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
+# yum install jdk17.rpm
+```
 
-### NTFS
+
+### montar DISCO NTFS
 ```
 # yum install epel-release
 # yum install ntfs-3g
+```
 
-mkdir /mnt/win
+```
+# df -h
+S.ficheros          Tamaño Usados  Disp Uso% Montado en
+devtmpfs              5,7G      0  5,7G   0% /dev
+tmpfs                 5,7G      0  5,7G   0% /dev/shm
+tmpfs                 5,7G    18M  5,7G   1% /run
+tmpfs                 5,7G      0  5,7G   0% /sys/fs/cgroup
+/dev/mapper/rl-root    70G   7,2G   63G  11% /
+/dev/mapper/rl-home    35G   296M   35G   1% /home
+/dev/sda1            1014M   338M  677M  34% /boot
+tmpfs                 1,2G    32K  1,2G   1% /run/user/1000
 
-mount -t ntfs-3g /dev/sdb1 /mnt/win
+# mkdir /mnt/win
+
+# mount -t ntfs-3g /dev/sda1 /mnt/win
 
 umount /mnt/win
 ```
-
 
 
 

@@ -58,3 +58,5 @@ SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 > EXEC DBMS_XDB.SETLISTENERLOCALACCESS(FALSE);
 
 ```
+
+[Apex-latest]:https://download.oracle.com/otn_software/apex/apex-latest.zip
