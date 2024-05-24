@@ -49,12 +49,14 @@ SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 > @apxchpwd.sql
   CAV Ag?24
 
-> alter user APEX_PUBLIC_USER ACCOUNT UNLOCK;
-> alter user APEX_PUBLIC_USER IDENTIFIED BY $$$$;
+// esto no va mas > alter user APEX_PUBLIC_USER IDENTIFIED BY $$$$;
 
 > @apex_rest_config.sql;
 
-> ALTER USER ANONYMOUS ACCOUNT UNLOCK;    >> session cdb$root
+> alter user APEX_PUBLIC_USER ACCOUNT UNLOCK;
+
+>> session cdb$root
+> ALTER USER ANONYMOUS ACCOUNT UNLOCK;    
 > EXEC DBMS_XDB.SETLISTENERLOCALACCESS(FALSE);
 
 ```
