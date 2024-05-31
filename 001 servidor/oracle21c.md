@@ -82,8 +82,22 @@ $ /etc/profile.d/cav.sh
 export ORACLE_SID=XE
 export ORACLE_BASE=/opt/oracle
 export ORACLE_HOME=$ORACLE_BASE/product/21c/dbhomeXE
+export JAVA_HOME=/usr/java/jdk-17
 export PATH="$PATH:$ORACLE_HOME/bin:$ORACLE_BASE/ords/bin"
+
+export ORDS_HOME=/opt/oracle/ords
+export ORDS_CONFIG=/opt/oracle/config
+
+## modifica la memoria de Java
+export _JAVA_OPTIONS="-Xms1126M -Xmx1126M"
+
+## LOGFILE=/home/oracle/scripts/logs/ords-`date +"%Y""%m""%d"`.log
+## nohup ${ORDS_HOME}/bin/ords --config ${ORDS_CONFIG} serve >> $LOGFILE 2>&1 &
+## echo "View log file with : tail -f $LOGFILE"
+
 ```
+
+### ORATAB
 ```
 $ /etc/oratab
 XE:/opt/oracle/product/21c/dbhomeXE:Y

@@ -69,6 +69,7 @@ Abrir los puertos
 ```
 # firewall-cmd --zone=public --add-port=1521/tcp
 # firewall-cmd --zone=public --add-port=8080/tcp
+# firewall-cmd --zone=public --add-port=8443/tcp
 # firewall-cmd --runtime-to-permanent
 ```
 Comprobar resultado
