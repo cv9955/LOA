@@ -1,4 +1,5 @@
 # Proceso de Instalacion
+> Documento el proceso de instalacion, completo, tomando notas de los errores recibibos
 
 ## Hardware
 [Intel i5](hardware.md)
@@ -14,3 +15,12 @@
 
 ## ORDS
 [Ords](ords.md)
+
+
+
+### To Do:
+
+[] archivelog
+[] habilitar puerto https
+[] configurar backups
+[] configurar samba
