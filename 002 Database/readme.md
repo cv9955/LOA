@@ -1,7 +1,9 @@
 # DATABASE
-> Este archivo documenta la configuracion de la base de datos, usuarios, permisos
+> Este archivo documenta la configuracion y el mantenimiento periodico de la base de datos
 
-## PDBS
+
+## PDBS - pluggable databases
+> 
 ```
 SQL> show pdbs;
 
@@ -11,11 +13,9 @@ SQL> show pdbs;
          3 PDBLOA                         READ WRITE NO
 ```
 
-
-
-## SCHEMAS
-
 ## USUARIOS
+[create_users](create_users.sql)
+
 ```SQL
 select * from dba_users
 where account_status = 'OPEN';
