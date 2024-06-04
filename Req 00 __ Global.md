@@ -57,17 +57,7 @@ Este modulo no deberia tener dependencias
 > control de acceso , habilitacion de roles
 
 
-## REQ 01 : EMPRESAS
-> Centralizo la informacion de las empresas, clientes y proveedores
-> Datos fiscales, Direcciones de Depositos y oficinas, datos de contactos 
 
-### REQ 01 01 : CLIENTES
-### REQ 01 02 : PROVEEDORES
-### REQ 01 03 : EMPLEADOS
-### REQ 01 04 : DATOS FISCALES
-### REQ 01 05 : DATOS PERSONALES
-### REQ 01 06 : DIRECCIONES
-### REQ 01 07 : CONTACTOS
 
 
 
