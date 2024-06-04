@@ -51,16 +51,24 @@ Este modulo no deberia tener dependencias
 
 
 # 3	Requerimientos específicos
-## RQ00 Modulo Global
+## REQ 00 : Modulo Global
 
-### RQ00.1 [USUARIOS](<Req 00 01 Usuarios.md>)
+### REQ 00 01 : [ACCESS CONTROL](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
 > control de acceso , habilitacion de roles
 
-### RQ00.2 [STATUS](req000.2_status.md)
-> centralizo el control de status de todos los objetos
 
-### RQ00.3 [STICKY NOTES](req000.3_stick.md)
-> Funcion para tomar notas, comentarios,observaciones Y recordatorios. para visualizar en calendario
+## REQ 01 : EMPRESAS
+> Centralizo la informacion de las empresas, clientes y proveedores
+> Datos fiscales, Direcciones de Depositos y oficinas, datos de contactos 
+
+### REQ 01 01 : CLIENTES
+### REQ 01 02 : PROVEEDORES
+### REQ 01 03 : EMPLEADOS
+### REQ 01 04 : DATOS FISCALES
+### REQ 01 05 : DATOS PERSONALES
+### REQ 01 06 : DIRECCIONES
+### REQ 01 07 : CONTACTOS
+
 
 
 
