@@ -9,7 +9,7 @@ $ unzip apex.zip -d /opt/oracle
 /opt/oracle/apex $ sqlplus / as sysdba
 ```
 ```sql
-alter session set container = pdbloa;
+alter session set container = #PDB_NAME#;
 ```
 ```sql
 > select * from v$tablespace;
@@ -33,18 +33,18 @@ TS# NAME                           INC BIG FLA ENC     CON_ID
 ### Crear tablespace
 ```sql
 CREATE TABLESPACE APEX
-DATAFILE '/opt/oracle/oradata/ORCL/pdbloa/apex.dbf'
+DATAFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex.dbf'
 SIZE 300M AUTOEXTEND ON NEXT 50M MAXSIZE 1G;
 -- luego de la instalacion el archivo tenia 230M
 
 CREATE TEMPORARY TABLESPACE APEX_TEMP
-TEMPFILE '/opt/oracle/oradata/ORCL/pdbloa/apex_temp.dbf'
+TEMPFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex_temp.dbf'
 SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 ```
 
 ### instalacion APEX 23.2
 ```
-> @apexins.sql APEX APEX APEX_TEMP /i/
+> @apexins.sql APEX23 APEX23 APEX_TEMP /i/
 
 > @apxchpwd.sql
   CAV Ag?24
@@ -58,7 +58,11 @@ SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 >> session cdb$root
 > ALTER USER ANONYMOUS ACCOUNT UNLOCK;    
 > EXEC DBMS_XDB.SETLISTENERLOCALACCESS(FALSE);
+```
 
+### evitar vencimiento Password usuarios
+```
+> ALTER PROFILE "DEFAULT" LIMIT PASSWORD_LIFE_TIME UNLIMITED; 
 ```
 
 [Apex-latest]:https://download.oracle.com/otn_software/apex/apex-latest.zip

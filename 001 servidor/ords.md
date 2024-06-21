@@ -29,7 +29,7 @@ size 100m autoextend on next 10m maxsize 1g
 ### install
 ```
 # cd /opt/oracle/ords
-# ords --config /opt/oracle/ords install 
+# ords --config /opt/oracle/config install 
 ```
 - [1] Tipo de conexión: Básica
 - [2] Conexión básica: HOST=localhost PORT=1521 SERVICE_NAME=pdbloa
@@ -198,3 +198,23 @@ export _JAVA_OPTIONS="-Xms1126M -Xmx1126M"
 ords --config ${ORDS_CONFIG} serve --certificate ~/keystore/rocky8.loagrafica.der --key ~/keystore/rocky8.loagrafica-key.der
 ```
 > arranca el servidor en el puerto 8443, pero tira error 400 INVALID SNI
+
+
+### Cambiar MaxLimit
+java -jar ords.war set-property jdbc.MaxLimit 50
+
+[oracle@rocky8 databases]$ cat default/pool.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved on Fri May 31 19:57:12 UTC 2024</comment>
+<entry key="db.connectionType">basic</entry>
+<entry key="db.hostname">localhost</entry>
+<entry key="db.port">1521</entry>
+<entry key="db.servicename">pdbloa</entry>
+<entry key="db.username">ORDS_PUBLIC_USER</entry>
+<entry key="feature.sdw">true</entry>
+<entry key="plsql.gateway.mode">proxied</entry>
+<entry key="restEnabledSql.active">true</entry>
+<entry key="security.requestValidationFunction">ords_util.authorize_plsql_gateway</entry>
+</properties>

@@ -10,9 +10,22 @@
   > ESTA APLICACION LA VOY A UTILIZAR PARA PROBAR COSAS NUEVAS.. 
   > LANGUAJE:  SPANISH - AR
 
+- 103 - BASIC LOGIN
+  > Esta aplicacion contiene la pagina de login
+  - P9999 - LOGIN PAGE
+  - P9998 - CHANGE PASSOWRD PAGE
+
+- 106 - ENTIDADES
+  > en esta aplicacion pongo en practica la centalizacion de informacion de empresas y personas.
+  > Descarga datos del web services o la tabla externa **te_personas**
+
+  
 
 - 200 - DEVELOP
   > Aqui se hacen los desarrollos de los modulos 
+  > Esta aplicacion mantiene informacion de las aplicaciones en desarrollo
+
+
 
 - 300 - TESTER
   > Aqui se pone a prueba sin datos reales

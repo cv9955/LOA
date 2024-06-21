@@ -36,3 +36,10 @@ where account_status = 'OPEN';
 
 ## ARCHIVELOGS
 
+
+## Copia Pdb de PTC
+CREATE PLUGGABLE DATABASE pdbPTC USING '/opt/oracle/oradata/XE/XEPDB1/XEPDB1.xml' 
+  SOURCE_FILE_DIRECTORY = '/opt/oracle/oradata/XE/XEPDB1/'  
+  MOVE
+  FILE_NAME_CONVERT = ('/opt/oracle/oradata/XE/XEPDB1/', '/opt/oracle/oradata/XE/PDBPTC/')
+  STORAGE (MAXSIZE 8G);
