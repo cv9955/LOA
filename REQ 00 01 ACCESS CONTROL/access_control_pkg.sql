@@ -144,10 +144,10 @@ CREATE OR REPLACE PACKAGE BODY access_control_pkg AS
 
         apex_util.set_session_state(p_name => 'SESSION_USER_ID',p_value => l_user_id);
         apex_util.set_session_state(p_name => 'SESSION_USERNAME',p_value => l_username);
-        apex_util.set_session_state(p_name => 'SESSION_FIRST_NAME',p_value => l_first_name);
-        apex_util.set_session_state(p_name => 'SESSION_LAST_NAME',p_value => l_last_name);
-        apex_util.set_session_state(p_name => 'SESSION_EMAIL',p_value => l_email);
-        apex_util.set_session_state(p_name => 'VALID_PASSWORD',p_value => l_valid_password);
+--      apex_util.set_session_state(p_name => 'SESSION_FIRST_NAME',p_value => l_first_name);
+--      apex_util.set_session_state(p_name => 'SESSION_LAST_NAME',p_value => l_last_name);
+--      apex_util.set_session_state(p_name => 'SESSION_EMAIL',p_value => l_email);
+--      apex_util.set_session_state(p_name => 'VALID_PASSWORD',p_value => l_valid_password);
     EXCEPTION
         WHEN no_data_found THEN
             raise_application_error(-20000,'Invalid username/password.');

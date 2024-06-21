@@ -1,4 +1,4 @@
-# Control de usuarios
+# REQ 00 01 : Control de acceso
 ACL - Access Control List 
 ### SCHEME TYPES 
 > Seleccion de tipo de Esquema de Acceso
@@ -75,6 +75,8 @@ connect as sysdba
 
 
 ## ToDo
+### Evitar que un Admnistrador se autoelimine 
+
 ### habilitar login en horario limitado
 ```sql
 function check_business_hours return boolean
