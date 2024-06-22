@@ -42,14 +42,12 @@ ACL - Access Control List
 
 
 ## Applicaction Items
-- SESSION_USER_ID
-- SESSION_USERNAME
-- SESSION_MAIL
-- SESSION_FIRST_NAME
-- SESSION_LAST_NAME
+   - SESSION_USER_ID
+   - SESSION_USERNAME
+   
 
 ## Funciones
-### ACCESS_CONTROL_PKG [>>](<003 Apex Workspace/access_control_pkg.sql>)
+### ACCESS_CONTROL_PKG [>>](access_control_pkg.sql)
 * ADD_USER
 * CHANGE_PASSWORD
 * VALID_USER
@@ -60,18 +58,32 @@ ACL - Access Control List
 ## Diagrama de Paginas
 ![Diagrama de Paginas](<dfd 00 01 Access Control.png>)
 
+## Procedimiento 
+1- Crear Aplication Items
+   - SESSION_USER_ID
+   - SESSION_USERNAME
+   > shared Components - Application Items
+   > Scope GLOBAL - se replica en todas las aplicaciones
 
-
-## NOTAS
-### asignar privilegios para usar la funcion para encriptar los password
+2- Asignar privilegios para usar la funcion para encriptar los password
 ```sql
 connect as sysdba
-> GRANT EXECUTE ON dbms_crypto TO LOA;
-
-> select *
-  from dba_tab_privs
-  where table_name = 'DBMS_CRYPTO';
+> GRANT EXECUTE ON dbms_crypto TO #SCHEMA_USER# ;  -- LOA PTC VIC
 ```
+
+3- Crear Tablas Vistas y Package
+```sql
+connect as ptc@pdbptc
+> @access_control_script.sql
+> @access_control_pkg.sql
+```
+
+4- Crear Authentication Scheme
+![TableUsers Auth](AuthenticactionScheme.png)
+
+5- Crear Usuario Admin
+[Crear Roles y Usuario Admin](acl_create_user_admin.sql)
+
 
 
 ## ToDo
@@ -90,3 +102,4 @@ end check_business_hours;
 https://www.oneoracledeveloper.com/2021/12/managing-users-roles-and-authorization.html
 https://www.lrayner.com/post/creating-a-custom-authentication-schema-apex-18-1
 https://oracle-base.com/articles/9i/storing-passwords-in-the-database-9i
+ 
