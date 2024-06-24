@@ -1,4 +1,4 @@
-# REQ 01 04 : Datos Fiscales
+# REQ 01 01 : Datos Fiscales
 
 ## Requisitos
 1) lista de empresas
@@ -33,7 +33,7 @@
 ## Applicaction Items
 
 ## Funciones
-### DATOS_FISCALES_PKG [>>](<003 Apex Workspace/access_control_pkg.sql>)
+### DFISCALES_PKG [>>](<003 Apex Workspace/access_control_pkg.sql>)
 * ADD_CUIT
 * VALID_CUIT
 * disable
