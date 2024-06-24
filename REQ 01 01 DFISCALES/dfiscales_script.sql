@@ -49,6 +49,9 @@ create table t_dfiscales (
     INTEGRANTE_SOC                 varchar2(1 char),
     EMPLEADOR                      varchar2(1 char),
     ACT_MONOTRIBUTO                varchar2(2 char),
+    cliente_id number,
+    provedor_id number,
+    empleado_id number,   
     created                        date not null,
     created_by                     varchar2(255 char) not null,
     updated                        date not null,
@@ -100,6 +103,9 @@ SELECT
    ,integrante_soc
    ,empleador
    ,act_monotributo
+   ,CLIENTE_ID
+   ,PROVEDOR_ID
+   
 FROM
     t_dfiscales;
 

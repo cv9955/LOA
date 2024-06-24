@@ -48,12 +48,7 @@ ACL - Access Control List
 
 ## Funciones
 ### ACCESS_CONTROL_PKG [>>](access_control_pkg.sql)
-* ADD_USER
-* CHANGE_PASSWORD
-* VALID_USER
-* disable_user
-* enable_user
-* change_roles
+
 
 ## Diagrama de Paginas
 ![Diagrama de Paginas](<dfd 00 01 Access Control.png>)
