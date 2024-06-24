@@ -55,12 +55,14 @@ El modulo contempla manejo de la informacion refente a empresas y personas, list
 # 3	Requerimientos específicos
 
 ### REQ 01 01 : [DATOS FISCALES](<REQ 01 01 DFISCALES/Req 01 01 Datos Fiscales.md>)
+### REQ 01 02 : [CLIENTES](<REQ 01 02 Clientes/Req 01 02 Clientes.md>)
 
-### REQ 01 01 : CLIENTES [>>](<REQ 01 __ ENTIDADES/Req 01 01 Clientes.md>)
-### REQ 01 01 : [CLIENTES](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
-### REQ 01 01 : [CLIENTES](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
-### REQ 01 01 : [CLIENTES](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
-### REQ 01 01 : [CLIENTES](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
+
+
+### REQ 01 03 : PROVEEDORES
+### REQ 01 01 : 
+### REQ 01 01 :
+### REQ 01 01 :
 > control de acceso , habilitacion de roles
 
 

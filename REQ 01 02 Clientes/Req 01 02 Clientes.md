@@ -1,8 +1,7 @@
-# REQ 01 04 : Datos Fiscales
+# REQ 01 02 : Clientes
 
 ## Requisitos
-1) lista de empresas
-   > datos a incluir: Cuit, Razon Social, Domicilio Fiscal
+1) lista de vendedores
 2) alta de Empresa 
    > Verificar cuit valido, y no repetido => status = 1 
 3) bloquear datos
@@ -26,20 +25,6 @@
 
 ## Vistas
 ### DFISCAL [>>](users.view.sql)
-
-
-## Applicaction Items
-
-## Funciones
-### DATOS_FISCALES_PKG [>>](<003 Apex Workspace/access_control_pkg.sql>)
-* ADD_CUIT
-* VALID_CUIT
-* disable
-* enable
-* 
-
-## Diagrama de Paginas
-![Diagrama de Paginas](<dfd 00 01 Access Control.png>)
 
 
 
