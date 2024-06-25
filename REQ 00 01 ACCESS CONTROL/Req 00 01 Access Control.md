@@ -50,6 +50,27 @@ ACL - Access Control List
 ### ACCESS_CONTROL_PKG [>>](access_control_pkg.sql)
 
 
+## Authorization Schemes
+### Only Cav 
+   ```sql : PL/SQL Function Returning Boolean
+      RETURN apex_util.get_session_state(p_item => 'SESSION_USERNAME') = 'CAV';
+   ```
+### Acceso Basico
+   ```sql : Exists SQL Query
+      SELECT 1 FROM T_USERS WHERE ID = :SESSION_USER_ID;
+   ```
+
+### Administrador 
+   ```sql : PL/SQL Function Returning Boolean
+      return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'Administrador') ;
+   ```
+
+### Tester Y OTROS ROLES
+   ```sql : PL/SQL Function Returning Boolean
+      return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'Tester') ;
+   ```
+
+
 ## Diagrama de Paginas
 ![Diagrama de Paginas](<dfd 00 01 Access Control.png>)
 
