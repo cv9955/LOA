@@ -60,7 +60,7 @@ El modulo contempla manejo de la informacion refente a empresas y personas, list
 
 
 ### REQ 01 03 : PROVEEDORES
-### REQ 01 01 : 
+### REQ 01 04 : DIRECCIONES
 ### REQ 01 01 :
 ### REQ 01 01 :
 > control de acceso , habilitacion de roles
