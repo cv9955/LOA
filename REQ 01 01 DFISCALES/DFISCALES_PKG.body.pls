@@ -14,36 +14,45 @@ create or replace PACKAGE BODY dfiscales_pkg AS
         v_empleador       VARCHAR(1);
         v_act_monotributo VARCHAR(2);
         cuit_valido Boolean := False;
+        
+  
         leido_de_padron Boolean := False;
 
 v_cliente_id INTEGER := -1;
 
 
   procedure buscar_cuit(
-        p_cuit VARCHAR2,
-        p_id out INTEGER,
-        p_title out varchar2
+        p_cuit VARCHAR2,  -- cuit a buscar
+        p_id out INTEGER, -- dfiscal_id encontrado
+        p_title out varchar2 -- Razon social encontrada
     ) AS
   BEGIN
-        IF validar_cuit(p_cuit) > 0  THEN
-         dbms_output.put_line('CUIT VALIDO :: ' || p_CUIT );
-        
-            SELECT  id,title,NVL(cliente_id,-1)
-                INTO p_id,p_title,v_cliente_id
-                FROM t_dfiscales
-                WHERE cuit = v_cuit;
+        IF validar_cuit(p_cuit) < 0  THEN
+            p_id := -2;
+            dbms_output.put_line('CUIT NO VALIDO :: ' || p_CUIT );
+            RETURN;
         end if;
-
+        
+        SELECT  id,title,NVL(cliente_id,-1)
+            INTO p_id,p_title,v_cliente_id
+            FROM t_dfiscales
+            WHERE cuit = v_cuit;
+        
          dbms_output.put_line('EXISTE EN T_DFISCALES - id:' || p_id );
          dbms_output.put_line('EXISTE EN T_DFISCALES - CLIENTE id:' || V_CLIENTE_ID );
 
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
           p_id := -1;  
+          v_cliente_id := -1;      
+          
          dbms_output.put_line('NO EXISTE EN T_DFISCALES' );
          load_from_padron(v_cuit,p_title);
          if leido_de_padron then 
             save_from_padron(p_id);
+         else
+         dbms_output.put_line('NO EXISTE EN PADRON');
+            P_ID := -3;
         end if;
   END buscar_cuit;
 
@@ -89,6 +98,30 @@ v_cliente_id INTEGER := -1;
         WHEN NO_DATA_FOUND THEN
          dbms_output.put_line('NO EXISTE EN padron' );
     end load_from_padron;
+    
+    procedure AGREGAR_CUIT(p_cuit varchar2,p_razon_social varchar2, p_dfiscal_id out number) AS
+  BEGIN
+            INSERT INTO t_dfiscales(
+                cuit
+                ,title
+--                ,imp_ganancias
+--                ,imp_iva
+--                ,monotributo
+--                ,integrante_soc
+--                ,empleador
+--                ,act_monotributo
+            )VALUES(
+                p_cuit
+               ,p_razon_social
+--               ,v_imp_ganancias
+--               ,v_imp_iva
+--               ,v_monotributo
+--               ,v_integrante_soc
+--               ,v_empleador
+--               ,v_act_monotributo
+            )RETURNING id INTO p_dfiscal_id;
+  END AGREGAR_CUIT;
+
     
     procedure save_from_padron(p_id out INTEGER) AS
     begin
@@ -255,6 +288,17 @@ END DEL_CLIENTE;
     RETURN lov_estado_actividad;
   END categoria_sociedad;
 
+  FUNCTION BUSCAR_CLIENTE(p_dfiscal_id INTEGER,p_cliente_id out number) return boolean AS
+  BEGIN
+    select cliente_id into p_cliente_id from t_dfiscales where id = p_dfiscal_id;
+    return true;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            p_cliente_id := -1;
+          dbms_output.put_line('No existe dfiscal_id');
+    RETURN FALSE;
+  END BUSCAR_CLIENTE;
+
 begin
         lov_categoria_impuestos := list_by_key (
             key_title_typ('NI','No Inscripto'),
@@ -315,3 +359,4 @@ begin
         ); 
         
 END dfiscales_pkg;
+/

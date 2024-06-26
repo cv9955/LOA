@@ -29,7 +29,10 @@
 
 
 ## NOTAS
-
+datos importados desde clientes.csv
 ## ToDo
 
 ## referencias
+
+
+P108 - SH1:lQDwVb4lNnZphhrVx/6d1Rf4AMs=
