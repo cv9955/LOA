@@ -73,3 +73,43 @@ to do: rutina de verificacion.
 ## referencias
 
 
+## Caso de Uso 
+
+### CU : Asociar Cuit
+Descripcion : Busca si el CUIT existe en la tabla, sino lo carga del padron
+Actores : EditorEntidades
+PreCondicion : Cliente cargado con ID
+
+Flujo Principal
+1: Editor Ingresa Nro de CUIT 
+2: El sIstema Validar que el CUIT se correcto
+3: El sistema Busca en la BD 
+4: El sistema devuelve ID y muestra Razon Social del registro
+5: Editor Presiona Boton ASOCIAR
+6: El sistema Guardar Id de cliente en el registo de DATOS FISCALES
+
+Flujo Secundario : 
+2.1: Si el cuit no es valido, el sistema muestra una alerta
+3.1: Si el cuit no esta en la BD, Ejecutar CU BuscarEnPadron
+3.2: Si el cuit no estan el el Padron, Muestra opcion para agregar manualmente
+3.3: Editor Acepta 
+3.4: Editor ingresa Razon Social
+
+Post Condicion : El Cuit se asocia al Cliente. Se agrego en cuit a la BD si no existia previamente
+
+### CU : BuscarEnPadron
+Descripcion : Buscar en el archivo Padron.txt el nro de Cuit y carga la informacion en la tabla DFISCALES
+Actores : Sistema 
+PreCondicion : Archivo Padron Vigente, Nro de CUIT valido y no regitrado en la tabla
+
+Flujo Principal
+1: Se buscar en la tabla Externa
+2: Se Guardan los datos en la tabla DFISCALES
+3: Se devuelve ID
+
+Flujo Secundario
+2.1 : si no se encuentra se devuelve -1
+
+Post Condicion : Cuit registrado en la tabla DFISCALES
+
+
