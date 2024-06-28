@@ -1,362 +1,348 @@
-create or replace PACKAGE BODY dfiscales_pkg AS
-        lov_actividad_monotributo list_by_key;
-        lov_categoria_impuestos list_by_key;
-        lov_categoria_empleador list_by_key;
-        lov_categoria_monotributo list_by_key;
-        lov_estado_actividad list_by_key;
+CREATE OR REPLACE PACKAGE BODY DFISCALES_PKG AS
+    LOV_ACTIVIDAD_MONOTRIBUTO LIST_BY_KEY;
+    LOV_CATEGORIA_IMPUESTOS   LIST_BY_KEY;
+    LOV_CATEGORIA_EMPLEADOR   LIST_BY_KEY;
+    LOV_CATEGORIA_MONOTRIBUTO LIST_BY_KEY;
+    LOV_ESTADO_ACTIVIDAD      LIST_BY_KEY;
+    V_CUIT                    VARCHAR(400);
+    V_TITLE                   VARCHAR(400);
+    V_IMP_GANANCIAS           VARCHAR(2);
+    V_IMP_IVA                 VARCHAR(2);
+    V_MONOTRIBUTO             VARCHAR(2);
+    V_INTEGRANTE_SOC          VARCHAR(1);
+    V_EMPLEADOR               VARCHAR(1);
+    V_ACT_MONOTRIBUTO         VARCHAR(2);
+    CUIT_VALIDO               BOOLEAN:=FALSE;
+    LEIDO_DE_PADRON           BOOLEAN:=FALSE;
+    V_CLIENTE_ID              INTEGER:=-1;
+    V_PROVEDOR_ID             INTEGER:=-1;
 
-        v_cuit           VARCHAR(400);
-        v_title           VARCHAR(400);
-        v_imp_ganancias   VARCHAR(2);
-        v_imp_iva         VARCHAR(2);
-        v_monotributo     VARCHAR(2);
-        v_integrante_soc  VARCHAR(1);
-        v_empleador       VARCHAR(1);
-        v_act_monotributo VARCHAR(2);
-        cuit_valido Boolean := False;
-        
-  
-        leido_de_padron Boolean := False;
-
-v_cliente_id INTEGER := -1;
-
-
-  procedure buscar_cuit(
-        p_cuit VARCHAR2,  -- cuit a buscar
-        p_id out INTEGER, -- dfiscal_id encontrado
-        p_title out varchar2 -- Razon social encontrada
-    ) AS
-  BEGIN
-        IF validar_cuit(p_cuit) < 0  THEN
-            p_id := -2;
-            dbms_output.put_line('CUIT NO VALIDO :: ' || p_CUIT );
+    PROCEDURE BUSCAR_CUIT(
+        P_CUIT VARCHAR2,
+        P_DFISCAL_ID OUT INTEGER,
+        P_TITLE OUT VARCHAR2
+    )AS
+    BEGIN
+        IF VALIDAR_CUIT(P_CUIT)<0 THEN
+            P_DFISCAL_ID:=-2;
+            DBMS_OUTPUT.PUT_LINE('CUIT NO VALIDO :: '
+                                 ||P_CUIT);
             RETURN;
-        end if;
-        
-        SELECT  id,title,NVL(cliente_id,-1)
-            INTO p_id,p_title,v_cliente_id
-            FROM t_dfiscales
-            WHERE cuit = v_cuit;
-        
-         dbms_output.put_line('EXISTE EN T_DFISCALES - id:' || p_id );
-         dbms_output.put_line('EXISTE EN T_DFISCALES - CLIENTE id:' || V_CLIENTE_ID );
+        END IF;
 
+        SELECT
+            ID,
+            TITLE,
+            NVL(CLIENTE_ID, -1),
+            NVL(PROVEDOR_ID, -1)
+       INTO P_DFISCAL_ID,
+            P_TITLE,
+            V_CLIENTE_ID,
+            V_PROVEDOR_ID
+        FROM
+            T_DFISCALES
+        WHERE
+            CUIT=V_CUIT;
+        DBMS_OUTPUT.PUT_LINE('EXISTE EN T_DFISCALES - id:'||P_DFISCAL_ID);
+        DBMS_OUTPUT.PUT_LINE('EXISTE EN T_DFISCALES - CLIENTE id:'||V_CLIENTE_ID);
+        DBMS_OUTPUT.PUT_LINE('EXISTE EN T_DFISCALES - PROVEDORE_ID:'||V_PROVEDOR_ID);
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-          p_id := -1;  
-          v_cliente_id := -1;      
-          
-         dbms_output.put_line('NO EXISTE EN T_DFISCALES' );
-         load_from_padron(v_cuit,p_title);
-         if leido_de_padron then 
-            save_from_padron(p_id);
-         else
-         dbms_output.put_line('NO EXISTE EN PADRON');
-            P_ID := -3;
-        end if;
-  END buscar_cuit;
+            P_DFISCAL_ID :=-1;
+            V_CLIENTE_ID :=-1;
+            V_PROVEDOR_ID :=-1;
+            DBMS_OUTPUT.PUT_LINE('NO EXISTE EN T_DFISCALES');
+            LOAD_FROM_PADRON(V_CUIT, P_TITLE);
+            IF LEIDO_DE_PADRON THEN
+                SAVE_FROM_PADRON(P_DFISCAL_ID);
+            ELSE
+                DBMS_OUTPUT.PUT_LINE('NO EXISTE EN PADRON');
+                P_DFISCAL_ID:=-3;
+            END IF;
+    END BUSCAR_CUIT;
 
-        
-        
-    procedure load_from_padron(p_cuit VARCHAR2,p_title out varchar2) AS
-    begin
-        v_title := '';
-        v_imp_ganancias := '';
-        v_monotributo := '';
-        v_imp_iva := '';
-        v_integrante_soc := '';
-        v_empleador := '';
-        v_act_monotributo := '';
-        leido_de_padron := False;
-        if cuit_valido then 
-         dbms_output.put_line('BUSCAR EN TABLA EXTERNA: ' || p_cuit );
+    PROCEDURE LOAD_FROM_PADRON(
+        P_CUIT VARCHAR2,
+        P_TITLE OUT VARCHAR2
+    )AS
+    BEGIN
+        V_TITLE :='';
+        V_IMP_GANANCIAS :='';
+        V_MONOTRIBUTO :='';
+        V_IMP_IVA :='';
+        V_INTEGRANTE_SOC :='';
+        V_EMPLEADOR :='';
+        V_ACT_MONOTRIBUTO :='';
+        LEIDO_DE_PADRON :=FALSE;
+        IF CUIT_VALIDO THEN
+            DBMS_OUTPUT.PUT_LINE('BUSCAR EN TABLA EXTERNA: '
+                                 ||P_CUIT);
             SELECT
-                title
-               ,imp_ganancias
-               ,imp_iva
-               ,monotributo
-               ,integrante_soc
-               ,empleador
-               ,act_monotributo
-               into
-               v_title
-               ,v_imp_ganancias
-               ,v_imp_iva
-               ,v_monotributo
-               ,v_integrante_soc
-               ,v_empleador
-               ,v_act_monotributo
+                TITLE,
+                IMP_GANANCIAS,
+                IMP_IVA,
+                MONOTRIBUTO,
+                INTEGRANTE_SOC,
+                EMPLEADOR,
+                ACT_MONOTRIBUTO INTO V_TITLE,
+                V_IMP_GANANCIAS,
+                V_IMP_IVA,
+                V_MONOTRIBUTO,
+                V_INTEGRANTE_SOC,
+                V_EMPLEADOR,
+                V_ACT_MONOTRIBUTO
             FROM
-                te_dfiscales
+                TE_DFISCALES
             WHERE
-                cuit = v_cuit;
-             dbms_output.put_line('RAZON SOCIAL : ' || v_title );
-             leido_de_padron := True;
-             p_title := v_title;
-        end if;           
-     EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-         dbms_output.put_line('NO EXISTE EN padron' );
-    end load_from_padron;
-    
-    procedure AGREGAR_CUIT(p_cuit varchar2,p_razon_social varchar2, p_dfiscal_id out number) AS
-  BEGIN
-            INSERT INTO t_dfiscales(
-                cuit
-                ,title
---                ,imp_ganancias
---                ,imp_iva
---                ,monotributo
---                ,integrante_soc
---                ,empleador
---                ,act_monotributo
-            )VALUES(
-                p_cuit
-               ,p_razon_social
---               ,v_imp_ganancias
---               ,v_imp_iva
---               ,v_monotributo
---               ,v_integrante_soc
---               ,v_empleador
---               ,v_act_monotributo
-            )RETURNING id INTO p_dfiscal_id;
-  END AGREGAR_CUIT;
-
-    
-    procedure save_from_padron(p_id out INTEGER) AS
-    begin
-     dbms_output.put_line('save_from_padron' );
-            if leido_de_padron then
-            INSERT INTO t_dfiscales(
-                cuit
-                ,title
-                ,imp_ganancias
-                ,imp_iva
-                ,monotributo
-                ,integrante_soc
-                ,empleador
-                ,act_monotributo
-            )VALUES(
-                v_cuit
-               ,v_title
-               ,v_imp_ganancias
-               ,v_imp_iva
-               ,v_monotributo
-               ,v_integrante_soc
-               ,v_empleador
-               ,v_act_monotributo
-            )RETURNING id INTO p_id;
-           
-            dbms_output.put_line('AGREGA REGISTRO : ' || p_id );
-        COMMIT;
-            end if;
-       EXCEPTION
-        WHEN OTHERS THEN
-        dbms_output.put_line('OTRO EXCEPTION' );
-    end save_from_padron;
-
-    FUNCTION to_cuit(
-        p_cuit VARCHAR2
-    )RETURN VARCHAR AS
-        cuit VARCHAR(20);
-        vret VARCHAR(200);
-    BEGIN
-        cuit := replace(p_cuit,'-','');
-        vret := substr(cuit,0,2)
-                || '-'
-                || substr(cuit,3,8)
-                || '-'
-                || substr(cuit,-1);
-
-        RETURN vret;
-    END to_cuit;
-
-    FUNCTION validar_cuit(
-        p_cuit IN VARCHAR2
-    )RETURN INTEGER AS
-        TYPE v1 IS
-            VARRAY(10)OF INTEGER;
-        verificador INT := -1; --verificador es un numero entero
-        resultado   INT := 0; --resultado es un numero entero
-        vret        INT;
-        mult        v1; --mult es una matriz de 10 numeros
-        digito      INT;
-    BEGIN
-        cuit_valido := False;
-        v_cuit := replace(p_cuit,'-','');  
-        IF length(v_cuit)<> 11 THEN
-        dbms_output.put_line('cantidad de caracteres incorrectos');
-            RETURN -1; --  Si la cantidad de digitos es distinto a 11, la funci�n retorna -1
+                CUIT=V_CUIT;
+            DBMS_OUTPUT.PUT_LINE('RAZON SOCIAL : '
+                                 ||V_TITLE);
+            LEIDO_DE_PADRON :=TRUE;
+            P_TITLE :=V_TITLE;
         END IF;
-        
-        verificador := substr(v_cuit,-1); --  'verificador es igual al �ltimo d�gito de la CUIT
-        resultado := calcular_numero_verificador(v_cuit);
-        IF resultado = verificador THEN --        'Si ambas variables coinciden, significa que la CUIT es valida y
-            dbms_output.put_line('CUIT VALIDO');   
-            cuit_valido := True;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('NO EXISTE EN padron');
+    END LOAD_FROM_PADRON;
+
+    PROCEDURE AGREGAR_CUIT_SIN_PADRON(
+        P_CUIT VARCHAR2,
+        P_RAZON_SOCIAL VARCHAR2,
+        P_DFISCAL_ID OUT NUMBER
+    )AS
+    BEGIN
+        INSERT INTO T_DFISCALES(
+            CUIT,
+            TITLE,
+            STATUS
+ --                ,imp_ganancias
+ --                ,imp_iva
+ --                ,monotributo
+ --                ,integrante_soc
+ --                ,empleador
+ --                ,act_monotributo
+        )VALUES(
+            P_CUIT,
+            P_RAZON_SOCIAL,
+            0
+ --               ,v_imp_ganancias
+ --               ,v_imp_iva
+ --               ,v_monotributo
+ --               ,v_integrante_soc
+ --               ,v_empleador
+ --               ,v_act_monotributo
+        )RETURNING ID INTO P_DFISCAL_ID;
+    END AGREGAR_CUIT_SIN_PADRON;
+
+    PROCEDURE SAVE_FROM_PADRON(
+        P_DFISCAL_ID OUT INTEGER
+    )AS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('save_from_padron');
+        IF LEIDO_DE_PADRON THEN
+            INSERT INTO T_DFISCALES(
+                CUIT,
+                TITLE,
+                IMP_GANANCIAS,
+                IMP_IVA,
+                MONOTRIBUTO,
+                INTEGRANTE_SOC,
+                EMPLEADOR,
+                ACT_MONOTRIBUTO,
+                STATUS
+            )VALUES(
+                V_CUIT,
+                V_TITLE,
+                V_IMP_GANANCIAS,
+                V_IMP_IVA,
+                V_MONOTRIBUTO,
+                V_INTEGRANTE_SOC,
+                V_EMPLEADOR,
+                V_ACT_MONOTRIBUTO,
+                1
+            )RETURNING ID INTO P_DFISCAL_ID;
+            DBMS_OUTPUT.PUT_LINE('AGREGA REGISTRO : '
+                                 ||P_DFISCAL_ID);
+            COMMIT;
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('OTRO EXCEPTION');
+    END SAVE_FROM_PADRON;
+
+    FUNCTION TO_CUIT(
+        P_CUIT VARCHAR2
+    )RETURN VARCHAR AS
+        CUIT VARCHAR(20);
+        VRET VARCHAR(200);
+    BEGIN
+        CUIT :=REPLACE(P_CUIT, '-', '');
+        VRET :=SUBSTR(CUIT, 0, 2)
+               ||'-'
+               ||SUBSTR(CUIT, 3, 8)
+                 ||'-'
+                 ||SUBSTR(CUIT, -1);
+        RETURN VRET;
+    END TO_CUIT;
+
+    FUNCTION VALIDAR_CUIT(
+        P_CUIT IN VARCHAR2
+    )RETURN INTEGER AS
+        TYPE V1 IS
+            VARRAY(10)OF INTEGER;
+        VERIFICADOR INT:=-1; --verificador es un numero entero
+        RESULTADO   INT:=0; --resultado es un numero entero
+        VRET        INT;
+        MULT        V1; --mult es una matriz de 10 numeros
+        DIGITO      INT;
+    BEGIN
+        CUIT_VALIDO :=FALSE;
+        V_CUIT :=REPLACE(P_CUIT, '-', '');
+        IF LENGTH(V_CUIT)<>11 THEN
+            DBMS_OUTPUT.PUT_LINE('cantidad de caracteres incorrectos');
+            RETURN-1; --  Si la cantidad de digitos es distinto a 11, la funci�n retorna -1
+        END IF;
+
+        VERIFICADOR :=SUBSTR(V_CUIT, -1); --  'verificador es igual al �ltimo d�gito de la CUIT
+        RESULTADO :=CALCULAR_NUMERO_VERIFICADOR(V_CUIT);
+        IF RESULTADO=VERIFICADOR THEN --        'Si ambas variables coinciden, significa que la CUIT es valida y
+            DBMS_OUTPUT.PUT_LINE('CUIT VALIDO');
+            CUIT_VALIDO:=TRUE;
             RETURN 1; -- 'retornamos 1
         ELSE
-           dbms_output.put_line('CUIT NO VALIDO'); 
-            RETURN -1; -- 'Si la CUIT no es valida, retornamos 0
+            DBMS_OUTPUT.PUT_LINE('CUIT NO VALIDO');
+            RETURN-1; -- 'Si la CUIT no es valida, retornamos 0
         END IF;
-    END validar_cuit;
+    END VALIDAR_CUIT;
 
-    FUNCTION calcular_numero_verificador(
-        p_cuit IN VARCHAR2
+    FUNCTION CALCULAR_NUMERO_VERIFICADOR(
+        P_CUIT IN VARCHAR2
     )RETURN INTEGER AS
-
-        TYPE v1 IS
+        TYPE V1 IS
             VARRAY(10)OF INTEGER;
-        resultado INT := 0; --resultado es un numero entero
-        mult      v1; --mult es una matriz de 10 numeros
-        cuit      VARCHAR(20);
-        digito    INT;
+        RESULTADO INT:=0; --resultado es un numero entero
+        MULT      V1; --mult es una matriz de 10 numeros
+        CUIT      VARCHAR(20);
+        DIGITO    INT;
     BEGIN
-        IF p_cuit IS NULL THEN
-            RETURN -1; -- no hay error
+        IF P_CUIT IS NULL THEN
+            RETURN-1; -- no hay error
         END IF;
-        cuit := replace(p_cuit,'-','');
-        IF length(cuit)< 10 THEN
-            RETURN -2; --  Si la cantidad de digitos es distinto a 11, la funci�n retorna -1
-        END IF;
-        mult := v1(5,4,3,2,7,6,5,4,3,2);
 
-        FOR x IN 1..10 LOOP --'recorremos todos los d�gitos de la CUIT y acumulamos en la variable "resultado"
-            digito := substr(cuit,x,1);
-            resultado := resultado +(mult(x)* digito);
+        CUIT :=REPLACE(P_CUIT, '-', '');
+        IF LENGTH(CUIT)<10 THEN
+            RETURN-2; --  Si la cantidad de digitos es distinto a 11, la funci�n retorna -1
+        END IF;
+
+        MULT :=V1(5, 4, 3, 2, 7, 6, 5, 4, 3, 2);
+        FOR X IN 1..10 LOOP --'recorremos todos los d�gitos de la CUIT y acumulamos en la variable "resultado"
+            DIGITO :=SUBSTR(CUIT, X, 1);
+            RESULTADO :=RESULTADO+(MULT(X)*DIGITO);
         END LOOP;
 
-        resultado := resultado MOD 11; --'obtenemos el resto de dividir "resultado" con 11
-        resultado := 11 - resultado; --'restamos
-        IF resultado = 11 THEN --        'si resultado es igual a 11, cambiamos a 0
-            resultado := 0;
-        ELSIF resultado = 10 THEN --        'si resultado es igual a 10, cambiamos a 9
-            resultado := 9;
+        RESULTADO :=RESULTADO MOD 11; --'obtenemos el resto de dividir "resultado" con 11
+        RESULTADO :=11-RESULTADO; --'restamos
+        IF RESULTADO=11 THEN --        'si resultado es igual a 11, cambiamos a 0
+            RESULTADO:=0;
+        ELSIF RESULTADO=10 THEN --        'si resultado es igual a 10, cambiamos a 9
+            RESULTADO:=9;
         END IF;
 
-        RETURN resultado;
-    END calcular_numero_verificador;
+        RETURN RESULTADO;
+    END CALCULAR_NUMERO_VERIFICADOR;
 
-  PROCEDURE ADD_CLIENTE(p_cuit varchar2,p_cliente_id INTEGER) AS
-    p_id INTEGER;
-  BEGIN
-    buscar_cuit(p_cuit,p_id,v_title);
-             dbms_output.put_line('cliente :' || v_cliente_id );
-    if v_cliente_id > 0 then
-         RAISE_APPLICATION_ERROR(-20001,'ya existe cun cliente con ese cuit');
-    end if;
-    
-    if p_id <= 0 then
-         RAISE_APPLICATION_ERROR(-20001,'no es encontro nro de cuit');   
-    end if;
-        update t_dfiscales
-        set cliente_id = p_cliente_id
-        WHERE ID = p_id;
-             dbms_output.put_line('Add clientes Ok');
-  END ADD_CLIENTE;
+    PROCEDURE ASOCIAR_CLIENTE(
+        P_CUIT VARCHAR2,
+        P_CLIENTE_ID INTEGER,
+        P_DFISCAL_ID OUT NUMBER
+    )AS
+    BEGIN
+        BUSCAR_CUIT(P_CUIT, P_DFISCAL_ID, V_TITLE);
+        IF V_CLIENTE_ID>0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'ya existe cun cliente con ese cuit');
+        END IF;
 
-
-  PROCEDURE DEL_CLIENTE(p_dfiscal_id INTEGER) AS
-  BEGIN
+        IF P_DFISCAL_ID<=0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'no es encontro nro de cuit');
+        END IF;
         UPDATE T_DFISCALES
-        SET CLIENTE_ID = NULL
-        WHERE ID = p_dfiscal_id;
-END DEL_CLIENTE;
+        SET
+            CLIENTE_ID=P_CLIENTE_ID
+        WHERE
+            ID=P_DFISCAL_ID;
+    END ASOCIAR_CLIENTE;
 
-  FUNCTION categoria_impuestos RETURN list_by_key AS
-  BEGIN
-        RETURN lov_categoria_impuestos;
-  END categoria_impuestos;
+    PROCEDURE DESASOCIAR_CLIENTE(
+        P_DFISCAL_ID INTEGER
+    )AS
+    BEGIN
+        UPDATE T_DFISCALES
+        SET
+            CLIENTE_ID=NULL
+        WHERE
+            ID=P_DFISCAL_ID;
+    END DESASOCIAR_CLIENTE;
 
-  FUNCTION categoria_monotributo RETURN list_by_key AS
-  BEGIN
-    RETURN lov_categoria_monotributo;
-  END categoria_monotributo;
+    PROCEDURE ASOCIAR_PROVEEDOR(
+        P_CUIT VARCHAR2,
+        P_PROV_ID INTEGER,
+        P_DFISCAL_ID OUT NUMBER
+    )AS
+    BEGIN
+        BUSCAR_CUIT(P_CUIT, P_DFISCAL_ID, V_TITLE);
+        IF V_PROVEDOR_ID>0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'ya existe cun PROVEEDOR con ese cuit');
+        END IF;
 
-  FUNCTION actividad_monotributo RETURN list_by_key AS
-  BEGIN
-    RETURN lov_actividad_monotributo;
-  END actividad_monotributo;
+        IF P_DFISCAL_ID<=0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'no es encontro nro de cuit');
+        END IF;
+        UPDATE T_DFISCALES
+        SET
+            PROVEDOR_ID=P_PROV_ID
+        WHERE
+            ID=P_DFISCAL_ID;
+    END ASOCIAR_PROVEEDOR;
 
-  FUNCTION categoria_empleador RETURN list_by_key AS
-  BEGIN
-       RETURN lov_estado_actividad;
-  END categoria_empleador;
+    PROCEDURE DESASOCIAR_PROVEEDOR(
+        P_DFISCAL_ID INTEGER
+    )AS
+    BEGIN
+        UPDATE T_DFISCALES
+        SET
+            PROVEDOR_ID=NULL
+        WHERE
+            ID=P_DFISCAL_ID;
+    END DESASOCIAR_PROVEEDOR;
 
-  FUNCTION categoria_sociedad  RETURN list_by_key AS
-  BEGIN
-    RETURN lov_estado_actividad;
-  END categoria_sociedad;
+    FUNCTION CATEGORIA_IMPUESTOS RETURN LIST_BY_KEY AS
+    BEGIN
+        RETURN LOV_CATEGORIA_IMPUESTOS;
+    END CATEGORIA_IMPUESTOS;
 
-  FUNCTION BUSCAR_CLIENTE(p_dfiscal_id INTEGER,p_cliente_id out number) return boolean AS
-  BEGIN
-    select cliente_id into p_cliente_id from t_dfiscales where id = p_dfiscal_id;
-    return true;
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            p_cliente_id := -1;
-          dbms_output.put_line('No existe dfiscal_id');
-    RETURN FALSE;
-  END BUSCAR_CLIENTE;
+    FUNCTION CATEGORIA_MONOTRIBUTO RETURN LIST_BY_KEY AS
+    BEGIN
+        RETURN LOV_CATEGORIA_MONOTRIBUTO;
+    END CATEGORIA_MONOTRIBUTO;
 
-begin
-        lov_categoria_impuestos := list_by_key (
-            key_title_typ('NI','No Inscripto'),
-            key_title_typ('AC','Activo'),
-            key_title_typ('EX','Exento'),
-            key_title_typ('NC','No corresponde')
-        );
+    FUNCTION ACTIVIDAD_MONOTRIBUTO RETURN LIST_BY_KEY AS
+    BEGIN
+        RETURN LOV_ACTIVIDAD_MONOTRIBUTO;
+    END ACTIVIDAD_MONOTRIBUTO;
 
-        lov_categoria_monotributo := list_by_key (
-            key_title_typ('NI','No Inscripto'),
-            key_title_typ('AC','Activo'),
-            key_title_typ('EX','Exento'),
-            key_title_typ('NA','No alcanzado'),	
-            key_title_typ('XN','Exento no alcanzado'),
-            key_title_typ('AN','Activo no alcanzado'),
-            key_title_typ('A ','Categoria A'),
-            key_title_typ('B ','Categoria B'),
-            key_title_typ('C ','Categoria C'),
-            key_title_typ('D ','Categoria D'),
-            key_title_typ('E ','Categoria E'),
-            key_title_typ('F ','Categoria F'),
-            key_title_typ('G ','Categoria G'),
-            key_title_typ('H ','Categoria H'),
-            key_title_typ('I ','Categoria I'),
-            key_title_typ('J ','Categoria J'),
-            key_title_typ('K ','Categoria K')
-           
-        );
-        
-        lov_categoria_empleador := list_by_key (
-            key_title_typ('BT','B trabajador promovido'),
-            key_title_typ('AP','A actividad primaria'),
-            key_title_typ('AC','A asociado a cooperativa'),
-            key_title_typ('AL','A monotributo social locacion'),
-            key_title_typ('AV','A monotributo social ventas'),
-            key_title_typ('AT','A trabajador promovido'),
-            key_title_typ('NI','No Inscripto')
-        );
+    FUNCTION CATEGORIA_EMPLEADOR RETURN LIST_BY_KEY AS
+    BEGIN
+        RETURN LOV_ESTADO_ACTIVIDAD;
+    END CATEGORIA_EMPLEADOR;
 
-        lov_actividad_monotributo := list_by_key (
-            key_title_typ('00','No es monotributista'),
-            key_title_typ('01','Comercial'),
-            key_title_typ('02','Profesional'),
-            key_title_typ('03','Servicios/Oficio'),
-            key_title_typ('04','Industrial'),
-            key_title_typ('05','Agropecuaria'),
-            key_title_typ('06','Otros'),
-            key_title_typ('07','Eventual'),
-            key_title_typ('08','Prest. de Servicio o Locación'),
-            key_title_typ('09','Otras actividades'),
-            key_title_typ('10','Ventas'),
-            key_title_typ('10','Ventas'),
-            key_title_typ('11','Agricultura Familia')
-        ); 
-        lov_estado_actividad := list_by_key (
-            key_title_typ('N','No activo'),	
-            key_title_typ('S','Activo')	
-        ); 
-        
-END dfiscales_pkg;
-/
+    FUNCTION CATEGORIA_SOCIEDAD RETURN LIST_BY_KEY AS
+    BEGIN
+        RETURN LOV_ESTADO_ACTIVIDAD;
+    END CATEGORIA_SOCIEDAD;
+BEGIN
+    LOV_CATEGORIA_IMPUESTOS :=LIST_BY_KEY(KEY_TITLE_TYP('NI', 'No Inscripto'), KEY_TITLE_TYP('AC', 'Activo'), KEY_TITLE_TYP('EX', 'Exento' ), KEY_TITLE_TYP('NC', 'No corresponde'));
+    LOV_CATEGORIA_MONOTRIBUTO :=LIST_BY_KEY(KEY_TITLE_TYP('NI', 'No Inscripto'), KEY_TITLE_TYP('AC', 'Activo'), KEY_TITLE_TYP('EX', 'Exento' ), KEY_TITLE_TYP('NA', 'No alcanzado'), KEY_TITLE_TYP('XN', 'Exento no alcanzado'), KEY_TITLE_TYP('AN', 'Activo no alcanzado'), KEY_TITLE_TYP ('A ', 'Categoria A'), KEY_TITLE_TYP('B ', 'Categoria B'), KEY_TITLE_TYP('C ', 'Categoria C'), KEY_TITLE_TYP('D ', 'Categoria D'), KEY_TITLE_TYP ('E ', 'Categoria E'), KEY_TITLE_TYP('F ', 'Categoria F'), KEY_TITLE_TYP('G ', 'Categoria G'), KEY_TITLE_TYP('H ', 'Categoria H'), KEY_TITLE_TYP ('I ', 'Categoria I'), KEY_TITLE_TYP('J ', 'Categoria J'), KEY_TITLE_TYP('K ', 'Categoria K'));
+    LOV_CATEGORIA_EMPLEADOR :=LIST_BY_KEY(KEY_TITLE_TYP('BT', 'B trabajador promovido'), KEY_TITLE_TYP('AP', 'A actividad primaria'), KEY_TITLE_TYP ('AC', 'A asociado a cooperativa'), KEY_TITLE_TYP('AL', 'A monotributo social locacion'), KEY_TITLE_TYP('AV', 'A monotributo social ventas' ), KEY_TITLE_TYP('AT', 'A trabajador promovido'), KEY_TITLE_TYP('NI', 'No Inscripto'));
+    LOV_ACTIVIDAD_MONOTRIBUTO :=LIST_BY_KEY(KEY_TITLE_TYP('00', 'No es monotributista'), KEY_TITLE_TYP('01', 'Comercial'), KEY_TITLE_TYP( '02', 'Profesional'), KEY_TITLE_TYP('03', 'Servicios/Oficio'), KEY_TITLE_TYP('04', 'Industrial'), KEY_TITLE_TYP('05', 'Agropecuaria'), KEY_TITLE_TYP ('06', 'Otros'), KEY_TITLE_TYP('07', 'Eventual'), KEY_TITLE_TYP('08', 'Prest. de Servicio o Locación'), KEY_TITLE_TYP('09', 'Otras actividades' ), KEY_TITLE_TYP('10', 'Ventas'), KEY_TITLE_TYP('10', 'Ventas'), KEY_TITLE_TYP('11', 'Agricultura Familia'));
+    LOV_ESTADO_ACTIVIDAD :=LIST_BY_KEY(KEY_TITLE_TYP('N', 'No activo'), KEY_TITLE_TYP('S', 'Activo'));
+END DFISCALES_PKG;

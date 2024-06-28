@@ -2,7 +2,7 @@ create or replace PACKAGE dfiscales_pkg AS
 
     procedure buscar_cuit(
         p_cuit VARCHAR2,
-        p_id out INTEGER,
+        p_dfiscal_id out INTEGER,
         p_title out varchar2
     );
 
@@ -12,7 +12,7 @@ create or replace PACKAGE dfiscales_pkg AS
     );
 
     procedure save_from_padron(
-        p_id out INTEGER
+        p_dfiscal_id out INTEGER
     );
     
     FUNCTION to_cuit(
@@ -27,13 +27,15 @@ create or replace PACKAGE dfiscales_pkg AS
         p_cuit IN VARCHAR2
     )RETURN INTEGER;
 
-    procedure AGREGAR_CUIT(p_cuit varchar2,p_razon_social varchar2, p_dfiscal_id out number);
+    procedure agregar_cuit_sin_padron(p_cuit varchar2,p_razon_social varchar2, p_dfiscal_id out number);
     
-
-    PROCEDURE ADD_CLIENTE(p_cuit varchar2,p_cliente_id INTEGER);
-    PROCEDURE DEL_CLIENTE(p_dfiscal_id INTEGER);    
     
-    FUNCTION BUSCAR_CLIENTE(p_dfiscal_id INTEGER,p_cliente_id out number) return boolean;
+   
+    PROCEDURE ASOCIAR_CLIENTE(p_cuit varchar2,p_cliente_id INTEGER,p_dfiscal_id out number);
+    PROCEDURE DESASOCIAR_CLIENTE(p_dfiscal_id INTEGER);    
+   
+    PROCEDURE ASOCIAR_PROVEEDOR(p_cuit varchar2,p_prov_id INTEGER,p_dfiscal_id out number);
+    PROCEDURE DESASOCIAR_PROVEEDOR(p_dfiscal_id INTEGER);    
     
     
     FUNCTION categoria_impuestos RETURN list_by_key;
@@ -44,4 +46,3 @@ create or replace PACKAGE dfiscales_pkg AS
     FUNCTION categoria_sociedad  RETURN list_by_key;
  
 END dfiscales_pkg;
-/
