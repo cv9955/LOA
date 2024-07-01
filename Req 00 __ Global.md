@@ -55,6 +55,7 @@ Este modulo no deberia tener dependencias
 
 ### REQ 00 01 : [ACCESS CONTROL](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
 ### REQ 00 02 : [LISTAS GLOBALES](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
+### REQ 00 03 : [PLAN DE CUENTAS](<REQ 00 01 ACCESS CONTROL/Req 00 01 Access Control.md>)
 > control de acceso , habilitacion de roles
 
 

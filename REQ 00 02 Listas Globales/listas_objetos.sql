@@ -8,7 +8,15 @@ create or replace TYPE KEY_TITLE_TYP AS OBJECT
     , title    VARCHAR2(400)
     );   
 
+create or replace TYPE TREE_TYP AS OBJECT
+    ( ID      Number
+    , title   VARCHAR2(400)
+    , parent  Number
+    );
+
 create or replace TYPE list_by_id IS TABLE OF id_title_typ;  
+
+create or replace TYPE list_tree IS TABLE OF TREE_TYP;  
 
 create or replace TYPE list_by_key IS TABLE OF key_title_typ;  
 
