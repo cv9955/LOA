@@ -4,6 +4,8 @@ CREATE OR REPLACE PACKAGE BODY DFISCALES_PKG AS
     LOV_CATEGORIA_EMPLEADOR   LIST_BY_KEY;
     LOV_CATEGORIA_MONOTRIBUTO LIST_BY_KEY;
     LOV_ESTADO_ACTIVIDAD      LIST_BY_KEY;
+    LOV_STATUS                LIST_BY_ID;
+
     V_CUIT                    VARCHAR(400);
     V_TITLE                   VARCHAR(400);
     V_IMP_GANANCIAS           VARCHAR(2);
@@ -339,10 +341,16 @@ CREATE OR REPLACE PACKAGE BODY DFISCALES_PKG AS
     BEGIN
         RETURN LOV_ESTADO_ACTIVIDAD;
     END CATEGORIA_SOCIEDAD;
+
+    FUNCTION STATUS_LIST RETURN LIST_BY_ID AS
+    BEGIN
+        RETURN LOV_STATUS;
+    END STATUS_LIST;
 BEGIN
     LOV_CATEGORIA_IMPUESTOS :=LIST_BY_KEY(KEY_TITLE_TYP('NI', 'No Inscripto'), KEY_TITLE_TYP('AC', 'Activo'), KEY_TITLE_TYP('EX', 'Exento' ), KEY_TITLE_TYP('NC', 'No corresponde'));
     LOV_CATEGORIA_MONOTRIBUTO :=LIST_BY_KEY(KEY_TITLE_TYP('NI', 'No Inscripto'), KEY_TITLE_TYP('AC', 'Activo'), KEY_TITLE_TYP('EX', 'Exento' ), KEY_TITLE_TYP('NA', 'No alcanzado'), KEY_TITLE_TYP('XN', 'Exento no alcanzado'), KEY_TITLE_TYP('AN', 'Activo no alcanzado'), KEY_TITLE_TYP ('A ', 'Categoria A'), KEY_TITLE_TYP('B ', 'Categoria B'), KEY_TITLE_TYP('C ', 'Categoria C'), KEY_TITLE_TYP('D ', 'Categoria D'), KEY_TITLE_TYP ('E ', 'Categoria E'), KEY_TITLE_TYP('F ', 'Categoria F'), KEY_TITLE_TYP('G ', 'Categoria G'), KEY_TITLE_TYP('H ', 'Categoria H'), KEY_TITLE_TYP ('I ', 'Categoria I'), KEY_TITLE_TYP('J ', 'Categoria J'), KEY_TITLE_TYP('K ', 'Categoria K'));
     LOV_CATEGORIA_EMPLEADOR :=LIST_BY_KEY(KEY_TITLE_TYP('BT', 'B trabajador promovido'), KEY_TITLE_TYP('AP', 'A actividad primaria'), KEY_TITLE_TYP ('AC', 'A asociado a cooperativa'), KEY_TITLE_TYP('AL', 'A monotributo social locacion'), KEY_TITLE_TYP('AV', 'A monotributo social ventas' ), KEY_TITLE_TYP('AT', 'A trabajador promovido'), KEY_TITLE_TYP('NI', 'No Inscripto'));
     LOV_ACTIVIDAD_MONOTRIBUTO :=LIST_BY_KEY(KEY_TITLE_TYP('00', 'No es monotributista'), KEY_TITLE_TYP('01', 'Comercial'), KEY_TITLE_TYP( '02', 'Profesional'), KEY_TITLE_TYP('03', 'Servicios/Oficio'), KEY_TITLE_TYP('04', 'Industrial'), KEY_TITLE_TYP('05', 'Agropecuaria'), KEY_TITLE_TYP ('06', 'Otros'), KEY_TITLE_TYP('07', 'Eventual'), KEY_TITLE_TYP('08', 'Prest. de Servicio o Locación'), KEY_TITLE_TYP('09', 'Otras actividades' ), KEY_TITLE_TYP('10', 'Ventas'), KEY_TITLE_TYP('10', 'Ventas'), KEY_TITLE_TYP('11', 'Agricultura Familia'));
     LOV_ESTADO_ACTIVIDAD :=LIST_BY_KEY(KEY_TITLE_TYP('N', 'No activo'), KEY_TITLE_TYP('S', 'Activo'));
+    LOV_STATUS := LIST_BY_ID(ID_TITLE_TYP(1,'Activo'),ID_TITLE_TYP(0,'No Existe en Archivo Padron'));
 END DFISCALES_PKG;

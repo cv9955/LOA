@@ -15,6 +15,9 @@ create or replace PACKAGE dfiscales_pkg AS
         p_dfiscal_id out INTEGER
     );
     
+    FUNCTION STATUS_LIST RETURN LIST_BY_ID;
+
+
     FUNCTION to_cuit(
         p_cuit VARCHAR2
     )RETURN VARCHAR;
