@@ -3,6 +3,12 @@ create or replace TYPE ID_TITLE_TYP AS OBJECT
     , title    VARCHAR2(400)
     );
 
+create or replace TYPE ID_TITLE_VALUE_TYP AS OBJECT
+    ( ID      NUMBER
+    , title    VARCHAR2(400)
+    , value NUMBER
+    );
+
 create or replace TYPE KEY_TITLE_TYP AS OBJECT
     ( key      VARCHAR2(20)
     , title    VARCHAR2(400)
@@ -13,6 +19,18 @@ create or replace TYPE TREE_TYP AS OBJECT
     , title   VARCHAR2(400)
     , parent  Number
     );
+
+create or replace TYPE cbte_afip_typ AS OBJECT 
+(
+    id  INTEGER
+   ,title INTEGER
+   ,letra CHAR
+)
+
+create or replace TYPE list_cbte_afip IS TABLE OF cbte_afip_typ;
+
+
+create or replace TYPE list_with_value IS TABLE OF ID_TITLE_VALUE_TYP; 
 
 create or replace TYPE list_by_id IS TABLE OF id_title_typ;  
 
