@@ -1,4 +1,6 @@
-## Apex 23.2
+## Apex 
+  - Version 23.2
+  - Version 24.1 (ago 2024)
 ### Descarga
 ```
 $ curl -o apex.zip https://download.oracle.com/otn_software/apex/apex-latest.zip
@@ -27,12 +29,13 @@ TS# NAME                           INC BIG FLA ENC     CON_ID
 
 /opt/oracle/oradata/ORCL/pdbloa/system01.dbf
 /opt/oracle/oradata/ORCL/pdbloa/sysaux01.dbf
-/opt/oracle/oradata/ORCL/pdbloa/undotbs01.dbf                                            /opt/oracle/oradata/ORCL/pdbloa/users01.dbf
+/opt/oracle/oradata/ORCL/pdbloa/undotbs01.dbf
+/opt/oracle/oradata/ORCL/pdbloa/users01.dbf
 ```
 
 ### Crear tablespace
 ```sql
-CREATE TABLESPACE APEX
+CREATE TABLESPACE APEX23
 DATAFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex.dbf'
 SIZE 300M AUTOEXTEND ON NEXT 50M MAXSIZE 1G;
 -- luego de la instalacion el archivo tenia 230M

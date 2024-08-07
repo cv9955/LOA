@@ -34,6 +34,6 @@ resource_manager_cpu_allocation integer 0
 resource_manager_cpu_scope      string  INSTANCE_ONLY */
 
 
-ALTER SYSTEM SET pga_aggregate_limit = 4G;
+
 
 ALTER SESSION SET PARALLEL_DEGREE_POLICY = LIMITED;

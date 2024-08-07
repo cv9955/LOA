@@ -1,9 +1,6 @@
 # Proceso de Instalacion
 > Documento el proceso de instalacion, completo, tomando notas de los errores recibibos
 
-## Hardware
-[Intel i5](hardware.md)
-
 ## Sistema Operativo
 [Rocky8.8](linux.md)
 
@@ -17,9 +14,9 @@
 [Ords](ords.md)
 
 
-### Servidor LOA
+### Servidor LOA / PTC
 
-### Servidor PTC
+### Servidor VICKY
 
 
 

@@ -62,7 +62,7 @@
   > Esquema personalizado desarrollado por CAV.
   - Scheme Type : Custom
   - Authentication Function Name : **access_control_pkg.valid_user**
-
+  - Session Sharing : **Workspace Sharing**
 
 ### Authorization Schemes
 - *Administration Rights* 
