@@ -1,11 +1,33 @@
 ## Apex 
   - Version 23.2
-  - Version 24.1 (ago 2024)
+
+## UPGRADE   - Version 24.1 (ago 2024)
+$ curl -o apex.zip https://download.oracle.com/otn_software/apex/apex-latest.zip
+$ unzip apex.zip -d /opt/oracle
+nota!! renombrar carpeta APEX de la version anterior >> mv APEX APEX23
+y la carpeta META-INF ... 
+
+```sql
+CREATE TABLESPACE APEX24
+DATAFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex24.dbf'
+SIZE 300M AUTOEXTEND ON NEXT 50M MAXSIZE 1G;
+```
+> @apexins.sql APEX24 APEX24 APEX_TEMP /i/
+> @apex_rest_config.sql;
+
+ORDS ya esta configurado con la carpeta imegenes en /opt/oracle/apex/images.. 
+
+#### fin de UPGRADE
+
+
 ### Descarga
 ```
 $ curl -o apex.zip https://download.oracle.com/otn_software/apex/apex-latest.zip
 $ unzip apex.zip -d /opt/oracle
 ```
+nota!! renombrar carpeta APEX de la version anterior >> mv APEX APEX23
+y la carpeta META-INF ... 
+
 ### Instalacion
 ```
 /opt/oracle/apex $ sqlplus / as sysdba
@@ -35,26 +57,29 @@ TS# NAME                           INC BIG FLA ENC     CON_ID
 
 ### Crear tablespace
 ```sql
-CREATE TABLESPACE APEX23
-DATAFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex.dbf'
+CREATE TABLESPACE APEX24
+DATAFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex24.dbf'
 SIZE 300M AUTOEXTEND ON NEXT 50M MAXSIZE 1G;
 -- luego de la instalacion el archivo tenia 230M
 
+-- SE USA LA MISMA APEX_TEMP
 CREATE TEMPORARY TABLESPACE APEX_TEMP
 TEMPFILE '/opt/oracle/oradata/XE/#PDB_NAME#/apex_temp.dbf'
 SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 ```
 
-### instalacion APEX 23.2
+### instalacion APEX 24.1
 ```
-> @apexins.sql APEX23 APEX23 APEX_TEMP /i/
+> @apexins.sql APEX24 APEX24 APEX_TEMP /i/
+> @apex_rest_config.sql;
+
 
 > @apxchpwd.sql
   CAV Ag?24
 
 // esto no va mas > alter user APEX_PUBLIC_USER IDENTIFIED BY $$$$;
 
-> @apex_rest_config.sql;
+
 
 > alter user APEX_PUBLIC_USER ACCOUNT UNLOCK;
 
@@ -69,3 +94,5 @@ SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 ```
 
 [Apex-latest]:https://download.oracle.com/otn_software/apex/apex-latest.zip
+
+

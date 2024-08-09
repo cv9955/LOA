@@ -146,3 +146,9 @@ unzip file.zip -d /dir
 ```
 [Rocky-8.8-x86_64-dvd1]: https://docs.rockylinux.org/guides/8_6_installation/
 [Firewall]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos
+
+### ACTUALIZAR LINUX
+
+sudo dnf check-update
+sudo dnf update
+
