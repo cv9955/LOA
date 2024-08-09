@@ -23,6 +23,9 @@ Sistema de Gestion
 
 ### REQ 02 : Articulos
 ### REQ 03 : Compras
+    REQ 03 01 - FACTURAS DE COMPRA
+    REQ 03 02 - PAGOS A PROVEEDORES
+
 ### REQ 04 : Ventas
 
 
