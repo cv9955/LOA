@@ -96,3 +96,11 @@ SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE 1G;
 [Apex-latest]:https://download.oracle.com/otn_software/apex/apex-latest.zip
 
 
+
+### Offline Tablespace Apex Old
+alter tablespace apex23 offline;
+
+-- error en pagina admin workspace
+Error acessing Oracle Apex 23.1 after upgrade
+ora-00376 file cannot be read at this time
+$ curl -o apex_verify.sql https://support.oracle.com/epmos/main/downloadattachmentprocessor?attachid=2036107.1:APEX_POS_12C_SCRIPT&clickstream=no

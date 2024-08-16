@@ -1,0 +1,174 @@
+@media screen{
+	.imagen {    display: block;   }  
+    .encabezado {
+        position :float;
+    }
+    .cuerpo {
+        margin-top: 5mm;
+        margin-bottom: 5mm;
+    }
+    .firma {    display: none;}
+
+}
+header { display:block; }
+@page :not(:first) {
+   header { display:none; }
+}
+
+
+header, footer {
+    width: 100%; height: .5in;
+}
+
+header {
+    position: absolute;
+    top: 0;
+}
+
+@media print{
+    @page {  
+        size : A4 PORTRAIT;  
+        margin: 10mm,10mm,10mm,10mm;
+        
+        }
+
+    table.paging thead td, table.paging tfoot td {
+        height: .5in;
+    }
+
+    header, footer {
+        position: fixed;
+    }
+    
+    footer {
+        bottom: 0;
+    }
+
+    body {  background-color:white;}
+
+	.imagen 	{	display: none;  }   	
+	.screenOnly {	display: none;	}
+	header nav  {   display: none;}
+	t_Header    {	display: none;	} 
+
+    .cuerpo {
+        padding-top: 4mm;
+        padding-bottom: 10mm;
+        height: max-content;
+    }
+
+
+
+
+   .encabezado {
+       position: fixed;
+        top : 0mm;
+        width: 100%; height: .5in;
+    }
+
+    /* .valores {
+     page-break-inside: avoid;
+     }*/
+
+}   
+
+
+@media all{
+    .encabezado {
+        width:180mm;
+        display:grid;
+        grid-template-columns: 9cm 2cm 7cm;
+        border: 2px solid; 
+    }	
+    .firma{
+        float: footnote;
+        position :absolute;
+        border-top: 1px dashed #000;
+        height : 20mm;
+        width:180mm;
+        bottom: 1mm;
+        display:grid;
+        border: 1px solid;
+        grid-template-columns:  10cm 4cm 4cm;
+        padding : 10px;
+        font-weight : bold;
+    }	
+
+
+    .empresa {
+        margin-left : 15px;
+    }
+    .empresa > h1 {
+        font-size: 2.6rem;
+        margin: 0px 0 -0.4rem;
+    }
+    .empresa > h2 {
+        font-size: 1.5rem;
+        margin: 0px 0 1.2rem;
+    }
+
+    .provedor {
+        width:179mm;
+        display:grid;
+        grid-template-columns: 13cm 5cm;
+        border-top: 2px solid; 
+    }	
+
+    .provedor > h4 {
+        margin-left : 15px;
+        margin-top: 8px;
+    }
+
+
+    .valores {
+        width:180mm;
+        display:grid;
+        border-bottom: 2px solid;
+        margin-bottom: 5mm;
+        
+        grid-template-columns: 3cm 3cm 6cm 3cm 3cm;
+    }	
+    .retenciones {
+        width:180mm;
+        display:grid;
+        border-bottom: 2px solid;
+        margin-bottom: 2mm;
+        grid-template-columns: 6cm 6cm 3cm 3cm;
+    }		
+
+    .aplicacion {
+        width:180mm;
+        display:grid;
+        border-bottom: 2px solid;
+        margin-bottom: 5mm;
+        grid-template-columns: 2cm 5cm 5cm 3cm 3cm;
+    }		
+
+    .subtexto {
+        align-self: flex-end;
+        text-align: center;
+    }	
+
+    .grid-fecha {
+        text-align: center;
+    }	
+
+    .grid-titulo {
+        font-weight : bold;
+        background-color : lightgray;
+    }		
+
+    .grid-texto {
+        text-align : left;
+    }	
+    .grid-importe {
+        text-align : right;
+    }	
+
+    .grid-total{
+        border-top: 2px solid lightgray;
+        font-weight : bold;
+        margin-top: 10px;
+
+    }
+}

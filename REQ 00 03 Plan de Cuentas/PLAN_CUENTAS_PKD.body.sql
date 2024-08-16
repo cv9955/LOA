@@ -24,6 +24,7 @@ CREATE OR REPLACE PACKAGE BODY PLAN_CUENTAS_PKG AS
     PROCEDURE AGREGAR_RUBRO(
         P_PARENT_ID INTEGER,
         P_RUBRO_TITLE VARCHAR2,
+        P_CUENTA_TIPO VARCHAR2 DEFAULT NULL,
         P_RUBRO_ID OUT NUMBER
     )AS
     BEGIN
@@ -31,11 +32,13 @@ CREATE OR REPLACE PACKAGE BODY PLAN_CUENTAS_PKG AS
         INSERT INTO T_CUENTA_RUBROS(
             ID,
             TITLE,
-            PARENT
+            PARENT,
+            CUENTA_TIPO
         )VALUES(
             P_RUBRO_ID,
             P_RUBRO_TITLE,
-            P_PARENT_ID
+            P_PARENT_ID,
+            P_CUENTA_TIPO
         );
     END AGREGAR_RUBRO;
 
