@@ -3,15 +3,58 @@ https://phoenixnap.com/kb/linux-format-disk
 https://www.digitalocean.com/community/tutorials/create-a-partition-in-linux
 
 
+
+RMAN> show all;
+
+RMAN configuration parameters for database with db_unique_name XE are:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1; # default
+CONFIGURE BACKUP OPTIMIZATION OFF; # default
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP ON; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE COMPRESSION ALGORITHM 'BASIC' AS OF RELEASE 'DEFAULT' OPTIMIZE FOR LOAD TRUE ;
+CONFIGURE RMAN OUTPUT TO KEEP FOR 7 DAYS; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO '/opt/oracle/dbs/snapcf_XE.f'; # default
+
+
 # ARCHIVELOG MODE
 
 
 
 ### montar disco
+```
+# mount /dev/sdb1 /mnt/fra
+
+# chown oracle:oinstall /mnt/fra
+
+
+[oracle@rocky8 win]$ lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda           8:0    0 111,8G  0 disk
+├─sda1        8:1    0     1G  0 part /boot
+└─sda2        8:2    0 110,8G  0 part
+  ├─rl-root 253:0    0    70G  0 lvm  /
+  ├─rl-swap 253:1    0   5,9G  0 lvm  [SWAP]
+  └─rl-home 253:2    0    35G  0 lvm  /home
+sdb           8:16   0 931,5G  0 disk
+├─sdb1        8:17   0   200G  0 part
+├─sdb2        8:18   0   200G  0 part
+└─sdb3        8:19   0 531,5G  0 part
 
 
 
+## fstab >> montar al arranque
+sudo nano /etc/fstab
+/dev/vdb1 /mnt/1 ext4 defaults 0 0
 
+```
 
 
 

@@ -120,7 +120,6 @@ tmpfs                 1,2G    32K  1,2G   1% /run/user/1000
 # mount -t ntfs-3g /dev/sda1 /mnt/win
 
 umount /mnt/win
-```
 
 
 
