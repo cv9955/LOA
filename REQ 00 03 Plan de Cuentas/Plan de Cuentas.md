@@ -2,17 +2,33 @@
 
 ## Tablas
 - t_pc_rubros   (t_cuenta_rubros)
+    ID	            NUMBER
+    PARENT_ID	    NUMBER
+    RUBRO_TITLE	    VARCHAR2(80 BYTE)
+    RUBRO_CONFIG	VARCHAR2(400 BYTE)
+
 - t_pc_cuentas  (t_cuentas)
+    ID	            NUMBER
+    RUBRO_ID	    NUMBER
+    CUENTA_NUM	    NUMBER
+    CUENTA_TITLE	VARCHAR2(80 BYTE)
+    CUENTA_CONFIG	VARCHAR2(200 BYTE)
+    BLOQ_DESDE	    DATE
+    BLOQ_HASTA	    DATE
+
 
 ![Diagrama Entidad Relacion](DER.png)
   
 ## Package 
+
+
 - PLAN_CUENTAS_PKG
   - RAMA_PRINCIPAL
   - CUENTA_TIPOS
   - CUENTA_TITLE
   - CUENTA_TO_STRING
   - AGREGAR_RUBRO
+  - GUARDAR_RUBRO
   - AGREGAR_CUENTA
   - SIGUIENTE_RUBRO_ID
   - SIGUIENTE_CUENTA_NUM
@@ -22,7 +38,9 @@
 - V_PC_RAMA_PRINCIPAL (CUENTA_RAMA_PRINCIPAL)
 - V_PC_RUBROS         (CUENTA_RUBROS)
 - V_PC_CUENTAS        (CUENTAS - CUENTAS_LOV)
+- V_PC_TREE 
 
+ 
 - CUENTA_TREE
 - CUENTA_TIPOS
 
