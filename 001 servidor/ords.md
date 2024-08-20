@@ -201,20 +201,26 @@ ords --config ${ORDS_CONFIG} serve --certificate ~/keystore/rocky8.loagrafica.de
 
 
 ### Cambiar MaxLimit
-java -jar ords.war set-property jdbc.MaxLimit 50
+```
+WARNING     *** 
+jdbc.MaxLimit en la configuración |ptc|lo| está utilizando un valor de 10. Puede que este valor no se haya ajustado al tamaño correctamente para un entorno de producción ***
+jdbc.InitialLimit en la configuración |ptc|lo| está utilizando un valor de 10. Puede que este valor no se haya ajustado al tamaño correctamente para un entorno de producción ***
 
-[oracle@rocky8 databases]$ cat default/pool.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment>Saved on Fri May 31 19:57:12 UTC 2024</comment>
-<entry key="db.connectionType">basic</entry>
-<entry key="db.hostname">localhost</entry>
-<entry key="db.port">1521</entry>
-<entry key="db.servicename">pdbloa</entry>
-<entry key="db.username">ORDS_PUBLIC_USER</entry>
-<entry key="feature.sdw">true</entry>
-<entry key="plsql.gateway.mode">proxied</entry>
-<entry key="restEnabledSql.active">true</entry>
-<entry key="security.requestValidationFunction">ords_util.authorize_plsql_gateway</entry>
-</properties>
+
+[oracle@rocky8 ords]$ ords --config /opt/oracle/config config --db-pool loa set jdbc.MaxLimit 50
+Picked up _JAVA_OPTIONS: -Xms1126M -Xmx1126M
+ORDS: versión 24.1 Producción del mar ago. 20 18:42:00 2024
+Copyright (c) 2010, 2024, Oracle.
+Configuración:
+  /opt/oracle/config
+El valor llamado: jdbc.MaxLimit se ha definido en: 50 en la configuración: loa
+
+[oracle@rocky8 ords]$ ords --config /opt/oracle/config config --db-pool loa set jdbc.InitialLimit 50
+Picked up _JAVA_OPTIONS: -Xms1126M -Xmx1126M
+ORDS: versión 24.1 Producción del mar ago. 20 18:42:17 2024
+Copyright (c) 2010, 2024, Oracle.
+Configuración:
+  /opt/oracle/config
+El valor llamado: jdbc.InitialLimit se ha definido en: 50 en la configuración: loa
+
+```

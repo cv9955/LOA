@@ -10,16 +10,18 @@ SELECT name, SUM(bytes) FROM V$SGASTAT WHERE pool='large pool' GROUP BY ROLLUP(n
 
 select * from V$SGASTAT  WHERE pool='large pool';
 
-show parameter;
+show parameter SHAR;
 
 CREATE SPFILE FROM MEMORY;
 
-SHOW PARAMETER PARALLEL;
+SHOW PARAMETER shared;
 
 SHOW PARAMETER cpu;
 
-ALTER SYSTEM SET pga_aggregate_limit = 4G;
+ALTER SYSTEM SET shared_servers = 0;
 
+ALTER SYSTEM SET pga_aggregate_limit = 4G;
+ 
 ALTER SESSION SET PARALLEL_DEGREE_POLICY = LIMITED;
 
 alter system set cursor_sharing = FORCE;
@@ -42,7 +44,7 @@ select *
 
 from v$sql;    
 
-alter system flush SHARED_POOL;
+alter system flush buffer_POOL all;
 
 select * from V$SQLAREA;
 
