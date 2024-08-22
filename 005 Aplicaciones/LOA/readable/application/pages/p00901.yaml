@@ -1,0 +1,2198 @@
+---
+# ====== Page: Plan de Cuentas ===============================
+id: 901
+identification: 
+  name: Plan de Cuentas
+  alias: PLAN-DE-CUENTAS
+  title: Plan de Cuentas
+  page-group: REQ 01 03 PLAN DE CUENTAS # 8575649034152435
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authorization-scheme: Configurador # 8538860384112721
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: INFO_RUBRO ==================================
+  id: 1856903418155460
+  identification: 
+    name: INFO_RUBRO
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: EDIT_RUBRO_DLG ==============================
+  id: 1856436490155455
+  identification: 
+    name: EDIT_RUBRO_DLG
+    title: Editar Rubro
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PLAN DE CUENTAS =============================
+  id: 251371602051929
+  identification: 
+    name: PLAN DE CUENTAS
+    type: Tree
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+             ,title
+             ,parent_ID
+            FROM V_PC_RAMA_PRINCIPAL       
+       UNION ALL     
+       SELECT id
+            ,TITLE
+            ,parent_id
+      FROM V_PC_RUBROS
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      node-label-column: TITLE
+      node-value-column: ID
+      hierarchy: Computed with SQL
+      node-id-column: ID
+      parent-key-column: PARENT_ID
+      start-tree-with: Value is NULL
+      tooltip: None
+      activate-node-link-with: Single Click
+      link: 'javascript:$s("P901_SELECTED_ID",&ID.)'
+      default-icon-css-class: icon-tree-folder
+      icon-type-css-class: a-Icon
+      selected-node-page-item: P901_RUBRO_ID
+
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: ADD_RUBRO_DLG ===============================
+  id: 251624351051932
+  identification: 
+    name: ADD_RUBRO_DLG
+    title: Agregar Nuevo Rubro
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Cuentas =====================================
+  id: 253279381051948
+  identification: 
+    name: Cuentas
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: V_PC_CUENTAS
+    include-rowid-column: false
+    where-clause: 'RUBRO_ID = :P901_RUBRO_ID'
+    page-items-to-submit: 
+    - P901_RUBRO_ID
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: RUBRO_ID ====================================
+    id: 8466193533228089
+    identification: 
+      column-name: RUBRO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 30
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_NUM ==================================
+    id: 8466133828228088
+    identification: 
+      column-name: CUENTA_NUM
+      type: Plain Text
+
+    heading: 
+      heading: Num
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 000
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_TITLE ================================
+    id: 8466036103228087
+    identification: 
+      column-name: CUENTA_TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: RUBRO_TITLE =================================
+    id: 8465854143228086
+    identification: 
+      column-name: RUBRO_TITLE
+      type: Hidden
+
+    layout: 
+      sequence: 60
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_CONFIG ===============================
+    id: 8465787024228085
+    identification: 
+      column-name: CUENTA_CONFIG
+      type: Plain Text
+
+    heading: 
+      heading: Cuenta Config
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: RUBRO_CONFIG ================================
+    id: 8465670102228084
+    identification: 
+      column-name: RUBRO_CONFIG
+      type: Plain Text
+
+    heading: 
+      heading: Rubro Config
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CONFIGURACION ===============================
+    id: 8465629149228083
+    identification: 
+      column-name: CONFIGURACION
+      type: Plain Text
+
+    heading: 
+      heading: Configuracion
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BLOQ_DESDE ==================================
+    id: 8465502504228082
+    identification: 
+      column-name: BLOQ_DESDE
+      type: Hidden
+
+    layout: 
+      sequence: 120
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BLOQ_HASTA ==================================
+    id: 8465394615228081
+    identification: 
+      column-name: BLOQ_HASTA
+      type: Hidden
+
+    layout: 
+      sequence: 130
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 1858313839155474
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 1858173765155473
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:902:&SESSION.::&DEBUG.::P902_ID:#ID#'
+        page: 902 # PC_CUENTAS_DLG
+        values: 
+          p902_id: '#ID#'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: TITLE BAR ===================================
+  id: 45647797976576789
+  identification: 
+    name: TITLE BAR
+    title: Plan de Cuentas
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-accessor-more
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P901_EDITAR_TITULO =======================
+  id: 8467706305228104
+  identification: 
+    name: P901_EDITAR_TITULO
+    type: Text Field
+
+  label: 
+    label: Editar Titulo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: EDIT_RUBRO_DLG # 1856436490155455
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_EDITAR_TIPO_RUBRO ===================
+  id: 8467597842228103
+  identification: 
+    name: P901_EDITAR_TIPO_RUBRO
+    type: Select List
+
+  label: 
+    label: Editar Tipo Rubro
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: EDIT_RUBRO_DLG # 1856436490155455
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: SELECT TITLE,KEY FROM TABLE(PLAN_DE_CUENTAS_PKG.LOV_CUENTA_CONFIG)
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_ADD_RUBRO_PARENT_ID =================
+  id: 8464855429228076
+  identification: 
+    name: P901_ADD_RUBRO_PARENT_ID
+    type: Select List
+
+  label: 
+    label: Rama
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: ADD_RUBRO_DLG # 251624351051932
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PC_RAMA_PRINCIPAL # 7243187887558424
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_INFO_RUBRO_TITLE ====================
+  id: 1857668156155468
+  identification: 
+    name: P901_INFO_RUBRO_TITLE
+    type: Display Only
+
+  label: 
+    label: 'Rubro : '
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 10
+    region: INFO_RUBRO # 1856903418155460
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_ADD_RUBRO_CONFIG ====================
+  id: 1857114378155462
+  identification: 
+    name: P901_ADD_RUBRO_CONFIG
+    type: Select List
+
+  label: 
+    label: Configuracion para todas las cuentas de Rubro
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: ADD_RUBRO_DLG # 251624351051932
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PC_CONFIGURACOIN # 8547060935139314
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_INFO_RUBRO_CONFIG ===================
+  id: 1856766717155459
+  identification: 
+    name: P901_INFO_RUBRO_CONFIG
+    type: Display Only
+
+  label: 
+    label: 'Configuracion :'
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 20
+    region: INFO_RUBRO # 1856903418155460
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_RUBRO_ID ============================
+  id: 259656235051994
+  identification: 
+    name: P901_RUBRO_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: PLAN DE CUENTAS # 251371602051929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_ADD_RUBRO_NEXT_ID ===================
+  id: 259853343051977
+  identification: 
+    name: P901_ADD_RUBRO_NEXT_ID
+    type: Number Field
+
+  label: 
+    label: Numero
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: ADD_RUBRO_DLG # 251624351051932
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_PARENT_ID ===========================
+  id: 259975395051978
+  identification: 
+    name: P901_PARENT_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: PLAN DE CUENTAS # 251371602051929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_ADD_RUBRO_TITLE =====================
+  id: 260046678051979
+  identification: 
+    name: P901_ADD_RUBRO_TITLE
+    type: Text Field
+
+  label: 
+    label: Titulo de Rubro
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: ADD_RUBRO_DLG # 251624351051932
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P901_SELECTED_ID =========================
+  id: 265192311052012
+  identification: 
+    name: P901_SELECTED_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: PLAN DE CUENTAS # 251371602051929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BTN_ADD_RUBRO_OK ============================
+  id: 8565984032139336
+  identification: 
+    button-name: BTN_ADD_RUBRO_OK
+    label: OK
+
+  layout: 
+    sequence: 40
+    region: ADD_RUBRO_DLG # 251624351051932
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: BTN_ADD_CUENTA ==============================
+  id: 8564328175139333
+  identification: 
+    button-name: BTN_ADD_CUENTA
+    label: Cuenta
+
+  layout: 
+    sequence: 10
+    region: Cuentas # 253279381051948
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconLeft
+    - t-Button--pillStart
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:902:&SESSION.::&DEBUG.:902:P902_RUBRO_ID:&P901_RUBRO_ID.'
+      page: 902 # PC_CUENTAS_DLG
+      clear-cache: 902
+      values: 
+        p902_rubro_id: '&P901_RUBRO_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: BTN_ADD_RUBRO ===============================
+  id: 8563961789139333
+  identification: 
+    button-name: BTN_ADD_RUBRO
+    label: Rubro
+
+  layout: 
+    sequence: 10
+    region: PLAN DE CUENTAS # 251371602051929
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconLeft
+    - t-Button--pillEnd
+    icon: fa-plus
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: BTN_EDIT_RUBRO_OK ===========================
+  id: 8467516614228102
+  identification: 
+    button-name: BTN_EDIT_RUBRO_OK
+    label: Guardar
+
+  layout: 
+    sequence: 30
+    region: EDIT_RUBRO_DLG # 1856436490155455
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: BTN_DELETE_RUBRO ============================
+  id: 8464532343228072
+  identification: 
+    button-name: BTN_DELETE_RUBRO
+    label: Eliminar
+
+  layout: 
+    sequence: 40
+    region: INFO_RUBRO # 1856903418155460
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--simple
+    - t-Button--iconLeft
+    icon: fa-times
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  confirmation: 
+    message: |
+      Seguro ?
+      
+    style: Warning
+
+- # ====== Button: BTN_EDIT_RUBRO ==============================
+  id: 1856991069155461
+  identification: 
+    button-name: BTN_EDIT_RUBRO
+    label: Editar
+
+  layout: 
+    sequence: 30
+    region: INFO_RUBRO # 1856903418155460
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--simple
+    - t-Button--iconLeft
+    icon: fa-window-edit
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Expandir Tree =======================
+  id: 8558194561139324
+  identification: 
+    name: Expandir Tree
+
+  execution: 
+    sequence: 11
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  actions: 
+  - # ====== Action: Expand Tree =================================
+    id: 8557772889139323
+    identification: 
+      action: Expand Tree
+
+    affected-elements: 
+      selection-type: Region
+      region: PLAN DE CUENTAS # 251371602051929
+
+    execution: 
+      sequence: 10
+      event: Expandir Tree # 8558194561139324
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: SELECTED_ID CHANGE >10 ==============
+  id: 8557320521139323
+  identification: 
+    name: SELECTED_ID CHANGE >10
+
+  execution: 
+    sequence: 1
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P901_SELECTED_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P901_SELECTED_ID
+    value: 10
+
+  actions: 
+  - # ====== Action: SET PARENT ==================================
+    id: 8556788250139323
+    identification: 
+      name: SET PARENT
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Function Body
+      pl/sql-function-body: |
+        begin
+            IF :P901_SELECTED_ID > 100 THEN 
+                RETURN TRUNC(:P901_SELECTED_ID / 10);
+            ELSE
+                RETURN :P901_SELECTED_ID;
+            END IF;
+        END;
+      items-to-submit: 
+      - P901_SELECTED_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_PARENT_ID
+
+    execution: 
+      sequence: 40
+      event: SELECTED_ID CHANGE >10 # 8557320521139323
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: clear PARENT_id =============================
+    id: 8556348991139323
+    identification: 
+      name: clear PARENT_id
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_PARENT_ID
+
+    execution: 
+      sequence: 10
+      event: SELECTED_ID CHANGE >10 # 8557320521139323
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CLICK BTN_ADD_RUBRO =================
+  id: 8553131350139321
+  identification: 
+    name: CLICK BTN_ADD_RUBRO
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_ADD_RUBRO # 8563961789139333
+
+  actions: 
+  - # ====== Action: OPEN ADD_RUBRO_DIALOG =======================
+    id: 8552105570139321
+    identification: 
+      name: OPEN ADD_RUBRO_DIALOG
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: ADD_RUBRO_DLG # 251624351051932
+
+    execution: 
+      sequence: 30
+      event: CLICK BTN_ADD_RUBRO # 8553131350139321
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: CLEAR ADD_RUBRO =============================
+    id: 8551656732139321
+    identification: 
+      name: CLEAR ADD_RUBRO
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_ADD_RUBRO_TITLE
+
+    execution: 
+      sequence: 10
+      event: CLICK BTN_ADD_RUBRO # 8553131350139321
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 8464618424228073
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ':P901_PARENT_ID'
+      items-to-submit: 
+      - P901_PARENT_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_ADD_RUBRO_PARENT_ID
+
+    execution: 
+      sequence: 20
+      event: CLICK BTN_ADD_RUBRO # 8553131350139321
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: PARENT_ID CHANGE ====================
+  id: 8551209716139320
+  identification: 
+    name: PARENT_ID CHANGE
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P901_PARENT_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P901_SELECTED_ID
+    value: 10
+
+  actions: 
+  - # ====== Action: ENABLE BTN_ADD_RUBRO ========================
+    id: 8550777149139320
+    identification: 
+      name: ENABLE BTN_ADD_RUBRO
+      action: Enable
+
+    affected-elements: 
+      selection-type: Button
+      button: BTN_ADD_RUBRO # 8563961789139333
+
+    execution: 
+      sequence: 30
+      event: PARENT_ID CHANGE # 8551209716139320
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    client-side-condition: 
+      type: Item is not null
+      item: P901_PARENT_ID
+
+  - # ====== Action: DISABLE BTN_ADD_RUBRO =======================
+    id: 8550225786139319
+    identification: 
+      name: DISABLE BTN_ADD_RUBRO
+      action: Disable
+
+    affected-elements: 
+      selection-type: Button
+      button: BTN_ADD_RUBRO # 8563961789139333
+
+    execution: 
+      sequence: 20
+      event: PARENT_ID CHANGE # 8551209716139320
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: RUBRO_ID CHANGE =====================
+  id: 8549791895139319
+  identification: 
+    name: RUBRO_ID CHANGE
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P901_RUBRO_ID
+
+  client-side-condition: 
+    type: Item is not null
+    item: P901_RUBRO_ID
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 8553549049139321
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Cuentas # 253279381051948
+
+    execution: 
+      sequence: 30
+      event: RUBRO_ID CHANGE # 8549791895139319
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: ENABLE BTN_ADD_RUBRO ========================
+    id: 8549346541139319
+    identification: 
+      name: ENABLE BTN_ADD_RUBRO
+      action: Enable
+
+    affected-elements: 
+      selection-type: Button
+      button: BTN_ADD_CUENTA # 8564328175139333
+
+    execution: 
+      sequence: 10
+      event: RUBRO_ID CHANGE # 8549791895139319
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: DISABLE BTN_ADD_RUBRO =======================
+    id: 8548790542139319
+    identification: 
+      name: DISABLE BTN_ADD_RUBRO
+      action: Disable
+
+    affected-elements: 
+      selection-type: Button
+      button: BTN_ADD_CUENTA # 8564328175139333
+
+    execution: 
+      sequence: 20
+      event: RUBRO_ID CHANGE # 8549791895139319
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: LOAD INFO_RUBRO =============================
+    id: 1857614744155467
+    identification: 
+      name: LOAD INFO_RUBRO
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        select title , configuracion
+            INTO :P901_INFO_RUBRO_TITLE,:P901_INFO_RUBRO_CONFIG
+            from v_pc_rubros where id = :P901_RUBRO_ID;
+      items-to-submit: 
+      - P901_RUBRO_ID
+      items-to-return: 
+      - P901_INFO_RUBRO_TITLE
+      - P901_INFO_RUBRO_CONFIG
+      suppress-change-event: false
+
+    execution: 
+      sequence: 20
+      event: RUBRO_ID CHANGE # 8549791895139319
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: CLEAR INFO_RUBRO ============================
+    id: 1857482067155466
+    identification: 
+      name: CLEAR INFO_RUBRO
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_INFO_RUBRO_TITLE
+      - P901_INFO_RUBRO_CONFIG
+
+    execution: 
+      sequence: 30
+      event: RUBRO_ID CHANGE # 8549791895139319
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: SELECTED_ID CHANGE  >100 ============
+  id: 8548448352139319
+  identification: 
+    name: SELECTED_ID CHANGE  >100
+
+  execution: 
+    sequence: 2
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P901_SELECTED_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P901_SELECTED_ID
+    value: 100
+
+  actions: 
+  - # ====== Action: SET RUBRO ===================================
+    id: 8547948086139318
+    identification: 
+      name: SET RUBRO
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ':P901_SELECTED_ID'
+      items-to-submit: 
+      - P901_SELECTED_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_RUBRO_ID
+
+    execution: 
+      sequence: 30
+      event: SELECTED_ID CHANGE  >100 # 8548448352139319
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: clear RUBRO_id ==============================
+    id: 8547382635139318
+    identification: 
+      name: clear RUBRO_id
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_RUBRO_ID
+
+    execution: 
+      sequence: 20
+      event: SELECTED_ID CHANGE  >100 # 8548448352139319
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: ADD_RUBRO_PARENT_ID_CHANGE ==========
+  id: 8464760630228075
+  identification: 
+    name: ADD_RUBRO_PARENT_ID_CHANGE
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P901_ADD_RUBRO_PARENT_ID
+
+  actions: 
+  - # ====== Action: SIGUIENTE_RUBRO_ID ==========================
+    id: 8552596403139321
+    identification: 
+      name: SIGUIENTE_RUBRO_ID
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: 'plan_de_cuentas_pkg.siguiente_rubro_id(:P901_PARENT_ID)'
+      items-to-submit: 
+      - P901_PARENT_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P901_ADD_RUBRO_NEXT_ID
+
+    execution: 
+      sequence: 20
+      event: ADD_RUBRO_PARENT_ID_CHANGE # 8464760630228075
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: P920 DIALOG CLOSED ==================
+  id: 7252379830028799
+  identification: 
+    name: P920 DIALOG CLOSED
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: BTN_ADD_CUENTA # 8564328175139333
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 7252267289028798
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Cuentas # 253279381051948
+
+    execution: 
+      sequence: 10
+      event: P920 DIALOG CLOSED # 7252379830028799
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CUENTAS_DIALOG_CLOSE ================
+  id: 7252164438028797
+  identification: 
+    name: CUENTAS_DIALOG_CLOSE
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: Cuentas # 253279381051948
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 7252061148028796
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Cuentas # 253279381051948
+
+    execution: 
+      sequence: 10
+      event: CUENTAS_DIALOG_CLOSE # 7252164438028797
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CLICK INFO_RUBRO_EDIT ===============
+  id: 1856589142155457
+  identification: 
+    name: CLICK INFO_RUBRO_EDIT
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: BTN_EDIT_RUBRO # 1856991069155461
+
+  actions: 
+  - # ====== Action: COPIAR DATOS ================================
+    id: 8466971601228097
+    identification: 
+      name: COPIAR DATOS
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        SELECT RUBRO_TITLE,RUBRO_CONFIG 
+        INTO :P901_EDITAR_TITULO,:P901_EDITAR_TIPO_RUBRO
+        FROM V_PC_RUBROS
+        WHERE ID = :P901_RUBRO_ID;
+      items-to-submit: 
+      - P901_RUBRO_ID
+      items-to-return: 
+      - P901_EDITAR_TITULO
+      - P901_EDITAR_TIPO_RUBRO
+      suppress-change-event: false
+
+    execution: 
+      sequence: 20
+      event: CLICK INFO_RUBRO_EDIT # 1856589142155457
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Open Region =================================
+    id: 1856500301155456
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: EDIT_RUBRO_DLG # 1856436490155455
+
+    execution: 
+      sequence: 30
+      event: CLICK INFO_RUBRO_EDIT # 1856589142155457
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: AGREGAR_RUBRO ==============================
+  id: 8563025351139328
+  identification: 
+    name: AGREGAR_RUBRO
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: PLAN_DE_CUENTAS_PKG
+    procedure-or-function: AGREGAR_RUBRO
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_ADD_RUBRO_OK # 8565984032139336
+
+  parameters: 
+  - # ====== Parameter: p_parent_id ==============================
+    id: 8562508192139326
+    identification: 
+      name: p_parent_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_ADD_RUBRO_PARENT_ID
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_rubro_id ===============================
+    id: 8562012733139326
+    identification: 
+      name: p_rubro_id
+
+    parameter: 
+      direction: In/Out
+      data-type: NUMBER
+      ignore-output: false
+
+    value: 
+      item: P901_ADD_RUBRO_NEXT_ID
+
+    advanced: 
+      display-sequence: 50
+
+  - # ====== Parameter: p_rubro_title ============================
+    id: 8561574781139326
+    identification: 
+      name: p_rubro_title
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_ADD_RUBRO_TITLE
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_rubro_config ===========================
+    id: 8466665286228094
+    identification: 
+      name: p_rubro_config
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_ADD_RUBRO_CONFIG
+
+    advanced: 
+      display-sequence: 60
+
+- # ====== Process: EDITAR_RUBRO ===============================
+  id: 8467400021228101
+  identification: 
+    name: EDITAR_RUBRO
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: PLAN_DE_CUENTAS_PKG
+    procedure-or-function: EDITAR_RUBRO
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_EDIT_RUBRO_OK # 8467516614228102
+
+  parameters: 
+  - # ====== Parameter: p_rubro_id ===============================
+    id: 8467326786228100
+    identification: 
+      name: p_rubro_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_RUBRO_ID
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_rubro_title ============================
+    id: 8467200847228099
+    identification: 
+      name: p_rubro_title
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_EDITAR_TITULO
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_rubro_config ===========================
+    id: 8467135585228098
+    identification: 
+      name: p_rubro_config
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_EDITAR_TIPO_RUBRO
+
+    advanced: 
+      display-sequence: 30
+
+- # ====== Process: BORRAR_RUIBRO ==============================
+  id: 8464121541228068
+  identification: 
+    name: BORRAR_RUIBRO
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: PLAN_DE_CUENTAS_PKG
+    procedure-or-function: BORRAR_RUBRO
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BTN_DELETE_RUBRO # 8464532343228072
+
+  parameters: 
+  - # ====== Parameter: p_rubro_id ===============================
+    id: 8464049867228067
+    identification: 
+      name: p_rubro_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P901_RUBRO_ID
+
+    advanced: 
+      display-sequence: 10
+
+branches: 
+- # ====== Branch: RELOAD ======================================
+  id: 7251899793028794
+  identification: 
+    name: RELOAD
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:901:&SESSION.::&DEBUG.:901::&success_msg=#SUCCESS_MSG#'
+      page: 901 # Plan de Cuentas
+      clear-cache: 901
+
+  server-side-condition: 
+    when-button-pressed: BTN_DELETE_RUBRO # 8464532343228072
+

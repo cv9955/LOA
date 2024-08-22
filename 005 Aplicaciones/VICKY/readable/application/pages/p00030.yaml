@@ -1,0 +1,7435 @@
+---
+# ====== Page: ART_X =========================================
+id: 30
+identification: 
+  name: ART_X
+  alias: ART_X
+  title: ARTICULO
+  page-group: 030 ARTICULOS # 1930054017627653
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  file-urls: 
+  - '#APP_IMAGES#js/pag30_calcular.js'
+  - '#APP_FILES#js/canvas#MIN#.js'
+
+css: 
+  inline: |
+    #P30_IMAGEN {
+        max-width : 700px;
+    }
+    
+    
+    .t-Tabs--pill .t-Tabs-item.is-active .t-Tabs-link {
+        background-color: #fbce4a99;
+    }
+    
+    .t-Tabs--pill {
+        background-color: #fafad2;
+    }
+    
+    
+
+security: 
+  authorization-scheme: Must Not Be Public User
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: No - Prevent page from being re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: CAMBIO_CLIENTE ==============================
+  id: 1056030283445965
+  identification: 
+    name: CAMBIO_CLIENTE
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size480x320
+    - t-Form--xlarge
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: ARTICULO &P30_ID. ===========================
+  id: 1844820711986953
+  identification: 
+    name: ARTICULO &P30_ID.
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             REV,
+             CLIENTE_ID,
+             CLI_GRUPO_ID,
+             CODIGO,
+             STATUS,
+             ART_TIPO_ID,
+             LARGO,
+             ANCHO,
+             ALTO,
+             ART_CALIDAD_ID,
+             PLARGO,
+             PANCHO,
+             TRAZADOS,
+             SLOTTER,
+             OBS,
+             MULT_X,
+             MULT_Y,
+             DESARROLLO,
+             CIERRE_TIPO,
+             CIERRE_VALOR,
+             ALETA_SUP_TIPO,
+             ALETA_SUP_VALOR,
+             ALETA_INF_TIPO,
+             ALETA_INF_VALOR,
+             CENTRO,
+             MULT,
+             REFILE,
+             COLOR,
+             CALCULAR,
+             IMAGEN,
+      
+             PARENT_ID,
+             PARENT_FLG,
+             PARENT_CANT,
+      
+             COD_ALETA,
+      AJ_PRECIO,AJ_TROQ,AJ_MOT
+            ,AUDIT_COLS
+        from ARTICULOS_P30
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - t-Form--large
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (-1)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Medidas =====================================
+  id: 1893849451604529
+  identification: 
+    name: Medidas
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: ARTICULO &P30_ID. # 1844820711986953
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    - t-Form--large
+    css-classes: 
+    - medida_caja
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (11)'
+
+  read-only: 
+    type: Expression
+    language: SQL
+    sql-expression: ':P30_STATUS IN (4)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Plancha =====================================
+  id: 1893990267604530
+  identification: 
+    name: Plancha
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: ARTICULO &P30_ID. # 1844820711986953
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    - t-Form--large
+    css-classes: 
+    - medida_plancha
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (10,11)'
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PLANO =======================================
+  id: 1894156764604532
+  identification: 
+    name: PLANO
+    type: Static Content
+
+  source: 
+    html-code: |
+      <canvas id="myplano" width="730px" height="350px" style="width:700px;height:350px;"></canvas>
+      
+
+  layout: 
+    sequence: 30
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: reg_plano
+    custom-attributes: 
+    - 'style="height:380px;"'
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (3,6,10,11)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: FOOTER ======================================
+  id: 2740508468644756
+  identification: 
+    name: FOOTER
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_05
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Always
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Parametros ==================================
+  id: 2812341661267136
+  identification: 
+    name: Parametros
+    type: Static Content
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - t-Form--stretchInputs
+    css-classes: 
+    - u-color-18-bg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (10,11)'
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P30_STATUS IN (4,5)
+      
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CANVAS ======================================
+  id: 3338136083303352
+  identification: 
+    name: CANVAS
+    type: Static Content
+
+  source: 
+    html-code: '<canvas id="mycanvas" width="4000px" height="2000px" style="width:700px;height:350px;"></canvas>'
+
+  layout: 
+    sequence: 40
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: reg_canvas
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (3,6,10,11)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Historial ===================================
+  id: 4025226401572147
+  identification: 
+    name: Historial
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_HISTORIAL
+    include-rowid-column: false
+    where-clause: 'ID = :P30_ID'
+    page-items-to-submit: 
+    - P30_ID
+
+  order-by: 
+    type: Static Value
+    order-by-clause: REV
+
+  layout: 
+    sequence: 90
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 8756483472860181
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REV =========================================
+    id: 8756591879860182
+    identification: 
+      column-name: REV
+      type: Plain Text
+
+    heading: 
+      heading: Rev
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE =====================================
+    id: 9072540606443433
+    identification: 
+      column-name: CLIENTE
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 9072595262443434
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TIPO ========================================
+    id: 9072726311443435
+    identification: 
+      column-name: TIPO
+      type: Plain Text
+
+    heading: 
+      heading: Tipo
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LARGO =======================================
+    id: 9072800873443436
+    identification: 
+      column-name: LARGO
+      type: Plain Text
+
+    heading: 
+      heading: Largo
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ANCHO =======================================
+    id: 9072876550443437
+    identification: 
+      column-name: ANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Ancho
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALTO ========================================
+    id: 9073043418443438
+    identification: 
+      column-name: ALTO
+      type: Plain Text
+
+    heading: 
+      heading: Alto
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CALIDAD =====================================
+    id: 9073149184443439
+    identification: 
+      column-name: CALIDAD
+      type: Plain Text
+
+    heading: 
+      heading: Calidad
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLARGO ======================================
+    id: 9073254767443440
+    identification: 
+      column-name: PLARGO
+      type: Plain Text
+
+    heading: 
+      heading: Plargo
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PANCHO ======================================
+    id: 9073330435443441
+    identification: 
+      column-name: PANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Pancho
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 9073404931443442
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_FEC =================================
+    id: 9073470554443443
+    identification: 
+      column-name: UPDATED_FEC
+      type: Plain Text
+
+    heading: 
+      heading: Firmado
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 9073615316443444
+    identification: 
+      column-name: UPDATED_BY
+      type: Plain Text
+
+    heading: 
+      heading: User
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MULT_X ======================================
+    id: 9073673544443445
+    identification: 
+      column-name: MULT_X
+      type: Plain Text
+
+    heading: 
+      heading: Mult X
+      alignment: center
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MULT_Y ======================================
+    id: 9073795298443446
+    identification: 
+      column-name: MULT_Y
+      type: Plain Text
+
+    heading: 
+      heading: Mult Y
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESARROLLO ==================================
+    id: 9073886658443447
+    identification: 
+      column-name: DESARROLLO
+      type: Plain Text
+
+    heading: 
+      heading: Desarrollo
+      alignment: center
+
+    layout: 
+      sequence: 17
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CIERRE_TIPO =================================
+    id: 9074052565443448
+    identification: 
+      column-name: CIERRE_TIPO
+      type: Plain Text
+
+    heading: 
+      heading: Cierre Tipo
+      alignment: center
+
+    layout: 
+      sequence: 18
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CIERRE_VALOR ================================
+    id: 9074089356443449
+    identification: 
+      column-name: CIERRE_VALOR
+      type: Plain Text
+
+    heading: 
+      heading: Cierre Valor
+      alignment: center
+
+    layout: 
+      sequence: 19
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALETA_SUP_TIPO ==============================
+    id: 9074235910443450
+    identification: 
+      column-name: ALETA_SUP_TIPO
+      type: Plain Text
+
+    heading: 
+      heading: Aleta Sup Tipo
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALETA_SUP_VALOR =============================
+    id: 9074323854443451
+    identification: 
+      column-name: ALETA_SUP_VALOR
+      type: Plain Text
+
+    heading: 
+      heading: Aleta Sup Valor
+      alignment: center
+
+    layout: 
+      sequence: 21
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALETA_INF_TIPO ==============================
+    id: 9074384325443452
+    identification: 
+      column-name: ALETA_INF_TIPO
+      type: Plain Text
+
+    heading: 
+      heading: Aleta Inf Tipo
+      alignment: center
+
+    layout: 
+      sequence: 22
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALETA_INF_VALOR =============================
+    id: 9074519897443453
+    identification: 
+      column-name: ALETA_INF_VALOR
+      type: Plain Text
+
+    heading: 
+      heading: Aleta Inf Valor
+      alignment: center
+
+    layout: 
+      sequence: 23
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CENTRO ======================================
+    id: 9074624531443454
+    identification: 
+      column-name: CENTRO
+      type: Plain Text
+
+    heading: 
+      heading: Centro
+      alignment: center
+
+    layout: 
+      sequence: 24
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MULT ========================================
+    id: 9074721442443455
+    identification: 
+      column-name: MULT
+      type: Plain Text
+
+    heading: 
+      heading: Mult
+      alignment: center
+
+    layout: 
+      sequence: 25
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REFILE ======================================
+    id: 9074781145443456
+    identification: 
+      column-name: REFILE
+      type: Plain Text
+
+    heading: 
+      heading: Refile
+      alignment: center
+
+    layout: 
+      sequence: 26
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COLOR =======================================
+    id: 9074963308443457
+    identification: 
+      column-name: COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Color
+      alignment: center
+
+    layout: 
+      sequence: 27
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TRAZADOS ====================================
+    id: 9075080998443459
+    identification: 
+      column-name: TRAZADOS
+      type: Plain Text
+
+    heading: 
+      heading: Trazados
+      alignment: center
+
+    layout: 
+      sequence: 29
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SLOTTER =====================================
+    id: 9075197972443460
+    identification: 
+      column-name: SLOTTER
+      type: Plain Text
+
+    heading: 
+      heading: Slotter
+      alignment: center
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLI_GRUPO_ID ================================
+    id: 9075356150443461
+    identification: 
+      column-name: CLI_GRUPO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Cli Grupo Id
+      alignment: center
+
+    layout: 
+      sequence: 31
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: IMPRESION ===================================
+  id: 4497653700984251
+  identification: 
+    name: IMPRESION
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - u-color-18-bg
+    render-components: Above Content
+
+  advanced: 
+    custom-attributes: 
+    - style="background-color
+    - ':'
+    - ligtygray;"
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (5,-1)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: REGION PLANO ================================
+  id: 6588676775325038
+  identification: 
+    name: REGION PLANO
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Tabs Container
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - t-TabsRegion-mod--pill
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: IMAGEN ======================================
+  id: 6588818271325039
+  identification: 
+    name: IMAGEN
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    custom-attributes: 
+    - 'style="height:380px;"'
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Planchas Especial ===========================
+  id: 8332513691600433
+  identification: 
+    name: Planchas Especial
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             CODIGO,
+             STATUS,
+             ART_TIPO_ID,
+             ART_CALIDAD_ID,
+             PLARGO,
+             PANCHO,
+             TRAZADOS,
+             SLOTTER,
+             OBS,
+             PARENT_ID,
+             PARENT_FLG,
+             PARENT_CANT,
+      CLIENTE_ID,
+      CLI_GRUPO_ID
+      
+        from ARTICULOS
+       where parent_id = :P30_ID AND PARENT_FLG in (10,3)
+    page-items-to-submit: 
+    - P30_ID
+
+  layout: 
+    sequence: 70
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (10,3)'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 48723773669702847
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:39:&SESSION.::&DEBUG.::P39_ID:#ID#'
+        page: 39 # PART_ESPECIAL
+        values: 
+          p39_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 48785904183849792
+      identification: 
+        name: Primary Report
+        alias: 522217
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 48723903372702848
+      identification: 
+        column-name: ID
+        type: Plain Text
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CODIGO ======================================
+      id: 48723972271702849
+      identification: 
+        column-name: CODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATUS ======================================
+      id: 48724155111702850
+      identification: 
+        column-name: STATUS
+        type: Plain Text
+
+      heading: 
+        heading: Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_TIPO_ID =================================
+      id: 48724178524702851
+      identification: 
+        column-name: ART_TIPO_ID
+        type: Plain Text
+
+      heading: 
+        heading: Art Tipo Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_CALIDAD_ID ==============================
+      id: 48724365141702852
+      identification: 
+        column-name: ART_CALIDAD_ID
+        type: Plain Text
+
+      heading: 
+        heading: Art Calidad Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLARGO ======================================
+      id: 48724373416702853
+      identification: 
+        column-name: PLARGO
+        type: Plain Text
+
+      heading: 
+        heading: Plargo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PANCHO ======================================
+      id: 48724481640702854
+      identification: 
+        column-name: PANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Pancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TRAZADOS ====================================
+      id: 48724583496702855
+      identification: 
+        column-name: TRAZADOS
+        type: Plain Text
+
+      heading: 
+        heading: Trazados
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SLOTTER =====================================
+      id: 48724687650702856
+      identification: 
+        column-name: SLOTTER
+        type: Plain Text
+
+      heading: 
+        heading: Slotter
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 48724798590702857
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PARENT_ID ===================================
+      id: 48724920132702858
+      identification: 
+        column-name: PARENT_ID
+        type: Plain Text
+
+      heading: 
+        heading: Parent Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PARENT_FLG ==================================
+      id: 48725054874702859
+      identification: 
+        column-name: PARENT_FLG
+        type: Plain Text
+
+      heading: 
+        heading: Parent Flg
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PARENT_CANT =================================
+      id: 48725116774702860
+      identification: 
+        column-name: PARENT_CANT
+        type: Plain Text
+
+      heading: 
+        heading: Parent Cant
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 48725187858702861
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text
+
+      heading: 
+        heading: Cliente Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLI_GRUPO_ID ================================
+      id: 48725267644702862
+      identification: 
+        column-name: CLI_GRUPO_ID
+        type: Plain Text
+
+      heading: 
+        heading: Cli Grupo Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Planchas Especial
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: CONJUNTO ====================================
+  id: 23422619334675248
+  identification: 
+    name: CONJUNTO
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,art_id
+            ,ix
+            ,part_id
+            ,cant
+            ,s_articulo(part_id) codigo
+        FROM art_11 
+       WHERE art_id=:p30_id
+      
+    page-items-to-submit: 
+    - P30_ID
+
+  layout: 
+    sequence: 50
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    custom-attributes: 
+    - 'style="height:380px;"'
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (3,7,8,9,10,11)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 23422670585675249
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      show-null-values-as: '-'
+      select-first-row: true
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: false
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: false
+      define-chart-view: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 23521537840676706
+      identification: 
+        name: Primary Report
+        alias: 18193
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 3899937741235958
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::P30_ID:&PART_ID.'
+        page: 30 # ART_X
+        values: 
+          p30_id: '&PART_ID.'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      query-only: true
+      primary-key: true
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IX ==========================================
+    id: 4108996555313259
+    identification: 
+      column-name: IX
+      type: Number Field
+
+    heading: 
+      heading: Ix
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: IX
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 22241171830049345
+    identification: 
+      column-name: CODIGO
+      type: Text Field
+
+    heading: 
+      heading: Codigo
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Always
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: CODIGO
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: ART_ID ======================================
+    id: 23422746491675250
+    identification: 
+      column-name: ART_ID
+      type: Display Only
+
+    heading: 
+      alignment: start
+
+    settings: 
+      format: Plain Text
+      based-on: Item Value
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ART_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Item
+      item: P30_ID
+      duplicate-copies-existing-value: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      lov-type: Distinct Column
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: PART_ID =====================================
+    id: 23422953829675252
+    identification: 
+      column-name: PART_ID
+      type: Number Field
+
+    heading: 
+      heading: PART_ID
+      alignment: end
+      alternative-label: PARTE
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+      stretch: Always
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: PART_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CANT ========================================
+    id: 23423110788675253
+    identification: 
+      column-name: CANT
+      type: Number Field
+
+    heading: 
+      heading: Cant
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+      stretch: Always
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: CANT
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: a ===========================================
+    id: 23423326485675255
+    identification: 
+      column-name: a
+      type: Actions Menu
+
+    layout: 
+      sequence: 10
+
+    advanced: 
+      static-id: MENU
+
+    server-side-condition: 
+      type: Page/Region is NOT Read Only
+
+- # ====== Region: MENU ARTICULO ===============================
+  id: 35367026879426461
+  identification: 
+    name: MENU ARTICULO
+    type: List
+
+  source: 
+    list: MENU ARTICULO # 13198988506218124
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-none
+    - margin-left-lg
+    - margin-right-lg
+    - margin-top-none
+    - t-Form--noPadding
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: APLICACION ==================================
+  id: 67243940115644972
+  identification: 
+    name: APLICACION
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,art_id
+            ,ix
+            ,part_id
+            ,cant
+            ,s_articulo(art_id) codigo
+            ,cod_aleta
+        FROM art_11
+      WHERE part_id=:p30_id
+
+  layout: 
+    sequence: 60
+    parent-region: REGION PLANO # 6588676775325038
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 67244046819644973
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::P30_ID:#ART_ID#'
+        page: 30 # ART_X
+        values: 
+          p30_id: '#ART_ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+      link-attributes: TARGET="P30"
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 71349430040041494
+      identification: 
+        name: Primary Report
+        alias: 747852
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 67244088018644974
+      identification: 
+        column-name: ID
+        type: Plain Text
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_ID ======================================
+      id: 67244196738644975
+      identification: 
+        column-name: ART_ID
+        type: Plain Text
+
+      heading: 
+        heading: Art Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 67244356040644976
+      identification: 
+        column-name: IX
+        type: Plain Text
+
+      heading: 
+        heading: Ix
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PART_ID =====================================
+      id: 67244402197644977
+      identification: 
+        column-name: PART_ID
+        type: Plain Text
+
+      heading: 
+        heading: Part Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CANT ========================================
+      id: 67244481825644978
+      identification: 
+        column-name: CANT
+        type: Plain Text
+
+      heading: 
+        heading: Cant
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CODIGO ======================================
+      id: 67244622093644979
+      identification: 
+        column-name: CODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: COD_ALETA ===================================
+      id: 67244900837644982
+      identification: 
+        column-name: COD_ALETA
+        type: Plain Text
+
+      heading: 
+        heading: Cod Aleta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: APLICACION
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+page-items: 
+- # ====== Page Item: P30_CLIENTE_ID ===========================
+  id: 1047891304565833
+  identification: 
+    name: P30_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ID ===================================
+  id: 1844858141986954
+  identification: 
+    name: P30_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CODIGO ===============================
+  id: 1845080148986956
+  identification: 
+    name: P30_CODIGO
+    type: Text Field
+
+  label: 
+    label: Codigo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 50
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CODIGO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_LARGO ================================
+  id: 1845204425986957
+  identification: 
+    name: P30_LARGO
+    type: Number Field
+
+  label: 
+    label: Largo
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: Medidas # 1893849451604529
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    width: 5
+    value-placeholder: Largo
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: LARGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ANCHO ================================
+  id: 1845319034986958
+  identification: 
+    name: P30_ANCHO
+    type: Number Field
+
+  label: 
+    label: Ancho
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: Medidas # 1893849451604529
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    width: 5
+    value-placeholder: Ancho
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ANCHO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ALTO =================================
+  id: 1845404933986959
+  identification: 
+    name: P30_ALTO
+    type: Number Field
+
+  label: 
+    label: Alto
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: Medidas # 1893849451604529
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    width: 5
+    value-placeholder: Alto
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ALTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (0,6)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ART_TIPO_ID ==========================
+  id: 1845442507986960
+  identification: 
+    name: P30_ART_TIPO_ID
+    type: Select List
+
+  label: 
+    label: Art Tipo Id
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ARTICULOS.TIPO # 1892364726520679
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ART_TIPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CAMBIO_CLIENTE =======================
+  id: 1845571909986961
+  identification: 
+    name: P30_CAMBIO_CLIENTE
+    type: Select List
+
+  label: 
+    label: Seleccionar Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: CAMBIO_CLIENTE # 1056030283445965
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Above
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 2084520149913047
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CALIDAD ==============================
+  id: 1845710252986962
+  identification: 
+    name: P30_CALIDAD
+    type: Select List
+
+  label: 
+    label: Calidad
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: Medidas # 1893849451604529
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT KEY|| ' ' || TITLE TITLE,ID FROM ART_CALS WHERE IX IS NOT NULL
+      ORDER BY IX
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ART_CALIDAD_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: 2
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PLARGO ===============================
+  id: 1845750764986963
+  identification: 
+    name: P30_PLARGO
+    type: Number Field
+
+  label: 
+    label: Largo
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 10
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: PLARGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PANCHO ===============================
+  id: 1845917012986964
+  identification: 
+    name: P30_PANCHO
+    type: Number Field
+
+  label: 
+    label: Onda
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 45
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: PANCHO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_TRAZADOS =============================
+  id: 1894716705604537
+  identification: 
+    name: P30_TRAZADOS
+    type: Text Field
+
+  label: 
+    label: Trazados ==
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 55
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 6
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - 'u-bold:'
+    - u-textCenter
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 200
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: TRAZADOS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ALETA_SUP ============================
+  id: 1895194206604542
+  identification: 
+    name: P30_ALETA_SUP
+    type: Select List
+
+  label: 
+    label: Aleta Sup
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,IX FROM ART_CONFIG
+      WHERE KEY = 'ALT' 
+      AND ART_TIPO_ID = :P30_ART_TIPO_ID 
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ALETA_SUP_TIPO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (7,8,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ALETA_SUP_VALOR ======================
+  id: 1895330370604543
+  identification: 
+    name: P30_ALETA_SUP_VALOR
+    type: Number Field
+
+  label: 
+    label: Valor
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 5
+
+  validation: 
+    value-required: false
+    maximum-length: 5
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ALETA_SUP_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID  IN (7,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ALETA_INF ============================
+  id: 1895333646604544
+  identification: 
+    name: P30_ALETA_INF
+    type: Select List
+
+  label: 
+    label: Aleta Inf
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 40
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,IX FROM ART_CONFIG
+      WHERE KEY = 'ALT' 
+      AND ART_TIPO_ID = :P30_ART_TIPO_ID 
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ALETA_INF_TIPO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (7,8,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_ALETA_INF_VALOR ======================
+  id: 1895500122604545
+  identification: 
+    name: P30_ALETA_INF_VALOR
+    type: Number Field
+
+  label: 
+    label: Valor
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 5
+
+  validation: 
+    value-required: false
+    maximum-length: 5
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: ALETA_INF_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (7,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CIERRE ===============================
+  id: 1895568445604546
+  identification: 
+    name: P30_CIERRE
+    type: Select List
+
+  label: 
+    label: Cierre
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,IX FROM ART_CONFIG
+      WHERE KEY = 'CRR' 
+      AND ART_TIPO_ID = :P30_ART_TIPO_ID 
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CIERRE_TIPO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (1,2,4,7,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CIERRE_VALOR =========================
+  id: 1895725917604547
+  identification: 
+    name: P30_CIERRE_VALOR
+    type: Number Field
+
+  label: 
+    label: Chapeton
+    alignment: Left
+
+  settings: 
+    minimum-value: 0
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 5
+
+  validation: 
+    value-required: false
+    maximum-length: 3
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CIERRE_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: 30
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (4,7,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_MULT_Y ===============================
+  id: 1895756507604548
+  identification: 
+    name: P30_MULT_Y
+    type: Select List
+
+  label: 
+    label: Mult Onda
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:1;1,2;2,3;3,4;4,5;5,6;6,7;7,8;8,9;9'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: MULT_Y
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (0,6)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_DESARROLLO ===========================
+  id: 1895907620604549
+  identification: 
+    name: P30_DESARROLLO
+    type: Select List
+
+  label: 
+    label: Desarrollo
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 130
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,IX FROM ART_CONFIG
+      WHERE KEY = 'DES' 
+      AND ART_TIPO_ID = :P30_ART_TIPO_ID 
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: DESARROLLO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      SELECT 1 FROM ART_CONFIG
+      WHERE KEY = 'DES' 
+      AND ART_TIPO_ID = :P30_ART_TIPO_ID 
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_MULT =================================
+  id: 1896027114604550
+  identification: 
+    name: P30_MULT
+    type: Number Field
+
+  label: 
+    label: Mult
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 25
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: MULT
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_MULT_X ===============================
+  id: 1896058603604551
+  identification: 
+    name: P30_MULT_X
+    type: Select List
+
+  label: 
+    label: Mult Largo
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:1;1,2;2,3;3,4;4,5;5,6;6,7;7,8;8,9;9,10;10,12;12,15;15,16;16,20;20'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: MULT_X
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (0,1,2,6,8)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_COLOR ================================
+  id: 2074309395886537
+  identification: 
+    name: P30_COLOR
+    type: Select2
+
+  label: 
+    alignment: Left
+
+  settings: 
+    select-list-type: Multi-value Select List
+    width: 90%
+    maximum-selection-size: 4
+    rapid-selection: ' '
+    search-logic: Starts With & Ignore Case
+    label-for-null-option-group: Sin Impresion
+
+  layout: 
+    sequence: 20
+    region: IMPRESION # 4497653700984251
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ART_TINTAS_LOV # 2156068247123796
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: COLOR
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_OBS ==================================
+  id: 2075010135886544
+  identification: 
+    name: P30_OBS
+    type: Rich Text Editor
+
+  label: 
+    label: Observaciones
+    alignment: Left
+
+  settings: 
+    library: TinyMCE
+    format: Markdown
+    minimum-height: 180
+
+  layout: 
+    sequence: 30
+    region: IMPRESION # 4497653700984251
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_REFILE ===============================
+  id: 2075862439886553
+  identification: 
+    name: P30_REFILE
+    type: Select List
+
+  label: 
+    label: Refile
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 150
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:00;0,05;5,10;10,15;15,20;20,25;25,30;30'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: REFILE
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CENTRO ===============================
+  id: 2075934983886554
+  identification: 
+    name: P30_CENTRO
+    type: Number Field
+
+  label: 
+    label: Centro
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 140
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 3
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CENTRO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: true
+    label-1: 100
+    value-1: 100
+    label-2: 200
+    value-2: 200
+    label-3: 300
+    value-3: 300
+    label-4: 400
+    value-4: 400
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (4,7,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_STATUS ===============================
+  id: 2667283231647920
+  identification: 
+    name: P30_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 2740508468644756
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ARTICULOS.STATUS # 12486902465965205
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - art_estado&G_ARTICULO_STATUS.
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_DEBUG ================================
+  id: 2668845347647936
+  identification: 
+    name: P30_DEBUG
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 100
+    region: Medidas # 1893849451604529
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_SLOTTER ==============================
+  id: 2669037102647938
+  identification: 
+    name: P30_SLOTTER
+    type: Text Field
+
+  label: 
+    label: Slotter | | | |
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 6
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - 'u-bold:'
+    - u-textCenter
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 200
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: SLOTTER
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P30_ART_TIPO_ID
+    value: 10
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CLI_GRUPO_ID =========================
+  id: 2813994353267152
+  identification: 
+    name: P30_CLI_GRUPO_ID
+    type: Select List
+
+  label: 
+    label: Grupo
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'SELECT TITLE,ID FROM CLI_GRUPOS WHERE CLIENTE_ID = :P30_CLIENTE_ID ORDER BY 1'
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: '---'
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P30_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CLI_GRUPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_CALCULAR =============================
+  id: 4497551668984250
+  identification: 
+    name: P30_CALCULAR
+    type: Checkbox Group
+
+  label: 
+    label: Calcular
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 35
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: 0
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Auto;1'
+    display-extra-values: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: CALCULAR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (7,8,9)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_REV ==================================
+  id: 4778725945154129
+  identification: 
+    name: P30_REV
+    type: Text Field
+
+  label: 
+    label: Rev
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: FOOTER # 2740508468644756
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - art_estado&G_ARTICULO_STATUS.
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: REV
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_DIV_X ================================
+  id: 5607618739947819
+  identification: 
+    name: P30_DIV_X
+    type: Select List
+
+  label: 
+    label: Tiras Largas
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:1;1,2;2,3;3,4;4,5;5,6;6,7;7,8;8,9;9'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: MULT_X
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (3)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_DIV_Y ================================
+  id: 5607664259947820
+  identification: 
+    name: P30_DIV_Y
+    type: Select List
+
+  label: 
+    label: Tiras Cortas
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 110
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:1;1,2;2,3;3,4;4,5;5,6;6,7;7,8;8,9;9'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    custom-attributes: 
+    - onchange
+    - ="Calcular()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: MULT_Y
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (3)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_DIV_Z ================================
+  id: 5607745332947821
+  identification: 
+    name: P30_DIV_Z
+    type: Text Field
+
+  label: 
+    label: 'Div : '
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 120
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 3
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    post-text-: Unidades
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: '(:P30_DIV_X + 1) * (:P30_DIV_Y + 1)'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P30_ART_TIPO_ID
+    value: 3
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PINTAR ===============================
+  id: 6058698991702263
+  identification: 
+    name: P30_PINTAR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: PLANO # 1894156764604532
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: NO
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  server-side-condition: 
+    type: Never
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_IMAGEN ===============================
+  id: 6588922927325040
+  identification: 
+    name: P30_IMAGEN
+    type: Display Image
+
+  label: 
+    label: Imagen
+    alignment: Left
+
+  settings: 
+    based-on: BLOB Column specified in Item Source
+
+  layout: 
+    sequence: 10
+    region: IMAGEN # 6588818271325039
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: IMAGEN
+    data-type: BLOB
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_RETURN ===============================
+  id: 6962359395862248
+  identification: 
+    name: P30_RETURN
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 80
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_AJ_PRECIO ============================
+  id: 10167581515689948
+  identification: 
+    name: P30_AJ_PRECIO
+    type: Number Field
+
+  label: 
+    label: Aj Precio
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 1000
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: 1
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: AJ_PRECIO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_AJ_TROQ ==============================
+  id: 12339770190986099
+  identification: 
+    name: P30_AJ_TROQ
+    type: Number Field
+
+  label: 
+    label: Aj Troq
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 1000
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: 0
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: AJ_TROQ
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_AJ_MOT ===============================
+  id: 12339922560986100
+  identification: 
+    name: P30_AJ_MOT
+    type: Number Field
+
+  label: 
+    label: Aj Mot
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 1000
+    region: Parametros # 2812341661267136
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: 1
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: AJ_MOT
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PARENT_CANT ==========================
+  id: 25538113766422857
+  identification: 
+    name: P30_PARENT_CANT
+    type: Number Field
+
+  label: 
+    label: Cant
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: PARENT_CANT
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (10,11)'
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PARENT_FLG ===========================
+  id: 44347117521939761
+  identification: 
+    name: P30_PARENT_FLG
+    type: Select List
+
+  label: 
+    label: Parent Flg
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Especial;10,Conjunto;11,Division;3'
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: Libre
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: PARENT_FLG
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (10,11)'
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PARENT_ID ============================
+  id: 44347202634939762
+  identification: 
+    name: P30_PARENT_ID
+    type: Select List
+
+  label: 
+    label: Parent Id
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT s_articulo(id) scodigo
+            ,id
+      FROM arts
+       WHERE cliente_id=:p30_cliente_id 
+          AND(art_tipo_id IN(2,7,8,9,10,11)
+          AND:p30_parent_flg IS NULL 
+          OR art_tipo_id=:p30_parent_flg)
+       ORDER BY 1
+    display-extra-values: true
+    display-null-value: true
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P30_PARENT_FLG
+    items-to-submit: 
+    - P30_PARENT_FLG
+    - P30_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: PARENT_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (10,11)'
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_AUDIT_COLS ===========================
+  id: 52162101949665631
+  identification: 
+    name: P30_AUDIT_COLS
+    type: Display Only
+
+  label: 
+    label: Audit Cols
+    alignment: Left
+
+  settings: 
+    format: HTML
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 90
+    region: FOOTER # 2740508468644756
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: AUDIT_COLS
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_COD_ALETA ============================
+  id: 57516510363286643
+  identification: 
+    name: P30_COD_ALETA
+    type: Text Field
+
+  label: 
+    label: Cod Aleta
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: IMPRESION # 4497653700984251
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 20
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+    column: COD_ALETA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_PL_HASH ==============================
+  id: 87546574063797640
+  identification: 
+    name: P30_PL_HASH
+    type: Text Field
+
+  label: 
+    label: Hash
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 65
+    region: Plancha # 1893990267604530
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: "select substr(PL_HASH,0,6) || '...' from ARTICULOS WHERE ID = :P30_ID"
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CAMBIAR_CLIENTE =============================
+  id: 1055828766445963
+  identification: 
+    button-name: CAMBIAR_CLIENTE
+    label: Cambiar Cliente
+
+  layout: 
+    sequence: 20
+    region: CAMBIO_CLIENTE # 1056030283445965
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-exchange
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: CERRAR ======================================
+  id: 1055721629445962
+  identification: 
+    button-name: CERRAR
+    label: Cerrar
+
+  layout: 
+    sequence: 10
+    region: CAMBIO_CLIENTE # 1056030283445965
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: GUARDAR =====================================
+  id: 1893260866604523
+  identification: 
+    button-name: GUARDAR
+    label: Guardar
+
+  layout: 
+    sequence: 10
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--gapRight
+    icon: fa-floppy-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  advanced: 
+    custom-attributes: 
+    - style
+    - =
+    - '"background-color'
+    - ':'
+    - GREEN"
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (0,1,2,3,4,-1)'
+
+- # ====== Button: RECALCULAR ==================================
+  id: 2667360790647921
+  identification: 
+    button-name: RECALCULAR
+    label: Recalcular
+
+  layout: 
+    sequence: 10
+    region: Parametros # 2812341661267136
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-refresh fa-spin
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (1,2,3)'
+
+- # ====== Button: PALLET ======================================
+  id: 2740416890644755
+  identification: 
+    button-name: PALLET
+    label: Pallet
+
+  layout: 
+    sequence: 20
+    region: MENU ARTICULO # 35367026879426461
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-th
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.:RP:P35_ARTICULO_ID:&P30_ID.'
+      page: 35 # ART_PALLET
+      clear-cache: RP
+      values: 
+        p35_articulo_id: '&P30_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ORDEN =======================================
+  id: 2740656696644757
+  identification: 
+    button-name: ORDEN
+    label: Orden
+
+  layout: 
+    sequence: 30
+    region: MENU ARTICULO # 35367026879426461
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconRight
+    icon: fa-print
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:160:&SESSION.::&DEBUG.:RP:P160_ID:&P30_ID.'
+      page: 160 # PRINT_ARTICULO
+      clear-cache: RP
+      values: 
+        p160_id: '&P30_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: IMAGEN ======================================
+  id: 2740727394644758
+  identification: 
+    button-name: IMAGEN
+    label: Imagen
+
+  layout: 
+    sequence: 10
+    region: MENU ARTICULO # 35367026879426461
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-image
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.:RP:P34_ID:&P30_ID.'
+      page: 34 # ART_IMAGEN
+      clear-cache: RP
+      values: 
+        p34_id: '&P30_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: FIRMAR ======================================
+  id: 2811996496267132
+  identification: 
+    button-name: FIRMAR
+    label: Firmar
+
+  layout: 
+    sequence: 20
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    - t-Button--gapRight
+    css-classes: 
+    - u-info
+    icon: fa-lock-check
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P30_STATUS
+    value: 3
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: DESBLOQUEAR =================================
+  id: 4084446398279455
+  identification: 
+    button-name: DESBLOQUEAR
+    label: Desbloquear
+
+  layout: 
+    sequence: 20
+    region: FOOTER # 2740508468644756
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - u-warning
+    icon: fa-unlock
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4,-1)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: ANULAR ======================================
+  id: 4498728103984261
+  identification: 
+    button-name: ANULAR
+    label: Anular
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 2740508468644756
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--gapLeft
+    css-classes: 
+    - u-danger
+    icon: fa-lock-x
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (4)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: DUPLICAR ====================================
+  id: 6961956161862244
+  identification: 
+    button-name: DUPLICAR
+    label: Duplicar
+
+  layout: 
+    sequence: 40
+    region: FOOTER # 2740508468644756
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    - t-Button--pillEnd
+    - t-Button--gapRight
+    icon: fa-copy
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (3,4)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: ELIMINAR ====================================
+  id: 7118533655676523
+  identification: 
+    button-name: ELIMINAR
+    label: Eliminar
+
+  layout: 
+    sequence: 30
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--gapLeft
+    css-classes: 
+    - u-danger
+    icon: fa-trash-o
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: false
+
+  advanced: 
+    static-id: ELIMINAR
+    custom-attributes: 
+    - style
+    - =
+    - '"background-color'
+    - ':'
+    - red"
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (3,2,1,-1)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: CAMBIO_CLIENTE ==============================
+  id: 10466021432487239
+  identification: 
+    button-name: CAMBIO_CLIENTE
+    label: Cliente
+
+  layout: 
+    sequence: 30
+    region: FOOTER # 2740508468644756
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    - t-Button--pillStart
+    icon: fa-exchange
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (3)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Button: GO_TO_PARENT ================================
+  id: 48644382242163177
+  identification: 
+    button-name: GO_TO_PARENT
+    label: '>>PARENT'
+
+  layout: 
+    sequence: 40
+    region: ARTICULO &P30_ID. # 1844820711986953
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--gapTop
+    icon: fa-arrow-right
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::P30_ID:&P30_PARENT_ID.'
+      page: 30 # ART_X
+      values: 
+        p30_id: '&P30_PARENT_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P30_PARENT_ID
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+- # ====== Button: ETIQUETA ====================================
+  id: 169616475358604665
+  identification: 
+    button-name: ETIQUETA
+    label: ETIQUETA
+
+  layout: 
+    sequence: 40
+    region: MENU ARTICULO # 35367026879426461
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconRight
+    icon: fa-print
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:318:&SESSION.::&DEBUG.:RP,:P318_ID:&P30_ID.'
+      page: 318 # PRINT_ETIQUETA_PALLET
+      clear-cache: RP
+      values: 
+        p318_id: '&P30_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: CERRAR_DIALOG =======================
+  id: 1055613603445961
+  identification: 
+    name: CERRAR_DIALOG
+
+  execution: 
+    sequence: 130
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CERRAR # 1055721629445962
+
+  actions: 
+  - # ====== Action: Close Region ================================
+    id: 1055442622445960
+    identification: 
+      action: Close Region
+
+    affected-elements: 
+      selection-type: Region
+      region: CAMBIO_CLIENTE # 1056030283445965
+
+    execution: 
+      sequence: 10
+      event: CERRAR_DIALOG # 1055613603445961
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: calcular ============================
+  id: 2668304845647930
+  identification: 
+    name: calcular
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: RECALCULAR # 2667360790647921
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2668422746647931
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        Calcular();
+        
+
+    execution: 
+      sequence: 10
+      event: calcular # 2668304845647930
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: calcular_load =======================
+  id: 2810772032267120
+  identification: 
+    name: calcular_load
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Expression
+    language: SQL
+    sql-expression: ':P30_STATUS in (1)'
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 2810907591267121
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        Calcular();
+        
+
+    execution: 
+      sequence: 10
+      event: calcular_load # 2810772032267120
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: dibujar_canvas ======================
+  id: 4025008679572145
+  identification: 
+    name: dibujar_canvas
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+
+  when: 
+    event: Resize
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID NOT IN (3,6,10,11)'
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 3338280371303353
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        //dibujar_plano();
+        dibujar_canvas(pCanvas = "mycanvas",escala = 1);
+        dibujar_canvas(pCanvas = "myplano",escala = 0);
+        
+
+    execution: 
+      sequence: 10
+      event: dibujar_canvas # 4025008679572145
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: CAMBIO CALIDAD ======================
+  id: 7680513958237864
+  identification: 
+    name: CAMBIO CALIDAD
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P30_CALIDAD
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 7680632880237865
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT TITLE FROM ART_CALS WHERE ID = :P30_CALIDAD'
+      items-to-submit: 
+      - P30_CALIDAD
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P30_CALIDAD_TEXT
+
+    execution: 
+      sequence: 10
+      event: CAMBIO CALIDAD # 7680513958237864
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: cambiocliente =======================
+  id: 10466073199487240
+  identification: 
+    name: cambiocliente
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CAMBIO_CLIENTE # 10466021432487239
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 10466209947487241
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: CAMBIO_CLIENTE # 1056030283445965
+
+    execution: 
+      sequence: 10
+      event: cambiocliente # 10466073199487240
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: DELETE_CONFIRM ======================
+  id: 28573975193599258
+  identification: 
+    name: DELETE_CONFIRM
+
+  execution: 
+    sequence: 150
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: ELIMINAR # 7118533655676523
+
+  actions: 
+  - # ====== Action: Confirm =====================================
+    id: 28574071558599259
+    identification: 
+      action: Confirm
+
+    settings: 
+      message: SEGURO ELIMINA ARTICULO?
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: DELETE_CONFIRM # 28573975193599258
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Submit Page =================================
+    id: 88947372527197533
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: ELIMINAR
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: DELETE_CONFIRM # 28573975193599258
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: LARGO_PLANCHA ===========================
+  id: 71650324887081550
+  identification: 
+    name: LARGO_PLANCHA
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_PLARGO <= 2240'
+    always-execute: true
+
+  error: 
+    error-message: LARGO PLANCHA MAYOR A 2240
+    display-location: Inline with Field and in Notification
+    associated-item: P30_PLARGO # 1845750764986963
+
+  server-side-condition: 
+    when-button-pressed: FIRMAR # 2811996496267132
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_ART_TIPO_ID IN (4,7,8,9)'
+
+- # ====== Validation: New =====================================
+  id: 87546416218797638
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item contains only characters specified in Value
+    item: P30_TRAZADOS
+    value: '0123456789:'
+    always-execute: true
+
+  error: 
+    error-message: caracter incorrecto
+    display-location: Inline with Field and in Notification
+    associated-item: P30_TRAZADOS # 1894716705604537
+
+computations: 
+- # ====== Computation: G_CLIENTE_TITLE ========================
+  id: 12488652025943819
+  identification: 
+    item-name: G_CLIENTE_TITLE
+
+  execution: 
+    sequence: 50
+    point: After Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT TITLE FROM CLIENTES WHERE ID =:G_CLIENTE_ID
+      
+
+- # ====== Computation: G_ARTICULO_ID ==========================
+  id: 13213266455329242
+  identification: 
+    item-name: G_ARTICULO_ID
+
+  execution: 
+    sequence: 40
+    point: After Header
+
+  computation: 
+    type: Item
+    item-name: P30_ID
+
+- # ====== Computation: G_CLIENTE_ID ===========================
+  id: 13213596533330573
+  identification: 
+    item-name: G_CLIENTE_ID
+
+  execution: 
+    sequence: 40
+    point: After Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT CLIENTE_ID FROM ARTICULOS WHERE ID = :P30_ID'
+
+- # ====== Computation: G_ARTICULO_STATUS ======================
+  id: 13260781985448097
+  identification: 
+    item-name: G_ARTICULO_STATUS
+
+  execution: 
+    sequence: 60
+    point: After Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT STATUS FROM ARTICULOS WHERE ID = :P30_ID'
+
+processes: 
+- # ====== Process: LOAD ARTICULOS =============================
+  id: 1844936780986955
+  identification: 
+    name: LOAD ARTICULOS
+    type: Form - Initialization
+    execution-chain: None
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+
+  execution: 
+    sequence: 10
+    point: After Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: SAVE ARTICULOS =============================
+  id: 1893145697604522
+  identification: 
+    name: SAVE ARTICULOS
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: ARTICULO &P30_ID. # 1844820711986953
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: false
+
+  execution: 
+    sequence: 100
+    point: After Submit
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: CAMBIOS GUARDADOS
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: DESBLOQUEAR ================================
+  id: 4084587587279456
+  identification: 
+    name: DESBLOQUEAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE ARTICULOS
+      SET STATUS = 3
+      WHERE ID = :P30_ID;
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DESBLOQUEAR # 4084446398279455
+
+- # ====== Process: GUARDAR ====================================
+  id: 4351252158223332
+  identification: 
+    name: GUARDAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: ':P30_STATUS := 3'
+
+  execution: 
+    sequence: 10
+    point: After Submit
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: GUARDAR # 1893260866604523
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P30_STATUS IN (1,2)'
+
+- # ====== Process: FIRMAR =====================================
+  id: 4498245860984257
+  identification: 
+    name: FIRMAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE ARTICULOS
+      SET STATUS = 4,
+          updated = sysdate,
+          updated_by = nvl(v('APP_USER'),USER)
+      WHERE ID = :P30_ID ;
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: ARTICULO FIRMADO
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: FIRMAR # 2811996496267132
+
+- # ====== Process: ANULADO ====================================
+  id: 4498758718984262
+  identification: 
+    name: ANULADO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE ARTICULOS
+      SET STATUS = -1,
+          updated = sysdate,
+          updated_by = nvl(v('APP_USER'),USER)
+      WHERE ID = :P30_ID ;
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: ARTICULO FUERA DE USO
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: ANULAR # 4498728103984261
+
+- # ====== Process: DUPLICAR ===================================
+  id: 6962051132862245
+  identification: 
+    name: DUPLICAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'DUPLICAR_ARTICULO(:P30_ID);'
+
+  execution: 
+    sequence: 5
+    point: After Submit
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DUPLICAR # 6961956161862244
+
+- # ====== Process: MOVER_CLIENTE ==============================
+  id: 7248090878866122
+  identification: 
+    name: MOVER_CLIENTE
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      BEGIN 
+      UPDATE ARTICULOS 
+      SET CLIENTE_ID = :P30_CAMBIO_CLIENTE,
+      CLI_GRUPO_ID = NULL
+      WHERE ID = :P30_ID;
+      
+      END;
+
+  execution: 
+    sequence: 70
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: CAMBIAR_CLIENTE # 1055828766445963
+
+- # ====== Process: Planchas - conjunto ========================
+  id: 8644115715190453
+  identification: 
+    name: Planchas - conjunto
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: CONJUNTO # 23422619334675248
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: GUARDAR # 1893260866604523
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: ELIMINAR ===================================
+  id: 88947484598197534
+  identification: 
+    name: ELIMINAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'DELETE ARTICULOS WHERE ID = :P30_ID;'
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: ELIMINAR # 7118533655676523
+
+branches: 
+- # ====== Branch: DUPLICAR ====================================
+  id: 6962292638862247
+  identification: 
+    name: DUPLICAR
+
+  execution: 
+    sequence: 30
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:RP,30:P30_ID:&P30_ID.&success_msg=#SUCCESS_MSG#'
+      page: 30 # ART_X
+      clear-cache: RP,30
+      values: 
+        p30_id: '&P30_ID.'
+
+  server-side-condition: 
+    when-button-pressed: DUPLICAR # 6961956161862244
+
+- # ====== Branch: Go To Page 100 ==============================
+  id: 7118658538676524
+  identification: 
+    name: Go To Page 100
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:100:&SESSION.::&DEBUG.:RP::&success_msg=#SUCCESS_MSG#'
+      page: 100 # CLIENTES_ARTICULOS
+      clear-cache: RP
+
+  server-side-condition: 
+    when-button-pressed: ELIMINAR # 7118533655676523
+

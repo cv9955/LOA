@@ -1,0 +1,2495 @@
+---
+# ====== Page: COMISIONES DE VENTAS ==========================
+id: 606
+identification: 
+  name: COMISIONES DE VENTAS
+  alias: COMISIONES-DE-VENTAS
+  title: COMISIONES DE VENTAS
+  page-group: 600 CONTADURIA # 1929866135622157
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    .item-active{
+      background-color: lightgreen;
+    } 
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: CUENTA ======================================
+  id: 84976822490908029
+  identification: 
+    name: CUENTA
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,vta_remito_id
+            ,remito
+            ,cliente
+            ,aj_comision
+            ,vendedor_id
+            ,mes
+            ,fecha
+            ,articulo_id
+            ,codigo
+            ,cantidad
+            ,precio
+            ,detalle
+            ,comision
+        FROM comision_ventas
+       WHERE vendedor_id= :P606_VENDEDOR_ID
+        and EXTRACT(YEAR FROM fecha)  =:p606_year 
+        AND EXTRACT(MONTH FROM fecha) =NVL(:p606_mes,EXTRACT(MONTH FROM fecha))
+        and articulo_id >= 1000
+       ORDER BY fecha,id
+    page-items-to-submit: 
+    - P606_VENDEDOR_ID
+    - P606_YEAR
+    - P606_MES
+    - P606_CTA
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 1000
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 53979499366335831
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VTA_REMITO_ID ===============================
+    id: 53979592949335832
+    identification: 
+      column-name: VTA_REMITO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 60
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: REMITO ======================================
+    id: 53979698095335833
+    identification: 
+      column-name: REMITO
+      type: Plain Text
+
+    heading: 
+      heading: Remito
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE =====================================
+    id: 53979743562335834
+    identification: 
+      column-name: CLIENTE
+      type: Plain Text
+
+    heading: 
+      heading: Cliente
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VENDEDOR_ID =================================
+    id: 53979863027335835
+    identification: 
+      column-name: VENDEDOR_ID
+      type: Hidden
+
+    layout: 
+      sequence: 100
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MES =========================================
+    id: 53979961796335836
+    identification: 
+      column-name: MES
+      type: Hidden
+
+    layout: 
+      sequence: 110
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 53980041092335837
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Articulo Id
+      alignment: end
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 53980135468335838
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: start
+
+    layout: 
+      sequence: 130
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 53980262057335839
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: Cantidad
+      alignment: end
+
+    layout: 
+      sequence: 140
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO ======================================
+    id: 53980369181335840
+    identification: 
+      column-name: PRECIO
+      type: Plain Text
+
+    heading: 
+      heading: Precio
+      alignment: end
+
+    layout: 
+      sequence: 150
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DETALLE =====================================
+    id: 53980495747335841
+    identification: 
+      column-name: DETALLE
+      type: Plain Text
+
+    heading: 
+      heading: Detalle
+      alignment: start
+
+    layout: 
+      sequence: 180
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COMISION ====================================
+    id: 53980569291335842
+    identification: 
+      column-name: COMISION
+      type: Plain Text
+
+    heading: 
+      heading: Comision
+      alignment: end
+
+    layout: 
+      sequence: 170
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: AJ_COMISION =================================
+    id: 53980703915335843
+    identification: 
+      column-name: AJ_COMISION
+      type: Plain Text
+
+    heading: 
+      heading: '%'
+      alignment: end
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 54599944884918826
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON-YYYY
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: LISTADO =====================================
+  id: 85060485547582943
+  identification: 
+    name: LISTADO
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             apex_page.get_url(p_items => 'P606_VENDEDOR_ID', p_values => "ID") link,
+              title,
+              description,
+              null icon_class,
+              null link_attr,
+              null icon_color_class,
+              case when nvl(:P606_VENDEDOR_ID,'0') = ID then 'item-active' else ' '   end ITEM_CLASSES,
+              NULL MISC
+        from cli_vendors c
+        where status = 1
+        and id > 0
+      order by TITLE
+      ;
+    page-items-to-submit: 
+    - P606_VENDEDOR_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-ContentRow--hideSelection
+      - t-ContentRow--hideIcon
+      - t-ContentRow--hideActions
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: true
+      link-text: Download
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DESCRIPTION =================================
+    id: 54588132034918778
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 19
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 54588530504918780
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 54588876212918781
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      heading: Link
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 54589277653918783
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:606:&SESSION.::&DEBUG.::P606_VENDEDOR_ID:#ID#'
+        page: 606 # COMISIONES DE VENTAS
+        values: 
+          p606_vendedor_id: '#ID#'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 54589686354918784
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Class
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK_ATTR ===================================
+    id: 54590050051918785
+    identification: 
+      column-name: LINK_ATTR
+      type: Plain Text
+
+    heading: 
+      heading: Link Attr
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_COLOR_CLASS ============================
+    id: 54590488413918786
+    identification: 
+      column-name: ICON_COLOR_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Color Class
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_CLASSES ================================
+    id: 54590876548918787
+    identification: 
+      column-name: ITEM_CLASSES
+      type: Plain Text
+
+    heading: 
+      heading: Item Classes
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 54591321754918788
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990
+
+    column-formatting: 
+      css-classes: 
+      - u-success-text
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: TOOLBAR =====================================
+  id: 85475927190473922
+  identification: 
+    name: TOOLBAR
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    - t-Form--noPadding
+    - t-Form--xlarge
+    - margin-top-none
+    - margin-bottom-none
+    - margin-left-none
+    - margin-right-none
+    css-classes: 
+    - CTA-&P603_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CONTADURIA ==================================
+  id: 106160286887112576
+  identification: 
+    name: CONTADURIA
+    type: List
+
+  source: 
+    list: MENU_CONTABLE # 2626165322405257
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-heartbeat
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-slide
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: CIERRE  DE CAJA =============================
+  id: 122629159938846695
+  identification: 
+    name: CIERRE  DE CAJA
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: BOTONES =====================================
+  id: 123247139792923154
+  identification: 
+    name: BOTONES
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form--noPadding
+    - t-Form--large
+    - t-Form--stretchInputs
+    - margin-right-none
+    css-classes: 
+    - CTA-&P603_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: SALDOS ======================================
+  id: 123247182196923155
+  identification: 
+    name: SALDOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      
+      SELECT 'APERTURA' description
+            ,importe title
+            ,fecha misc
+            ,apex_page.get_url( 
+                    p_page => 26, 
+                    p_clear_cache => 26, 
+                    p_items => 'p26_id', 
+                    p_values =>  id
+                  )  doc_link
+      
+        FROM doc_cajas
+           WHERE cta =:p606_cta
+           AND DOC_TIPO_ID = 0
+           AND :p606_cuenta_id = cuenta_in 
+           AND TO_CHAR(FECHA_IN,'YYYYMM') = :p606_year || :p606_mes
+      
+      union all   
+      
+      SELECT 'CIERRE' description
+            ,importe title
+            ,fecha misc
+            ,apex_page.get_url( 
+                    p_page => 26, 
+                    p_clear_cache => 26, 
+                    p_items => 'p26_id', 
+                    p_values =>  id
+                  )  doc_link
+      
+        FROM doc_cajas
+       WHERE cta =:p606_cta
+       AND DOC_TIPO_ID = 0
+       AND :p606_cuenta_id = cuenta_out 
+       AND TO_CHAR(FECHA,'YYYYMM') = :p606_year || :p606_mes
+      ;
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--hideNoPagination
+      - t-ContentRow--hideSelection
+      - t-ContentRow--hideIcon
+      - t-ContentRow--hideActions
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: TITLE =======================================
+    id: 54595622263918810
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: end
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 54596018942918811
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 54596426518918812
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 54596747165918813
+    identification: 
+      column-name: DOC_LINK
+      type: Hidden
+
+    layout: 
+      sequence: 80
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P606_CTA =================================
+  id: 84829048690245462
+  identification: 
+    name: P606_CTA
+    type: Radio Group
+
+  label: 
+    label: Cta
+    alignment: Left
+
+  settings: 
+    number-of-columns: 3
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  layout: 
+    sequence: 70
+    region: TOOLBAR # 85475927190473922
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - margin-top-sm
+    - margin-bottom-sm
+    - margin-left-sm
+    - margin-right-sm
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC: 1;1, 2;2'
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: ALL
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_VENDEDOR_ID =========================
+  id: 85095161324159537
+  identification: 
+    name: P606_VENDEDOR_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: LISTADO # 85060485547582943
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1001
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_YEAR ================================
+  id: 85170372438829848
+  identification: 
+    name: P606_YEAR
+    type: Radio Group
+
+  label: 
+    label: AÑO
+    alignment: Left
+
+  settings: 
+    number-of-columns: 5
+    page-action-on-selection: Redirect and Set Value
+
+  layout: 
+    sequence: 50
+    region: TOOLBAR # 85475927190473922
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - margin-top-sm
+    - margin-bottom-sm
+    - margin-left-sm
+    - margin-right-sm
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_AÑOS # 110289324833720610
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_MES =================================
+  id: 85170390561829849
+  identification: 
+    name: P606_MES
+    type: Radio Group
+
+  label: 
+    label: MES
+    alignment: Left
+
+  settings: 
+    number-of-columns: 12
+    page-action-on-selection: Redirect and Set Value
+
+  layout: 
+    sequence: 60
+    region: TOOLBAR # 85475927190473922
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - margin-top-sm
+    - margin-bottom-sm
+    - margin-left-sm
+    - margin-right-sm
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_MONTH # 12380015065838899
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_DIA_OUT =============================
+  id: 122644189387846855
+  identification: 
+    name: P606_DIA_OUT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_DIA_IN ==============================
+  id: 122644489620846858
+  identification: 
+    name: P606_DIA_IN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_MES_PREV ============================
+  id: 122645617549846869
+  identification: 
+    name: P606_MES_PREV
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_MES_NEXT ============================
+  id: 122645652439846870
+  identification: 
+    name: P606_MES_NEXT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_YEAR_PREV ===========================
+  id: 122645781184846871
+  identification: 
+    name: P606_YEAR_PREV
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_YEAR_NEXT ===========================
+  id: 122645901843846872
+  identification: 
+    name: P606_YEAR_NEXT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: CONTADURIA # 106160286887112576
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P606_IMPORTE =============================
+  id: 123247991318923229
+  identification: 
+    name: P606_IMPORTE
+    type: Text Field
+
+  label: 
+    label: Importe
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: CIERRE  DE CAJA # 122629159938846695
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: SUBMIT ======================================
+  id: 54587040004918726
+  identification: 
+    button-name: SUBMIT
+    label: Submit
+
+  layout: 
+    sequence: 40
+    region: CIERRE  DE CAJA # 122629159938846695
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: PREV ========================================
+  id: 54593965435918805
+  identification: 
+    button-name: PREV
+    label: <<
+
+  layout: 
+    sequence: 10
+    region: BOTONES # 123247139792923154
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--stretch
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: NEXT ========================================
+  id: 54594394583918807
+  identification: 
+    button-name: NEXT
+    label: '>>'
+
+  layout: 
+    sequence: 30
+    region: BOTONES # 123247139792923154
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--stretch
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: HOY =========================================
+  id: 54594808778918808
+  identification: 
+    button-name: HOY
+    label: HOY
+
+  layout: 
+    sequence: 40
+    region: BOTONES # 123247139792923154
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--stretch
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CIERRE_CAJA =================================
+  id: 54597154934918814
+  identification: 
+    button-name: CIERRE_CAJA
+    label: Cierre Caja
+
+  layout: 
+    sequence: 20
+    region: SALDOS # 123247182196923155
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      SELECT 1
+        FROM doc_cajas
+       WHERE DOC_TIPO_ID = 0
+       AND :p606_cuenta_id = cuenta_out 
+       AND TO_CHAR(FECHA,'YYYYMM') = :p606_year || :p606_mes
+      ;
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+- # ====== Button: MOV_CAJA ====================================
+  id: 54603592722918836
+  identification: 
+    button-name: MOV_CAJA
+    label: SALIDA DE CAJA
+
+  layout: 
+    sequence: 20
+    region: CONTADURIA # 106160286887112576
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.:26:P26_CUENTA_OUT,P26_CTA:&P606_CUENTA_ID.,&P606_CTA.'
+      page: 26 # DOC_CAJAS
+      clear-cache: 26
+      values: 
+        p26_cuenta_out: '&P606_CUENTA_ID.'
+        p26_cta: '&P606_CTA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Actualizar Region Listado ===========
+  id: 54607496085918902
+  identification: 
+    name: Actualizar Region Listado
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P606_PARENT_ID
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 54607970154918910
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTA # 84976822490908029
+
+    execution: 
+      sequence: 30
+      event: Actualizar Region Listado # 54607496085918902
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 54608495418918912
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: LISTADO # 85060485547582943
+
+    execution: 
+      sequence: 20
+      event: Actualizar Region Listado # 54607496085918902
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 54608955416918913
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT ID from (
+                SELECT id FROM CUENTAS_lov 
+                 WHERE PARENT_ID = NVL(:P606_PARENT_ID,111)
+                 order by cuenta_num       
+            )where rownum = 1;
+      items-to-submit: 
+      - P606_PARENT_ID
+      escape-special-characters: true
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P606_CUENTA_ID
+
+    execution: 
+      sequence: 10
+      event: Actualizar Region Listado # 54607496085918902
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New_2 ===============================
+  id: 54609377713918914
+  identification: 
+    name: New_2
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CIERRE_CAJA # 54597154934918814
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 54609930610918915
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: CIERRE  DE CAJA # 122629159938846695
+
+    execution: 
+      sequence: 20
+      event: New_2 # 54609377713918914
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 54610383125918917
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "LAST_DAY(TO_DATE(:P606_YEAR||:P606_MES,'YYYYMM'))"
+      items-to-submit: 
+      - P606_YEAR
+      - P606_MES
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P606_FECHA
+
+    execution: 
+      sequence: 10
+      event: New_2 # 54609377713918914
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: PREV_MES ============================
+  id: 54610749854918918
+  identification: 
+    name: PREV_MES
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: PREV # 54593965435918805
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 54611259843918919
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTA # 84976822490908029
+
+    execution: 
+      sequence: 20
+      event: PREV_MES # 54610749854918918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 54611773925918921
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            IF :P606_MES = '01' THEN
+                :P606_YEAR := :P606_YEAR - 1;
+                :P606_MES  := '12' ;
+            ELSIF :P606_MES = '02' THEN :P606_MES  := '01' ;
+            ELSIF :P606_MES = '03' THEN :P606_MES  := '02' ;
+            ELSIF :P606_MES = '04' THEN :P606_MES  := '03' ;
+            ELSIF :P606_MES = '05' THEN :P606_MES  := '04' ;
+            ELSIF :P606_MES = '06' THEN :P606_MES  := '05' ;
+            ELSIF :P606_MES = '07' THEN :P606_MES  := '06' ;
+            ELSIF :P606_MES = '08' THEN :P606_MES  := '07' ;
+            ELSIF :P606_MES = '09' THEN :P606_MES  := '08' ;
+            ELSIF :P606_MES = '10' THEN :P606_MES  := '09' ;
+            ELSIF :P606_MES = '11' THEN :P606_MES  := '10' ;
+            ELSIF :P606_MES = '12' THEN :P606_MES  := '11' ;
+            END IF;
+        END;
+      items-to-submit: 
+      - P606_YEAR
+      - P606_MES
+      items-to-return: 
+      - P606_YEAR
+      - P606_MES
+      - P606_MES_PREV
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: PREV_MES # 54610749854918918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 54612303188918922
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SALDOS # 123247182196923155
+
+    execution: 
+      sequence: 30
+      event: PREV_MES # 54610749854918918
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: NEXT_MES ============================
+  id: 54612647389918923
+  identification: 
+    name: NEXT_MES
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: NEXT # 54594394583918807
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 54613139676918924
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTA # 84976822490908029
+
+    execution: 
+      sequence: 10
+      event: NEXT_MES # 54612647389918923
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 54613724907918925
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            IF :P606_MES = '12' THEN
+                :P606_YEAR := :P606_YEAR + 1;
+                :P606_MES  := '01' ;
+            ELSIF :P606_MES = '01' THEN :P606_MES  := '02' ;
+            ELSIF :P606_MES = '02' THEN :P606_MES  := '03' ;
+            ELSIF :P606_MES = '03' THEN :P606_MES  := '04' ;
+            ELSIF :P606_MES = '04' THEN :P606_MES  := '05' ;
+            ELSIF :P606_MES = '05' THEN :P606_MES  := '06' ;
+            ELSIF :P606_MES = '06' THEN :P606_MES  := '07' ;
+            ELSIF :P606_MES = '07' THEN :P606_MES  := '08' ;
+            ELSIF :P606_MES = '08' THEN :P606_MES  := '09' ;
+            ELSIF :P606_MES = '09' THEN :P606_MES  := '10' ;
+            ELSIF :P606_MES = '10' THEN :P606_MES  := '11' ;
+            ELSIF :P606_MES = '11' THEN :P606_MES  := '12' ;
+            END IF;
+        END;
+      items-to-submit: 
+      - P606_YEAR
+      - P606_MES
+      items-to-return: 
+      - P606_YEAR
+      - P606_MES
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: NEXT_MES # 54612647389918923
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 54614217878918926
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SALDOS # 123247182196923155
+
+    execution: 
+      sequence: 20
+      event: NEXT_MES # 54612647389918923
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 54614582748918927
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: HOY # 54594808778918808
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 54615129597918928
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+                :P606_YEAR := EXTRACT (YEAR FROM SYSDATE);
+                :P606_MES  := TO_CHAR(SYSDATE,'MM') ;
+        END;
+        
+      items-to-submit: 
+      - P606_YEAR
+      - P606_MES
+      items-to-return: 
+      - P606_YEAR
+      - P606_MES
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: New_1 # 54614582748918927
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 54615572372918929
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTA # 84976822490908029
+
+    execution: 
+      sequence: 20
+      event: New_1 # 54614582748918927
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 54616062177918930
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SALDOS # 123247182196923155
+
+    execution: 
+      sequence: 30
+      event: New_1 # 54614582748918927
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 54616482973918931
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: CUENTA # 84976822490908029
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 54617013577918932
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTA # 84976822490908029
+
+    execution: 
+      sequence: 10
+      event: New # 54616482973918931
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 54617472931918933
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SALDOS # 123247182196923155
+
+    execution: 
+      sequence: 20
+      event: New # 54616482973918931
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P606_YEAR ==============================
+  id: 54606509445918895
+  identification: 
+    item-name: P606_YEAR
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT (YEAR FROM SYSDATE)
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P606_YEAR
+
+- # ====== Computation: P606_MES ===============================
+  id: 54606755191918895
+  identification: 
+    item-name: P606_MES
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: TO_CHAR(SYSDATE,'MM')
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P606_MES
+
+processes: 
+- # ====== Process: CIERRE DE CAJA =============================
+  id: 54607132294918896
+  identification: 
+    name: CIERRE DE CAJA
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      INSERT INTO DOC_CAJAS
+      (DOC_TIPO_ID,FECHA,FECHA_IN,CTA,IMPORTE,CUENTA_OUT,CUENTA_IN,OBS)
+      VALUES (0
+          ,LAST_DAY(TO_DATE(:P606_YEAR||:P606_MES,'YYYYMM'))
+          ,LAST_DAY(TO_DATE(:P606_YEAR||:P606_MES,'YYYYMM')) + 1 
+          ,:P606_CTA
+          ,:P606_IMPORTE
+          ,:P606_CUENTA_ID
+          ,:P606_CUENTA_ID
+          ,'SALDO: ' || :P606_IMPORTE 
+      );
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SUBMIT # 54587040004918726
+

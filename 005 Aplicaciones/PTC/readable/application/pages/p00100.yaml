@@ -1,0 +1,887 @@
+---
+# ====== Page: CLIENTES ======================================
+id: 100
+identification: 
+  name: CLIENTES
+  alias: CLIENTES
+  title: CLIENTES
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: DATOS FISCALES ==============================
+  id: 8985800885919015
+  identification: 
+    name: DATOS FISCALES
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             TITLE,
+             CLIENTE_ID,
+      cliente_id cliente,
+             STATUS,
+             CUIT,
+             IVA_MODO_ID,
+             IIBB,
+             FEC_INI,
+             DOMICILIO,
+             CIUDAD,
+             CP,
+             PROVINCIA_ID,
+             PARTIDO_ID
+        from CLI_DFISCAL
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 8985961592919016
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.::P101_ID:#CLIENTE_ID#'
+        page: 101 # CLIENTES_FORM
+        values: 
+          p101_id: '#CLIENTE_ID#'
+
+      link-icon: <img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: false
+      compute: false
+      aggregate: false
+      chart: true
+      group-by: true
+      pivot: false
+      flashback: false
+      save-report: true
+      save-public-report: false
+      reset: false
+      help: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 9209641406713646
+      identification: 
+        name: Primary Report
+        alias: 92097
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 8986033182919017
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 20
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TITLE =======================================
+      id: 8986164493919018
+      identification: 
+        column-name: TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Razon Social
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATUS ======================================
+      id: 8986306465919020
+      identification: 
+        column-name: STATUS
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: STATUS_LOV # 8882214395464961
+
+      heading: 
+        heading: Status
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 9425946109962626
+      identification: 
+        column-name: CLIENTE_ID
+        type: Hidden
+
+      heading: 
+        heading: Cliente
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUIT ========================================
+      id: 9426044143962627
+      identification: 
+        column-name: CUIT
+        type: Plain Text
+
+      heading: 
+        heading: Cuit
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IVA_MODO_ID =================================
+      id: 9426114478962628
+      identification: 
+        column-name: IVA_MODO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: IVA_MODO.KEY # 13013193647337269
+
+      heading: 
+        heading: Cond Iva
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: IIBB ========================================
+      id: 9426270397962629
+      identification: 
+        column-name: IIBB
+        type: Plain Text
+
+      heading: 
+        heading: Iibb
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FEC_INI =====================================
+      id: 9426307655962630
+      identification: 
+        column-name: FEC_INI
+        type: Plain Text
+
+      heading: 
+        heading: Inicio de Actividades
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DOMICILIO ===================================
+      id: 9426453432962631
+      identification: 
+        column-name: DOMICILIO
+        type: Plain Text
+
+      heading: 
+        heading: Domicilio
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CIUDAD ======================================
+      id: 9426553963962632
+      identification: 
+        column-name: CIUDAD
+        type: Plain Text
+
+      heading: 
+        heading: Ciudad
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CP ==========================================
+      id: 9426638518962633
+      identification: 
+        column-name: CP
+        type: Plain Text
+
+      heading: 
+        heading: Cp
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVINCIA_ID ================================
+      id: 9426737675962634
+      identification: 
+        column-name: PROVINCIA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: PROVINCIAS_LOV # 9470116399931501
+
+      heading: 
+        heading: Provincia
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PARTIDO_ID ==================================
+      id: 9426841096962635
+      identification: 
+        column-name: PARTIDO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: PARTIDOS_LOV # 9470351055933771
+
+      heading: 
+        heading: Partido
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CLIENTE =====================================
+      id: 9604187862784801
+      identification: 
+        column-name: CLIENTE
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 3736475304094515
+
+      heading: 
+        heading: Cliente
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.::P101_ID:#CLIENTE_ID#'
+          page: 101 # CLIENTES_FORM
+          values: 
+            p101_id: '#CLIENTE_ID#'
+
+        link-text: '#CLIENTE#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 9207584791709950
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 2005438132195560
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: CLIENTES ====================================
+  id: 9496086637225402
+  identification: 
+    name: CLIENTES
+    type: List View
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLIENTES
+    include-rowid-column: false
+
+  order-by: 
+    type: Static Value
+    order-by-clause: title
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      features: Enable Search
+      text-column: TITLE
+      link-target: 
+        url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.::P101_ID:&ID.'
+        page: 101 # CLIENTES_FORM
+        values: 
+          p101_id: '&ID.'
+
+      search-type: 'Server: Exact & Ignore Case'
+      search-column: TITLE
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+buttons: 
+- # ====== Button: ADD_CLIENTE =================================
+  id: 8986400898919021
+  identification: 
+    button-name: ADD_CLIENTE
+    label: Add Cliente
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 9207584791709950
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.:101::'
+      page: 101 # CLIENTES_FORM
+      clear-cache: 101
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 9497030328225412
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_CLIENTE # 8986400898919021
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9497102501225413
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CLIENTES # 9496086637225402
+
+    execution: 
+      sequence: 10
+      event: New # 9497030328225412
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9497238195225414
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DATOS FISCALES # 8985800885919015
+
+    execution: 
+      sequence: 20
+      event: New # 9497030328225412
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,152 @@
+---
+- # ====== Application Computation: U_VENDEDOR_ID ==============
+  id: 1061548905613567
+  identification: 
+    item-name: U_VENDEDOR_ID
+
+  execution: 
+    sequence: 100
+    point: AFTER_LOGIN
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: gbl_vendedor_id(nvl(v('APP_USER'),USER))
+
+  error: 
+    error-message: NO EXISTE CORREDOR CON ESE ID
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - VENDEDOR # 1059280082509961
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: PAGE_CLIENTE ===============
+  id: 933429106831053
+  identification: 
+    item-name: PAGE_CLIENTE
+
+  execution: 
+    sequence: 10
+    point: New Session
+
+  computation: 
+    type: Static Value
+    static-value: 101
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: G_CLIENTE_TITLE ============
+  id: 931952380804004
+  identification: 
+    item-name: G_CLIENTE_TITLE
+
+  execution: 
+    sequence: 20
+    point: Before Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT TITLE FROM CLIENTES WHERE ID = :G_CLIENTE_ID'
+
+  server-side-condition: 
+    type: Current Page is in comma delimited list
+    pages: 
+    - 100
+    - 104
+    - 107
+    - 108
+    - 109
+    - 111
+    - 114
+    - 123
+    - 124
+    - 30
+    - 31
+    - 32
+    - 33
+    - 19
+    - 110
+    - 140
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: PAGE_CLIENTE ===============
+  id: 927813147684573
+  identification: 
+    item-name: PAGE_CLIENTE
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':APP_PAGE_ID'
+
+  server-side-condition: 
+    type: Current Page is in comma delimited list
+    pages: 
+    - 100
+    - 104.107
+    - 108
+    - 109
+    - 111
+    - 114
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: A001_ARTICULO ==============
+  id: 2096022170046221
+  identification: 
+    item-name: A001_ARTICULO
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT CODIGO FROM ARTICULOS WHERE ID = :P30_ID'
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: A001_CTA ===================
+  id: 11021216489539870
+  identification: 
+    item-name: A001_CTA
+
+  execution: 
+    sequence: 10
+    point: AFTER_LOGIN
+
+  computation: 
+    type: Static Value
+    static-value: 1
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Computation: A001_USER ==================
+  id: 17924707448059929
+  identification: 
+    item-name: A001_USER
+
+  execution: 
+    sequence: 10
+    point: AFTER_LOGIN
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: nvl(v('APP_USER'),USER)
+
+  subscription: 
+    version-number: 1
+

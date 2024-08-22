@@ -1,0 +1,1598 @@
+---
+# ====== Page: RECORRIDO =====================================
+id: 706
+identification: 
+  name: RECORRIDO
+  alias: RECORRIDO
+  title: RECORRIDO
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    @media print{
+    	.imagen 	{	display: none;  }   	
+    	.screenOnly {	display: none;	}
+    	header nav, footer {display: none;}
+    	t_Header  {	display: none;	} 
+    t-Footer  {display: none;}    
+    }   
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Recorrido ===================================
+  id: 19634476804761689
+  identification: 
+    name: Recorrido
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-truck
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: HOJA DE RUTA ================================
+  id: 27712385072991210
+  identification: 
+    name: HOJA DE RUTA
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT rm.id orden
+            ,de.lat
+            ,de.lng
+            ,rm.flt_viaje_ix ix
+            ,S_cliente(rm.cliente_id) title 
+            ,rm.id
+            ,de.direccion dir
+            ,'<a href=javascript:$s("P706_ID_A_BORRAR",'||rm.id||') class="fa fa-trash" ></a>'  borrar
+            ,'<a href=javascript:$s("P706_ID_A_BAJAR",'||rm.id||') class="fa fa-arrow-up" ></a>'
+            ||'<a href=javascript:$s("P706_ID_A_SUBIR",'||rm.id||') class="fa fa-arrow-down" ></a>' link
+        FROM vta_remitos   rm
+        ,cli_depositos de
+        where rm.cli_deposito_id=de.id
+        and rm.flt_viaje_id=:p706_id
+       ORDER BY rm.flt_viaje_ix
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    column-css-classes: 
+    - screenOnly
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: HOJA
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges 1-15 16-30 in select list (with pagination)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: TITLE =======================================
+    id: 9076186919443470
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BORRAR ======================================
+    id: 9419309867950477
+    identification: 
+      column-name: BORRAR
+      type: Plain Text
+
+    heading: 
+      heading: Borrar
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: LINK ========================================
+    id: 9419694397950480
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      heading: Link
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ORDEN =======================================
+    id: 9420139094950480
+    identification: 
+      column-name: ORDEN
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LAT =========================================
+    id: 9420498374950480
+    identification: 
+      column-name: LAT
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LNG =========================================
+    id: 9420889229950482
+    identification: 
+      column-name: LNG
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 9421668585950482
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIR =========================================
+    id: 9422119585950483
+    identification: 
+      column-name: DIR
+      type: Plain Text
+
+    heading: 
+      heading: Dir
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IX ==========================================
+    id: 172845640687845073
+    identification: 
+      column-name: IX
+      type: Plain Text
+
+    heading: 
+      heading: Ix
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: MAPA ========================================
+  id: 28881924376215123
+  identification: 
+    name: MAPA
+    type: JK64 Report Google Map
+
+  source: 
+    sql-query: |
+      select n001 id,
+              n002 lat,
+              n003 lng,
+              c001 name,
+              c002 dir 
+      from apex_collections
+      where collection_name = 'MAPAS'
+      
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      min.-map-height: 600
+      initial-map-position: 33.00,33.00
+      pan-on-click: false
+      geolocate: false
+      directions: (NONE)
+      attribute1: Label
+      default-map-type: Roadmap
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 10
+
+- # ====== Region: New =========================================
+  id: 29905266985066501
+  identification: 
+    name: New
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT  CHR(64+rownum) ORDEN ,C001 DEPOSITO, N001 ID,C002 DIR, n002 lat ,n003 lng 
+      FROM APEX_COLLECTIONS 
+      WHERE COLLECTION_NAME ='MAPAS'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ORDEN =======================================
+    id: 9425970808950496
+    identification: 
+      column-name: ORDEN
+      type: Plain Text
+
+    heading: 
+      heading: Orden
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEPOSITO ====================================
+    id: 9426394209950496
+    identification: 
+      column-name: DEPOSITO
+      type: Plain Text
+
+    heading: 
+      heading: Deposito
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 9426865426950497
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIR =========================================
+    id: 9427251747950497
+    identification: 
+      column-name: DIR
+      type: Plain Text
+
+    heading: 
+      heading: Dir
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LAT =========================================
+    id: 38470243520901702
+    identification: 
+      column-name: LAT
+      type: Plain Text
+
+    heading: 
+      heading: Lat
+      alignment: end
+
+    layout: 
+      sequence: 14
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LNG =========================================
+    id: 38470398335901703
+    identification: 
+      column-name: LNG
+      type: Plain Text
+
+    heading: 
+      heading: Lng
+      alignment: end
+
+    layout: 
+      sequence: 24
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P706_ID ==================================
+  id: 9076146810443469
+  identification: 
+    name: P706_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: New # 29905266985066501
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_DISTANCIA ===========================
+  id: 9418171609950469
+  identification: 
+    name: P706_DISTANCIA
+    type: Number Field
+
+  label: 
+    label: Distancia
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: MAPA # 28881924376215123
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - screenOnly
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    post-text-: mts
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_TIEMPO ==============================
+  id: 9418647756950469
+  identification: 
+    name: P706_TIEMPO
+    type: Display Only
+
+  label: 
+    label: Tiempo
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 50
+    region: MAPA # 28881924376215123
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 1
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - screenOnly
+
+  advanced: 
+    post-text-: seg
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_CLIENTE =============================
+  id: 9423712617950489
+  identification: 
+    name: P706_CLIENTE
+    type: Select List
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 2084520149913047
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_DEPOSITO ============================
+  id: 9424114605950492
+  identification: 
+    name: P706_DEPOSITO
+    type: Select List
+
+  label: 
+    label: Depositos
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'SELECT title_deposito(id),id FROM CLI_DEPOSITOS WHERE CLIENTE_ID = :P706_CLIENTE'
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P706_CLIENTE
+    items-to-submit: 
+    - P706_CLIENTE
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_ID_A_BORRAR =========================
+  id: 9424528254950492
+  identification: 
+    name: P706_ID_A_BORRAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 50
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_ID_A_SUBIR ==========================
+  id: 9424956037950492
+  identification: 
+    name: P706_ID_A_SUBIR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 60
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P706_ID_A_BAJAR ==========================
+  id: 9425295897950492
+  identification: 
+    name: P706_ID_A_BAJAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 70
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: AGREGAR =====================================
+  id: 9422522618950483
+  identification: 
+    button-name: AGREGAR
+    label: Agregar
+
+  layout: 
+    sequence: 40
+    region: HOJA DE RUTA # 27712385072991210
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Right
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: VICKY =======================================
+  id: 9422906487950486
+  identification: 
+    button-name: VICKY
+    label: VICTORIA
+
+  layout: 
+    sequence: 10
+    region: HOJA DE RUTA # 27712385072991210
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-home
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CLEAR =======================================
+  id: 9423332473950489
+  identification: 
+    button-name: CLEAR
+    label: BORRAR
+
+  layout: 
+    sequence: 20
+    region: HOJA DE RUTA # 27712385072991210
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: SUBIR_ITEM ==========================
+  id: 9427867171950511
+  identification: 
+    name: SUBIR_ITEM
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P706_ID_A_SUBIR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9428429553950535
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+            APEX_COLLECTION.MOVE_MEMBER_UP(
+                p_collection_name => 'MAPAS',
+                p_seq => :P706_ID_A_SUBIR);
+      items-to-submit: 
+      - P706_ID_A_SUBIR
+
+    execution: 
+      sequence: 10
+      event: SUBIR_ITEM # 9427867171950511
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9428910703950544
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA # 28881924376215123
+
+    execution: 
+      sequence: 20
+      event: SUBIR_ITEM # 9427867171950511
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9429420540950544
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 30
+      event: SUBIR_ITEM # 9427867171950511
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BORRAR_ITEM =========================
+  id: 9429844014950544
+  identification: 
+    name: BORRAR_ITEM
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P706_ID_A_BORRAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9430323038950546
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+            APEX_COLLECTION.DELETE_MEMBER(
+                p_collection_name => 'MAPAS',
+                p_seq => :P706_ID_A_BORRAR);
+        
+        APEX_COLLECTION.RESEQUENCE_COLLECTION (
+            p_collection_name =>'MAPAS');
+      items-to-submit: 
+      - P706_ID_A_BORRAR
+
+    execution: 
+      sequence: 10
+      event: BORRAR_ITEM # 9429844014950544
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9430842803950546
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA # 28881924376215123
+
+    execution: 
+      sequence: 20
+      event: BORRAR_ITEM # 9429844014950544
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9431247534950552
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 40
+      event: BORRAR_ITEM # 9429844014950544
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BORRAR_LISTADO ======================
+  id: 9431582015950552
+  identification: 
+    name: BORRAR_LISTADO
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CLEAR # 9423332473950489
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9432067161950552
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+            APEX_COLLECTION.TRUNCATE_COLLECTION(
+                p_collection_name => 'MAPAS');
+
+    execution: 
+      sequence: 10
+      event: BORRAR_LISTADO # 9431582015950552
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9432666571950553
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 30
+      event: BORRAR_LISTADO # 9431582015950552
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: AGREGAR_ITEM ========================
+  id: 9432999234950553
+  identification: 
+    name: AGREGAR_ITEM
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: AGREGAR # 9422522618950483
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9433494178950553
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DECLARE
+        vtitle varchar2(400);
+        vdireccion varchar2(400);
+        vid number;
+        vlat number;
+        vlng number;
+        
+        
+        BEGIN
+        SELECT ID,LAT,LNG,direccion,S_cliente(cliente_id) || ' ' ||TITLE_deposito(id)
+        INTO vid,vlat,vlng,vdireccion,vtitle
+        FROM CLI_DEPOSITOS WHERE ID = :P706_DEPOSITO;
+        
+        
+        APEX_COLLECTION.ADD_MEMBER(
+                p_collection_name => 'MAPAS',
+                p_n001            => vid,
+                p_n002            => vlat,
+                p_n003            => vlng,
+                p_c001            => vtitle,
+                p_c002            => vdireccion
+        );
+                
+        END;
+      items-to-submit: 
+      - P706_DEPOSITO
+
+    execution: 
+      sequence: 10
+      event: AGREGAR_ITEM # 9432999234950553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9433982664950555
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 40
+      event: AGREGAR_ITEM # 9432999234950553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9434530723950555
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA # 28881924376215123
+
+    execution: 
+      sequence: 20
+      event: AGREGAR_ITEM # 9432999234950553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BAJAR_ITEM ==========================
+  id: 9434892585950555
+  identification: 
+    name: BAJAR_ITEM
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P706_ID_A_BAJAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9435424871950557
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+            APEX_COLLECTION.MOVE_MEMBER_DOWN(
+                p_collection_name => 'MAPAS',
+                p_seq => :P706_ID_A_BAJAR);
+      items-to-submit: 
+      - P706_ID_A_BAJAR
+
+    execution: 
+      sequence: 10
+      event: BAJAR_ITEM # 9434892585950555
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9435954759950557
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA # 28881924376215123
+
+    execution: 
+      sequence: 20
+      event: BAJAR_ITEM # 9434892585950555
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9436462229950561
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 30
+      event: BAJAR_ITEM # 9434892585950555
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 9436824332950561
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: HOJA DE RUTA # 27712385072991210
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9437327745950563
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA # 28881924376215123
+
+    execution: 
+      sequence: 20
+      event: New_1 # 9436824332950561
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: vicky ===============================
+  id: 9437750203950563
+  identification: 
+    name: vicky
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: VICKY # 9422906487950486
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9438171309950563
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DECLARE
+        
+        BEGIN
+        
+        
+        
+        APEX_COLLECTION.ADD_MEMBER(
+                p_collection_name => 'MAPAS',
+                p_n001            => 0,
+                p_n002            => -34.8097527,
+                p_n003            => -58.4574414,
+                p_c001             => 'VICTORIA CORRUGADOS'
+        );
+                
+        END;
+
+    execution: 
+      sequence: 10
+      event: vicky # 9437750203950563
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 9438675959950564
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: HOJA DE RUTA # 27712385072991210
+
+    execution: 
+      sequence: 30
+      event: vicky # 9437750203950563
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

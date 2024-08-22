@@ -1,0 +1,2609 @@
+---
+# ====== Page: FACTURA_X =====================================
+id: 70
+identification: 
+  name: FACTURA_X
+  title: FACTURA
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  width: 1200
+  height: 600
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: DETALLE =====================================
+  id: 7425396961374534
+  identification: 
+    name: DETALLE
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID,  VTA_FACTURA_ID,CANTIDAD,PRECIO,TEXTO,ARTICULO_ID, CANTIDAD * PRECIO NETO , IVA_TIPO_ID
+      FROM VTA_FACTURA_its 
+      WHERE VTA_FACTURA_ID = :P70_ID 
+    page-items-to-submit: 
+    - P70_ID
+
+  layout: 
+    sequence: 20
+    parent-region: CBTE # 18342520065256624
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P70_CAB_TIPO_ID
+    value: 1001
+
+  read-only: 
+    type: Item is NOT NULL
+    item: P70_CAI
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 17922765799039253
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: false
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      show-null-values-as: '-'
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Actions Menu
+      - Reset Button
+      - Save Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: false
+      define-chart-view: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 18059539318089284
+      identification: 
+        name: Primary Report
+        alias: 18210
+
+  columns: 
+  - # ====== Column: APEX$ACTION_MENU ============================
+    id: 1005532518449948
+    identification: 
+      column-name: APEX$ACTION_MENU
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: IVA_TIPO_ID =================================
+    id: 3899269983235951
+    identification: 
+      column-name: IVA_TIPO_ID
+      type: Select List
+
+    heading: 
+      heading: Iva
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: |2
+          select IVA,ID 
+          from T_VTA_IVA_TIPO
+         order by 1
+      display-extra-values: false
+      display-null-value: false
+
+    source: 
+      type: Database Column
+      database-column: IVA_TIPO_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ID ==========================================
+    id: 17922877122039254
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 30
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+
+  - # ====== Column: VTA_FACTURA_ID ==============================
+    id: 17922975262039255
+    identification: 
+      column-name: VTA_FACTURA_ID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 40
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: VTA_FACTURA_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Item
+      item: P70_ID
+      duplicate-copies-existing-value: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 17923078650039256
+    identification: 
+      column-name: CANTIDAD
+      type: Number Field
+
+    heading: 
+      heading: Cantidad
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: CANTIDAD
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PRECIO ======================================
+    id: 17923159542039257
+    identification: 
+      column-name: PRECIO
+      type: Number Field
+
+    heading: 
+      heading: Precio
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 99999999990D00
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PRECIO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: TEXTO =======================================
+    id: 17923408697039259
+    identification: 
+      column-name: TEXTO
+      type: Text Field
+
+    heading: 
+      heading: Detalle
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 75
+
+    source: 
+      type: Database Column
+      database-column: TEXTO
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 17923467995039260
+    identification: 
+      column-name: ARTICULO_ID
+      type: Number Field
+
+    heading: 
+      heading: Art
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: ARTICULO_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: NETO ========================================
+    id: 18462716160677939
+    identification: 
+      column-name: NETO
+      type: Text Field
+
+    heading: 
+      heading: NETO
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: NETO
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 18462837223677941
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+- # ====== Region: subtotales ==================================
+  id: 7428153053374562
+  identification: 
+    name: subtotales
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P70_CAI IS not NULL'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: total =======================================
+  id: 7596546605969417
+  identification: 
+    name: total
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 9
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P70_CAI IS not NULL'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CBTE ========================================
+  id: 18342520065256624
+  identification: 
+    name: CBTE
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: VTA_FACTURAS
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P70_CAI IS not NULL'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+    edit-authorization: 
+      delete: ACCESS CONTROL - VICTORIA # 285793758003850
+
+- # ====== Region: FOOTER ======================================
+  id: 19187665083112220
+  identification: 
+    name: FOOTER
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P70_CREATED ==============================
+  id: 940128254483666
+  identification: 
+    name: P70_CREATED
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 160
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CREATED
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CREATED_BY ===========================
+  id: 1002405916449917
+  identification: 
+    name: P70_CREATED_BY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 170
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CREATED_BY
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_FACT_REF =============================
+  id: 1005276834449946
+  identification: 
+    name: P70_FACT_REF
+    type: Text Field
+
+  label: 
+    label: Referencia
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 20
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: FACT_REF
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_ID ===================================
+  id: 7427050256374551
+  identification: 
+    name: P70_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_FECHA ================================
+  id: 7427391124374554
+  identification: 
+    name: P70_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 90
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 12
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CAB_TIPO_ID ==========================
+  id: 7427453510374555
+  identification: 
+    name: P70_CAB_TIPO_ID
+    type: Select List
+
+  label: 
+    label: Comprobante
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CAB_TIPO.VTA_FACTURAS # 35860784943074893
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CAB_TIPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item is NOT NULL
+    item: P70_CAI
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_PUNTO_VENTA ==========================
+  id: 7427620318374556
+  identification: 
+    name: P70_PUNTO_VENTA
+    type: Number Field
+
+  label: 
+    label: Nro
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Numeric
+
+  layout: 
+    sequence: 60
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 0000
+    width: 4
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: PUNTO_VENTA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_NRO_CAB ==============================
+  id: 7427695436374557
+  identification: 
+    name: P70_NRO_CAB
+    type: Number Field
+
+  label: 
+    label: NRO_CAB
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Numeric
+
+  layout: 
+    sequence: 70
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 00000000
+    width: 8
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: NRO_CAB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CUIT =================================
+  id: 7427765007374558
+  identification: 
+    name: P70_CUIT
+    type: Number Field
+
+  label: 
+    label: Cuit
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 130
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 11
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CUIT
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_DFISCAL ==============================
+  id: 7427839552374559
+  identification: 
+    name: P70_DFISCAL
+    type: Text Field
+
+  label: 
+    label: Razon Social
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 140
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 80
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: DFISCAL
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_TOTAL ================================
+  id: 7428246995374563
+  identification: 
+    name: P70_TOTAL
+    type: Number Field
+
+  label: 
+    label: 'Importe Total '
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 10
+    region: total # 7596546605969417
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    icon: fa-usd
+    format-mask: 9999999999990D00
+    width: 20
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - style
+    - =
+    - '"background-color:yellow;"'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: TOTAL
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_NETO_GRAVADO =========================
+  id: 7428367471374564
+  identification: 
+    name: P70_NETO_GRAVADO
+    type: Number Field
+
+  label: 
+    label: Neto Gravado
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 20
+    region: subtotales # 7428153053374562
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 9999999999990D00
+    width: 15
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: NETO_GRAVADO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_IVA ==================================
+  id: 7428484954374565
+  identification: 
+    name: P70_IVA
+    type: Number Field
+
+  label: 
+    label: IVA
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: subtotales # 7428153053374562
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 9999999999990D00
+    width: 15
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: IVA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_IIBB =================================
+  id: 7428621401374566
+  identification: 
+    name: P70_IIBB
+    type: Number Field
+
+  label: 
+    label: IIBB
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: subtotales # 7428153053374562
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 9999999999990D00
+    width: 15
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: IIBB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_NETO_EXENTO ==========================
+  id: 7596715441969418
+  identification: 
+    name: P70_NETO_EXENTO
+    type: Number Field
+
+  label: 
+    label: Neto Exentas
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: subtotales # 7428153053374562
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 9999999999990D00
+    width: 15
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: NETO_EXENTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_IIBB_VALOR ===========================
+  id: 13690486133230834
+  identification: 
+    name: P70_IIBB_VALOR
+    type: Number Field
+
+  label: 
+    label: Iibb Valor
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 150
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CAI ==================================
+  id: 18277079377572648
+  identification: 
+    name: P70_CAI
+    type: Display Only
+
+  label: 
+    label: CAI
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 19187665083112220
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CAI
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CLIENTE_ID ===========================
+  id: 18949161249312040
+  identification: 
+    name: P70_CLIENTE_ID
+    type: Display Only
+
+  label: 
+    label: Cliente_id
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 110
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_CLI_DFISCAL_ID =======================
+  id: 18949318129312041
+  identification: 
+    name: P70_CLI_DFISCAL_ID
+    type: Select List
+
+  label: 
+    label: CUIT
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 120
+    region: CBTE # 18342520065256624
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: "select cuit || '-' || TITLE,id from cli_dfiscal where cliente_id = :P70_CLIENTE_ID"
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: CLI_DFISCAL_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_MES ==================================
+  id: 38688713590062107
+  identification: 
+    name: P70_MES
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 180
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: MES
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_PAGO =================================
+  id: 38688757397062108
+  identification: 
+    name: P70_PAGO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 190
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: PAGO
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P70_SIGNO ================================
+  id: 38688891706062109
+  identification: 
+    name: P70_SIGNO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 200
+    region: CBTE # 18342520065256624
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: CBTE # 18342520065256624
+    column: SIGNO
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CALCULAR ====================================
+  id: 3898771311235946
+  identification: 
+    button-name: CALCULAR
+    label: Calcular
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 19187665083112220
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P70_CAI
+
+- # ====== Button: SAVE ========================================
+  id: 8872090417200232
+  identification: 
+    button-name: SAVE
+    label: GUARDAR
+
+  layout: 
+    sequence: 30
+    region: FOOTER # 19187665083112220
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P70_ID IS NOT NULL AND :P70_CAI IS NULL'
+
+- # ====== Button: DELETE ======================================
+  id: 12836281408350443
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 50
+    region: FOOTER # 19187665083112220
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P70_CAI
+
+- # ====== Button: CREAR =======================================
+  id: 18949076344312039
+  identification: 
+    button-name: CREAR
+    label: Crear
+
+  layout: 
+    sequence: 40
+    region: FOOTER # 19187665083112220
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P70_ID
+
+- # ====== Button: PRINT_CHQ ===================================
+  id: 51181924765291341
+  identification: 
+    button-name: PRINT_CHQ
+    label: Print Chq
+
+  layout: 
+    sequence: 20
+    region: FOOTER # 19187665083112220
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::P2_ID:&P70_ID.'
+      page: 2 # PRINT_CHEQUE_RECHAZADO
+      values: 
+        p2_id: '&P70_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P70_CAB_TIPO_ID
+    value: 1599
+
+- # ====== Button: CHEQUE_RECHAZADO ============================
+  id: 154710596546021263
+  identification: 
+    button-name: CHEQUE_RECHAZADO
+    label: CHEQUE_RECHAZADO
+
+  layout: 
+    sequence: 60
+    region: FOOTER # 19187665083112220
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P70_CAB_TIPO_ID IN (1502,1503)'
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+dynamic-actions: 
+- # ====== Dynamic Action: FACTURA A ===========================
+  id: 11360938098480178
+  identification: 
+    name: FACTURA A
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CALCULAR # 3898771311235946
+
+  client-side-condition: 
+    type: Item is in list
+    item: P70_CAB_TIPO_ID
+    list: 
+    - 1501
+    - 1502
+    - 1503
+    - 1551
+    - 1552
+    - 1553
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 11361038598480179
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT SUM(TOTAL_IVA) IVA
+        FROM VTA_FACTURA_ITS
+        WHERE VTA_FACTURA_ID = :P70_ID
+      items-to-submit: 
+      - P70_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_IVA
+
+    execution: 
+      sequence: 10
+      event: FACTURA A # 11360938098480178
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 11361136060480180
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT SUM(NETO_GRAVADO)
+        FROM VTA_FACTURA_ITS
+        WHERE VTA_FACTURA_ID = :P70_ID
+      items-to-submit: 
+      - P70_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_NETO_GRAVADO
+
+    execution: 
+      sequence: 20
+      event: FACTURA A # 11360938098480178
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 11361261371480181
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT SUM(NETO_EXENTO + NETO_NO_GRAVADO)
+        FROM VTA_FACTURA_ITS
+        WHERE VTA_FACTURA_ID = :P70_ID
+      items-to-submit: 
+      - P70_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_NETO_EXENTO
+
+    execution: 
+      sequence: 40
+      event: FACTURA A # 11360938098480178
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 13690414945230833
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: 'ROUND(:P70_NETO_GRAVADO * :P70_IIBB_VALOR /100 , 2)'
+      items-to-submit: 
+      - P70_IIBB_VALOR
+      - P70_NETO_GRAVADO
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_IIBB
+
+    execution: 
+      sequence: 30
+      event: FACTURA A # 11360938098480178
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: TOTAL ===============================
+  id: 19060643475651563
+  identification: 
+    name: TOTAL
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P70_NETO_GRAVADO
+    - P70_IIBB
+    - P70_NETO_EXENTO
+    - P70_IVA
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P70_CAI
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 19060802809651564
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: |
+        NVL(:P70_NETO_GRAVADO,0) + 
+        NVL(:P70_IVA,0) + NVL(:P70_IIBB,0) + NVL(:P70_NETO_EXENTO,0)
+      items-to-submit: 
+      - P70_NETO_GRAVADO
+      - P70_IVA
+      - P70_IIBB
+      - P70_NETO_EXENTO
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_TOTAL
+
+    execution: 
+      sequence: 10
+      event: TOTAL # 19060643475651563
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: CHEQ RECH ===========================
+  id: 51181447563291336
+  identification: 
+    name: CHEQ RECH
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CALCULAR # 3898771311235946
+
+  client-side-condition: 
+    type: Item is in list
+    item: P70_CAB_TIPO_ID
+    list: 
+    - 1599
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 51181467900291337
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT SUM(neto)
+        FROM VTA_FACTURA_ITS 
+        WHERE VTA_FACTURA_ID = :P70_ID
+      items-to-submit: 
+      - P70_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_NETO_EXENTO
+
+    execution: 
+      sequence: 10
+      event: CHEQ RECH # 51181447563291336
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 51181654371291338
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_IIBB
+
+    execution: 
+      sequence: 20
+      event: CHEQ RECH # 51181447563291336
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 51181739701291339
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_IVA
+
+    execution: 
+      sequence: 30
+      event: CHEQ RECH # 51181447563291336
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 51181847152291340
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_NETO_GRAVADO
+
+    execution: 
+      sequence: 40
+      event: CHEQ RECH # 51181447563291336
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New =================================
+  id: 133782936892664047
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P70_CLI_DFISCAL_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 133782972064664048
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT CUIT FROM CLI_DFISCAL WHERE ID = :P70_CLI_DFISCAL_ID'
+      items-to-submit: 
+      - P70_CLI_DFISCAL_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_CUIT
+
+    execution: 
+      sequence: 10
+      event: New # 133782936892664047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 133783121589664049
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT TITLE FROM CLI_DFISCAL WHERE ID = :P70_CLI_DFISCAL_ID'
+      items-to-submit: 
+      - P70_CLI_DFISCAL_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P70_DFISCAL
+
+    execution: 
+      sequence: 20
+      event: New # 133782936892664047
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+computations: 
+- # ====== Computation: P70_IIBB_VALOR =========================
+  id: 13690586732230835
+  identification: 
+    item-name: P70_IIBB_VALOR
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT NVL(CLI_IIBB.VALOR,0)
+      FROM CLI_IIBB,CLI_DFISCAL
+      WHERE CLI_DFISCAL.ID = :P70_CLI_DFISCAL_ID
+      AND CLI_IIBB.CUIT = CLI_DFISCAL.CUIT
+      AND :P70_FECHA BETWEEN CLI_IIBB.DESDE AND CLI_IIBB.HASTA
+
+- # ====== Computation: P70_TOTAL ==============================
+  id: 19188521773112228
+  identification: 
+    item-name: P70_TOTAL
+
+  execution: 
+    sequence: 100
+    point: After Submit
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      NVL(:P70_NETO_GRAVADO,0) + 
+      NVL(:P70_IVA,0) + NVL(:P70_IIBB,0) + NVL(:P70_NETO_EXENTO,0)
+
+processes: 
+- # ====== Process: Process form CBTE ==========================
+  id: 1002724478449920
+  identification: 
+    name: Process form CBTE
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: CBTE # 18342520065256624
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: VTA_FACTURAS ===============================
+  id: 7427321536374553
+  identification: 
+    name: VTA_FACTURAS
+    type: Form - Initialization
+    execution-chain: None
+    form-region: CBTE # 18342520065256624
+
+  execution: 
+    sequence: 10
+    point: After Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: CLOSE DIALOG ===============================
+  id: 18372873721639620
+  identification: 
+    name: CLOSE DIALOG
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: DETALLE - Save Interactive Grid Data =======
+  id: 18462976031677942
+  identification: 
+    name: DETALLE - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: DETALLE # 7425396961374534
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+- # ====== Process: CHEQUE RECHAZADO ===========================
+  id: 154710790739021265
+  identification: 
+    name: CHEQUE RECHAZADO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE VTA_FACTURAS
+      SET CAB_TIPO_ID = 1599
+      WHERE ID = :P70_ID;
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: CHEQUE_RECHAZADO # 154710596546021263
+    type: Item = Value
+    item: P70_CAB_TIPO_ID
+    value: 1502
+
+- # ====== Process: CHEQUE RECHAZADO_1 =========================
+  id: 154710883453021266
+  identification: 
+    name: CHEQUE RECHAZADO_1
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE VTA_FACTURAS
+      SET CAB_TIPO_ID = 1598
+      WHERE ID = :P70_ID;
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: CHEQUE_RECHAZADO # 154710596546021263
+    type: Item = Value
+    item: P70_CAB_TIPO_ID
+    value: 1503
+

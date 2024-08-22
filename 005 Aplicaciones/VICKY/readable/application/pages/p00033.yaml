@@ -1,0 +1,2312 @@
+---
+# ====== Page: ART_HISTORAL ==================================
+id: 33
+identification: 
+  name: ART_HISTORAL
+  alias: ART-HISTORIAL
+  title: ARTICULO
+  page-group: 030 ARTICULOS # 1930054017627653
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: registros ===================================
+  id: 8772915488495787
+  identification: 
+    name: registros
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select count(1),pl.articulo_id 
+      from t_corr_pls pl, t_corrugados c
+      where pl.bloqued is null and c.id = pl.corrugado_id and c.fecha < to_date('20230101','YYYYMMDD')
+      group by pl.articulo_id 
+      order by 1 desc
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-useLocalStorage
+    - is-expanded
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: COUNT(1) ====================================
+    id: 8772842332495786
+    identification: 
+      column-name: COUNT(1)
+      type: Plain Text
+
+    heading: 
+      heading: Count(1)
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 8772731258495785
+    identification: 
+      column-name: ARTICULO_ID
+      type: Link
+
+    heading: 
+      heading: Articulo Id
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P33_ID",#ARTICULO_ID#)'
+      link-text: '#ARTICULO_ID#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: planchas mismo hash =========================
+  id: 4221679891712647
+  identification: 
+    name: planchas mismo hash
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,S_CLIENTE(CLIENTE_ID) scliente
+            ,S_ARTICULO(ID) scodigo
+            ,S_ARTICULO(ID,'PLANCHA_DIV')  div
+        FROM arts
+      WHERE pl_hash=:p33_pl_hash
+    page-items-to-submit: 
+    - P33_PL_HASH
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-useLocalStorage
+    - is-collapsed
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: SCLIENTE ====================================
+    id: 8771887354495777
+    identification: 
+      column-name: SCLIENTE
+      type: Plain Text
+
+    heading: 
+      heading: Scliente
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 4221783017712648
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P33_ID",#ID#)'
+      link-text: '#ID#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 5368939693534299
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Scodigo
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIV =========================================
+    id: 5369053957534300
+    identification: 
+      column-name: DIV
+      type: Plain Text
+
+    heading: 
+      heading: Plancha
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: OPCION ======================================
+  id: 10165061498689923
+  identification: 
+    name: OPCION
+    type: Static Content
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: ARTICULO &P33_ID. ===========================
+  id: 11393525689835543
+  identification: 
+    name: ARTICULO &P33_ID.
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id                       id
+            ,s_articulo(id)                codigo
+            ,s_articulo(id,'MEDIDAS')      medidas
+            ,cliente_id
+            ,s_cliente(cliente_id)     cliente_nom
+            ,pl_hash
+            ,s_calidad(art_calidad_id) calidad_title
+        FROM arts 
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - t-Form--large
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: false
+
+- # ====== Region: CONTROL PRODUCCION ==========================
+  id: 26212463583908993
+  identification: 
+    name: CONTROL PRODUCCION
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT case when ARTICULO_ID = :P33_ID THEN '<div class=u-bold>'||articulo_id||'</div>'
+      ELSE to_char(ARTICULO_ID) 
+      END ARTICULO_ID,
+      
+      ID_CAB,PL_HASH,SUBSTR(PL_HASH,0,6) PL_HASH_1,FECHA,
+      CASE PROC WHEN 1 THEN '1 - CORRUGADO' WHEN 2 THEN '2 - TERMINADO' WHEN 4 THEN '4 - TERMINADO' WHEN 5 THEN '5 - ENTREGA' END PROC
+      
+      
+      ,BLOQUED
+      ,PL_ALTA,PL_BAJA,ALTA,BAJA,OBS,MULT,DIF,ACC_PL,ACC_PL_TOTAL,ACC_CAJA,STYLE,
+      CASE WHEN ACC_PL>0 AND ACC_CAJA <0 THEN '<i class="fa fa-arrow-right">' END ICON_1,
+      CASE WHEN BLOQUED IS NULL
+      --    AND ACC_PL=0  
+          AND ACC_CAJA = 0  
+          AND PROC = 5
+       THEN 
+          case WHEN :P33_FILTRO_HASH = 0 THEN  '<i class="fa fa-lock">' 
+              ELSE '<i class="fa fa-times">' END 
+          end ICON_BLOQ
+      
+      FROM (
+      SELECT ARTICULO_ID ,ID_CAB,PL_HASH,FECHA ,PROC,BLOQUED
+      ,PL_ALTA ,PL_BAJA ,ALTA ,BAJA ,OBS ,MULT, DIF,--div,
+          SUM(NVL(PL_ALTA,0) - NVL(PL_BAJA,0)) OVER ( partition by articulo_id ORDER BY FECHA,PROC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ACC_PL,
+          SUM(NVL(PL_ALTA,0) - NVL(PL_BAJA,0)) OVER ( ORDER BY FECHA,PROC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ACC_PL_TOTAL,
+          SUM(NVL(ALTA,0) - NVL(BAJA,0)) OVER ( partition by articulo_id ORDER BY FECHA,PROC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) ACC_CAJA,
+      case proc when 1 then 'stock_plancha' when 5 then 'stock_terminado' else 'stock_produccion' end style
+       FROM prod_historico ph
+       where (articulo_id in (:P33_ID ) 
+          or (articulo_id in (select id from articulos where pl_hash = :P33_PL_HASH) and :P33_FILTRO_HASH = 1)  
+          or (pl_hash = :P33_PL_HASH and :P33_FILTRO_HASH = 1))
+       and (:P33_BLOQUED = 0 OR  bloqued is null)
+          )
+    page-items-to-submit: 
+    - P33_ID
+    - P33_BLOQUED
+    - P33_BLOQ_FECHA
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 26212629906908993
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: No data found.
+      when-more-data-found: 'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 26217780705923799
+      identification: 
+        name: Primary Report
+        alias: 31735
+
+    columns: 
+    - # ====== Column: PL_HASH_1 ===================================
+      id: 8772015199495778
+      identification: 
+        column-name: PL_HASH_1
+        type: Hidden
+
+      heading: 
+        heading: Pl Hash 1
+
+      layout: 
+        sequence: 129
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ARTICULO_ID =================================
+      id: 8771621403495774
+      identification: 
+        column-name: ARTICULO_ID
+        type: Plain Text
+
+      heading: 
+        heading: Articulo Id
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 19
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ICON_1 ======================================
+      id: 268504798383048
+      identification: 
+        column-name: ICON_1
+        type: Link
+
+      heading: 
+        heading: '&nbsp;'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 69
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:241:&SESSION.::&DEBUG.:RP,241:P241_ARTICULO_ID,P241_PLANCHA_ID,P241_CANT_PL,P241_CANTIDAD:&P45_ARTICULO_ID.,&P45_ARTICULO_ID.,#ACC_PL#,#ACC_CAJA#'
+          page: 241 # QUICK_END
+          clear-cache: RP,241
+          values: 
+            p241_articulo_id: '&P45_ARTICULO_ID.'
+            p241_plancha_id: '&P45_ARTICULO_ID.'
+            p241_cant_pl: '#ACC_PL#'
+            p241_cantidad: '#ACC_CAJA#'
+
+        link-text: '#ICON_1#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ID_CAB ======================================
+      id: 267736933383047
+      identification: 
+        column-name: ID_CAB
+        type: Hidden
+
+      heading: 
+        heading: Id Cab
+
+      layout: 
+        sequence: 29
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: MULT ========================================
+      id: 267361314383047
+      identification: 
+        column-name: MULT
+        type: Plain Text
+
+      heading: 
+        heading: x
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 39
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DIF =========================================
+      id: 266536802383045
+      identification: 
+        column-name: DIF
+        type: Plain Text
+
+      heading: 
+        heading: Dif
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 49
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STYLE =======================================
+      id: 266172351383045
+      identification: 
+        column-name: STYLE
+        type: Hidden
+
+      heading: 
+        heading: Style
+
+      layout: 
+        sequence: 59
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: FECHA =======================================
+      id: 265370983383043
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 2
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PL_ALTA =====================================
+      id: 264984573383043
+      identification: 
+        column-name: PL_ALTA
+        type: Link
+
+      heading: 
+        heading: Corr
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 3
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:22002:&SESSION.::&DEBUG.:RP,:P22002_ID:#ID_CAB#'
+          page: 22002 # CORR 22
+          clear-cache: RP
+          values: 
+            p22002_id: '#ID_CAB#'
+
+        link-text: '#PL_ALTA#'
+        link-attributes: parent-class=stock_pedido
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PL_BAJA =====================================
+      id: 264610812383043
+      identification: 
+        column-name: PL_BAJA
+        type: Link
+
+      heading: 
+        heading: Pl Baja
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 4
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.:RP,:P42_ID:#ID_CAB#'
+          page: 42 # ORDER DE FABRICACION
+          clear-cache: RP
+          values: 
+            p42_id: '#ID_CAB#'
+
+        link-text: '#PL_BAJA#'
+        link-attributes: parent-class=stock_produccion
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ALTA ========================================
+      id: 264174735383042
+      identification: 
+        column-name: ALTA
+        type: Link
+
+      heading: 
+        heading: Term
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 5
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.:RP,:P42_ID:#ID_CAB#'
+          page: 42 # ORDER DE FABRICACION
+          clear-cache: RP
+          values: 
+            p42_id: '#ID_CAB#'
+
+        link-text: '#ALTA#'
+        link-attributes: parent-class=stock_produccion
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BAJA ========================================
+      id: 263761913383042
+      identification: 
+        column-name: BAJA
+        type: Link
+
+      heading: 
+        heading: Entrega
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 6
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:9:&SESSION.::&DEBUG.::P9_ID:#ID_CAB#'
+          page: 9 # 33_remtio
+          values: 
+            p9_id: '#ID_CAB#'
+
+        link-text: '#BAJA#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 263353331383042
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 7
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ACC_PL ======================================
+      id: 263008918383042
+      identification: 
+        column-name: ACC_PL
+        type: Plain Text
+
+      heading: 
+        heading: Planchas
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 8
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=stock_plancha >#ACC_PL#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACC_CAJA ====================================
+      id: 262537878383042
+      identification: 
+        column-name: ACC_CAJA
+        type: Plain Text
+
+      heading: 
+        heading: Cajas
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 9
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=stock_terminado >#ACC_CAJA#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BLOQUED =====================================
+      id: 5953071780108999
+      identification: 
+        column-name: BLOQUED
+        type: Plain Text
+
+      heading: 
+        heading: Bloqued
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 99
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: YYYY-MM-DD
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROC ========================================
+      id: 5953155310109000
+      identification: 
+        column-name: PROC
+        type: Plain Text
+
+      heading: 
+        heading: Proc
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 109
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ICON_BLOQ ===================================
+      id: 5957030883109038
+      identification: 
+        column-name: ICON_BLOQ
+        type: Link
+
+      heading: 
+        heading: Icon Bloq
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 119
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 'javascript:$s(P33_BLOQ_FECHA,"#FECHA#")'
+        link-text: '#ICON_BLOQ#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: PL_HASH =====================================
+      id: 87547117661797645
+      identification: 
+        column-name: PL_HASH
+        type: Link
+
+      heading: 
+        heading: Pl Hash
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 79
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:9:&SESSION.::&DEBUG.::P9_HASH:#PL_HASH#'
+          page: 9 # 33_remtio
+          values: 
+            p9_hash: '#PL_HASH#'
+
+        link-text: '#PL_HASH_1#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ACC_PL_TOTAL ================================
+      id: 87547194948797646
+      identification: 
+        column-name: ACC_PL_TOTAL
+        type: Plain Text
+
+      heading: 
+        heading: Acc Pl Total
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 89
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: MENU ARTICULO ===============================
+  id: 54584228996882067
+  identification: 
+    name: MENU ARTICULO
+    type: List
+
+  source: 
+    list: MENU ARTICULO # 13198988506218124
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-none
+    - margin-left-lg
+    - margin-right-lg
+    - margin-top-none
+    - t-Form--noPadding
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P33_FILTRO_HASH ==========================
+  id: 8772407860495782
+  identification: 
+    name: P33_FILTRO_HASH
+    type: Checkbox
+
+  label: 
+    label: Buscar x hash
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 100
+    region: OPCION # 10165061498689923
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_ID ===================================
+  id: 451798429447531
+  identification: 
+    name: P33_ID
+    type: Text Field
+
+  label: 
+    label: New
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: true
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_CODIGO ===============================
+  id: 451553115447529
+  identification: 
+    name: P33_CODIGO
+    type: Text Field
+
+  label: 
+    label: Codigo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: CODIGO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_MEDIDAS ==============================
+  id: 451496082447528
+  identification: 
+    name: P33_MEDIDAS
+    type: Text Field
+
+  label: 
+    label: Medidas
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: MEDIDAS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_CLIENTE_ID ===========================
+  id: 451353667447527
+  identification: 
+    name: P33_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_CLIENTE_NOM ==========================
+  id: 451293439447526
+  identification: 
+    name: P33_CLIENTE_NOM
+    type: Text Field
+
+  label: 
+    label: New
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: CLIENTE_NOM
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_PL_HASH ==============================
+  id: 4221511455712645
+  identification: 
+    name: P33_PL_HASH
+    type: Display Only
+
+  label: 
+    label: Pl Hash
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 80
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: PL_HASH
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_CALIDAD_TITLE ========================
+  id: 4221616405712646
+  identification: 
+    name: P33_CALIDAD_TITLE
+    type: Text Field
+
+  label: 
+    label: Calidad Title
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+    column: CALIDAD_TITLE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_BLOQUED ==============================
+  id: 5953285553109001
+  identification: 
+    name: P33_BLOQUED
+    type: Checkbox
+
+  label: 
+    label: Bloqued
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    checked-value: 1
+    unchecked-value: 0
+
+  layout: 
+    sequence: 90
+    region: OPCION # 10165061498689923
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P33_BLOQ_FECHA ===========================
+  id: 5957094342109039
+  identification: 
+    name: P33_BLOQ_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 90
+    region: ARTICULO &P33_ID. # 11393525689835543
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: buscar_id ===========================
+  id: 8772593398495784
+  identification: 
+    name: buscar_id
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P33_ID
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 8772479093495783
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: buscar_id # 8772593398495784
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 8771857579495776
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: 0
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P33_FILTRO_HASH
+
+    execution: 
+      sequence: 10
+      event: buscar_id # 8772593398495784
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: filtro_hash =========================
+  id: 8772309202495781
+  identification: 
+    name: filtro_hash
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P33_FILTRO_HASH
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 8772227441495780
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: filtro_hash # 8772309202495781
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: apply_class_to_parent ===============
+  id: 260094285383003
+  identification: 
+    name: apply_class_to_parent
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: CONTROL PRODUCCION # 26212463583908993
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 259617054383001
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: apply_class_to_parent # 260094285383003
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: bloq_fecha ==========================
+  id: 5957146769109040
+  identification: 
+    name: bloq_fecha
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P33_BLOQ_FECHA
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 5957325631109041
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+            BLOQUEAR_ARTICULOS(
+                 P_ARTICULO => :P33_ID
+                 , P_FECHA => TO_DATE(:P33_BLOQ_FECHA,'DD-MM-YY')
+                 ); 
+        END;
+      items-to-submit: 
+      - P33_ID
+      - P33_BLOQ_FECHA
+
+    execution: 
+      sequence: 10
+      event: bloq_fecha # 5957146769109040
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+    client-side-condition: 
+      type: Item = Value
+      item: P33_FILTRO_HASH
+      value: 0
+
+  - # ====== Action: Refresh =====================================
+    id: 5957416169109042
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CONTROL PRODUCCION # 26212463583908993
+
+    execution: 
+      sequence: 20
+      event: bloq_fecha # 5957146769109040
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: bloqued =============================
+  id: 87545902690797633
+  identification: 
+    name: bloqued
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P33_BLOQUED
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 87546064385797634
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: bloqued # 87545902690797633
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: New ========================================
+  id: 451101918447524
+  identification: 
+    name: New
+    type: Form - Initialization
+    execution-chain: None
+    form-region: ARTICULO &P33_ID. # 11393525689835543
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+    run-process: Once Per Page Visit (default)
+

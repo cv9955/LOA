@@ -1,0 +1,286 @@
+---
+# ====== Page: MAPA_ZONAS ====================================
+id: 170
+identification: 
+  name: MAPA_ZONAS
+  alias: MAPA-ZONAS1
+  title: MAPA_ZONAS
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: New =========================================
+  id: 217932051626281628
+  identification: 
+    name: New
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: MAPA CLIENTES ===============================
+  id: 217936061908281668
+  identification: 
+    name: MAPA CLIENTES
+    type: JK64 Report Google Map
+
+  source: 
+    sql-query: |
+      select
+         LAT,LNG,s_cliente(dep.cliente_id ) || '-' || dep.title label,id
+        from CLI_DEPOSITOS dep
+         WHERE zona_id IN (                
+             select replace(column_value,'''') from table(apex_string.split(:P170_ZONA,':'))    
+                        
+              )
+      
+      
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      min.-map-height: 600
+      zoom-level-on-click: 13
+      marker-icon: fa-industry
+      initial-map-position: '-34.8097527,-58.4574414'
+      pan-on-click: false
+      geolocate: false
+      directions: (NONE)
+      attribute1: Label
+      default-map-type: Roadmap
+      gesture-handling: auto
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+page-items: 
+- # ====== Page Item: P170_ZONA ================================
+  id: 217933482640281757
+  identification: 
+    name: P170_ZONA
+    type: Radio Group
+
+  label: 
+    label: Zona
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 40
+    region: New # 217932051626281628
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT ZONA || ' ' || TITLE TITLE, ID FROM flt_zonas
+      ORDER BY KMS_DESDE,ANG_DESDE
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: New =========================================
+  id: 48633058074039416
+  identification: 
+    button-name: New
+    label: New
+
+  layout: 
+    sequence: 50
+    region: New # 217932051626281628
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Right
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 48634336219039500
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P170_ZONA
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 48634741136039506
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "REPLACE(:P170_ZONA,':',',')"
+      items-to-submit: 
+      - P170_ZONA
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P170_TEXT
+
+    execution: 
+      sequence: 10
+      event: New # 48634336219039500
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 48635263098039510
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MAPA CLIENTES # 217936061908281668
+
+    execution: 
+      sequence: 10
+      event: New # 48634336219039500
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,552 @@
+---
+# ====== Page: COPY REMITOS ==================================
+id: 7
+identification: 
+  name: COPY REMITOS
+  alias: COPY-REMITOS
+  title: COPY REMITOS
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: X NUMERO ====================================
+  id: 71651085752081558
+  identification: 
+    name: X NUMERO
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: New =========================================
+  id: 71651417408081561
+  identification: 
+    name: New
+    type: Region Display Selector
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Tabs Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-TabsRegion-mod--simple
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: By Session
+
+- # ====== Region: X FECHA =====================================
+  id: 153023545646694930
+  identification: 
+    name: X FECHA
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: VENTAS ======================================
+  id: 163003779468585790
+  identification: 
+    name: VENTAS
+    type: List
+
+  source: 
+    list: MENU_VENTAS # 15192935647770055
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P7_DESDE =================================
+  id: 71650929433081556
+  identification: 
+    name: P7_DESDE
+    type: Date Picker
+
+  label: 
+    label: Desde
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 20
+    region: X FECHA # 153023545646694930
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: sysdate
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_HASTA =================================
+  id: 71651061485081557
+  identification: 
+    name: P7_HASTA
+    type: Date Picker
+
+  label: 
+    label: Hasta
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: X FECHA # 153023545646694930
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: sysdate
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_COPY_ALL ==============================
+  id: 77937757829880186
+  identification: 
+    name: P7_COPY_ALL
+    type: Textarea
+
+  label: 
+    label: Copy All
+    alignment: Left
+
+  settings: 
+    resizable: true
+    auto-height: true
+    character-counter: false
+    trim-spaces: None
+
+  layout: 
+    sequence: 60
+    region: X FECHA # 153023545646694930
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    width: 200
+    height: 20
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'COPY_REMITOS_TO_EXCEL(:P7_DESDE,:P7_HASTA)'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: OK ==========================================
+  id: 71651316480081560
+  identification: 
+    button-name: OK
+    label: Ok
+
+  layout: 
+    sequence: 50
+    region: X FECHA # 153023545646694930
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Right
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-check
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: COPY1 ===============================
+  id: 77947287679880344
+  identification: 
+    name: COPY1
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_COPY
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 77947794331880352
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: 'REMITO_TO_EXCEL(:P7_COPY)'
+      items-to-submit: 
+      - P7_COPY
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_COPY1
+
+    execution: 
+      sequence: 10
+      event: COPY1 # 77947287679880344
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New =================================
+  id: 77948238056880353
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_CTA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 77948677080880355
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: CTA
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: New # 77948238056880353
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: COPY_REMITO_2 =======================
+  id: 77949074041880355
+  identification: 
+    name: COPY_REMITO_2
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_COPY2
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 77949611252880357
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_COPY2
+
+    execution: 
+      sequence: 10
+      event: COPY_REMITO_2 # 77949074041880355
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: COPY2 ===============================
+  id: 77949967215880358
+  identification: 
+    name: COPY2
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P7_COPY1
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 77950558735880358
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_COPY1
+
+    execution: 
+      sequence: 10
+      event: COPY2 # 77949967215880358
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

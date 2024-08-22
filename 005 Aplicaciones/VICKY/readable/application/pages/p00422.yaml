@@ -1,0 +1,582 @@
+---
+# ====== Page: Step 2 ========================================
+id: 422
+identification: 
+  name: Step 2
+  title: Step 2
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Wizard Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  height: 400
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Wizard Progress =============================
+  id: 18745874064095815
+  identification: 
+    name: Wizard Progress
+    type: List
+
+  source: 
+    list: Wizard Progress List-37010775125816916 # 18740508975095714
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Wizard Progress
+
+- # ====== Region: Step 2 ======================================
+  id: 18746030345095815
+  identification: 
+    name: Step 2
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Buttons =====================================
+  id: 18746115634095815
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P422_RETURN ==============================
+  id: 18783258771879944
+  identification: 
+    name: P422_RETURN
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Step 2 # 18746030345095815
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P422_PTO_VENTA ===========================
+  id: 18806580235335953
+  identification: 
+    name: P422_PTO_VENTA
+    type: Radio Group
+
+  label: 
+    label: PUNTO DE VENTA
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 40
+    region: Step 2 # 18746030345095815
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:2 - FACTURA A;1501,2 - FACTURA B;1506,2 - FACT CRED ELECT ;1551,9 - EXPORTACION;1519,X - CHEQUE RECHAZADO;1599'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P422_CBTE ================================
+  id: 18806855310337800
+  identification: 
+    name: P422_CBTE
+    type: Radio Group
+
+  label: 
+    label: Comprobante
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 50
+    region: Step 2 # 18746030345095815
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:FACTURA;0,NOTA DE DEBITO;1,NOTA DE CREDITO;2'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item is NOT NULL
+    item: P421_VTA_REMITO_ID
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P422_CONCEPTO ============================
+  id: 18807190660339888
+  identification: 
+    name: P422_CONCEPTO
+    type: Radio Group
+
+  label: 
+    label: Concepto
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 60
+    region: Step 2 # 18746030345095815
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Producto;1,Servicio;2'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 18748031383095818
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 18746115634095815
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: PREVIOUS ====================================
+  id: 18748209905095818
+  identification: 
+    button-name: PREVIOUS
+    label: Previous
+
+  layout: 
+    sequence: 20
+    region: Buttons # 18746115634095815
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-chevron-left
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: NEXT ========================================
+  id: 18748294088095818
+  identification: 
+    button-name: NEXT
+    label: Next
+
+  layout: 
+    sequence: 30
+    region: Buttons # 18746115634095815
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 18748412077095818
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 18748031383095818
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 18749200694095819
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 18748412077095818
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P422_PTO_VENTA =========================
+  id: 133782512670664043
+  identification: 
+    item-name: P422_PTO_VENTA
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT NVL(CAB_TIPO_ID,1501) FROM CLI_DFISCAL WHERE ID = :P421_CLI_DFISCAL_ID'
+
+processes: 
+- # ====== Process: FACTURAR_SIN_REMITO ========================
+  id: 18782983639879941
+  identification: 
+    name: FACTURAR_SIN_REMITO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'FACTURAR(:P421_FECHA,:P421_CLI_DFISCAL_ID,:P422_PTO_VENTA+:P422_CBTE,:P422_RETURN);'
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18748294088095818
+    type: Item is NULL
+    item: P421_VTA_REMITO_ID
+
+- # ====== Process: FACTURAR_REMITO ============================
+  id: 22605098544075919
+  identification: 
+    name: FACTURAR_REMITO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'FACTURAR_REMITO(:P421_VTA_REMITO_ID,:P421_FECHA,:P422_PTO_VENTA+:P422_CBTE,:P422_RETURN) ;'
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18748294088095818
+    type: Item is NOT NULL
+    item: P421_VTA_REMITO_ID
+
+branches: 
+- # ====== Branch: Go To Page 421 ==============================
+  id: 18749948503095820
+  identification: 
+    name: Go To Page 421
+
+  execution: 
+    sequence: 10
+    point: Validating
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:421:&SESSION.&success_msg=#SUCCESS_MSG#'
+      page: 421 # Step 1
+
+  server-side-condition: 
+    when-button-pressed: PREVIOUS # 18748209905095818
+
+- # ====== Branch: GO TO PAGE 70 ===============================
+  id: 18783109972879942
+  identification: 
+    name: GO TO PAGE 70
+
+  execution: 
+    sequence: 30
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:70:&SESSION.::&DEBUG.:RP:P70_ID:&P422_RETURN.&success_msg=#SUCCESS_MSG#'
+      page: 70 # FACTURA_X
+      clear-cache: RP
+      values: 
+        p70_id: '&P422_RETURN.'
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 18748294088095818
+    type: Item is NOT NULL
+    item: P422_RETURN
+

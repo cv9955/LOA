@@ -1,0 +1,2254 @@
+---
+# ====== Page: CONTROL_SLOTTER ===============================
+id: 37
+identification: 
+  name: CONTROL_SLOTTER
+  alias: CONTROL-SLOTTER
+  title: CONTROL_SLOTTER
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: SLOTTER 1 ===================================
+  id: 175477782054127685
+  identification: 
+    name: SLOTTER 1
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             PRODUCCION_ID,
+             INICIO_BY,
+             FINAL_BY,
+             NVL(destino, cantidad_log) Salida,
+             INICIO_FEC INICIO,
+             FINAL_FEC FINAL,
+             ARTICULO_ID,
+             PLANCHA_ID,
+             CANT_PL,
+             CANTIDAD,
+             cliente SCLIENTE,
+             SCODIGO,
+             MEDIDAS,
+             STATUS,
+             ART_MULT
+      
+      from PROD_LOG_INFO      
+      where PROD_TIPO_ID= 1
+      ORDER BY INICIO DESC
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent3
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 175982302745617069
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCCION_ID ===============================
+    id: 175982372151617070
+    identification: 
+      column-name: PRODUCCION_ID
+      type: Link
+
+    heading: 
+      heading: Prod
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::P42_ID:#PRODUCCION_ID#'
+        page: 42 # ORDER DE FABRICACION
+        values: 
+          p42_id: '#PRODUCCION_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO_BY ===================================
+    id: 175982726576617073
+    identification: 
+      column-name: INICIO_BY
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL_BY ====================================
+    id: 175982843298617074
+    identification: 
+      column-name: FINAL_BY
+      type: Hidden
+
+    layout: 
+      sequence: 13
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 175983359776617079
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#INICIO#</DIV>
+        <DIV class="u-color-13-text">#INICIO_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 175983448578617080
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#FINAL#</DIV>
+        <DIV class="u-color-13-text">#FINAL_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 175983490863617081
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Art_Id
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLANCHA_ID ==================================
+    id: 175983642516617082
+    identification: 
+      column-name: PLANCHA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANT_PL =====================================
+    id: 176981285525288233
+    identification: 
+      column-name: CANT_PL
+      type: Plain Text
+
+    heading: 
+      heading: PLANCHAS
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 176981458379288234
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: FINAL
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCLIENTE ====================================
+    id: 176981544615288235
+    identification: 
+      column-name: SCLIENTE
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 176981610644288236
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <DIV>#SCLIENTE#</DIV>
+        <DIV CLASS="u-bold">#SCODIGO#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 176981749297288237
+    identification: 
+      column-name: MEDIDAS
+      type: Hidden
+
+    layout: 
+      sequence: 14
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 176981809500288238
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_MULT ====================================
+    id: 176981920759288239
+    identification: 
+      column-name: ART_MULT
+      type: Plain Text
+
+    heading: 
+      heading: x
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALIDA ======================================
+    id: 177565975590512740
+    identification: 
+      column-name: SALIDA
+      type: Plain Text
+
+    heading: 
+      heading: Salida
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-color-12-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: SLOTTER 2 ===================================
+  id: 177566095084512741
+  identification: 
+    name: SLOTTER 2
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             PRODUCCION_ID,
+             INICIO_BY,
+             FINAL_BY,
+             NVL(destino, cantidad_log) Salida,
+             INICIO_FEC INICIO,
+             FINAL_FEC FINAL,
+             ARTICULO_ID,
+             PLANCHA_ID,
+             CANT_PL,
+             CANTIDAD,
+             cliente SCLIENTE,
+             SCODIGO,
+             MEDIDAS,
+             STATUS,
+             ART_MULT
+      
+      from PROD_LOG_INFO      
+      where PROD_TIPO_ID= 2
+      ORDER BY INICIO DESC
+         
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 177566213912512742
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCCION_ID ===============================
+    id: 177566336446512743
+    identification: 
+      column-name: PRODUCCION_ID
+      type: Link
+
+    heading: 
+      heading: Prod
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::P42_ID:#PRODUCCION_ID#'
+        page: 42 # ORDER DE FABRICACION
+        values: 
+          p42_id: '#PRODUCCION_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO_BY ===================================
+    id: 177566371442512744
+    identification: 
+      column-name: INICIO_BY
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL_BY ====================================
+    id: 177566563980512745
+    identification: 
+      column-name: FINAL_BY
+      type: Hidden
+
+    layout: 
+      sequence: 13
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 177566651627512746
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#INICIO#</DIV>
+        <DIV class="u-color-13-text">#INICIO_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 177566685892512747
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#FINAL#</DIV>
+        <DIV class="u-color-13-text">#FINAL_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 177566771237512748
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Art_Id
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLANCHA_ID ==================================
+    id: 177566890668512749
+    identification: 
+      column-name: PLANCHA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANT_PL =====================================
+    id: 177567034341512750
+    identification: 
+      column-name: CANT_PL
+      type: Plain Text
+
+    heading: 
+      heading: PLANCHAS
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 177567072376512751
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: FINAL
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCLIENTE ====================================
+    id: 177567246216512752
+    identification: 
+      column-name: SCLIENTE
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 177567272257512753
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <DIV>#SCLIENTE#</DIV>
+        <DIV CLASS="u-bold">#SCODIGO#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 177567402840512754
+    identification: 
+      column-name: MEDIDAS
+      type: Hidden
+
+    layout: 
+      sequence: 14
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 177567481424512755
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_MULT ====================================
+    id: 177567597682512756
+    identification: 
+      column-name: ART_MULT
+      type: Plain Text
+
+    heading: 
+      heading: x
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALIDA ======================================
+    id: 177567674519512757
+    identification: 
+      column-name: SALIDA
+      type: Plain Text
+
+    heading: 
+      heading: Salida
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-color-12-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: PEGADO - COSIDO =============================
+  id: 177567832628512758
+  identification: 
+    name: PEGADO - COSIDO
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             PRODUCCION_ID,
+             INICIO_BY,
+             FINAL_BY,
+             NVL(destino, cantidad_log) Salida,
+             INICIO_FEC INICIO,
+             FINAL_FEC FINAL,
+             ARTICULO_ID,
+             PLANCHA_ID,
+             CANT_PL,
+             CANTIDAD,
+             cliente SCLIENTE,
+             SCODIGO,
+             MEDIDAS,
+             STATUS,
+             ART_MULT
+      
+      from PROD_LOG_INFO      
+      where PROD_TIPO_ID in (3,4)
+      ORDER BY INICIO DESC
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY_1
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 177567957612512759
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCCION_ID ===============================
+    id: 177567987101512760
+    identification: 
+      column-name: PRODUCCION_ID
+      type: Link
+
+    heading: 
+      heading: Prod
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::P42_ID:#PRODUCCION_ID#'
+        page: 42 # ORDER DE FABRICACION
+        values: 
+          p42_id: '#PRODUCCION_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO_BY ===================================
+    id: 177568069731512761
+    identification: 
+      column-name: INICIO_BY
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL_BY ====================================
+    id: 177568175795512762
+    identification: 
+      column-name: FINAL_BY
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 177568287077512763
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#INICIO#</DIV>
+        <DIV class="u-color-13-text">#INICIO_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 177568368409512764
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#FINAL#</DIV>
+        <DIV class="u-color-13-text">#FINAL_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 177568493491512765
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Art_Id
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLANCHA_ID ==================================
+    id: 177568623608512766
+    identification: 
+      column-name: PLANCHA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANT_PL =====================================
+    id: 177568679729512767
+    identification: 
+      column-name: CANT_PL
+      type: Plain Text
+
+    heading: 
+      heading: PLANCHAS
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 177568798078512768
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: FINAL
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCLIENTE ====================================
+    id: 177568868367512769
+    identification: 
+      column-name: SCLIENTE
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 177569030031512770
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <DIV>#SCLIENTE#</DIV>
+        <DIV CLASS="u-bold">#SCODIGO#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 177569081412512771
+    identification: 
+      column-name: MEDIDAS
+      type: Hidden
+
+    layout: 
+      sequence: 14
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 177569205012512772
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_MULT ====================================
+    id: 177569351761512773
+    identification: 
+      column-name: ART_MULT
+      type: Plain Text
+
+    heading: 
+      heading: x
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALIDA ======================================
+    id: 177569446942512774
+    identification: 
+      column-name: SALIDA
+      type: Plain Text
+
+    heading: 
+      heading: Salida
+      alignment: center
+
+    layout: 
+      sequence: 17
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-color-12-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: TRAZADORA - TROQUELADO ======================
+  id: 177569586439512776
+  identification: 
+    name: TRAZADORA - TROQUELADO
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             PRODUCCION_ID,
+             INICIO_BY,
+             FINAL_BY,
+             NVL(destino, cantidad_log) Salida,
+             INICIO_FEC INICIO,
+             FINAL_FEC FINAL,
+             ARTICULO_ID,
+             PLANCHA_ID,
+             CANT_PL,
+             CANTIDAD,
+             cliente SCLIENTE,
+             SCODIGO,
+             MEDIDAS,
+             STATUS,
+             ART_MULT
+      
+      from PROD_LOG_INFO      
+      where PROD_TIPO_ID in (5,6,7)
+      ORDER BY INICIO DESC
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY_1
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent5
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 177569757364512777
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCCION_ID ===============================
+    id: 177569825798512778
+    identification: 
+      column-name: PRODUCCION_ID
+      type: Link
+
+    heading: 
+      heading: Prod
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::P42_ID:#PRODUCCION_ID#'
+        page: 42 # ORDER DE FABRICACION
+        values: 
+          p42_id: '#PRODUCCION_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO_BY ===================================
+    id: 177569897725512779
+    identification: 
+      column-name: INICIO_BY
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL_BY ====================================
+    id: 177569974043512780
+    identification: 
+      column-name: FINAL_BY
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 177570073449512781
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#INICIO#</DIV>
+        <DIV class="u-color-13-text">#INICIO_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 177570262297512782
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD/MM HH24:MI'
+
+    column-formatting: 
+      html-expression: |
+        <DIV CLASS="u-bold">#FINAL#</DIV>
+        <DIV class="u-color-13-text">#FINAL_BY#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 177742313358154633
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Art_Id
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLANCHA_ID ==================================
+    id: 177742373896154634
+    identification: 
+      column-name: PLANCHA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANT_PL =====================================
+    id: 177742537121154635
+    identification: 
+      column-name: CANT_PL
+      type: Plain Text
+
+    heading: 
+      heading: PLANCHAS
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 177742585425154636
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: FINAL
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCLIENTE ====================================
+    id: 177742762053154637
+    identification: 
+      column-name: SCLIENTE
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 177742768883154638
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      html-expression: |
+        <DIV>#SCLIENTE#</DIV>
+        <DIV CLASS="u-bold">#SCODIGO#</DIV>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 177742900110154639
+    identification: 
+      column-name: MEDIDAS
+      type: Hidden
+
+    layout: 
+      sequence: 13
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 177743022393154640
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 14
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_MULT ====================================
+    id: 177743093484154641
+    identification: 
+      column-name: ART_MULT
+      type: Plain Text
+
+    heading: 
+      heading: x
+      alignment: center
+
+    layout: 
+      sequence: 15
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALIDA ======================================
+    id: 177743257653154642
+    identification: 
+      column-name: SALIDA
+      type: Plain Text
+
+    heading: 
+      heading: Salida
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-color-12-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: PRODUCCION ==================================
+  id: 233414395228790910
+  identification: 
+    name: PRODUCCION
+    type: List
+
+  source: 
+    list: MENU_FABRI # 743079948322539
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-gears
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P37_WEEK =================================
+  id: 175020766664842654
+  identification: 
+    name: P37_WEEK
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: PRODUCCION # 233414395228790910
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+computations: 
+- # ====== Computation: P37_WEEK ===============================
+  id: 175020814099842655
+  identification: 
+    item-name: P37_WEEK
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "TO_CHAR(SYSDATE,'YYYYWW') "
+

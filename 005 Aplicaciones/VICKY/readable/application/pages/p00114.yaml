@@ -1,0 +1,2833 @@
+---
+# ====== Page: CLIENTES_INFO =================================
+id: 114
+identification: 
+  name: CLIENTES_INFO
+  alias: CLIENTES_INFO
+  title: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.'
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    td[headers="LUGAR_ENTREGA"] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: INFORMACION =================================
+  id: 5446047407789646
+  identification: 
+    name: INFORMACION
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             NOMBRE,
+             VENDEDOR_ID,
+             ALIAS,
+             TAGS,
+             COND_PAGO,
+             STATUS,
+             AJ_COMISION,
+             AJ_COTIZ,
+             LISTA_PRECIO,
+             CAT002,
+             CAT003,
+             AJ_FLETE
+        from CLIENTES
+    page-items-to-submit: 
+    - P114_ID
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent2
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+    edit-authorization: 
+      delete: ACCESS CONTROL - GERENCIA # 285585236988156
+
+- # ====== Region: GRUPOS ======================================
+  id: 17903963009970160
+  identification: 
+    name: GRUPOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             TITLE,
+             STATUS,
+              'fa fa-users' ICON_CLASS,
+              NULL ICON_HTML,
+             CLI_DEPOSITO_ID description,
+            '<ul>' ||
+             case when CLI_CUENTA_ID IS NOT NULL THEN
+             '<li>' || (SELECT TITLE FROM CLI_CUENTAS WHERE ID = CLI_GRUPOS.CLI_CUENTA_ID) || '</li>' end  ||
+             case when CLI_DFISCAL_ID IS NOT NULL THEN
+             '<li>' || (SELECT TITLE FROM CLI_DFISCAL WHERE ID = CLI_GRUPOS.CLI_DFISCAL_ID) || '</li>' end || 
+             '</ul>' misc        
+        from CLI_GRUPOS
+       where cliente_id = :G_CLIENTE_ID
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent13
+    - t-Region--scrollBody
+    icon: fa-object-group
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--hideNoPagination
+      - t-ContentRow--hideSelection
+      - t-ContentRow--hideActions
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: TITLE =======================================
+    id: 49589837974966
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:119:&SESSION.::&DEBUG.::P119_ID:#ID#'
+        page: 119 # CLI_GRUPOS_ABM
+        values: 
+          p119_id: '#ID#'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 49433427974965
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 49369577974964
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Description
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 2729062474221192
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 2730252084221199
+    identification: 
+      column-name: STATUS
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Status
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_STATUS # 13100581222138236
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 2730648866221200
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Class
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 2731021497221200
+    identification: 
+      column-name: ICON_HTML
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: CUENTAS =====================================
+  id: 31477876807217579
+  identification: 
+    name: CUENTAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID,TITLE,cuit,ICON_CLASS,1 ACTIONS,ITEM_CLASSES,PAG_ABM,PAG_CUENTA,STATUS FROM (
+      select ID,
+             TITLE,
+             CUIT  , 
+             'fa fa-address-book-o fa-2x ' || 
+             case status
+                   when 1 then  'fam-check fam-is-success'
+                   else 'fam-minus fam-is-danger'
+               end as icon_CLASS, 
+           
+              121 PAG_ABM, 123 PAG_CUENTA,
+          'CTA-1' ITEM_CLASSES, STATUS
+        from cli_DFISCAL DF
+       where CLIENTE_ID =  :G_CLIENTE_ID
+       
+       UNION ALL
+       
+      select ID,  
+          TITLE, 
+          '' cuit,
+             case status
+                   when 1 then 'fa fa-address-book fam-check fam-is-success fa-2x'
+                   when -1 then 'fa fa-address-book fam-minus fam-is-danger fa-2x'
+               end as icon_CLASS, 
+            
+              122 PAG_ABM,124 PAG_CUENTA, 'CTA-2' ITEM_CLASSES,STATUS
+        from CLI_cuentas DF
+       where CLIENTE_ID = :G_CLIENTE_ID
+       AND :A001_CTA = 2) 
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BEFORE_FOOTER
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Never
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 1562572597353494
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 1563022472353496
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:#PAG_CUENTA#:&SESSION.::&DEBUG.:RP,#PAG_CUENTA#:P#PAG_CUENTA#_ID:#ID#'
+        page: '#PAG_CUENTA#'
+        clear-cache: RP,#PAG_CUENTA#
+        values: 
+          p#pag_cuenta#_id: '#ID#'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 1563814933353497
+    identification: 
+      column-name: ICON_CLASS
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ACTIONS =====================================
+    id: 1564991013353497
+    identification: 
+      column-name: ACTIONS
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:#PAG_ABM#:&SESSION.::&DEBUG.:P#PAG_ABM#:P#PAG_ABM#_ID:#ID#'
+        page: '#PAG_ABM#'
+        clear-cache: P#PAG_ABM#
+        values: 
+          p#pag_abm#_id: '#ID#'
+
+      link-text: <i class="fa fa-edit"></i>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_CLASSES ================================
+    id: 1565410559353499
+    identification: 
+      column-name: ITEM_CLASSES
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PAG_ABM =====================================
+    id: 1565831755353499
+    identification: 
+      column-name: PAG_ABM
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PAG_CUENTA ==================================
+    id: 1566233159353499
+    identification: 
+      column-name: PAG_CUENTA
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUIT ========================================
+    id: 9470129144537755
+    identification: 
+      column-name: CUIT
+      type: Plain Text
+
+    heading: 
+      heading: Cuit
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 44346561127939755
+    identification: 
+      column-name: STATUS
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Status
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLIENTES.STATUS # 18355222121272839
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: MENU CLIENTE ================================
+  id: 57950162492578021
+  identification: 
+    name: MENU CLIENTE
+    type: List
+
+  source: 
+    list: MENU CLIENTE # 5512870084115675
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    - t-Form--noPadding
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: TOOLBOX =====================================
+  id: 59403630022294929
+  identification: 
+    name: TOOLBOX
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Datos Fiscales ==============================
+  id: 66339256261824600
+  identification: 
+    name: Datos Fiscales
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_DFISCAL
+    include-rowid-column: false
+    where-clause: 'CLIENTE_ID = :P114_ID'
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-1
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 66339429229824601
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:121:&SESSION.::&DEBUG.::P121_ID:#ID#'
+        page: 121 # CLI_DFISCAL_ABM
+        values: 
+          p121_id: '#ID#'
+
+      link-text: '#ID#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 66339453558824602
+    identification: 
+      column-name: CLIENTE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 66339538439824603
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUIT ========================================
+    id: 66339659057824604
+    identification: 
+      column-name: CUIT
+      type: Plain Text
+
+    heading: 
+      heading: Cuit
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOMICILIO ===================================
+    id: 66339793094824605
+    identification: 
+      column-name: DOMICILIO
+      type: Plain Text
+
+    heading: 
+      heading: Domicilio
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CIUDAD ======================================
+    id: 66339834888824606
+    identification: 
+      column-name: CIUDAD
+      type: Plain Text
+
+    heading: 
+      heading: Ciudad
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CP ==========================================
+    id: 66339997126824607
+    identification: 
+      column-name: CP
+      type: Plain Text
+
+    heading: 
+      heading: Cp
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PROVINCIA_ID ================================
+    id: 66340060593824608
+    identification: 
+      column-name: PROVINCIA_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Provincia Id
+      alignment: end
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_PROVINCIA # 9234255353752883
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARTIDO_ID ==================================
+    id: 66340205260824609
+    identification: 
+      column-name: PARTIDO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Partido Id
+      alignment: end
+
+    layout: 
+      sequence: 100
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_PARTIDOS # 9234484986759454
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 66340288199824610
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: end
+
+    layout: 
+      sequence: 130
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: AUDIT_COLS ==================================
+    id: 66340335360824611
+    identification: 
+      column-name: AUDIT_COLS
+      type: Plain Text
+
+    heading: 
+      heading: Audit Cols
+      alignment: start
+
+    layout: 
+      sequence: 140
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CAB_TIPO_ID =================================
+    id: 66340468623824612
+    identification: 
+      column-name: CAB_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cab Tipo Id
+      alignment: end
+
+    layout: 
+      sequence: 110
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CAB_TIPO.TITLE # 13778764956984108
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: JUR =========================================
+    id: 66340588608824613
+    identification: 
+      column-name: JUR
+      type: Plain Text
+
+    heading: 
+      heading: Jur
+      alignment: end
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - cta-1
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Cuentas =====================================
+  id: 66340704517824614
+  identification: 
+    name: Cuentas
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_CUENTAS
+    include-rowid-column: false
+    where-clause: 'cliente_id = :P114_ID'
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-2
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 66340814533824615
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 10
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:122:&SESSION.::&DEBUG.::P122_ID:#ID#'
+        page: 122 # CLI_CUENTAS_ABM
+        values: 
+          p122_id: '#ID#'
+
+      link-text: '#ID#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 66340881154824616
+    identification: 
+      column-name: CLIENTE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 66340958160824617
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 66341095990824618
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: end
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO =======================================
+    id: 66341154576824619
+    identification: 
+      column-name: SALDO
+      type: Plain Text
+
+    heading: 
+      heading: Saldo
+      alignment: end
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P114_ID ==================================
+  id: 5446263587789648
+  identification: 
+    name: P114_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_NOMBRE ==============================
+  id: 5446370874789649
+  identification: 
+    name: P114_NOMBRE
+    type: Text Field
+
+  label: 
+    label: Nombre
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 200
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: NOMBRE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_VENDEDOR_ID =========================
+  id: 5446447019789650
+  identification: 
+    name: P114_VENDEDOR_ID
+    type: Select List
+
+  label: 
+    label: Vendedor
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: VENDEDOR.TITLE # 1450671573559921
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: VENDEDOR_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_ALIAS ===============================
+  id: 5446601818789651
+  identification: 
+    name: P114_ALIAS
+    type: Text Field
+
+  label: 
+    label: Alias
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 13
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: ALIAS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_TAGS ================================
+  id: 5446705620789652
+  identification: 
+    name: P114_TAGS
+    type: Text Field
+
+  label: 
+    label: Tags
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 400
+
+  advanced: 
+    custom-attributes: 
+    - 'style="text-transform:uppercase"'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: TAGS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_COND_PAGO ===========================
+  id: 5446826772789653
+  identification: 
+    name: P114_COND_PAGO
+    type: Number Field
+
+  label: 
+    label: Cond Pago
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 90
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: COND_PAGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_STATUS ==============================
+  id: 5446849847789654
+  identification: 
+    name: P114_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: TOOLBOX # 59403630022294929
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: '&P114_ICON.'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_STATUS_EMPRESAS # 59432140020336376
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: STATUS
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_AJ_COMISION =========================
+  id: 5446953504789655
+  identification: 
+    name: P114_AJ_COMISION
+    type: Number Field
+
+  label: 
+    label: Comision
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-percent
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: AJ_COMISION
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_AJ_COTIZ ============================
+  id: 5447056420789656
+  identification: 
+    name: P114_AJ_COTIZ
+    type: Number Field
+
+  label: 
+    label: Aj Cotiz
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 100
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-sliders
+    format-mask: 999G999G999G999G990D00
+    width: 30
+    value-placeholder: 1
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: AJ_COTIZ
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_LISTA_PRECIO ========================
+  id: 6012898482188717
+  identification: 
+    name: P114_LISTA_PRECIO
+    type: Select List
+
+  label: 
+    label: Lista Precio
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 120
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:NO;0,Todos;1,Guardados;3,Firmados;4'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: LISTA_PRECIO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_COLOR ===============================
+  id: 59403468760294928
+  identification: 
+    name: P114_COLOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: TOOLBOX # 59403630022294929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "s_status(:P114_STATUS,'COLOR')"
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_ICON ================================
+  id: 59403699781294930
+  identification: 
+    name: P114_ICON
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: TOOLBOX # 59403630022294929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "s_status(:P114_STATUS,'ICON')"
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_CAT002 ==============================
+  id: 107579330569520469
+  identification: 
+    name: P114_CAT002
+    type: Select List
+
+  label: 
+    label: Forma de Pago
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 130
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: STAT02_CREDITO # 107646370262475311
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: CAT002
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_CAT003 ==============================
+  id: 107579375315520470
+  identification: 
+    name: P114_CAT003
+    type: Select List
+
+  label: 
+    label: Calificacion
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 140
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: STAT03_PAGO # 107653604203494019
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: CAT003
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_AJ_FLETE ============================
+  id: 108290733706346037
+  identification: 
+    name: P114_AJ_FLETE
+    type: Number Field
+
+  label: 
+    label: AJ_FLETE
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 110
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: INFORMACION # 5446047407789646
+    column: AJ_FLETE
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P114_CLIENTE_ID ==========================
+  id: 154709430181021251
+  identification: 
+    name: P114_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: INFORMACION # 5446047407789646
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: ADD_02 ======================================
+  id: 1566595679353500
+  identification: 
+    button-name: ADD_02
+    label: ADD
+
+  layout: 
+    sequence: 20
+    region: Cuentas # 66340704517824614
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - u-color-27
+    icon: fa-number-2-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:122:&SESSION.::&DEBUG.:RP,122:P122_CLIENTE_ID:&G_CLIENTE_ID.'
+      page: 122 # CLI_CUENTAS_ABM
+      clear-cache: RP,122
+      values: 
+        p122_cliente_id: '&G_CLIENTE_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: A001_CTA
+    value: 2
+
+- # ====== Button: ADD_01 ======================================
+  id: 1567031291353502
+  identification: 
+    button-name: ADD_01
+    label: ADD
+
+  layout: 
+    sequence: 10
+    region: Datos Fiscales # 66339256261824600
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - u-color-34
+    icon: fa-number-1-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:46:&SESSION.::&DEBUG.:RP,46:P46_CLIENTE_ID:&P114_ID.'
+      page: 46 # Asociar Cuit Cliente
+      clear-cache: RP,46
+      values: 
+        p46_cliente_id: '&P114_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ADD_03 ======================================
+  id: 2732647754221202
+  identification: 
+    button-name: ADD_03
+    label: Agregar
+
+  layout: 
+    sequence: 10
+    region: GRUPOS # 17903963009970160
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:119:&SESSION.::&DEBUG.:RP,119:P119_CLIENTE_ID:&P114_ID.'
+      page: 119 # CLI_GRUPOS_ABM
+      clear-cache: RP,119
+      values: 
+        p119_cliente_id: '&P114_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: SAVE ========================================
+  id: 6013269430188721
+  identification: 
+    button-name: SAVE
+    label: Guardar
+
+  layout: 
+    sequence: 20
+    region: INFORMACION # 5446047407789646
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+- # ====== Button: DELETE ======================================
+  id: 6015187909188740
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 10
+    region: INFORMACION # 5446047407789646
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: 'SELECT 1 FROM ARTICULOS WHERE CLIENTE_ID = :P114_ID'
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 66341305643824620
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_01 # 1567031291353502
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 66341347225824621
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Datos Fiscales # 66339256261824600
+
+    execution: 
+      sequence: 10
+      event: New # 66341305643824620
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 66341444579824622
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_02 # 1566595679353500
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 66341555021824623
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Cuentas # 66340704517824614
+
+    execution: 
+      sequence: 10
+      event: New_1 # 66341444579824622
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: G_CLIENTE_ID ===========================
+  id: 1857868289371171
+  identification: 
+    item-name: G_CLIENTE_ID
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: P114_ID
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P114_ID
+
+- # ====== Computation: P114_ID ================================
+  id: 6013395413188722
+  identification: 
+    item-name: P114_ID
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: G_CLIENTE_ID
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P114_ID
+
+- # ====== Computation: P114_CLIENTE_ID ========================
+  id: 154709494393021252
+  identification: 
+    item-name: P114_CLIENTE_ID
+
+  execution: 
+    sequence: 40
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: P114_ID
+
+- # ====== Computation: P114_NOMBRE ============================
+  id: 169616057339604660
+  identification: 
+    item-name: P114_NOMBRE
+
+  execution: 
+    sequence: 50
+    point: After Submit
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'UPPER(:P114_NOMBRE)'
+
+- # ====== Computation: P114_ALIAS =============================
+  id: 169616121317604661
+  identification: 
+    item-name: P114_ALIAS
+
+  execution: 
+    sequence: 60
+    point: After Submit
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'UPPER(:P114_ALIAS)'
+
+processes: 
+- # ====== Process: Initialize form CLIENTE_INFO ===============
+  id: 5446138591789647
+  identification: 
+    name: Initialize form CLIENTE_INFO
+    type: Form - Initialization
+    execution-chain: None
+    form-region: INFORMACION # 5446047407789646
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form INFORMACION ===================
+  id: 6013201039188720
+  identification: 
+    name: Process form INFORMACION
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: INFORMACION # 5446047407789646
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: DELETE,SAVE
+
+branches: 
+- # ====== Branch: Go To Page 101 ==============================
+  id: 6015250013188741
+  identification: 
+    name: Go To Page 101
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.:RP,101::&success_msg=#SUCCESS_MSG#'
+      page: 101 # BUSCAR_CLIENTE
+      clear-cache: RP,101
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 6015187909188740
+

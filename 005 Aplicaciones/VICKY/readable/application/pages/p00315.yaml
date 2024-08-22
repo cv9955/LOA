@@ -1,0 +1,111 @@
+---
+# ====== Page: PRINT_PLANILLA ================================
+id: 315
+identification: 
+  name: PRINT_PLANILLA
+  alias: BOB_PRINT_PLANILLA
+  title: PRINT_PLANILLA
+  page-group: 300 BOBINAS # 4255325950619063
+
+appearance: 
+  page-mode: Normal
+  page-template: planilla
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Disabled
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: &P315_ID. ===================================
+  id: 9152449244705516
+  identification: 
+    name: '&P315_ID.'
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: 'BOBINAS_PKG.print_planilla(:P315_ID);'
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P315_ID ==================================
+  id: 6229803951039716
+  identification: 
+    name: P315_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: '&P315_ID.' # 9152449244705516
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: 0
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+

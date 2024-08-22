@@ -1,0 +1,833 @@
+---
+# ====== Page: BUSCAR RAZON SOCIAL ===========================
+id: 109
+identification: 
+  name: BUSCAR RAZON SOCIAL
+  alias: BUSCAR-RAZON-SOCIAL
+  title: BUSCAR RAZON SOCIAL
+  page-group: REQ 01 01 DATOS FISCALES # 24241595491096871
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: BUSCAR ======================================
+  id: 24254328004191572
+  identification: 
+    name: BUSCAR
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: BUSCAR RAZON SOCIAL =========================
+  id: 24290046871445989
+  identification: 
+    name: BUSCAR RAZON SOCIAL
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select CUIT LINK, 
+      DFISCALES_PKG.TO_CUIT(CUIT) CUIT,
+             TITLE,
+             IMP_GANANCIAS,
+             IMP_IVA,
+             MONOTRIBUTO,
+             INTEGRANTE_SOC,
+             EMPLEADOR,
+             ACT_MONOTRIBUTO
+        from TE_DFISCALES
+       where TITLE LIKE '%' || :P109_SEARCH || '%'
+    page-items-to-submit: 
+    - P109_SEARCH
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P109_LENGTH
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LINK ========================================
+    id: 24255954858191588
+    identification: 
+      column-name: LINK
+      type: Link
+
+    heading: 
+      heading: Agregar
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P109_CUIT",#LINK#)'
+      link-text: <img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUIT ========================================
+    id: 24290358425446166
+    identification: 
+      column-name: CUIT
+      type: Plain Text
+
+    heading: 
+      heading: Cuit
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 24290808678446166
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMP_GANANCIAS ===============================
+    id: 24291163952446167
+    identification: 
+      column-name: IMP_GANANCIAS
+      type: Plain Text
+
+    heading: 
+      heading: Imp Ganancias
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMP_IVA =====================================
+    id: 24291594146446167
+    identification: 
+      column-name: IMP_IVA
+      type: Plain Text
+
+    heading: 
+      heading: Imp Iva
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MONOTRIBUTO =================================
+    id: 24291938925446167
+    identification: 
+      column-name: MONOTRIBUTO
+      type: Plain Text
+
+    heading: 
+      heading: Monotributo
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INTEGRANTE_SOC ==============================
+    id: 24292375261446167
+    identification: 
+      column-name: INTEGRANTE_SOC
+      type: Plain Text
+
+    heading: 
+      heading: Integrante Soc
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: EMPLEADOR ===================================
+    id: 24292775011446167
+    identification: 
+      column-name: EMPLEADOR
+      type: Plain Text
+
+    heading: 
+      heading: Empleador
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACT_MONOTRIBUTO =============================
+    id: 24293214211446167
+    identification: 
+      column-name: ACT_MONOTRIBUTO
+      type: Plain Text
+
+    heading: 
+      heading: Act Monotributo
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P109_SEARCH ==============================
+  id: 24254176200191570
+  identification: 
+    name: P109_SEARCH
+    type: Text Field
+
+  label: 
+    label: Search
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: true
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: BUSCAR # 24254328004191572
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P109_LENGTH ==============================
+  id: 24255408138191582
+  identification: 
+    name: P109_LENGTH
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: BUSCAR # 24254328004191572
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P109_CUIT ================================
+  id: 24256099184191589
+  identification: 
+    name: P109_CUIT
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: BUSCAR RAZON SOCIAL # 24290046871445989
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P109_TITLE ===============================
+  id: 24309782930664542
+  identification: 
+    name: P109_TITLE
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: BUSCAR RAZON SOCIAL # 24290046871445989
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P109_ID ==================================
+  id: 24309877191664543
+  identification: 
+    name: P109_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: BUSCAR RAZON SOCIAL # 24290046871445989
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: New_1 ===============================
+  id: 24254873278191577
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P109_LENGTH
+
+  client-side-condition: 
+    type: Item > Value
+    item: P109_LENGTH
+    value: 3
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 24254927334191578
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: BUSCAR RAZON SOCIAL # 24290046871445989
+
+    execution: 
+      sequence: 10
+      event: New_1 # 24254873278191577
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 24256157983191590
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P109_CUIT
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 24309934938664544
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: ADD_CUIT
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: New # 24256157983191590
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P109_LENGTH ============================
+  id: 24255500232191583
+  identification: 
+    item-name: P109_LENGTH
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'CASE WHEN LENGTH(:P109_SEARCH) > 6 THEN 1 ELSE 0 END'
+
+processes: 
+- # ====== Process: ADD_CUIT ===================================
+  id: 24310068992664545
+  identification: 
+    name: ADD_CUIT
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: DFISCALES_PKG
+    procedure-or-function: BUSCAR_CUIT
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: ADD_CUIT
+
+  parameters: 
+  - # ====== Parameter: p_cuit ===================================
+    id: 24310214734664546
+    identification: 
+      name: p_cuit
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P109_CUIT
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_id =====================================
+    id: 24310234661664547
+    identification: 
+      name: p_id
+
+    parameter: 
+      direction: Out
+      data-type: PL/SQL INTEGER
+      ignore-output: false
+
+    value: 
+      item: P109_ID
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_title ==================================
+    id: 24310417562664548
+    identification: 
+      name: p_title
+
+    parameter: 
+      direction: Out
+      data-type: VARCHAR2
+      ignore-output: false
+
+    value: 
+      item: P109_TITLE
+
+    advanced: 
+      display-sequence: 30
+
+branches: 
+- # ====== Branch: Go To Page 101 ==============================
+  id: 24310429080664549
+  identification: 
+    name: Go To Page 101
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.:101,109::&success_msg=#SUCCESS_MSG#'
+      page: 101 # DATOS FISCALES
+      clear-cache: 101,109
+

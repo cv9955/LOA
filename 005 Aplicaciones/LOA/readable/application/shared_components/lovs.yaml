@@ -1,0 +1,427 @@
+---
+- # ====== List of Values: PC_CONFIGURACOIN ====================
+  id: 8547060935139314
+  identification: 
+    name: PC_CONFIGURACOIN
+
+  subscription: 
+    version-number: 305766635
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select * from TABLE(PLAN_DE_CUENTAS_PKG.LOV_CUENTA_CONFIG)
+
+  column-mapping: 
+    return: KEY
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: PLAN_CUENTAS.RAMA_PRINCIPAL =========
+  id: 8546055926139311
+  identification: 
+    name: PLAN_CUENTAS.RAMA_PRINCIPAL
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select id,title,parent from cuenta_rama_principal
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: PC_RUBROS ===========================
+  id: 8545509103139310
+  identification: 
+    name: PC_RUBROS
+
+  subscription: 
+    version-number: 305780963
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: V_PC_RUBROS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: PARENT_TITLE
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: PC_RAMA_PRINCIPAL ===================
+  id: 7243187887558424
+  identification: 
+    name: PC_RAMA_PRINCIPAL
+
+  subscription: 
+    version-number: 305785761
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: V_PC_RAMA_PRINCIPAL
+    where-clause: ID > 10
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: PARENT_TITLE
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: PROVEEDORES.TITLE ===================
+  id: 724263643366737
+  identification: 
+    name: PROVEEDORES.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: PROVS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTAS.DESTINO_COMPRAS =============
+  id: 726234313418805
+  identification: 
+    name: CUENTAS.DESTINO_COMPRAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_DESTINO_COMPRAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: VENDEDORES.TITLE ====================
+  id: 24238370925069659
+  identification: 
+    name: VENDEDORES.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: VENDEDORES
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CLIENTES.TITLE ======================
+  id: 24238610531071259
+  identification: 
+    name: CLIENTES.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLIENTES
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_PROVINCIAS ======================
+  id: 24338437167279383
+  identification: 
+    name: LOV_PROVINCIAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_PROVINCIAS
+
+  column-mapping: 
+    return: ID
+    display: PROVINCIA
+    default-sort: PROVINCIA
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_PARTIDOS ========================
+  id: 24338720212282097
+  identification: 
+    name: LOV_PARTIDOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_PARTIDOS
+
+  column-mapping: 
+    return: ID
+    display: PARTIDO
+    default-sort: PARTIDO
+    sort-direction: Ascending (Nulls Last)
+    group: PROVINCIA
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: DESKTOP THEME STYLES ================
+  id: 26136726044151678
+  identification: 
+    name: DESKTOP THEME STYLES
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select s.name d,
+             s.theme_style_id r
+        from apex_application_theme_styles s,
+             apex_application_themes t
+       where s.application_id = :app_id
+         and t.application_id = s.application_id
+         and t.theme_number   = s.theme_number
+         and t.is_current     = 'Yes'
+       order by 1
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: USER_THEME_PREFERENCE ===============
+  id: 26137462693151685
+  identification: 
+    name: USER_THEME_PREFERENCE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Allow End Users to choose Theme Style ========
+    id: 26137687576151685
+    entry: 
+      sequence: 1
+      display: Allow End Users to choose Theme Style
+      return: Yes
+
+- # ====== List of Values: TIMEFRAME (4 WEEKS) =================
+  id: 26156432872151722
+  identification: 
+    name: TIMEFRAME (4 WEEKS)
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select disp,
+             val as seconds
+        from table( apex_util.get_timeframe_lov_data )
+       order by insert_order
+
+  column-mapping: 
+    return: SECONDS
+    display: DISP
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: VIEW_AS_REPORT_CHART ================
+  id: 26202842749151776
+  identification: 
+    name: VIEW_AS_REPORT_CHART
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Add Report Page ==============================
+    id: 26203149737151777
+    entry: 
+      sequence: 1
+      display: Add Report Page
+      return: REPORT
+
+    globalization: 
+      template: <span class="fa fa-table" aria-hidden="true"></span><span class="u-VisuallyHidden">#DISPLAY_VALUE#</span>
+
+  - # ====== Entry: Add Chart Page ===============================
+    id: 26203518156151777
+    entry: 
+      sequence: 2
+      display: Add Chart Page
+      return: CHART
+
+    globalization: 
+      template: <span class="fa fa-pie-chart" aria-hidden="true"></span><span class="u-VisuallyHidden">#DISPLAY_VALUE#</span>
+
+- # ====== List of Values: ACCESS_ROLES ========================
+  id: 26235572122151812
+  identification: 
+    name: ACCESS_ROLES
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select title d, id r
+      from t_user_roles
+      -- where application_id = :APP_ID 
+      order by 1
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: EMAIL_USERNAME_FORMAT ===============
+  id: 26243046902151819
+  identification: 
+    name: EMAIL_USERNAME_FORMAT
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Email Addresses ==============================
+    id: 26243314933151820
+    entry: 
+      sequence: 1
+      display: Email Addresses
+      return: EMAIL
+
+- # ====== List of Values: FEEDBACK_RATING =====================
+  id: 26260263660151844
+  identification: 
+    name: FEEDBACK_RATING
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Positive =====================================
+    id: 26260571550151844
+    entry: 
+      sequence: 1
+      display: Positive
+      return: 3
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-smile-o fa-2x feedback-positive" aria-hidden="true" ></span></span>
+
+  - # ====== Entry: Neutral ======================================
+    id: 26260887903151845
+    entry: 
+      sequence: 2
+      display: Neutral
+      return: 2
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-emoji-neutral fa-2x feedback-neutral" aria-hidden="true" ></span></span>
+
+  - # ====== Entry: Negative =====================================
+    id: 26261280219151845
+    entry: 
+      sequence: 3
+      display: Negative
+      return: 1
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-frown-o fa-2x feedback-negative" aria-hidden="true" ></span></span>
+
+- # ====== List of Values: FEEDBACK_STATUS =====================
+  id: 26272644489151851
+  identification: 
+    name: FEEDBACK_STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: No Action ====================================
+    id: 26272965844151851
+    entry: 
+      sequence: 1
+      display: No Action
+      return: 0
+
+  - # ====== Entry: Acknowledged =================================
+    id: 26273353385151851
+    entry: 
+      sequence: 2
+      display: Acknowledged
+      return: 1
+
+  - # ====== Entry: Open =========================================
+    id: 26273686336151851
+    entry: 
+      sequence: 3
+      display: Open
+      return: 3
+
+  - # ====== Entry: Closed =======================================
+    id: 26274098481151851
+    entry: 
+      sequence: 4
+      display: Closed
+      return: 4
+

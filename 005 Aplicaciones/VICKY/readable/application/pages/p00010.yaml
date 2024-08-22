@@ -1,0 +1,893 @@
+---
+# ====== Page: ART_LISTA =====================================
+id: 10
+identification: 
+  name: ART_LISTA
+  alias: ART_LISTA
+  title: LISTADO DE ARTICULOS
+  page-group: 030 ARTICULOS # 1930054017627653
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: ARTICULOS ===================================
+  id: 12281805681709011
+  identification: 
+    name: ARTICULOS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,cliente_id
+            ,s_articulo(id) scodigo
+            ,art_tipo_id
+            ,largo
+            ,ancho
+            ,alto
+            ,art_calidad_id
+            ,plargo
+            ,pancho
+            ,trazados
+            ,status
+            ,obs
+            ,s_calidad(art_calidad_id,'CALIDAD_STYLE') calidad_style
+        FROM arts 
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    static-id: LISTA2018
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 12827836737384477
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:RP:P30_ID:#ID#'
+        page: 30 # ART_X
+        clear-cache: RP
+        values: 
+          p30_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 12847139487420368
+      identification: 
+        name: Primary Report
+        alias: 44579
+
+    column-groups: 
+    - # ====== Column Group: PLANCHA ===============================
+      id: 12829046700384489
+      identification: 
+        name: PLANCHA
+
+      layout: 
+        sequence: 10
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 1016571056305905
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:RP:P31_ID:#ID#'
+          page: 31 # ART_Z
+          clear-cache: RP
+          values: 
+            p31_id: '#ID#'
+
+        link-text: '#ID#'
+        link-attributes: target = "ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LARGO =======================================
+      id: 1017029393305908
+      identification: 
+        column-name: LARGO
+        type: Plain Text
+
+      heading: 
+        heading: Largo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_caja>#LARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ANCHO =======================================
+      id: 1017384694305908
+      identification: 
+        column-name: ANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Ancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_caja>#ANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ALTO ========================================
+      id: 1017773521305908
+      identification: 
+        column-name: ALTO
+        type: Plain Text
+
+      heading: 
+        heading: Alto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_caja>#ALTO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLARGO ======================================
+      id: 1018224159305910
+      identification: 
+        column-name: PLARGO
+        type: Plain Text
+
+      heading: 
+        heading: Plargo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_plancha>#PLARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PANCHO ======================================
+      id: 1018622368305910
+      identification: 
+        column-name: PANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Pancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_plancha>#PANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TRAZADOS ====================================
+      id: 1019054332305910
+      identification: 
+        column-name: TRAZADOS
+        type: Plain Text
+
+      heading: 
+        heading: Trazados
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_plancha>#TRAZADOS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATUS ======================================
+      id: 1019381580305913
+      identification: 
+        column-name: STATUS
+        type: Hidden
+
+      heading: 
+        heading: Status
+
+      layout: 
+        sequence: 140
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: OBS =========================================
+      id: 1019815556305913
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CALIDAD_STYLE ===============================
+      id: 1020243630305913
+      identification: 
+        column-name: CALIDAD_STYLE
+        type: Hidden
+
+      heading: 
+        heading: Calidad Style
+
+      layout: 
+        sequence: 170
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: SCODIGO =====================================
+      id: 1020581131305914
+      identification: 
+        column-name: SCODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 1021022903305914
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: ART_TIPO_ID =================================
+      id: 1021423071305914
+      identification: 
+        column-name: ART_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: ART_CALIDAD_ID ==============================
+      id: 1021831164305914
+      identification: 
+        column-name: ART_CALIDAD_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+      heading: 
+        heading: Calidad
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<span parent-class="col-calidad #CALIDAD_STYLE#">#ART_CALIDAD_ID#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 8.5
+        height: 11
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#9bafde'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#efefef'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: Listado de Articulos ========================
+  id: 32699201931634505
+  identification: 
+    name: Listado de Articulos
+    type: List
+
+  source: 
+    list: MENU_INICIO # 5829844276418607
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-users
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 1023227985305994
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P10_A_FABRI
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 1023737824306002
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P10_A_FABRI
+
+    execution: 
+      sequence: 10
+      event: New # 1023227985305994
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 1024165005306003
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: ARTICULOS # 12281805681709011
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 1024604649306003
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent()
+
+    execution: 
+      sequence: 10
+      event: New_1 # 1024165005306003
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+

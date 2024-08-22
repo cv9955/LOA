@@ -1,0 +1,4040 @@
+---
+- # ====== Region Template: Alert ==============================
+  id: 2036966502195651
+  identification: 
+    name: Alert
+    identifier: ALERT
+    class: Custom 1
+
+  subscription: 
+    master: 
+      referenced-id: 2039236646100190748
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-Alert--horizontal
+    - t-Alert--defaultIcons
+    - t-Alert--warning
+
+  template: 
+    template: |
+      <div class="t-Alert #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon #ICON_CSS_CLASSES#" aria-hidden="true"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-header">
+              <h2 class="t-Alert-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h2>
+            </div>
+            <div class="t-Alert-body">#BODY##SUB_REGIONS#</div>
+          </div>
+          <div class="t-Alert-buttons">#PREVIOUS##CLOSE##CREATE##NEXT#</div>
+        </div>
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: Hidden but Accessible ==============
+    id: 2039281150195662
+    identification: 
+      name: Hidden but Accessible
+      identifier: HIDDENHEADER
+      group: Alert Title
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--accessibleHeading
+
+    help: 
+      help-text: Visually hides the alert title, but assistive technologies can still read it.
+
+  - # ====== Template Option: Highlight Background ===============
+    id: 2039438591195662
+    identification: 
+      name: Highlight Background
+      identifier: COLOREDBACKGROUND
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--colorBG
+
+    help: 
+      help-text: Set alert background color to that of the alert type (warning, success, etc.)
+
+  - # ====== Template Option: Show Custom Icons ==================
+    id: 2039847540195662
+    identification: 
+      name: Show Custom Icons
+      identifier: SHOW_CUSTOM_ICONS
+      group: Alert Icons
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--customIcons
+
+    help: 
+      help-text: Set custom icons by modifying the Alert Region's Icon CSS Classes property.
+
+  - # ====== Template Option: Danger =============================
+    id: 2040212907195664
+    identification: 
+      name: Danger
+      identifier: DANGER
+      group: Alert Type
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--danger
+
+    help: 
+      help-text: Show an error or danger alert.
+
+  - # ====== Template Option: Show Default Icons =================
+    id: 2040459985195664
+    identification: 
+      name: Show Default Icons
+      identifier: USEDEFAULTICONS
+      group: Alert Icons
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--defaultIcons
+
+    help: 
+      help-text: Uses default icons for alert types.
+
+  - # ====== Template Option: Horizontal =========================
+    id: 2040804022195664
+    identification: 
+      name: Horizontal
+      identifier: HORIZONTAL
+      group: Alert Display
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--horizontal
+
+    help: 
+      help-text: Show horizontal alert with buttons to the right.
+
+  - # ====== Template Option: Information ========================
+    id: 2041013535195665
+    identification: 
+      name: Information
+      identifier: INFORMATION
+      group: Alert Type
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--info
+
+    help: 
+      help-text: Show informational alert.
+
+  - # ====== Template Option: Hide Icons =========================
+    id: 2041292400195665
+    identification: 
+      name: Hide Icons
+      identifier: HIDE_ICONS
+      group: Alert Icons
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--noIcon
+
+    help: 
+      help-text: Hides alert icons
+
+  - # ====== Template Option: Hidden =============================
+    id: 2041450651195665
+    identification: 
+      name: Hidden
+      identifier: HIDDENHEADERNOAT
+      group: Alert Title
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--removeHeading
+      - js-removeLandmark
+
+    help: 
+      help-text: Hides the Alert Title from being displayed.
+
+  - # ====== Template Option: Success ============================
+    id: 2041672428195665
+    identification: 
+      name: Success
+      identifier: SUCCESS
+      group: Alert Type
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--success
+
+    help: 
+      help-text: Show success alert.
+
+  - # ====== Template Option: Warning ============================
+    id: 2041806919195665
+    identification: 
+      name: Warning
+      identifier: WARNING
+      group: Alert Type
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--warning
+
+    help: 
+      help-text: Show a warning alert.
+
+  - # ====== Template Option: Wizard =============================
+    id: 2042014235195665
+    identification: 
+      name: Wizard
+      identifier: WIZARD
+      group: Alert Display
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Alert--wizard
+
+    help: 
+      help-text: Show the alert in a wizard style region.
+
+- # ====== Region Template: Blank with Attributes ==============
+  id: 2042129008195665
+  identification: 
+    name: Blank with Attributes
+    identifier: BLANK_WITH_ATTRIBUTES
+    class: Borderless Region
+
+  subscription: 
+    master: 
+      referenced-id: 4499993862448380551
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: '<div id="#REGION_STATIC_ID#" class="#REGION_CSS_CLASSES#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>#PREVIOUS##BODY##SUB_REGIONS##NEXT#</div>'
+
+- # ====== Region Template: Blank with Attributes (No Grid) ====
+  id: 2043572731195667
+  identification: 
+    name: Blank with Attributes (No Grid)
+    identifier: BLANK_WITH_ATTRIBUTES_NO_GRID
+    class: Borderless Region
+
+  subscription: 
+    master: 
+      referenced-id: 3369790999010910123
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: '<div id="#REGION_STATIC_ID#" class="#REGION_CSS_CLASSES#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>#PREVIOUS##BODY##SUB_REGIONS##NEXT#</div>'
+
+- # ====== Region Template: Buttons Container ==================
+  id: 2044971897195668
+  identification: 
+    name: Buttons Container
+    identifier: BUTTONS_CONTAINER
+    class: Button Region without Title
+
+  subscription: 
+    master: 
+      referenced-id: 2124982336649579661
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: |
+      <div class="t-ButtonRegion t-Form--floatLeft #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-ButtonRegion-wrap">
+          <div class="t-ButtonRegion-col t-ButtonRegion-col--left"><div class="t-ButtonRegion-buttons">#PREVIOUS##CLOSE##DELETE#</div></div>
+          <div class="t-ButtonRegion-col t-ButtonRegion-col--content">
+            #BODY#
+            <div class="t-ButtonRegion-buttons">#CHANGE#</div>
+            #SUB_REGIONS#
+          </div>
+          <div class="t-ButtonRegion-col t-ButtonRegion-col--right"><div class="t-ButtonRegion-buttons">#EDIT##CREATE##NEXT#</div></div>
+        </div>
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: Borderless =========================
+    id: 2048131809195671
+    identification: 
+      name: Borderless
+      identifier: BORDERLESS
+      group: Style
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ButtonRegion--noBorder
+
+  - # ====== Template Option: No Padding =========================
+    id: 2048562330195673
+    identification: 
+      name: No Padding
+      identifier: NOPADDING
+      group: Body Padding
+      sequence: 3
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ButtonRegion--noPadding
+
+  - # ====== Template Option: Remove UI Decoration ===============
+    id: 2048748416195673
+    identification: 
+      name: Remove UI Decoration
+      identifier: REMOVEUIDECORATION
+      group: Style
+      sequence: 4
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ButtonRegion--noUI
+
+  - # ====== Template Option: Slim Padding =======================
+    id: 2048924009195673
+    identification: 
+      name: Slim Padding
+      identifier: SLIMPADDING
+      group: Body Padding
+      sequence: 5
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ButtonRegion--slimPadding
+
+  - # ====== Template Option: Stick to Bottom for Mobile =========
+    id: 2049107919195673
+    identification: 
+      name: Stick to Bottom for Mobile
+      identifier: STICK_TO_BOTTOM
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ButtonRegion--stickToBottom
+
+    help: 
+      help-text: This will position the button container region to the bottom of the screen for small screens.
+
+- # ====== Region Template: Cards Container ====================
+  id: 2049252476195673
+  identification: 
+    name: Cards Container
+    identifier: CARDS_CONTAINER
+    class: Custom 1
+
+  subscription: 
+    master: 
+      referenced-id: 2071277712695139743
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    default: 
+    - u-colors
+
+  template: 
+    template: |
+      <div class="t-CardsRegion #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-Region-orderBy">#ORDER_BY_ITEM#</div>
+        #BODY#
+        #SUB_REGIONS#
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: Style A ============================
+    id: 2050437436195675
+    identification: 
+      name: Style A
+      identifier: STYLE_A
+      group: Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-CardsRegion--styleA
+
+  - # ====== Template Option: Style B ============================
+    id: 2050621191195675
+    identification: 
+      name: Style B
+      identifier: STYLE_B
+      group: Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-CardsRegion--styleB
+
+  - # ====== Template Option: Style C ============================
+    id: 2050809243195676
+    identification: 
+      name: Style C
+      identifier: STYLE_C
+      group: Style
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-CardsRegion--styleC
+
+  - # ====== Template Option: Apply Theme Colors =================
+    id: 2051030195195676
+    identification: 
+      name: Apply Theme Colors
+      identifier: APPLY_THEME_COLORS
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - u-colors
+
+    help: 
+      help-text: Applies the colors from the theme's color palette to the icons or initials within cards.
+
+- # ====== Region Template: Carousel Container =================
+  id: 2051130263195676
+  identification: 
+    name: Carousel Container
+    identifier: CAROUSEL_CONTAINER
+    class: Navigation Region
+
+  subscription: 
+    master: 
+      referenced-id: 2865840475322558786
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-Region--hiddenOverflow
+    default: 
+    - t-Region--showCarouselControls
+
+  template: 
+    template: |
+      <div class="t-Region t-Region--carousel #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-Region-header">
+          <div class="t-Region-headerItems t-Region-headerItems--title">
+            <span class="t-Region-headerIcon"><span class="t-Icon #ICON_CSS_CLASSES#" aria-hidden="true"></span></span>
+            <h2 class="t-Region-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h2>
+          </div>
+          <div class="t-Region-headerItems t-Region-headerItems--buttons">#COPY##EDIT#<span class="js-maximizeButtonContainer"></span></div>
+        </div>
+        <div role="region" aria-label="#TITLE#" class="t-Region-bodyWrap">
+          <div class="t-Region-buttons t-Region-buttons--top">
+            <div class="t-Region-buttons-left">#PREVIOUS#</div>
+            <div class="t-Region-buttons-right">#NEXT#</div>
+          </div>
+          <div class="t-Region-body">
+            #BODY#
+            <div class="t-Region-carouselRegions">#SUB_REGIONS#</div>
+          </div>
+          <div class="t-Region-buttons t-Region-buttons--bottom">
+            <div class="t-Region-buttons-left">#CLOSE##HELP#</div>
+            <div class="t-Region-buttons-right">#DELETE##CHANGE##CREATE#</div>
+          </div>
+        </div>
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+
+  sub-regions: 
+    template: |
+      <div data-label="#SUB_REGION_TITLE#" id="SR_#SUB_REGION_ID#">
+        #SUB_REGION#
+      </div>
+
+  javascript: 
+    file-urls: 
+    - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.apexTabs#MIN#.js?v=#APEX_VERSION#'
+    - '#APEX_FILES#plugins/com.oracle.apex.carousel/1.1/com.oracle.apex.carousel#MIN#.js?v=#APEX_VERSION#'
+
+  template-options: 
+  - # ====== Template Option: 240px ==============================
+    id: 2054960581195681
+    identification: 
+      name: 240px
+      identifier: 240PX
+      group: Body Height
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h240
+
+    help: 
+      help-text: Sets region body height to 240px.
+
+  - # ====== Template Option: 320px ==============================
+    id: 2055126785195681
+    identification: 
+      name: 320px
+      identifier: 320PX
+      group: Body Height
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h320
+
+    help: 
+      help-text: Sets region body height to 320px.
+
+  - # ====== Template Option: 480px ==============================
+    id: 2055358061195682
+    identification: 
+      name: 480px
+      identifier: 480PX
+      group: Body Height
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h480
+
+  - # ====== Template Option: 640px ==============================
+    id: 2055579483195682
+    identification: 
+      name: 640px
+      identifier: 640PX
+      group: Body Height
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h640
+
+  - # ====== Template Option: 10 Seconds =========================
+    id: 2055988059195682
+    identification: 
+      name: 10 Seconds
+      identifier: 10_SECONDS
+      group: Timer
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-cycle10s
+
+  - # ====== Template Option: 15 Seconds =========================
+    id: 2056155395195682
+    identification: 
+      name: 15 Seconds
+      identifier: 15_SECONDS
+      group: Timer
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-cycle15s
+
+  - # ====== Template Option: 20 Seconds =========================
+    id: 2056352904195682
+    identification: 
+      name: 20 Seconds
+      identifier: 20_SECONDS
+      group: Timer
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-cycle20s
+
+  - # ====== Template Option: 5 Seconds ==========================
+    id: 2056588069195684
+    identification: 
+      name: 5 Seconds
+      identifier: 5_SECONDS
+      group: Timer
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-cycle5s
+
+  - # ====== Template Option: Show Maximize Button ===============
+    id: 2056727149195684
+    identification: 
+      name: Show Maximize Button
+      identifier: SHOW_MAXIMIZE_BUTTON
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-showMaximizeButton
+
+    help: 
+      help-text: Displays a button in the Region Header to maximize the region. Clicking this button will toggle the maximize state and stretch the region to fill the screen.
+
+  - # ====== Template Option: Remember Carousel Slide ============
+    id: 2056998393195684
+    identification: 
+      name: Remember Carousel Slide
+      identifier: REMEMBER_CAROUSEL_SLIDE
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-useLocalStorage
+
+  - # ====== Template Option: Accent 1 ===========================
+    id: 2057318916195684
+    identification: 
+      name: Accent 1
+      identifier: ACCENT_1
+      group: Accent
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent1
+
+  - # ====== Template Option: Accent 2 ===========================
+    id: 2057519398195685
+    identification: 
+      name: Accent 2
+      identifier: ACCENT_2
+      group: Accent
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent2
+
+  - # ====== Template Option: Accent 3 ===========================
+    id: 2057789523195685
+    identification: 
+      name: Accent 3
+      identifier: ACCENT_3
+      group: Accent
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent3
+
+  - # ====== Template Option: Accent 4 ===========================
+    id: 2057916200195685
+    identification: 
+      name: Accent 4
+      identifier: ACCENT_4
+      group: Accent
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent4
+
+  - # ====== Template Option: Accent 5 ===========================
+    id: 2058107625195685
+    identification: 
+      name: Accent 5
+      identifier: ACCENT_5
+      group: Accent
+      sequence: 50
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent5
+
+  - # ====== Template Option: Slide ==============================
+    id: 2058541985195685
+    identification: 
+      name: Slide
+      identifier: SLIDE
+      group: Animation
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--carouselSlide
+
+  - # ====== Template Option: Spin ===============================
+    id: 2058772900195685
+    identification: 
+      name: Spin
+      identifier: SPIN
+      group: Animation
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--carouselSpin
+
+  - # ====== Template Option: Hide ===============================
+    id: 2059132809195689
+    identification: 
+      name: Hide
+      identifier: HIDEOVERFLOW
+      group: Body Overflow
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hiddenOverflow
+
+  - # ====== Template Option: Hidden but accessible ==============
+    id: 2059508762195689
+    identification: 
+      name: Hidden but accessible
+      identifier: HIDEREGIONHEADER
+      group: Header
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hideHeader
+
+    help: 
+      help-text: This option will hide the region header.  Note that the region title will still be audible for Screen Readers. Buttons placed in the region header will be hidden and inaccessible.
+
+  - # ====== Template Option: Remove Borders =====================
+    id: 2059768756195689
+    identification: 
+      name: Remove Borders
+      identifier: NOBORDER
+      group: Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noBorder
+
+    help: 
+      help-text: Removes borders from the region.
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2059909092195689
+    identification: 
+      name: Remove Body Padding
+      identifier: NOBODYPADDING
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noPadding
+
+    help: 
+      help-text: Removes padding from region body.
+
+  - # ====== Template Option: Hidden =============================
+    id: 2060160557195690
+    identification: 
+      name: Hidden
+      identifier: HIDDENHEADERNOAT
+      group: Header
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--removeHeader
+
+  - # ====== Template Option: Scroll =============================
+    id: 2060334826195690
+    identification: 
+      name: Scroll
+      identifier: SCROLLBODY
+      group: Body Overflow
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--scrollBody
+
+  - # ====== Template Option: Show Next and Previous Buttons =====
+    id: 2060567342195690
+    identification: 
+      name: Show Next and Previous Buttons
+      identifier: SHOW_NEXT_AND_PREVIOUS_BUTTONS
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--showCarouselControls
+
+  - # ====== Template Option: Show Region Icon ===================
+    id: 2060729997195690
+    identification: 
+      name: Show Region Icon
+      identifier: SHOW_REGION_ICON
+      sequence: 50
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--showIcon
+
+    help: 
+      help-text: Displays the region icon in the region header beside the region title
+
+  - # ====== Template Option: Stack Region =======================
+    id: 2060901370195692
+    identification: 
+      name: Stack Region
+      identifier: STACKED
+      group: Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--stacked
+
+    help: 
+      help-text: Removes side borders and shadows, and can be useful for accordions and regions that need to be grouped together vertically.
+
+- # ====== Region Template: Collapsible ========================
+  id: 2061027271195692
+  identification: 
+    name: Collapsible
+    identifier: COLLAPSIBLE
+    class: Hide and Show Region
+
+  subscription: 
+    master: 
+      referenced-id: 2662888092628347716
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - is-expanded
+    - t-Region--scrollBody
+
+  template: 
+    template: |
+      <div class="t-Region t-Region--hideShow #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" data-region-id="#REGION_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+       <div class="t-Region-header">
+        <div class="t-Region-headerItems t-Region-headerItems--controls"><span class="t-Button t-Button--icon t-Button--hideShow"><span class="a-Icon _a-Collapsible-icon" aria-hidden="true"></span></span></div>
+        <div class="t-Region-headerItems t-Region-headerItems--title">
+          <h2 id="#REGION_STATIC_ID#_heading" class="t-Region-title" data-apex-heading><button class="t-Region-titleButton" type="button">#TITLE#</button></h2>
+        </div>
+        <div class="t-Region-headerItems t-Region-headerItems--buttons">#EDIT#</div>
+       </div>
+       <div class="t-Region-bodyWrap">
+         <div class="t-Region-buttons t-Region-buttons--top">
+          <div class="t-Region-buttons-left">#CLOSE#</div>
+          <div class="t-Region-buttons-right">#CREATE#</div>
+         </div>
+         <div class="t-Region-body">
+           <div class="t-Region-orderBy">#ORDER_BY_ITEM#</div>
+           #COPY#
+           #BODY#
+           #SUB_REGIONS#
+           #CHANGE#
+         </div>
+         <div class="t-Region-buttons t-Region-buttons--bottom">
+          <div class="t-Region-buttons-left">#PREVIOUS#</div>
+          <div class="t-Region-buttons-right">#NEXT#</div>
+         </div>
+       </div>
+      </div>
+      <script>
+          (() => {
+              const region = document.getElementById('#REGION_STATIC_ID#').classList;
+              const pref = sessionStorage.getItem('ORA_WWV_apex.toggleCore.a_Collapsible_#REGION_ID#.&APP_ID..&APP_PAGE_ID..preferenceForExpanded');
+              if (region.contains('js-useLocalStorage')) { region.toggle('is-collapsed', pref === 'false'); }
+          })();
+      </script>
+
+  accessibility: 
+    landmark-type: Region
+    region-title-html-id: '#REGION_STATIC_ID#_heading'
+
+  template-options: 
+  - # ====== Template Option: 240px ==============================
+    id: 2064333440195696
+    identification: 
+      name: 240px
+      identifier: 240PX
+      group: Body Height
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h240
+
+    help: 
+      help-text: Sets region body height to 240px.
+
+  - # ====== Template Option: 320px ==============================
+    id: 2064504420195696
+    identification: 
+      name: 320px
+      identifier: 320PX
+      group: Body Height
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h320
+
+    help: 
+      help-text: Sets region body height to 320px.
+
+  - # ====== Template Option: 480px ==============================
+    id: 2064781600195696
+    identification: 
+      name: 480px
+      identifier: 480PX
+      group: Body Height
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h480
+
+    help: 
+      help-text: Sets body height to 480px.
+
+  - # ====== Template Option: 640px ==============================
+    id: 2064952621195698
+    identification: 
+      name: 640px
+      identifier: 640PX
+      group: Body Height
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h640
+
+    help: 
+      help-text: Sets body height to 640px.
+
+  - # ====== Template Option: Collapsed ==========================
+    id: 2065367411195698
+    identification: 
+      name: Collapsed
+      identifier: COLLAPSED
+      group: Default State
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - is-collapsed
+
+  - # ====== Template Option: Expanded ===========================
+    id: 2065560847195700
+    identification: 
+      name: Expanded
+      identifier: EXPANDED
+      group: Default State
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - is-expanded
+
+  - # ====== Template Option: Remember Collapsible State =========
+    id: 2065749608195700
+    identification: 
+      name: Remember Collapsible State
+      identifier: REMEMBER_COLLAPSIBLE_STATE
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-useLocalStorage
+
+    help: 
+      help-text: This option saves the current state of the collapsible region for the duration of the session.
+
+  - # ====== Template Option: Accent 1 ===========================
+    id: 2065977709195700
+    identification: 
+      name: Accent 1
+      identifier: ACCENT_1
+      group: Accent
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent1
+
+  - # ====== Template Option: Accent 10 ==========================
+    id: 2066129104195700
+    identification: 
+      name: Accent 10
+      identifier: ACCENT_10
+      group: Accent
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent10
+
+  - # ====== Template Option: Accent 11 ==========================
+    id: 2066306239195700
+    identification: 
+      name: Accent 11
+      identifier: ACCENT_11
+      group: Accent
+      sequence: 110
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent11
+
+  - # ====== Template Option: Accent 12 ==========================
+    id: 2066592627195701
+    identification: 
+      name: Accent 12
+      identifier: ACCENT_12
+      group: Accent
+      sequence: 120
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent12
+
+  - # ====== Template Option: Accent 13 ==========================
+    id: 2066775153195701
+    identification: 
+      name: Accent 13
+      identifier: ACCENT_13
+      group: Accent
+      sequence: 130
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent13
+
+  - # ====== Template Option: Accent 14 ==========================
+    id: 2066909090195701
+    identification: 
+      name: Accent 14
+      identifier: ACCENT_14
+      group: Accent
+      sequence: 140
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent14
+
+  - # ====== Template Option: Accent 15 ==========================
+    id: 2067134450195701
+    identification: 
+      name: Accent 15
+      identifier: ACCENT_15
+      group: Accent
+      sequence: 150
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent15
+
+  - # ====== Template Option: Accent 2 ===========================
+    id: 2067351469195701
+    identification: 
+      name: Accent 2
+      identifier: ACCENT_2
+      group: Accent
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent2
+
+  - # ====== Template Option: Accent 3 ===========================
+    id: 2067547500195703
+    identification: 
+      name: Accent 3
+      identifier: ACCENT_3
+      group: Accent
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent3
+
+  - # ====== Template Option: Accent 4 ===========================
+    id: 2067703731195703
+    identification: 
+      name: Accent 4
+      identifier: ACCENT_4
+      group: Accent
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent4
+
+  - # ====== Template Option: Accent 5 ===========================
+    id: 2067994538195703
+    identification: 
+      name: Accent 5
+      identifier: ACCENT_5
+      group: Accent
+      sequence: 50
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent5
+
+  - # ====== Template Option: Accent 6 ===========================
+    id: 2068126310195703
+    identification: 
+      name: Accent 6
+      identifier: ACCENT_6
+      group: Accent
+      sequence: 60
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent6
+
+  - # ====== Template Option: Accent 7 ===========================
+    id: 2068315193195703
+    identification: 
+      name: Accent 7
+      identifier: ACCENT_7
+      group: Accent
+      sequence: 70
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent7
+
+  - # ====== Template Option: Accent 8 ===========================
+    id: 2068558234195703
+    identification: 
+      name: Accent 8
+      identifier: ACCENT_8
+      group: Accent
+      sequence: 80
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent8
+
+  - # ====== Template Option: Accent 9 ===========================
+    id: 2068700754195704
+    identification: 
+      name: Accent 9
+      identifier: ACCENT_9
+      group: Accent
+      sequence: 90
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent9
+
+  - # ====== Template Option: End ================================
+    id: 2069162433195704
+    identification: 
+      name: End
+      identifier: CONRTOLS_POSITION_END
+      group: Collapsible Icon Position
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--controlsPosEnd
+
+    help: 
+      help-text: Position the expand / collapse button to the end of the region header.
+
+  - # ====== Template Option: Hide ===============================
+    id: 2069332959195704
+    identification: 
+      name: Hide
+      identifier: HIDEOVERFLOW
+      group: Body Overflow
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hiddenOverflow
+
+  - # ====== Template Option: Plus or Minus ======================
+    id: 2069776483195704
+    identification: 
+      name: Plus or Minus
+      identifier: ICONS_PLUS_OR_MINUS
+      group: Collapsible Button Icons
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hideShowIconsMath
+
+    help: 
+      help-text: Use the plus and minus icons for the expand and collapse button.
+
+  - # ====== Template Option: Remove Borders =====================
+    id: 2069996396195706
+    identification: 
+      name: Remove Borders
+      identifier: NOBORDER
+      group: Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noBorder
+
+    help: 
+      help-text: Removes borders from the region.
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2070121883195706
+    identification: 
+      name: Remove Body Padding
+      identifier: NOBODYPADDING
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noPadding
+
+    help: 
+      help-text: Removes padding from region body.
+
+  - # ====== Template Option: Remove UI Decoration ===============
+    id: 2070319639195706
+    identification: 
+      name: Remove UI Decoration
+      identifier: REMOVE_UI_DECORATION
+      group: Style
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noUI
+
+    help: 
+      help-text: Removes UI decoration (borders, backgrounds, shadows, etc) from the region.
+
+  - # ====== Template Option: Scroll - Default ===================
+    id: 2070554263195706
+    identification: 
+      name: Scroll - Default
+      identifier: SCROLLBODY
+      group: Body Overflow
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--scrollBody
+
+  - # ====== Template Option: Stack Region =======================
+    id: 2070799110195707
+    identification: 
+      name: Stack Region
+      identifier: STACKED
+      group: Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--stacked
+
+    help: 
+      help-text: Removes side borders and shadows, and can be useful for accordions and regions that need to be grouped together vertically.
+
+- # ====== Region Template: Content Block ======================
+  id: 2070898467195707
+  identification: 
+    name: Content Block
+    identifier: CONTENT_BLOCK
+    class: Custom 1
+
+  subscription: 
+    master: 
+      referenced-id: 2320668864738842174
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-ContentBlock--h1
+
+  template: 
+    template: |
+      <div class="t-ContentBlock #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-ContentBlock-header">
+          <div class="t-ContentBlock-headerItems t-ContentBlock-headerItems--title">
+            <span class="t-ContentBlock-headerIcon"><span class="t-Icon #ICON_CSS_CLASSES#" aria-hidden="true"></span></span>
+            <h2 class="t-ContentBlock-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h2>
+            #EDIT#
+          </div>
+          <div class="t-ContentBlock-headerItems t-ContentBlock-headerItems--buttons">#CHANGE#</div>
+        </div>
+        <div class="t-ContentBlock-body">#BODY##SUB_REGIONS#</div>
+        <div class="t-ContentBlock-buttons">#PREVIOUS##NEXT#</div>
+      </div>
+      
+
+  accessibility: 
+    landmark-type: Region
+    region-title-html-id: '#REGION_STATIC_ID#_heading'
+
+  template-options: 
+  - # ====== Template Option: Large ==============================
+    id: 2073133587195709
+    identification: 
+      name: Large
+      identifier: CONTENT_TITLE_H1
+      group: Region Title
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--h1
+
+  - # ====== Template Option: Medium =============================
+    id: 2073364016195709
+    identification: 
+      name: Medium
+      identifier: CONTENT_TITLE_H2
+      group: Region Title
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--h2
+
+  - # ====== Template Option: Small ==============================
+    id: 2073537452195710
+    identification: 
+      name: Small
+      identifier: CONTENT_TITLE_H3
+      group: Region Title
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--h3
+
+  - # ====== Template Option: Alternative ========================
+    id: 2073996047195710
+    identification: 
+      name: Alternative
+      identifier: HEADING_FONT_ALTERNATIVE
+      group: Heading Font
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--headingFontAlt
+
+  - # ====== Template Option: Hidden but accessible ==============
+    id: 2074132952195710
+    identification: 
+      name: Hidden but accessible
+      identifier: HIDEREGIONHEADER
+      group: Header
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--hideHeader
+
+    help: 
+      help-text: This option will hide the region header.  Note that the region title will still be audible for Screen Readers. Buttons placed in the region header will be hidden and inaccessible.
+
+  - # ====== Template Option: Light Background ===================
+    id: 2074547473195710
+    identification: 
+      name: Light Background
+      identifier: LIGHT_BACKGROUND
+      group: Body Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--lightBG
+
+    help: 
+      help-text: Gives the region body a slightly lighter background.
+
+  - # ====== Template Option: Add Body Padding ===================
+    id: 2074786172195710
+    identification: 
+      name: Add Body Padding
+      identifier: ADD_BODY_PADDING
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--padded
+
+    help: 
+      help-text: Adds padding to the region's body container.
+
+  - # ====== Template Option: Shadow Background ==================
+    id: 2074973600195710
+    identification: 
+      name: Shadow Background
+      identifier: SHADOW_BACKGROUND
+      group: Body Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--shadowBG
+
+    help: 
+      help-text: Gives the region body a slightly darker background.
+
+  - # ====== Template Option: Show Region Icon ===================
+    id: 2075173287195712
+    identification: 
+      name: Show Region Icon
+      identifier: SHOW_REGION_ICON
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ContentBlock--showIcon
+
+    help: 
+      help-text: Displays the region icon in the region header beside the region title
+
+  - # ====== Template Option: Hidden =============================
+    id: 2075359322195712
+    identification: 
+      name: Hidden
+      identifier: HIDDENHEADERNOAT
+      group: Header
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--removeHeader
+      - js-removeLandmark
+
+- # ====== Region Template: Hero ===============================
+  id: 2075476213195712
+  identification: 
+    name: Hero
+    identifier: HERO
+    class: Custom 2
+
+  subscription: 
+    master: 
+      referenced-id: 2672571031438297268
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: |
+      <div class="t-HeroRegion #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-HeroRegion-top">
+          <div class="t-HeroRegion-wrap">
+            <div class="t-HeroRegion-col t-HeroRegion-col--beforeIcon">#UP#</div>
+            <div class="t-HeroRegion-col t-HeroRegion-col--left">#REGION_IMAGE#<span class="t-HeroRegion-icon t-Icon #ICON_CSS_CLASSES#"></span></div>
+            <div class="t-HeroRegion-col t-HeroRegion-col--content">
+              <h1 id="#REGION_STATIC_ID#_heading" class="t-HeroRegion-title" data-apex-heading>#TITLE#</h1>
+              #BODY#
+            </div>
+            <div class="t-HeroRegion-col t-HeroRegion-col--right"><div class="t-HeroRegion-form">#SUB_REGIONS#</div><div class="t-HeroRegion-buttons">#NEXT#</div></div>
+          </div>
+        </div>
+        <div class="t-HeroRegion-bottom">#SMART_FILTERS#</div>
+      </div>
+      
+
+  accessibility: 
+    landmark-type: Region
+    region-title-html-id: '#REGION_STATIC_ID#_heading'
+
+  image: 
+    template: <img class="t-HeroRegion-icon" src="#REGION_IMAGE_URL#" alt="" />
+
+  template-options: 
+  - # ====== Template Option: Featured ===========================
+    id: 2077295720195715
+    identification: 
+      name: Featured
+      identifier: FEATURED
+      group: Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--featured
+
+  - # ====== Template Option: Stacked Featured ===================
+    id: 2077423943195715
+    identification: 
+      name: Stacked Featured
+      identifier: STACKED_FEATURED
+      group: Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--featured
+      - t-HeroRegion--centered
+
+  - # ====== Template Option: Alternative ========================
+    id: 2077622463195715
+    identification: 
+      name: Alternative
+      identifier: HEADING_FONT_ALTERNATIVE
+      group: Heading Font
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--headingFontAlt
+
+  - # ====== Template Option: No =================================
+    id: 2078059772195715
+    identification: 
+      name: No
+      identifier: DISPLAY_ICON_NO
+      group: Display Icon
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--hideIcon
+
+    help: 
+      help-text: Hide the Hero Region icon.
+
+  - # ====== Template Option: Circle =============================
+    id: 2078426135195717
+    identification: 
+      name: Circle
+      identifier: ICONS_CIRCULAR
+      group: Icon Shape
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--iconsCircle
+
+    help: 
+      help-text: The icons are displayed within a circle.
+
+  - # ====== Template Option: Square =============================
+    id: 2078669682195717
+    identification: 
+      name: Square
+      identifier: ICONS_SQUARE
+      group: Icon Shape
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--iconsSquare
+
+    help: 
+      help-text: The icons are displayed within a square.
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2078854936195717
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-HeroRegion--noPadding
+
+    help: 
+      help-text: Removes the padding around the hero region.
+
+- # ====== Region Template: Image ==============================
+  id: 2078957931195717
+  identification: 
+    name: Image
+    identifier: IMAGE
+    class: Custom 1
+
+  subscription: 
+    master: 
+      referenced-id: 1673953645642781634
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-ImageRegion--auto
+    - t-ImageRegion--cover
+    - t-ImageRegion--square
+    - t-ImageRegion--noFilter
+
+  template: 
+    template: '<div id="#REGION_STATIC_ID#" class="t-ImageRegion #REGION_CSS_CLASSES#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#><img src="#REGION_IMAGE_URL#" alt="#REGION_IMAGE_ALT_TEXT#" #REGION_IMAGE_ATTRIBUTES# /></div>'
+
+  template-options: 
+  - # ====== Template Option: 16:9 (Widescreen) ==================
+    id: 2080013717195718
+    identification: 
+      name: '16:9 (Widescreen)'
+      identifier: RATIO_16_9
+      group: Ratio
+      sequence: 120
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--16x9
+
+  - # ====== Template Option: 1:1 (Square) =======================
+    id: 2080250524195718
+    identification: 
+      name: '1:1 (Square)'
+      identifier: RATIO_1_1
+      group: Ratio
+      sequence: 110
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--1x1
+
+  - # ====== Template Option: 2:1 (Univisium) ====================
+    id: 2080491320195718
+    identification: 
+      name: '2:1 (Univisium)'
+      identifier: RATIO_2_1
+      group: Ratio
+      sequence: 140
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--2x1
+
+  - # ====== Template Option: 4:3 (Standard) =====================
+    id: 2080602879195718
+    identification: 
+      name: '4:3 (Standard)'
+      identifier: RATIO_4_3
+      group: Ratio
+      sequence: 130
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--4x3
+
+  - # ====== Template Option: Auto ===============================
+    id: 2080835035195720
+    identification: 
+      name: Auto
+      identifier: RATIO_AUTO
+      group: Ratio
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--auto
+
+  - # ====== Template Option: Blur ===============================
+    id: 2081240488195720
+    identification: 
+      name: Blur
+      identifier: FILTER_BLUR
+      group: Filter
+      sequence: 430
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--blur
+
+  - # ====== Template Option: Circle =============================
+    id: 2081609486195720
+    identification: 
+      name: Circle
+      identifier: SHAPE_CIRCLE
+      group: Shape
+      sequence: 320
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--circle
+
+  - # ====== Template Option: Contain ============================
+    id: 2082038488195721
+    identification: 
+      name: Contain
+      identifier: SCALE_CONTAIN
+      group: Scale
+      sequence: 200
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--contain
+
+  - # ====== Template Option: Cover ==============================
+    id: 2082207943195721
+    identification: 
+      name: Cover
+      identifier: SCALE_COVER
+      group: Scale
+      sequence: 210
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--cover
+
+  - # ====== Template Option: Fill ===============================
+    id: 2082474021195721
+    identification: 
+      name: Fill
+      identifier: SCALE_FILL
+      group: Scale
+      sequence: 220
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--fill
+
+  - # ====== Template Option: Grayscale ==========================
+    id: 2082682051195721
+    identification: 
+      name: Grayscale
+      identifier: FILTER_GRAYSCALE
+      group: Filter
+      sequence: 410
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--grayscale
+
+  - # ====== Template Option: Invert =============================
+    id: 2082871605195721
+    identification: 
+      name: Invert
+      identifier: FILTER_INVERT
+      group: Filter
+      sequence: 440
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--invert
+
+  - # ====== Template Option: None ===============================
+    id: 2083061443195721
+    identification: 
+      name: None
+      identifier: FILTER_NONE
+      group: Filter
+      sequence: 400
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--noFilter
+
+  - # ====== Template Option: Rounded ============================
+    id: 2083206098195723
+    identification: 
+      name: Rounded
+      identifier: SHAPE_ROUNDED
+      group: Shape
+      sequence: 310
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--rounded
+
+  - # ====== Template Option: Saturate ===========================
+    id: 2083495772195723
+    identification: 
+      name: Saturate
+      identifier: FILTER_SATURATE
+      group: Filter
+      sequence: 450
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--saturate
+
+  - # ====== Template Option: Scale Down =========================
+    id: 2083678609195723
+    identification: 
+      name: Scale Down
+      identifier: SCALE_DOWN
+      group: Scale
+      sequence: 230
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--scale-down
+
+  - # ====== Template Option: Sepia ==============================
+    id: 2083840199195723
+    identification: 
+      name: Sepia
+      identifier: FILTER_SEPIA
+      group: Filter
+      sequence: 420
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--sepia
+
+  - # ====== Template Option: Square =============================
+    id: 2084022950195723
+    identification: 
+      name: Square
+      identifier: SHAPE_SQUARE
+      group: Shape
+      sequence: 300
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--square
+
+  - # ====== Template Option: Image Stretch ======================
+    id: 2084255111195723
+    identification: 
+      name: Image Stretch
+      identifier: IMAGE_STRETCH
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ImageRegion--stretch
+
+- # ====== Region Template: Inline Dialog ======================
+  id: 2084339141195723
+  identification: 
+    name: Inline Dialog
+    identifier: INLINE_DIALOG
+    class: Custom 4
+
+  subscription: 
+    master: 
+      referenced-id: 2671226943886536762
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - js-dialog-size600x400
+    default: 
+    - js-modal
+    - js-draggable
+    - js-resizable
+
+  template: 
+    template: |
+      <div id="#REGION_STATIC_ID#_parent">
+      <div id="#REGION_STATIC_ID#" class="t-DialogRegion #REGION_CSS_CLASSES# js-regionDialog" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# style="display:none" title="#TITLE!ATTR#">
+        <div class="t-DialogRegion-wrap">
+          <div class="t-DialogRegion-bodyWrapperOut"><div class="t-DialogRegion-bodyWrapperIn"><div class="t-DialogRegion-body">#BODY##SUB_REGIONS#</div></div></div>
+          <div class="t-DialogRegion-buttons">
+             <div class="t-ButtonRegion t-ButtonRegion--dialogRegion">
+               <div class="t-ButtonRegion-wrap">
+                 <div class="t-ButtonRegion-col t-ButtonRegion-col--left"><div class="t-ButtonRegion-buttons">#PREVIOUS##DELETE##CLOSE#</div></div>
+                 <div class="t-ButtonRegion-col t-ButtonRegion-col--right"><div class="t-ButtonRegion-buttons">#EDIT##CREATE##NEXT#</div></div>
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Auto Height ========================
+    id: 2087033253195726
+    identification: 
+      name: Auto Height
+      identifier: AUTO_HEIGHT_INLINE_DIALOG
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-autoheight
+
+    help: 
+      help-text: This option will set the height of the dialog to fit its contents.
+
+  - # ====== Template Option: None ===============================
+    id: 2087443399195726
+    identification: 
+      name: None
+      identifier: NONE
+      group: Size
+      sequence: 5
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-nosize
+
+  - # ====== Template Option: Small (480x320) ====================
+    id: 2087615781195726
+    identification: 
+      name: Small (480x320)
+      identifier: SMALL_480X320
+      group: Size
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size480x320
+
+  - # ====== Template Option: Medium (600x400) ===================
+    id: 2087867759195728
+    identification: 
+      name: Medium (600x400)
+      identifier: MEDIUM_600X400
+      group: Size
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size600x400
+
+  - # ====== Template Option: Large (720x480) ====================
+    id: 2088049481195728
+    identification: 
+      name: Large (720x480)
+      identifier: LARGE_720X480
+      group: Size
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size720x480
+
+  - # ====== Template Option: Draggable ==========================
+    id: 2088237452195728
+    identification: 
+      name: Draggable
+      identifier: DRAGGABLE
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-draggable
+
+  - # ====== Template Option: Modal ==============================
+    id: 2088498234195728
+    identification: 
+      name: Modal
+      identifier: MODAL
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-modal
+
+  - # ====== Template Option: Resizable ==========================
+    id: 2088635176195728
+    identification: 
+      name: Resizable
+      identifier: RESIZABLE
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-resizable
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2088822172195728
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 5
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-DialogRegion--noPadding
+
+    help: 
+      help-text: Removes the padding around the region body.
+
+- # ====== Region Template: Inline Drawer ======================
+  id: 2088993464195728
+  identification: 
+    name: Inline Drawer
+    identifier: INLINE_DRAWER
+    class: Custom 4
+
+  subscription: 
+    master: 
+      referenced-id: 1659526333647509386
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - js-dialog-class-t-Drawer--pullOutEnd
+    default: 
+    - js-modal
+
+  template: 
+    template: |
+      <div id="#REGION_STATIC_ID#_parent">
+        <div id="#REGION_STATIC_ID#" class="t-DrawerRegion js-dialog-class-ui-dialog--drawer #REGION_CSS_CLASSES# js-regionDialog" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# style="display:none" title="#TITLE!ATTR#">
+          <div class="t-DrawerRegion-wrap">
+            <div class="t-DrawerRegion-bodyWrapperOut">
+              <div class="t-DrawerRegion-bodyWrapperIn">
+                <div class="t-DrawerRegion-body">#BODY##SUB_REGIONS#</div>
+              </div>
+            </div>
+            <div class="t-DrawerRegion-buttons">
+              <div class="t-ButtonRegion t-ButtonRegion--dialogRegion">
+                <div class="t-ButtonRegion-wrap">
+                  <div class="t-ButtonRegion-col t-ButtonRegion-col--left">
+                    <div class="t-ButtonRegion-buttons">#PREVIOUS##DELETE##CLOSE#</div>
+                  </div>
+                  <div class="t-ButtonRegion-col t-ButtonRegion-col--right">
+                    <div class="t-ButtonRegion-buttons">#EDIT##CREATE##NEXT#</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Large ==============================
+    id: 2091601557195731
+    identification: 
+      name: Large
+      identifier: DRAWER_SIZE_LARGE
+      group: Size
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--lg
+
+  - # ====== Template Option: Medium =============================
+    id: 2091819481195731
+    identification: 
+      name: Medium
+      identifier: DRAWER_SIZE_MEDIUM
+      group: Size
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--md
+
+  - # ====== Template Option: End ================================
+    id: 2092283929195732
+    identification: 
+      name: End
+      identifier: POSITION_END
+      group: Position
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--pullOutEnd
+
+  - # ====== Template Option: Start ==============================
+    id: 2092489634195732
+    identification: 
+      name: Start
+      identifier: POSITION_START
+      group: Position
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--pullOutStart
+
+  - # ====== Template Option: Small ==============================
+    id: 2092623558195732
+    identification: 
+      name: Small
+      identifier: DRAWER_SIZE_SMALL
+      group: Size
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--sm
+
+  - # ====== Template Option: Extra Large ========================
+    id: 2092899315195732
+    identification: 
+      name: Extra Large
+      identifier: DRAWER_SIZE_EXTRA_LARGE
+      group: Size
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--xl
+
+  - # ====== Template Option: None (Auto) ========================
+    id: 2093000601195732
+    identification: 
+      name: None (Auto)
+      identifier: NONE
+      group: Size
+      sequence: 5
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-nosize
+
+  - # ====== Template Option: Modal ==============================
+    id: 2093237256195732
+    identification: 
+      name: Modal
+      identifier: MODAL
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-modal
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2093489900195734
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 5
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-DialogRegion--noPadding
+
+    help: 
+      help-text: Removes the padding around the region body.
+
+- # ====== Region Template: Inline Popup =======================
+  id: 2093586604195734
+  identification: 
+    name: Inline Popup
+    identifier: INLINE_POPUP
+    class: Custom 4
+
+  subscription: 
+    master: 
+      referenced-id: 1483922538999385230
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - js-dialog-size600x400
+
+  template: 
+    template: |
+      <div id="#REGION_STATIC_ID#_parent">
+      <div id="#REGION_STATIC_ID#" class="t-DialogRegion #REGION_CSS_CLASSES# js-regionPopup" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# style="display:none" title="#TITLE!ATTR#">
+        <div class="t-DialogRegion-wrap">
+          <div class="t-DialogRegion-bodyWrapperOut"><div class="t-DialogRegion-bodyWrapperIn"><div class="t-DialogRegion-body">#BODY##SUB_REGIONS#</div></div></div>
+          <div class="t-DialogRegion-buttons">
+             <div class="t-ButtonRegion t-ButtonRegion--dialogRegion">
+               <div class="t-ButtonRegion-wrap">
+                 <div class="t-ButtonRegion-col t-ButtonRegion-col--left"><div class="t-ButtonRegion-buttons">#PREVIOUS##DELETE##CLOSE#</div></div>
+                 <div class="t-ButtonRegion-col t-ButtonRegion-col--right"><div class="t-ButtonRegion-buttons">#EDIT##CREATE##NEXT#</div></div>
+               </div>
+             </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Auto Height ========================
+    id: 2096205344195737
+    identification: 
+      name: Auto Height
+      identifier: AUTO_HEIGHT_INLINE_DIALOG
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-autoheight
+
+    help: 
+      help-text: This option will set the height of the dialog to fit its contents.
+
+  - # ====== Template Option: None ===============================
+    id: 2096464909195737
+    identification: 
+      name: None
+      identifier: NONE
+      group: Size
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-nosize
+
+  - # ====== Template Option: Small (480x320) ====================
+    id: 2096623339195737
+    identification: 
+      name: Small (480x320)
+      identifier: SMALL_480X320
+      group: Size
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size480x320
+
+  - # ====== Template Option: Medium (600x400) ===================
+    id: 2096811804195737
+    identification: 
+      name: Medium (600x400)
+      identifier: MEDIUM_600X400
+      group: Size
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size600x400
+
+  - # ====== Template Option: Large (720x480) ====================
+    id: 2097098646195737
+    identification: 
+      name: Large (720x480)
+      identifier: LARGE_720X480
+      group: Size
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-size720x480
+
+  - # ====== Template Option: Display Popup Callout ==============
+    id: 2097291943195739
+    identification: 
+      name: Display Popup Callout
+      identifier: DISPLAY_POPUP_CALLOUT
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-callout
+
+    help: 
+      help-text: Use this option to add display a callout for the popup. Note that callout will only be displayed if the data-parent-element custom attribute is defined.
+
+  - # ====== Template Option: Remove Page Overlay ================
+    id: 2097448472195739
+    identification: 
+      name: Remove Page Overlay
+      identifier: REMOVE_PAGE_OVERLAY
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-noOverlay
+
+    help: 
+      help-text: This option will display the inline dialog without an overlay on the background.
+
+  - # ====== Template Option: Above ==============================
+    id: 2097868846195739
+    identification: 
+      name: Above
+      identifier: ABOVE
+      group: Callout Position
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-pos-above
+
+    help: 
+      help-text: Positions the callout above or typically on top of the parent.
+
+  - # ====== Template Option: After ==============================
+    id: 2098001723195739
+    identification: 
+      name: After
+      identifier: AFTER
+      group: Callout Position
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-pos-after
+
+    help: 
+      help-text: Positions the callout after or typically to the right of the parent.
+
+  - # ====== Template Option: Before =============================
+    id: 2098255829195739
+    identification: 
+      name: Before
+      identifier: BEFORE
+      group: Callout Position
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-pos-before
+
+    help: 
+      help-text: Positions the callout before or typically to the left of the parent.
+
+  - # ====== Template Option: Below ==============================
+    id: 2098427569195739
+    identification: 
+      name: Below
+      identifier: BELOW
+      group: Callout Position
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-pos-below
+
+    help: 
+      help-text: Positions the callout below or typically to the bottom of the parent.
+
+  - # ====== Template Option: Inside =============================
+    id: 2098680019195739
+    identification: 
+      name: Inside
+      identifier: INSIDE
+      group: Callout Position
+      sequence: 50
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-popup-pos-inside
+
+    help: 
+      help-text: Positions the callout inside of the parent. This is useful when the parent is sufficiently large, such as a report or large region.
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2098819781195740
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-DialogRegion--noPadding
+
+    help: 
+      help-text: Removes the padding around the region body.
+
+- # ====== Region Template: Interactive Report =================
+  id: 2098995804195740
+  identification: 
+    name: Interactive Report
+    identifier: INTERACTIVE_REPORT
+    class: Reports Region
+
+  subscription: 
+    master: 
+      referenced-id: 2099079838218790610
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: |
+      <div id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# class="t-IRR-region #REGION_CSS_CLASSES#">
+          <div class="t-Region-orderBy">#ORDER_BY_ITEM#</div>
+          #PREVIOUS#
+          #BODY#
+          #SUB_REGIONS#
+          #NEXT#
+      </div>
+      
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: Show Maximize Button ===============
+    id: 2100773453195742
+    identification: 
+      name: Show Maximize Button
+      identifier: SHOW_MAXIMIZE_BUTTON
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-showMaximizeButton
+
+    help: 
+      help-text: Displays a button in the Interactive Reports toolbar to maximize the report. Clicking this button will toggle the maximize state and stretch the report to fill the screen.
+
+  - # ====== Template Option: Remove Borders =====================
+    id: 2100906259195742
+    identification: 
+      name: Remove Borders
+      identifier: REMOVEBORDERS
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-IRR-region--noBorders
+
+    help: 
+      help-text: Removes borders around the Interactive Report
+
+- # ====== Region Template: Item Container =====================
+  id: 2101080243195742
+  identification: 
+    name: Item Container
+    identifier: ITEM_CONTAINER
+    class: Custom 1
+
+  subscription: 
+    master: 
+      referenced-id: 1568547778806319863
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: |
+      <div class="t-ItemContainer #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-ItemContainer-start">#BUTTON_START#</div>
+        <div class="t-ItemContainer-item">#BODY#</div>
+        <div class="t-ItemContainer-end">#BUTTON_END#</div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Center =============================
+    id: 2102486829195743
+    identification: 
+      name: Center
+      identifier: ALIGNMENT_CENTER
+      group: Alignment
+      sequence: 11
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--alignCenter
+
+  - # ====== Template Option: End ================================
+    id: 2102697337195743
+    identification: 
+      name: End
+      identifier: ALIGNMENT_END
+      group: Alignment
+      sequence: 12
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--alignEnd
+
+  - # ====== Template Option: Start ==============================
+    id: 2102828688195743
+    identification: 
+      name: Start
+      identifier: ALIGNMENT_START
+      group: Alignment
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--alignStart
+
+  - # ====== Template Option: Stretch ============================
+    id: 2103023718195743
+    identification: 
+      name: Stretch
+      identifier: ALIGNMENT_STRETCH
+      group: Alignment
+      sequence: 13
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--alignStretch
+
+  - # ====== Template Option: Stack on Mobile ====================
+    id: 2103291122195745
+    identification: 
+      name: Stack on Mobile
+      identifier: STACK_MOBILE
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--stackMobile
+
+  - # ====== Template Option: Wrap Items =========================
+    id: 2103441894195745
+    identification: 
+      name: Wrap Items
+      identifier: WRAP_ITEMS
+      sequence: 2
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ItemContainer--wrap
+
+- # ====== Region Template: Login ==============================
+  id: 2103586837195745
+  identification: 
+    name: Login
+    identifier: LOGIN
+    class: Custom 3
+
+  subscription: 
+    master: 
+      referenced-id: 2672711194551076376
+
+  advanced: 
+    translatable: false
+
+  template: 
+    template: |
+      <div class="t-Login-region t-Form--stretchInputs t-Form--labelsAbove #REGION_CSS_CLASSES#" id="#REGION_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-Login-header">
+          #REGION_IMAGE#
+          <span class="t-Login-logo #ICON_CSS_CLASSES#" aria-hidden="true"></span>
+          <h2 class="t-Login-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h2>
+        </div>
+        <div class="t-Login-body">#BODY#</div>
+        <div class="t-Login-buttons">#NEXT#</div>
+        <div class="t-Login-links">#EDIT##CREATE#</div>
+        <div class="t-Login-subRegions">#SUB_REGIONS#</div>
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+    region-title-html-id: '#REGION_STATIC_ID#_heading'
+
+  image: 
+    template: <img class="t-Login-logo" src="#REGION_IMAGE_URL#" alt="" data-app-icon />
+
+  template-options: 
+  - # ====== Template Option: Hidden =============================
+    id: 2105550545195746
+    identification: 
+      name: Hidden
+      identifier: LOGO_HEADER_HIDDEN
+      group: Login Header
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Login-region--headerHidden
+      - js-removeLandmark
+
+    help: 
+      help-text: Hides both the Region Icon and Title from the Login region.
+
+  - # ====== Template Option: Icon ===============================
+    id: 2105799032195748
+    identification: 
+      name: Icon
+      identifier: LOGIN_HEADER_ICON
+      group: Login Header
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Login-region--headerIcon
+
+    help: 
+      help-text: Displays only the Region Icon in the Login region.
+
+  - # ====== Template Option: Title ==============================
+    id: 2105991657195748
+    identification: 
+      name: Title
+      identifier: LOGIN_HEADER_TITLE
+      group: Login Header
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Login-region--headerTitle
+      - js-removeLandmark
+
+    help: 
+      help-text: Displays only the Region Title in the Login region.
+
+- # ====== Region Template: Search Results Container ===========
+  id: 2106064103195748
+  identification: 
+    name: Search Results Container
+    identifier: SEARCH_RESULTS_CONTAINER
+    class: Region without Title
+
+  subscription: 
+    master: 
+      referenced-id: 1554292095258992441
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    default: 
+    - u-colors
+
+  template: 
+    template: |
+      <div class="t-ResultsRegion #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-ResultsRegion-search">#SEARCH_FIELD#</div>
+        #BODY#
+        #SUB_REGIONS#
+      </div>
+      
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: Boxed ==============================
+    id: 2107490290195750
+    identification: 
+      name: Boxed
+      identifier: RESULT_APPEARANCE_BOXED
+      group: Result Appearance
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ResultsRegion--boxed
+
+  - # ====== Template Option: Flat ===============================
+    id: 2107623093195750
+    identification: 
+      name: Flat
+      identifier: RESULT_APPEARANCE_FLAT
+      group: Result Appearance
+      sequence: 2
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ResultsRegion--flat
+
+  - # ====== Template Option: Large ==============================
+    id: 2108031702195751
+    identification: 
+      name: Large
+      identifier: ICON_SIZE_LARGE
+      group: Icon Size
+      sequence: 3
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ResultsRegion--iconLg
+
+    help: 
+      help-text: Sets the icon size to large (64px).
+
+  - # ====== Template Option: Medium =============================
+    id: 2108231644195751
+    identification: 
+      name: Medium
+      identifier: ICON_SIZE_MEDIUM
+      group: Icon Size
+      sequence: 2
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ResultsRegion--iconMd
+
+    help: 
+      help-text: Sets the icon size to medium (32px).
+
+  - # ====== Template Option: Small ==============================
+    id: 2108416302195751
+    identification: 
+      name: Small
+      identifier: ICON_SIZE_SMALL
+      group: Icon Size
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-ResultsRegion--iconSm
+
+    help: 
+      help-text: Sets the icon size to small (16px).
+
+  - # ====== Template Option: Apply Theme Colors =================
+    id: 2108692837195751
+    identification: 
+      name: Apply Theme Colors
+      identifier: APPLY_THEME_COLORS
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - u-colors
+
+    help: 
+      help-text: Applies the colors from the theme's color palette to the icons or initials within search results.
+
+- # ====== Region Template: Standard ===========================
+  id: 2108754950195751
+  identification: 
+    name: Standard
+    identifier: STANDARD
+    class: Form Region
+
+  subscription: 
+    master: 
+      referenced-id: 4070912133526059312
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-Region--scrollBody
+
+  template: 
+    template: |
+      <div class="t-Region #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+       <div class="t-Region-header">
+        <div class="t-Region-headerItems t-Region-headerItems--title">
+          <span class="t-Region-headerIcon"><span class="t-Icon #ICON_CSS_CLASSES#" aria-hidden="true"></span></span>
+          <h2 class="t-Region-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h2>
+        </div>
+        <div class="t-Region-headerItems t-Region-headerItems--buttons">#COPY##EDIT#<span class="js-maximizeButtonContainer"></span></div>
+       </div>
+       <div class="t-Region-bodyWrap">
+         <div class="t-Region-buttons t-Region-buttons--top">
+          <div class="t-Region-buttons-left">#PREVIOUS#</div>
+          <div class="t-Region-buttons-right">#NEXT#</div>
+         </div>
+         <div class="t-Region-body">
+           <div class="t-Region-orderBy">#ORDER_BY_ITEM#</div>
+           #BODY#
+           #SUB_REGIONS#
+         </div>
+         <div class="t-Region-buttons t-Region-buttons--bottom">
+          <div class="t-Region-buttons-left">#CLOSE##HELP#</div>
+          <div class="t-Region-buttons-right">#DELETE##CHANGE##CREATE#</div>
+         </div>
+       </div>
+      </div>
+      
+
+  accessibility: 
+    landmark-type: Region
+
+  template-options: 
+  - # ====== Template Option: 240px ==============================
+    id: 2112653502195756
+    identification: 
+      name: 240px
+      identifier: 240PX
+      group: Body Height
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h240
+
+    help: 
+      help-text: Sets region body height to 240px.
+
+  - # ====== Template Option: 320px ==============================
+    id: 2112814812195757
+    identification: 
+      name: 320px
+      identifier: 320PX
+      group: Body Height
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h320
+
+    help: 
+      help-text: Sets region body height to 320px.
+
+  - # ====== Template Option: 480px ==============================
+    id: 2113084854195757
+    identification: 
+      name: 480px
+      identifier: 480PX
+      group: Body Height
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h480
+
+  - # ====== Template Option: 640px ==============================
+    id: 2113239069195757
+    identification: 
+      name: 640px
+      identifier: 640PX
+      group: Body Height
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - i-h640
+
+  - # ====== Template Option: Show Maximize Button ===============
+    id: 2113435521195757
+    identification: 
+      name: Show Maximize Button
+      identifier: SHOW_MAXIMIZE_BUTTON
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-showMaximizeButton
+
+    help: 
+      help-text: Displays a button in the Region Header to maximize the region. Clicking this button will toggle the maximize state and stretch the region to fill the screen.
+
+  - # ====== Template Option: Accent 1 ===========================
+    id: 2113613987195757
+    identification: 
+      name: Accent 1
+      identifier: ACCENT_1
+      group: Accent
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent1
+
+  - # ====== Template Option: Accent 10 ==========================
+    id: 2113838776195757
+    identification: 
+      name: Accent 10
+      identifier: ACCENT_10
+      group: Accent
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent10
+
+  - # ====== Template Option: Accent 11 ==========================
+    id: 2114050933195759
+    identification: 
+      name: Accent 11
+      identifier: ACCENT_11
+      group: Accent
+      sequence: 110
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent11
+
+  - # ====== Template Option: Accent 12 ==========================
+    id: 2114291377195759
+    identification: 
+      name: Accent 12
+      identifier: ACCENT_12
+      group: Accent
+      sequence: 120
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent12
+
+  - # ====== Template Option: Accent 13 ==========================
+    id: 2114461187195759
+    identification: 
+      name: Accent 13
+      identifier: ACCENT_13
+      group: Accent
+      sequence: 130
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent13
+
+  - # ====== Template Option: Accent 14 ==========================
+    id: 2114631638195759
+    identification: 
+      name: Accent 14
+      identifier: ACCENT_14
+      group: Accent
+      sequence: 140
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent14
+
+  - # ====== Template Option: Accent 15 ==========================
+    id: 2114810365195759
+    identification: 
+      name: Accent 15
+      identifier: ACCENT_15
+      group: Accent
+      sequence: 150
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent15
+
+  - # ====== Template Option: Accent 2 ===========================
+    id: 2115016027195759
+    identification: 
+      name: Accent 2
+      identifier: ACCENT_2
+      group: Accent
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent2
+
+  - # ====== Template Option: Accent 3 ===========================
+    id: 2115224590195760
+    identification: 
+      name: Accent 3
+      identifier: ACCENT_3
+      group: Accent
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent3
+
+  - # ====== Template Option: Accent 4 ===========================
+    id: 2115497241195760
+    identification: 
+      name: Accent 4
+      identifier: ACCENT_4
+      group: Accent
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent4
+
+  - # ====== Template Option: Accent 5 ===========================
+    id: 2115655540195760
+    identification: 
+      name: Accent 5
+      identifier: ACCENT_5
+      group: Accent
+      sequence: 50
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent5
+
+  - # ====== Template Option: Accent 6 ===========================
+    id: 2115832148195760
+    identification: 
+      name: Accent 6
+      identifier: ACCENT_6
+      group: Accent
+      sequence: 60
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent6
+
+  - # ====== Template Option: Accent 7 ===========================
+    id: 2116054391195760
+    identification: 
+      name: Accent 7
+      identifier: ACCENT_7
+      group: Accent
+      sequence: 70
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent7
+
+  - # ====== Template Option: Accent 8 ===========================
+    id: 2116215168195762
+    identification: 
+      name: Accent 8
+      identifier: ACCENT_8
+      group: Accent
+      sequence: 80
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent8
+
+  - # ====== Template Option: Accent 9 ===========================
+    id: 2116446538195762
+    identification: 
+      name: Accent 9
+      identifier: ACCENT_9
+      group: Accent
+      sequence: 90
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--accent9
+
+  - # ====== Template Option: Hide ===============================
+    id: 2116643446195762
+    identification: 
+      name: Hide
+      identifier: HIDEOVERFLOW
+      group: Body Overflow
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hiddenOverflow
+
+  - # ====== Template Option: Hidden but accessible ==============
+    id: 2116884010195762
+    identification: 
+      name: Hidden but accessible
+      identifier: HIDEREGIONHEADER
+      group: Header
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--hideHeader
+
+    help: 
+      help-text: This option will hide the region header.  Note that the region title will still be audible for Screen Readers. Buttons placed in the region header will be hidden and inaccessible.
+
+  - # ====== Template Option: Remove Borders =====================
+    id: 2117009146195764
+    identification: 
+      name: Remove Borders
+      identifier: NOBORDER
+      group: Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noBorder
+
+    help: 
+      help-text: Removes borders from the region.
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 2117276938195764
+    identification: 
+      name: Remove Body Padding
+      identifier: NOBODYPADDING
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noPadding
+
+    help: 
+      help-text: Removes padding from region body.
+
+  - # ====== Template Option: Remove UI Decoration ===============
+    id: 2117419267195764
+    identification: 
+      name: Remove UI Decoration
+      identifier: REMOVE_UI_DECORATION
+      group: Style
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--noUI
+
+    help: 
+      help-text: Removes UI decoration (borders, backgrounds, shadows, etc) from the region.
+
+  - # ====== Template Option: Hidden =============================
+    id: 2117602257195764
+    identification: 
+      name: Hidden
+      identifier: HIDDENHEADERNOAT
+      group: Header
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--removeHeader
+      - js-removeLandmark
+
+  - # ====== Template Option: Scroll - Default ===================
+    id: 2117872348195764
+    identification: 
+      name: Scroll - Default
+      identifier: SCROLLBODY
+      group: Body Overflow
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--scrollBody
+
+  - # ====== Template Option: Show Region Icon ===================
+    id: 2118028305195765
+    identification: 
+      name: Show Region Icon
+      identifier: SHOW_REGION_ICON
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--showIcon
+
+    help: 
+      help-text: Displays the region icon in the region header beside the region title
+
+  - # ====== Template Option: Stack Region =======================
+    id: 2118239068195765
+    identification: 
+      name: Stack Region
+      identifier: STACKED
+      group: Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--stacked
+
+    help: 
+      help-text: Removes side borders and shadows, and can be useful for accordions and regions that need to be grouped together vertically.
+
+  - # ====== Template Option: Text Content =======================
+    id: 2118403722195765
+    identification: 
+      name: Text Content
+      identifier: TEXT_CONTENT
+      group: Style
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Region--textContent
+
+    help: 
+      help-text: Useful for displaying primarily text-based content, such as FAQs and more.
+
+- # ====== Region Template: Tabs Container =====================
+  id: 2118501386195765
+  identification: 
+    name: Tabs Container
+    identifier: TABS_CONTAINER
+    class: Navigation Region
+
+  subscription: 
+    master: 
+      referenced-id: 3221725015618492759
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-TabsRegion-mod--simple
+
+  template: 
+    template: |
+      <div class="t-TabsRegion #REGION_CSS_CLASSES# apex-tabs-region" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# id="#REGION_STATIC_ID#">
+        #BODY#
+        <div class="t-TabsRegion-items">#SUB_REGIONS#</div>
+      </div>
+
+  sub-regions: 
+    template: <div data-label="#SUB_REGION_TITLE!ATTR#" id="SR_#SUB_REGION_ID#">#SUB_REGION#</div>
+
+  javascript: 
+    file-urls: 
+    - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.apexTabs#MIN#.js?v=#APEX_VERSION#'
+
+  template-options: 
+  - # ====== Template Option: Remember Active Tab ================
+    id: 2119474331195768
+    identification: 
+      name: Remember Active Tab
+      identifier: REMEMBER_ACTIVE_TAB
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-useLocalStorage
+
+  - # ====== Template Option: Fill Tab Labels ====================
+    id: 2119805700195768
+    identification: 
+      name: Fill Tab Labels
+      identifier: FILL_TAB_LABELS
+      group: Layout
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-TabsRegion-mod--fillLabels
+
+  - # ====== Template Option: Large ==============================
+    id: 2120223322195768
+    identification: 
+      name: Large
+      identifier: TABSLARGE
+      group: Tabs Size
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-TabsRegion-mod--large
+
+  - # ====== Template Option: Pill ===============================
+    id: 2120669220195768
+    identification: 
+      name: Pill
+      identifier: PILL
+      group: Tab Style
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-TabsRegion-mod--pill
+
+  - # ====== Template Option: Simple =============================
+    id: 2120830897195770
+    identification: 
+      name: Simple
+      identifier: SIMPLE
+      group: Tab Style
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-TabsRegion-mod--simple
+
+  - # ====== Template Option: Small ==============================
+    id: 2121072362195770
+    identification: 
+      name: Small
+      identifier: TABS_SMALL
+      group: Tabs Size
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-TabsRegion-mod--small
+
+- # ====== Region Template: Title Bar ==========================
+  id: 2121101034195770
+  identification: 
+    name: Title Bar
+    identifier: TITLE_BAR
+    class: Breadcrumb Region
+
+  subscription: 
+    master: 
+      referenced-id: 2530016523834132090
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    default: 
+    - t-BreadcrumbRegion--showBreadcrumb
+
+  template: 
+    template: |
+      <nav id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES# class="t-BreadcrumbRegion #REGION_CSS_CLASSES#">
+        <div class="t-BreadcrumbRegion-top">
+          <div class="t-BreadcrumbRegion-buttons t-BreadcrumbRegion-buttons--start">#UP#</div>
+          <div class="t-BreadcrumbRegion-body">
+            <div class="t-BreadcrumbRegion-breadcrumb">#BODY#</div>
+              <div class="t-BreadcrumbRegion-title">
+              <h1 id="#REGION_STATIC_ID#_heading" class="t-BreadcrumbRegion-titleText" data-apex-heading>#TITLE#</h1>
+            </div>
+          </div>
+          <div class="t-BreadcrumbRegion-buttons t-BreadcrumbRegion-buttons--end">#PREVIOUS##CLOSE##DELETE##HELP##CHANGE##EDIT##COPY##CREATE##NEXT#</div>
+        </div>
+        <div class="t-BreadcrumbRegion-bottom">#SMART_FILTERS#</div>
+      </nav>
+      
+
+  accessibility: 
+    landmark-type: Navigation
+
+  template-options: 
+  - # ====== Template Option: Use Compact Style ==================
+    id: 2125359646195775
+    identification: 
+      name: Use Compact Style
+      identifier: USE_COMPACT_STYLE
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-BreadcrumbRegion--compactTitle
+
+    help: 
+      help-text: Uses a compact style for the breadcrumbs.
+
+  - # ====== Template Option: Alternative ========================
+    id: 2125516528195775
+    identification: 
+      name: Alternative
+      identifier: HEADING_FONT_ALTERNATIVE
+      group: Heading Font
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-BreadcrumbRegion--headingFontAlt
+
+  - # ====== Template Option: Show Breadcrumbs ===================
+    id: 2125723772195775
+    identification: 
+      name: Show Breadcrumbs
+      identifier: HIDE_BREADCRUMB
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-BreadcrumbRegion--showBreadcrumb
+
+  - # ====== Template Option: Use Current Breadcrumb Entry =======
+    id: 2125940691195775
+    identification: 
+      name: Use Current Breadcrumb Entry
+      identifier: GET_TITLE_FROM_BREADCRUMB
+      group: Region Title
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-BreadcrumbRegion--useBreadcrumbTitle
+
+  - # ====== Template Option: Use Region Title ===================
+    id: 2126141535195775
+    identification: 
+      name: Use Region Title
+      identifier: REGION_HEADER_VISIBLE
+      group: Region Title
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-BreadcrumbRegion--useRegionTitle
+
+- # ====== Region Template: Wizard Container ===================
+  id: 2126222527195775
+  identification: 
+    name: Wizard Container
+    identifier: WIZARD_CONTAINER
+    class: Form Region
+
+  subscription: 
+    master: 
+      referenced-id: 2117602213152591491
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - t-Wizard--hideStepsXSmall
+
+  template: 
+    template: |
+      <div class="t-Wizard #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>
+        <div class="t-Wizard-header">
+          <h1 class="t-Wizard-title" id="#REGION_STATIC_ID#_heading" data-apex-heading>#TITLE#</h1>
+          <div class="u-Table t-Wizard-controls">
+            <div class="u-Table-fit t-Wizard-buttons">#PREVIOUS##CLOSE#</div>
+            <div class="u-Table-fill t-Wizard-steps">#BODY#</div>
+            <div class="u-Table-fit t-Wizard-buttons">#NEXT#</div>
+          </div>
+        </div>
+        <div class="t-Wizard-body">#SUB_REGIONS#</div>
+      </div>
+
+  accessibility: 
+    landmark-type: Region
+    region-title-html-id: '#REGION_STATIC_ID#_heading'
+
+  template-options: 
+  - # ====== Template Option: Small Screens (Tablet) =============
+    id: 2128271948195778
+    identification: 
+      name: Small Screens (Tablet)
+      identifier: HIDESMALLSCREENS
+      group: Hide Steps For
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Wizard--hideStepsSmall
+
+    help: 
+      help-text: Hides the wizard progress steps for screens that are smaller than 768px wide.
+
+  - # ====== Template Option: X Small Screens (Mobile) ===========
+    id: 2128495717195778
+    identification: 
+      name: X Small Screens (Mobile)
+      identifier: HIDEXSMALLSCREENS
+      group: Hide Steps For
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Wizard--hideStepsXSmall
+
+    help: 
+      help-text: Hides the wizard progress steps for screens that are smaller than 768px wide.
+
+  - # ====== Template Option: Show Title =========================
+    id: 2128622426195778
+    identification: 
+      name: Show Title
+      identifier: SHOW_TITLE
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Wizard--showTitle
+

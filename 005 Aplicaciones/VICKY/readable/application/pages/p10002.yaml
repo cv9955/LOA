@@ -1,0 +1,139 @@
+---
+# ====== Page: Feedback Submitted ============================
+id: 10002
+identification: 
+  name: Feedback Submitted
+  alias: FEEDBACK-SUBMITTED
+  title: Feedback
+  page-group: MAIN # 1929982353627024
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Modal Dialog
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+configuration: 
+  build-option: 'Feature: Feedback' # 723782702363157
+
+regions: 
+- # ====== Region: Feedback Submitted ==========================
+  id: 724920580363232
+  identification: 
+    name: Feedback Submitted
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--wizard
+    - t-Alert--customIcons
+    - t-Alert--success
+    icon: fa-check-circle
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+buttons: 
+- # ====== Button: CLOSE =======================================
+  id: 724801568363232
+  identification: 
+    button-name: CLOSE
+    label: Close
+
+  layout: 
+    sequence: 20
+    region: Feedback Submitted # 724920580363232
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - w40p
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Close Dialog ========================
+  id: 725029563363232
+  identification: 
+    name: Close Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CLOSE # 724801568363232
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 734515038363446
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Close Dialog # 725029563363232
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

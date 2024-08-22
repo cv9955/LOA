@@ -1,0 +1,1996 @@
+---
+# ====== Page: CLIENTES_CTACTE ===============================
+id: 111
+identification: 
+  name: CLIENTES_CTACTE
+  alias: CLIENTES_CTACTE
+  title: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.'
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    td[headers="LUGAR_ENTREGA"] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: VALORES DIFERIDOS ===========================
+  id: 2959443739945853
+  identification: 
+    name: VALORES DIFERIDOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID ,
+          FECHA ,
+          IMPORTE ,
+          DOC_TIPO_ID ,
+          CUENTA_IN  ,
+          VTA_RECIBO_ID ,
+             (SELECT NRO_CAB FROM VTA_RECIBOS WHERE ID = D.VTA_RECIBO_ID) NRO_RECIBO
+      FROM DOC_CAJAS D
+      WHERE VTA_RECIBO_ID IN 
+      ( SELECT ID FROM VTA_RECIBOS WHERE CLIENTE_ID = :G_CLIENTE_ID)
+      AND FECHA > SYSDATE;
+      
+
+  layout: 
+    sequence: 90
+    parent-region: VALORES # 12235332419519567
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent3
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      report-sum-label: IMPORTE
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 2959530686945854
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 2959848625945857
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: IMPORTE
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: true
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VTA_RECIBO_ID ===============================
+    id: 2959991088945859
+    identification: 
+      column-name: VTA_RECIBO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_RECIBO ==================================
+    id: 2960166319945860
+    identification: 
+      column-name: NRO_RECIBO
+      type: Link
+
+    heading: 
+      heading: Recibo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:541:&SESSION.::&DEBUG.:RP,:P541_ID:#VTA_RECIBO_ID#'
+        page: 541 # VTA_RECIBO
+        clear-cache: RP
+        values: 
+          p541_id: '#VTA_RECIBO_ID#'
+
+      link-text: '#NRO_RECIBO#'
+      link-attributes: target="P500"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 2960418552945863
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_TIPO_ID =================================
+    id: 2960546440945864
+    identification: 
+      column-name: DOC_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Documento
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_IN ===================================
+    id: 12235260477519566
+    identification: 
+      column-name: CUENTA_IN
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cuenta
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CUENTA.TITLE # 12690372091894103
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: VALORES =====================================
+  id: 12235332419519567
+  identification: 
+    name: VALORES
+    type: Static Content
+
+  layout: 
+    sequence: 100
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CHEQUES A COBRAR ============================
+  id: 21170543305186386
+  identification: 
+    name: CHEQUES A COBRAR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             KEY,
+             VENCIMIENTO,
+             S_DOC(ID) DOC ,  
+             IMPORTE,
+             RSOCIAL,
+             VTA_RECIBO_ID
+             ,S_RECIBO(VTA_RECIBO_ID) RECIBO
+            , PROV_PAGO_ID
+             ,S_PAGO(PROV_PAGO_ID,'PROV') DESTINO
+                     ,apex_page.get_url( 
+                    p_page => 25, 
+                    p_clear_cache => 25, 
+                    p_items => 'p25_id', 
+                    p_values =>  ID
+                  ) DOC_LINK
+                from doc_CHEQUES CH
+              where CLIENTE_ID = :P111_ID
+              AND VENCIMIENTO > SYSDATE - 30
+       order by VENCIMIENTO
+    page-items-to-submit: 
+    - P111_ID
+
+  layout: 
+    sequence: 80
+    parent-region: VALORES # 12235332419519567
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent3
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      report-sum-label: IMPORTE
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 1051901836445924
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 20
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: KEY =========================================
+    id: 1051831701445923
+    identification: 
+      column-name: KEY
+      type: Plain Text
+
+    heading: 
+      heading: Key
+      alignment: center
+
+    layout: 
+      sequence: 50
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VENCIMIENTO =================================
+    id: 1051712339445922
+    identification: 
+      column-name: VENCIMIENTO
+      type: Plain Text
+
+    heading: 
+      heading: Venc
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 1051605010445921
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: IMPORTE
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: true
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: RSOCIAL =====================================
+    id: 1051494616445920
+    identification: 
+      column-name: RSOCIAL
+      type: Hidden
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VTA_RECIBO_ID ===============================
+    id: 1051429749445919
+    identification: 
+      column-name: VTA_RECIBO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 100
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PROV_PAGO_ID ================================
+    id: 866856016710067
+    identification: 
+      column-name: PROV_PAGO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 110
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: RECIBO ======================================
+    id: 48673768299376911
+    identification: 
+      column-name: RECIBO
+      type: Plain Text
+
+    heading: 
+      heading: Recibo
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESTINO =====================================
+    id: 48673912064376912
+    identification: 
+      column-name: DESTINO
+      type: Plain Text
+
+    heading: 
+      heading: Destino
+      alignment: start
+
+    layout: 
+      sequence: 120
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48673990242376913
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC =========================================
+    id: 48674216770376915
+    identification: 
+      column-name: DOC
+      type: Plain Text
+
+    heading: 
+      heading: CHEQUE
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: REMITOS SIN FACTURAR ========================
+  id: 21406419820538466
+  identification: 
+    name: REMITOS SIN FACTURAR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,cab_tipo_id
+            ,'fa fa-address-book-o fa-2x '||
+              CASE status
+                  WHEN 3 THEN 'fam-arrow-right fam-is-warning'
+                  WHEN 8 THEN 'fam-x fam-is-danger'
+                  WHEN 9 THEN 'fam-check fam-is-success'
+              END                 icon_class
+            ,CASE
+                  WHEN status=3 THEN '<a href=javascript:$s("P511_STATUS_9","'||id||'")class="fa fa-truck fa-lg fam-check fam-is-success" title="Recibido Ok"></a>'
+                  WHEN status=9 AND item_sin_precio > 0 THEN '<span aria-hidden="true" class="fa fa-file-text-o fa-lg fa-anim-flash fam-x fam-is-danger" title="Revisar Precios"></span>'
+                  WHEN status=9 AND item_sin_cantidad > 0 THEN '<span aria-hidden="true" class="fa fa-file-text-o fa-lg fa-anim-flash fam-x fam-is-warning" title="Falta Cantidad"></span>'
+                  WHEN status=9 AND NETO > 0 THEN '<a href=javascript:$s("P511_STATUS_10","'||id||'") class="fa fa-file-text-o  fam-arrow-right fam-is-success fa-lg" title="Facturar"></a>'
+              END                 actions
+            ,nro_remito           title
+            ,NULL                 icon_html
+            ,cliente_id
+            ,cli_dfiscal_id       description
+            ,cli_deposito_id
+            ,flete_id
+            ,obs
+            ,status
+            ,neto                 misc
+            ,apply1 facturado
+            ,signo * neto-nvl(apply1,0) saldo
+        FROM vta_remitos 
+       WHERE cliente_id=:p111_id AND status IN(3,8,9)
+       ORDER BY fecha;
+       
+
+  layout: 
+    sequence: 70
+    parent-region: VALORES # 12235332419519567
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-1
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select 1 
+        from VTA_REMITOS
+       where CLIENTE_ID = :p111_id
+        AND STATUS IN (3,8,9)
+        and cta = 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-ContentRow--styleCompact
+      - t-ContentRow--hideSelection
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 184632158522120
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 184476709522119
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CAB_TIPO_ID =================================
+    id: 184426736522118
+    identification: 
+      column-name: CAB_TIPO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Cab Tipo Id
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 2738278266644734
+    identification: 
+      column-name: CLIENTE_ID
+      type: Plain Text
+
+    heading: 
+      heading: Cliente Id
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLI_DEPOSITO_ID =============================
+    id: 2738496357644736
+    identification: 
+      column-name: CLI_DEPOSITO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Cli Deposito Id
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FLETE_ID ====================================
+    id: 2738597454644737
+    identification: 
+      column-name: FLETE_ID
+      type: Plain Text
+
+    heading: 
+      heading: Flete Id
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 2738739722644738
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 2738804449644739
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FACTURADO ===================================
+    id: 2739019264644741
+    identification: 
+      column-name: FACTURADO
+      type: Plain Text
+
+    heading: 
+      heading: Facturado
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO =======================================
+    id: 2739163325644742
+    identification: 
+      column-name: SALDO
+      type: Plain Text
+
+    heading: 
+      heading: Saldo
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 2739190423644743
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Class
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 2739403131644745
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.:RP:P502_ID:#ID#'
+        page: 502 # VTA_REMITO
+        clear-cache: RP
+        values: 
+          p502_id: '#ID#'
+
+      link-text: '#TITLE#'
+      link-attributes: target="P502"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 2739551034644746
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Description
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DFISCAL.TITLE # 2513212878412000
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 2739661492644747
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-danger-text
+      css-style: 
+      - 'font-size:24px;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 2739685938644748
+    identification: 
+      column-name: ICON_HTML
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIONS =====================================
+    id: 2739811074644749
+    identification: 
+      column-name: ACTIONS
+      type: Plain Text
+
+    heading: 
+      heading: Actions
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: ESTADO DE CUENTAS ===========================
+  id: 26479872740130747
+  identification: 
+    name: ESTADO DE CUENTAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,title
+            ,cuit DESCRIPTION
+            ,'fa fa-2x ' || icon_class || 
+                       CASE status
+                       WHEN 1    THEN             ' fam-check fam-is-success'
+                       WHEN -1   THEN             ' fam-minus fam-is-danger'
+                       end   icon_class
+            ,null icon_html
+            ,saldo   misc
+            ,1 actions
+            ,'CTA-' || CTA item_classes
+            ,120 + CTA pag_abm
+            ,122 + CTA pag_cuenta
+            ,cta
+            ,CASE
+                   WHEN saldo > 0 THEN         'u-danger-text'
+                                  ELSE         'u-success-text'
+                      END saldo_style
+       FROM (
+           SELECT id
+                 ,title
+                 ,cuit
+                 ,STATUS
+                 ,'fa-address-book-o'  icon_class
+                 , saldo
+                 ,cta
+           FROM dfiscales_saldos df
+           WHERE cliente_id =:P111_ID
+           UNION ALL
+           SELECT id
+                 ,title
+                 ,null cuit
+                 ,STATUS
+                 ,'fa-address-book' icon_class
+                 ,saldo
+                 ,2 cta
+           FROM cli_cuentas df
+           WHERE cliente_id =:P111_ID
+                 AND :a001_cta = 2
+       )
+      where status > 0 or saldo != 0
+       ORDER BY cta desc,abs(saldo) DESC NULLS LAST
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 7
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 30
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-ContentRow--styleCompact
+      - t-Report--hideNoPagination
+      - t-ContentRow--hideSelection
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CTA =========================================
+    id: 827545296848257
+    identification: 
+      column-name: CTA
+      type: Plain Text
+
+    heading: 
+      heading: Cta
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO_STYLE =================================
+    id: 6968291908104149
+    identification: 
+      column-name: SALDO_STYLE
+      type: Plain Text
+
+    heading: 
+      heading: Saldo Style
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 12274649174772625
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 12275805268772636
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:#PAG_CUENTA#:&SESSION.::&DEBUG.:RP,#PAG_CUENTA#:P#PAG_CUENTA#_ID:#ID#'
+        page: '#PAG_CUENTA#'
+        clear-cache: RP,#PAG_CUENTA#
+        values: 
+          p#pag_cuenta#_id: '#ID#'
+
+      link-text: '#TITLE#'
+      link-attributes: TARGET="P111"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 12275991335772638
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      html-expression: '<span class="u-bold #SALDO_STYLE#" style ="font-size:24px" >#MISC#</span>'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 12276094846772639
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Class
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 12276145444772640
+    identification: 
+      column-name: ICON_HTML
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIONS =====================================
+    id: 12276323429772641
+    identification: 
+      column-name: ACTIONS
+      type: Link
+
+    heading: 
+      heading: Actions
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:543:&SESSION.::&DEBUG.:543:P543_CLIENTE_ID,P543_CLI_CUENTA_ID,P543_CLI_DFISCAL_ID,P543_CTA:&G_CLIENTE_ID.,#ID#,#ID#,#CTA#'
+        page: 543 # VTA_RECIBO_NEW
+        clear-cache: 543
+        values: 
+          p543_cliente_id: '&G_CLIENTE_ID.'
+          p543_cli_cuenta_id: '#ID#'
+          p543_cli_dfiscal_id: '#ID#'
+          p543_cta: '#CTA#'
+
+      link-text: <i class="fa fa-plus fa-2x" title="Nuevo Recibo"></i>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_CLASSES ================================
+    id: 12276642630772645
+    identification: 
+      column-name: ITEM_CLASSES
+      type: Plain Text
+
+    heading: 
+      heading: Item Classes
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PAG_ABM =====================================
+    id: 12276797320772646
+    identification: 
+      column-name: PAG_ABM
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PAG_CUENTA ==================================
+    id: 12276844259772647
+    identification: 
+      column-name: PAG_CUENTA
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 40751252147861833
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: MENU CLIENTE ================================
+  id: 35411045475464982
+  identification: 
+    name: MENU CLIENTE
+    type: List
+
+  source: 
+    list: MENU CLIENTE # 5512870084115675
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - t-Form--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P111_ID ==================================
+  id: 34486722510454646
+  identification: 
+    name: P111_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: ESTADO DE CUENTAS # 26479872740130747
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+computations: 
+- # ====== Computation: P111_ID ================================
+  id: 34486767779454647
+  identification: 
+    item-name: P111_ID
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: G_CLIENTE_ID
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P111_ID
+

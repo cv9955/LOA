@@ -1,0 +1,1368 @@
+---
+# ====== Page: PLAN DE CUENTAS ===============================
+id: 650
+identification: 
+  name: PLAN DE CUENTAS
+  alias: PLAN-DE-CUENTAS
+  title: PLAN DE CUENTAS
+  page-group: 600 CONTADURIA # 1929866135622157
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PLAN DE CUENTAS =============================
+  id: 12605864360611125
+  identification: 
+    name: PLAN DE CUENTAS
+    type: Tree
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,parent parent_id
+            ,id cuenta_num
+            ,title cta_TITLE
+            ,level
+            ,CASE
+          WHEN CONNECT_BY_ISLEAF=1 THEN 0
+          WHEN level=1             THEN 1
+          ELSE-1
+              END                   AS status
+            ,CASE
+                  WHEN level<=3 THEN apex_page.get_url(p_items=>'P650_PARENT_ID',p_values=>"ID")
+              END                   link
+        FROM CUENTA_TREE
+      START WITH
+          parent is null
+      CONNECT BY
+          PRIOR id=parent
+       ORDER SIBLINGS BY ID;
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      node-label-column: CTA_TITLE
+      node-value-column: CUENTA_NUM
+      hierarchy: Computed with SQL
+      node-id-column: ID
+      parent-key-column: PARENT_ID
+      start-tree-with: Value is NULL
+      order-siblings-by: CUENTA_NUM
+      tooltip: Database Column
+      tooltip-column: ID
+      activate-node-link-with: Single Click
+      link-column: LINK
+      default-icon-css-class: icon-tree-folder
+      icon-type-css-class: a-Icon
+      selected-node-page-item: P650_PARENT_ID
+
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: CUENTAS =====================================
+  id: 12837139486350451
+  identification: 
+    name: CUENTAS
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+                ,title    
+                ,cuenta_num
+                ,parent_id 
+                ,flg_in    -- lov cuenta_in
+                ,flg_out   -- lov cuenta_out
+                ,flg_prov_compras -- lov cuenta_gasto 
+                ,flg_banco -- lov cuenta_bancos
+                ,apex_page.get_url( 
+                    p_page => 17, 
+                    p_clear_cache => 17, 
+                    p_items => 'p17_CUENTA_id', 
+                    p_values =>  ID
+                  ) DOC_LINK
+        from CUENTAS_lov
+         where PARENT_ID = :P650_PARENT_ID
+    page-items-to-submit: 
+    - P650_PARENT_ID
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 12837192292350452
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: false
+
+    edit-authorization: 
+      add: CAV - EXCLUSIVO # 47047883483758502
+      update: ACCESS CONTROL - VICTORIA # 285793758003850
+      delete: CAV - EXCLUSIVO # 47047883483758502
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    toolbar: 
+      show: true
+      controls: 
+      - Search Column Selection
+      - Search Field
+      - Actions Menu
+      - Reset Button
+      - Save Button
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: true
+      define-chart-view: true
+      download: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - PDF
+      - Excel
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 13195399609568191
+      identification: 
+        name: Primary Report
+        alias: 18342
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 12837288032350453
+    identification: 
+      column-name: ID
+      type: Number Field
+
+    heading: 
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 30
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: true
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: TITLE =======================================
+    id: 12837372941350454
+    identification: 
+      column-name: TITLE
+      type: Text Field
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 80
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PARENT_ID ===================================
+    id: 12837918435350459
+    identification: 
+      column-name: PARENT_ID
+      type: Number Field
+
+    heading: 
+      heading: PARENT
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PARENT_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Item
+      item: P650_PARENT_ID
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CUENTA_NUM ==================================
+    id: 12838030375350460
+    identification: 
+      column-name: CUENTA_NUM
+      type: Number Field
+
+    heading: 
+      heading: Num
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: CUENTA_NUM
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 12838194898350462
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 12838346330350463
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: FLG_IN ======================================
+    id: 48925939843166132
+    identification: 
+      column-name: FLG_IN
+      type: Number Field
+
+    heading: 
+      heading: Flg In
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 150
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: FLG_IN
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: FLG_OUT =====================================
+    id: 48926119567166133
+    identification: 
+      column-name: FLG_OUT
+      type: Number Field
+
+    heading: 
+      heading: Flg Out
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 160
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: FLG_OUT
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: FLG_BANCO ===================================
+    id: 48926169491166134
+    identification: 
+      column-name: FLG_BANCO
+      type: Number Field
+
+    heading: 
+      heading: Flg Banco
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 170
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: FLG_BANCO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48926255870166135
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 180
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '&DOC_LINK.'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+      link-attributes: TARGET="P17"
+
+    source: 
+      type: Database Column
+      database-column: DOC_LINK
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: FLG_PROV_COMPRAS ============================
+    id: 55973842646519719
+    identification: 
+      column-name: FLG_PROV_COMPRAS
+      type: Number Field
+
+    heading: 
+      heading: Flg Prov Compras
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 190
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: FLG_PROV_COMPRAS
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  printing: 
+    page: 
+      size: Letter
+      orientation: Landscape
+      units: Inches
+      width: 11
+      height: 8.5
+      border-width: 0.5
+      border-color: '#666666'
+
+    page-header: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+      page-header-text: CUENTAS
+
+    column-headings: 
+      font: Helvetica
+      font-weight: Bold
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#EEEEEE'
+
+    columns: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 10
+      font-color: '#000000'
+      background-color: '#FFFFFF'
+
+    page-footer: 
+      font: Helvetica
+      font-weight: Normal
+      font-size: 12
+      font-color: '#000000'
+      alignment: center
+
+- # ====== Region: SALIDAS =====================================
+  id: 43069165928794642
+  identification: 
+    name: SALIDAS
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 70
+    parent-region: CUENTAS # 12837139486350451
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 43069310019794643
+    chart: 
+      type: Pie
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 43069411588794644
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT id
+                ,cta_title title
+                ,parent_id
+                ,CTA_NUM                  num
+                ,C1.neto
+            FROM cuentas_lov c
+                ,( SELECT cuenta_id ,SUM(DEBE)  neto
+                      FROM PC_TOTAL
+                      WHERE CAB_fecha>add_months(sysdate,-13)
+                      GROUP BY cuenta_id
+                  )c1
+           WHERE c1.cuenta_id=c.id 
+               AND neto IS NOT NULL
+              and c.parent_id LIKE :P650_PARENT_ID || '%'
+          order by neto desc
+
+      column-mapping: 
+        label: TITLE
+        value: NETO
+        custom-tooltip: NETO
+        custom-column: NUM
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label - Value
+
+- # ====== Region: INGRESOS ====================================
+  id: 43069833080794648
+  identification: 
+    name: INGRESOS
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 80
+    parent-region: CUENTAS # 12837139486350451
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 43972047003140499
+    chart: 
+      type: Pie
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    settings: 
+      pie-selection-effect: Highlight
+
+    value: 
+      pie-chart-other-threshold: 0
+      format: Decimal
+      decimal-places: 0
+      format-scaling: None
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 43972205384140500
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT id
+                ,cta_title title
+                ,parent_id
+                ,CTA_NUM                  num
+                ,c1.neto
+            FROM cuentas_lov c
+                ,( SELECT cuenta_id ,SUM(HABER)  neto
+                      FROM PC_TOTAL
+                      WHERE CAB_fecha>add_months(sysdate,-13)
+                      GROUP BY cuenta_id
+                  )c1
+           WHERE c1.cuenta_id=c.id 
+               AND neto IS NOT NULL
+          and c.parent_id LIKE :P650_PARENT_ID || '%'
+          order by neto desc
+
+      column-mapping: 
+        label: TITLE
+        value: NETO
+        custom-tooltip: NETO
+        custom-column: NUM
+
+      label: 
+        show: true
+        position: Automatic
+        display-as: Label - Value
+
+- # ====== Region: RESULTADO ===================================
+  id: 43972296920140501
+  identification: 
+    name: RESULTADO
+    type: Chart
+
+  source: 
+    location: None
+
+  layout: 
+    sequence: 90
+    parent-region: CUENTAS # 12837139486350451
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 43972345184140502
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: false
+
+    layout: 
+      height: 400
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: false
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 43972530626140503
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Local Database
+        type: SQL Query
+        sql-query: |
+          SELECT id
+                ,cta_title title
+                ,parent_id
+                ,CTA_NUM                  num
+                ,c1.neto
+            FROM cuentas_lov c
+                ,( SELECT cuenta_id ,SUM(NVL(DEBE,0) - NVL(HABER,0))  neto
+                      FROM PC_TOTAL
+                      WHERE CAB_fecha>add_months(sysdate,-13)
+                      GROUP BY cuenta_id
+                  )c1
+           WHERE c1.cuenta_id=c.id 
+               AND neto IS NOT NULL
+          and c.parent_id LIKE :P650_PARENT_ID || '%'
+          order by neto desc
+
+      column-mapping: 
+        label: TITLE
+        value: NETO
+        custom-tooltip: NETO
+        custom-column: NUM
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 43972622513140504
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 43972707820140505
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format: Decimal
+        decimal-places: 0
+        format-scaling: None
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Yes
+
+      minor-ticks: 
+        show: false
+
+      tick-label: 
+        show: true
+
+- # ====== Region: CONTADURIA ==================================
+  id: 49426446738717700
+  identification: 
+    name: CONTADURIA
+    type: List
+
+  source: 
+    list: MENU_CONTABLE # 2626165322405257
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-heartbeat
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-slide
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P650_PARENT_ID ===========================
+  id: 12838092005350461
+  identification: 
+    name: P650_PARENT_ID
+    type: Select List
+
+  label: 
+    label: CUENTA
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: CUENTAS # 12837139486350451
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CUENTA_TREE # 49412103447516316
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CONTRACT_ALL ================================
+  id: 12606179499611136
+  identification: 
+    button-name: CONTRACT_ALL
+    label: Collapse All
+
+  layout: 
+    sequence: 10
+    region: PLAN DE CUENTAS # 12605864360611125
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: EXPAND_ALL ==================================
+  id: 12607503261611169
+  identification: 
+    button-name: EXPAND_ALL
+    label: Expand All
+
+  layout: 
+    sequence: 10
+    region: PLAN DE CUENTAS # 12605864360611125
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: CONTRACT_ALL ========================
+  id: 12606617021611158
+  identification: 
+    name: CONTRACT_ALL
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CONTRACT_ALL # 12606179499611136
+
+  actions: 
+  - # ====== Action: Collapse Tree ===============================
+    id: 12607148796611166
+    identification: 
+      action: Collapse Tree
+
+    affected-elements: 
+      selection-type: Region
+      region: PLAN DE CUENTAS # 12605864360611125
+
+    execution: 
+      sequence: 10
+      event: CONTRACT_ALL # 12606617021611158
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: EXPAND_ALL ==========================
+  id: 12607869795611169
+  identification: 
+    name: EXPAND_ALL
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: EXPAND_ALL # 12607503261611169
+
+  actions: 
+  - # ====== Action: Expand Tree =================================
+    id: 12608380974611169
+    identification: 
+      action: Expand Tree
+
+    affected-elements: 
+      selection-type: Region
+      region: PLAN DE CUENTAS # 12605864360611125
+
+    execution: 
+      sequence: 10
+      event: EXPAND_ALL # 12607869795611169
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+processes: 
+- # ====== Process: CUENTAS - Save Interactive Grid Data =======
+  id: 12838389527350464
+  identification: 
+    name: CUENTAS - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: CUENTAS # 12837139486350451
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+

@@ -1,0 +1,1130 @@
+---
+# ====== Page: LISTA RECIBOS =================================
+id: 540
+identification: 
+  name: LISTA RECIBOS
+  title: LISTA RECIBOS
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: RECIBOS =====================================
+  id: 41982746168439729
+  identification: 
+    name: RECIBOS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,EXTRACT(YEAR FROM fecha)  año
+            ,EXTRACT(MONTH FROM fecha) mes
+            ,cab_tipo_id
+            ,punto_venta
+            ,nro_cab
+            ,cliente_id
+            ,cliente_id               cliente
+            ,CASE cta
+          WHEN 1 THEN cli_dfiscal_id
+          WHEN 2 THEN cli_cuenta_id
+              END                      cuenta_id
+            ,caja
+            ,cheques
+            ,reten
+            ,obs
+            ,total
+            ,CASE status  WHEN 2 THEN '<i class="fa fa-lock u-success-text"></i>' END status
+            ,saldo
+        FROM vta_recibos r
+      WHERE CTA = :P540_CTA
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 1131529649352377
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:541:&SESSION.::&DEBUG.:541:P541_ID:#ID#'
+        page: 541 # VTA_RECIBO
+        clear-cache: 541
+        values: 
+          p541_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+      link-attributes: target="P541"
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 4914065906061517
+      identification: 
+        name: Primary Report
+        alias: 83498
+
+    - # ====== Saved Report: RECIBOS CON SALDO =====================
+      id: 6984301911513516
+      identification: 
+        name: RECIBOS CON SALDO
+        alias: 104201
+
+    - # ====== Saved Report: SALDO A COBRAR ========================
+      id: 11156321482633893
+      identification: 
+        name: SALDO A COBRAR
+        alias: 294266
+
+    - # ====== Saved Report: RECIBOS ===============================
+      id: 11161177140755119
+      identification: 
+        name: RECIBOS
+        alias: 294315
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 1131654096352378
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: FECHA =======================================
+      id: 1131691957352379
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CAB_TIPO_ID =================================
+      id: 1131785475352380
+      identification: 
+        column-name: CAB_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CAB_TIPO.TITLE # 13778764956984108
+
+      heading: 
+        heading: Cab Tipo Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PUNTO_VENTA =================================
+      id: 1131960017352381
+      identification: 
+        column-name: PUNTO_VENTA
+        type: Plain Text
+
+      heading: 
+        heading: Punto Venta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NRO_CAB =====================================
+      id: 1132023291352382
+      identification: 
+        column-name: NRO_CAB
+        type: Plain Text
+
+      heading: 
+        heading: Nro
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 4901896869060033
+      identification: 
+        column-name: CLIENTE_ID
+        type: Hidden
+
+      heading: 
+        heading: Cliente
+
+      layout: 
+        sequence: 60
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CUENTA_ID ===================================
+      id: 4901973892060034
+      identification: 
+        column-name: CUENTA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLI_CUENTAS_ALL # 3915103874676140
+
+      heading: 
+        heading: Cuenta
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: OBS =========================================
+      id: 4902132982060035
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TOTAL =======================================
+      id: 4902218258060036
+      identification: 
+        column-name: TOTAL
+        type: Plain Text
+
+      heading: 
+        heading: Total
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-bold">#TOTAL#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATUS ======================================
+      id: 6132171063342276
+      identification: 
+        column-name: STATUS
+        type: Plain Text
+
+      heading: 
+        heading: '&nbsp;'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CLIENTE =====================================
+      id: 6132704774342281
+      identification: 
+        column-name: CLIENTE
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:111:&SESSION.::&DEBUG.::G_CLIENTE_ID:#CLIENTE_ID#'
+          page: 111 # CLIENTES_CTACTE
+          values: 
+            g_cliente_id: '#CLIENTE_ID#'
+
+        link-text: '#CLIENTE#'
+        link-attributes: TARGET="P111"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: AÑO =========================================
+      id: 6782519217077959
+      identification: 
+        column-name: AÑO
+        type: Plain Text
+
+      heading: 
+        heading: Año
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MES =========================================
+      id: 6782624757077960
+      identification: 
+        column-name: MES
+        type: Plain Text
+
+      heading: 
+        heading: Mes
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CAJA ========================================
+      id: 6966817131104134
+      identification: 
+        column-name: CAJA
+        type: Plain Text
+
+      heading: 
+        heading: Caja
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CHEQUES =====================================
+      id: 6966938136104135
+      identification: 
+        column-name: CHEQUES
+        type: Plain Text
+
+      heading: 
+        heading: Cheques
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: RETEN =======================================
+      id: 6967120606104137
+      identification: 
+        column-name: RETEN
+        type: Plain Text
+
+      heading: 
+        heading: Retencion
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SALDO =======================================
+      id: 6967253042104138
+      identification: 
+        column-name: SALDO
+        type: Plain Text
+
+      heading: 
+        heading: Saldo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: RECIBOS
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: FILTRO_VENTAS ===============================
+  id: 67663739695807214
+  identification: 
+    name: FILTRO_VENTAS
+    type: Static Content
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: VENTAS ======================================
+  id: 116171465932193019
+  identification: 
+    name: VENTAS
+    type: List
+
+  source: 
+    list: MENU_VENTAS # 15192935647770055
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P540_CTA =================================
+  id: 15952268741797876
+  identification: 
+    name: P540_CTA
+    type: Switch
+
+  label: 
+    label: Cta
+    alignment: Left
+
+  settings: 
+    use-defaults: false
+    on-value: 1
+    on-label: RECIBOS
+    off-value: 2
+    off-label: PAGOS
+
+  layout: 
+    sequence: 10
+    region: FILTRO_VENTAS # 67663739695807214
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item = Value
+    item: A001_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: NUEVO_1 =====================================
+  id: 47160624974942
+  identification: 
+    button-name: NUEVO_1
+    label: 'Nuevo '
+
+  layout: 
+    sequence: 10
+    region: RECIBOS # 41982746168439729
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - CTA-&P540_CTA.
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:541:&SESSION.::&DEBUG.:541:P541_CTA::P540_CTA'
+      page: 541 # VTA_RECIBO
+      clear-cache: 541
+      values: 
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 15862442070676854
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P540_CTA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 15862552877676855
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: CTA
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: New # 15862442070676854
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

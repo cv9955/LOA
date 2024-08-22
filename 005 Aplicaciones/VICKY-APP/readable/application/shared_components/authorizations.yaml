@@ -1,0 +1,151 @@
+---
+- # ====== Authorization: Administration Rights ================
+  id: 176450957862038120
+  identification: 
+    name: Administration Rights
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: return true;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: ACCESS CONTROL - CAV =================
+  id: 176989717152772095
+  identification: 
+    name: ACCESS CONTROL - CAV
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): CAV
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: USER NO CAV
+
+- # ====== Authorization: ACCESS CONTROL - GERENCIA ============
+  id: 176989969286772098
+  identification: 
+    name: ACCESS CONTROL - GERENCIA
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): GERENCIA
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: CONTROL ROL GERENCIA
+
+- # ====== Authorization: Copy of ACCESS CONTROL - VENDEDOR ====
+  id: 176990274254772098
+  identification: 
+    name: Copy of ACCESS CONTROL - VENDEDOR
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): corredor
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: CONTROL ROL CORREDOR
+
+- # ====== Authorization: Copy of ACCESS CONTROL - VICTORIA ====
+  id: 176990525045772098
+  identification: 
+    name: Copy of ACCESS CONTROL - VICTORIA
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): administracion
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: CONTROL ROL GERENCIA
+
+- # ====== Authorization: ACCESS CONTROL - CORRUGADO ===========
+  id: 176990878554773950
+  identification: 
+    name: ACCESS CONTROL - CORRUGADO
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): CORRUGADO
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: ROL PARA MAQUINISTAS CORRUGADORES
+
+- # ====== Authorization: ACCESS CONTROL - TERMINADO ===========
+  id: 178746748376973285
+  identification: 
+    name: ACCESS CONTROL - TERMINADO
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): TERMINADO
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: ROL PARA TERMINADORES
+

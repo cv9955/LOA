@@ -1,0 +1,1528 @@
+---
+# ====== Page: LIBRO COMPRAS =================================
+id: 430
+identification: 
+  name: LIBRO COMPRAS
+  alias: LIBRO-COMPRAS
+  title: LIBRO COMPRAS
+  page-group: 600 CONTADURIA # 1929866135622157
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: TOTALES =====================================
+  id: 12344020720986141
+  identification: 
+    name: TOTALES
+    type: Badge List
+
+  source: 
+    sql-query: |
+      select NVL(HABER,0) - NVL(DEBE,0) SALDO , TITLE FROM PC_IVA_A_PAGAR  
+      WHERE CAB_MES = :P430_ANO||:P430_MES
+      UNION ALL 
+      select SUM (NVL(HABER,0) - NVL(DEBE,0)) SALDO , 'IVA A PAGAR' TITLE FROM PC_IVA_A_PAGAR  
+      WHERE CAB_MES = :P430_ANO||:P430_MES
+      
+    page-items-to-submit: 
+    - P430_ANO
+    - P430_MES
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: TITLE
+      value-column: SALDO
+      link-target: 
+        url: 'f?p=&APP_ID.:606:&SESSION.::&DEBUG.::P606_MES,P606_YEAR,P606_CUENTA_ID:&P430_MES.,&P430_ANO.,#CUENTA_ID#'
+        page: 606 # COMISIONES DE VENTAS
+        values: 
+          p606_mes: '&P430_MES.'
+          p606_year: '&P430_ANO.'
+          p606_cuenta_id: '#CUENTA_ID#'
+
+      layout: Float to Left
+      chart-type: Rectangular
+      color: Yes
+
+- # ====== Region: PERIODO =====================================
+  id: 12344715565986148
+  identification: 
+    name: PERIODO
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: FACTURAS ====================================
+  id: 67735637413071210
+  identification: 
+    name: FACTURAS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,provedor_id
+            ,(select title from dfiscales where provedor_id = prov_compras.provedor_id) provedor
+            ,mes
+            ,fecha
+            ,cab_tipo_id
+            ,pto_venta
+            ,nro_cab
+            ,s_prov(provedor_id,'CUIT') cuit
+            ,signo*monotrib   monotrib
+            ,signo*exento     exento
+            ,signo*total_neto neto
+            ,signo*total_iva  total_iva
+            ,signo*perc_iva   perc_iva
+            ,signo*perc_iibb  perc_iibb
+            ,signo*total      total
+            ,signo*neto_21    neto_21
+            ,signo*neto_27    neto_27
+            ,signo*neto_10    neto_10
+            ,cuenta_id
+       --     ,signo*saldo_abonado pago
+       --     ,signo*saldo_pendiente  saldo
+        FROM prov_compras
+       WHERE mes=:p430_ano||:p430_mes
+       AND CTA = 1
+       AND CAB_TIPO_ID IN (SELECT ID FROM T_CAB_TIPO WHERE LIBRO_COMPRAS = 1)
+    page-items-to-submit: 
+    - P430_ANO
+    - P430_MES
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 67735742074071211
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:403:&SESSION.::&DEBUG.:RP:P403_ID:#ID#'
+        page: 403 # prov_compras_abm
+        clear-cache: RP
+        values: 
+          p403_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: total libro compras ===================
+      id: 12752566233809857
+      identification: 
+        name: total libro compras
+        alias: 310229
+
+    - # ====== Saved Report: TOTAL MENSUAL =========================
+      id: 57791692107544595
+      identification: 
+        name: TOTAL MENSUAL
+        alias: 476955
+
+    - # ====== Saved Report: TOTAL MENSUAL 1 =======================
+      id: 64714539663649792
+      identification: 
+        name: TOTAL MENSUAL 1
+        alias: 476939
+
+    - # ====== Saved Report: TOTAL MENSUAL 2 =======================
+      id: 64715993855651817
+      identification: 
+        name: TOTAL MENSUAL 2
+        alias: 476928
+
+    - # ====== Saved Report: Primary Report ========================
+      id: 67768744037207783
+      identification: 
+        name: Primary Report
+        alias: 476951
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 44247477324786349
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: MES =========================================
+      id: 44247881699786375
+      identification: 
+        column-name: MES
+        type: Plain Text
+
+      heading: 
+        heading: Mes
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 9999-99
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FECHA =======================================
+      id: 44248359585786375
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUIT ========================================
+      id: 44248718700786377
+      identification: 
+        column-name: CUIT
+        type: Plain Text
+
+      heading: 
+        heading: Cuit
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MONOTRIB ====================================
+      id: 44249150691786377
+      identification: 
+        column-name: MONOTRIB
+        type: Plain Text
+
+      heading: 
+        heading: Monotrib
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EXENTO ======================================
+      id: 44249508636786377
+      identification: 
+        column-name: EXENTO
+        type: Plain Text
+
+      heading: 
+        heading: Exento
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PERC_IVA ====================================
+      id: 44249948237786378
+      identification: 
+        column-name: PERC_IVA
+        type: Plain Text
+
+      heading: 
+        heading: Perc Iva
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PERC_IIBB ===================================
+      id: 44250271021786378
+      identification: 
+        column-name: PERC_IIBB
+        type: Plain Text
+
+      heading: 
+        heading: Perc Iibb
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TOTAL =======================================
+      id: 44250708241786380
+      identification: 
+        column-name: TOTAL
+        type: Plain Text
+
+      heading: 
+        heading: Total
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TOTAL_IVA ===================================
+      id: 44251075989786380
+      identification: 
+        column-name: TOTAL_IVA
+        type: Plain Text
+
+      heading: 
+        heading: Total Iva
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NETO_21 =====================================
+      id: 44251508682786380
+      identification: 
+        column-name: NETO_21
+        type: Plain Text
+
+      heading: 
+        heading: Neto 21
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NETO_27 =====================================
+      id: 44251962361786382
+      identification: 
+        column-name: NETO_27
+        type: Plain Text
+
+      heading: 
+        heading: Neto 27
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NETO_10 =====================================
+      id: 44252283648786382
+      identification: 
+        column-name: NETO_10
+        type: Plain Text
+
+      heading: 
+        heading: Neto 10
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CAB_TIPO_ID =================================
+      id: 44253151420786383
+      identification: 
+        column-name: CAB_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CAB_TIPO.TITLE # 13778764956984108
+
+      heading: 
+        heading: Cab Tipo Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PROVEDOR_ID =================================
+      id: 44253489545786385
+      identification: 
+        column-name: PROVEDOR_ID
+        type: Hidden
+
+      heading: 
+        heading: Provedor Id
+
+      layout: 
+        sequence: 220
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CUENTA_ID ===================================
+      id: 44254319109786386
+      identification: 
+        column-name: CUENTA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CUENTA.TITLE # 12690372091894103
+
+      heading: 
+        heading: Cuenta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 300
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PTO_VENTA ===================================
+      id: 44254723664786386
+      identification: 
+        column-name: PTO_VENTA
+        type: Plain Text
+
+      heading: 
+        heading: Pto Venta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NRO_CAB =====================================
+      id: 44255165765786386
+      identification: 
+        column-name: NRO_CAB
+        type: Plain Text
+
+      heading: 
+        heading: Nro Cab
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 250
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PROVEDOR ====================================
+      id: 44256311979786388
+      identification: 
+        column-name: PROVEDOR
+        type: Link
+
+      heading: 
+        heading: Proveedor
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 280
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:402:&SESSION.::&DEBUG.:RP:P402_ID:#PROVEDOR_ID#'
+          page: 402 # prov_cuenta_report
+          clear-cache: RP
+          values: 
+            p402_id: '#PROVEDOR_ID#'
+
+        link-text: '#PROVEDOR#'
+        link-attributes: TARGET="P402"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NETO ========================================
+      id: 44256763058786389
+      identification: 
+        column-name: NETO
+        type: Plain Text
+
+      heading: 
+        heading: Neto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 290
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 8.5
+        height: 11
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#9bafde'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#efefef'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: CONTADURIA ==================================
+  id: 127369274670083287
+  identification: 
+    name: CONTADURIA
+    type: List
+
+  source: 
+    list: MENU_CONTABLE # 2626165322405257
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-book
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+
+page-items: 
+- # ====== Page Item: P430_ANO =================================
+  id: 40751934243861840
+  identification: 
+    name: P430_ANO
+    type: Select List
+
+  label: 
+    label: AÑO
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: PERIODO # 12344715565986148
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_AÑOS # 110289324833720610
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT(YEAR FROM SYSDATE)
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P430_MES =================================
+  id: 40751998350861841
+  identification: 
+    name: P430_MES
+    type: Select List
+
+  label: 
+    label: MES
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: PERIODO # 12344715565986148
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_MONTH.LARGE # 13917006372221347
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT(MONTH FROM SYSDATE)
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P430_COPY ================================
+  id: 44260601089786433
+  identification: 
+    name: P430_COPY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: FACTURAS # 67735637413071210
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      prov_compras_to_excel(
+          pmes => TO_CHAR(:P430_ANO,'FM0000')||TO_CHAR(:P430_MES,'FM00')
+          )
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: EXPORT ======================================
+  id: 40752131760861842
+  identification: 
+    button-name: EXPORT
+    label: Exportar
+
+  layout: 
+    sequence: 30
+    region: FACTURAS # 67735637413071210
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    icon: fa-file-excel-o
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 48926592631166138
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P430_MES
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 48926733396166139
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P430_COPY
+
+    execution: 
+      sequence: 10
+      event: New # 48926592631166138
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 48926819805166140
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: FACTURAS # 67735637413071210
+
+    execution: 
+      sequence: 20
+      event: New # 48926592631166138
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 48927165918166144
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: TOTALES # 12344020720986141
+
+    execution: 
+      sequence: 30
+      event: New # 48926592631166138
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 129490874953225558
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: EXPORT # 40752131760861842
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 44262661927786511
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P430_COPY
+
+    execution: 
+      sequence: 10
+      event: New_1 # 129490874953225558
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+branches: 
+- # ====== Branch: Go To Page 401 ==============================
+  id: 44262976106786521
+  identification: 
+    name: Go To Page 401
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:430:&SESSION.::&DEBUG.:RP,::&success_msg=#SUCCESS_MSG#'
+      page: 430 # LIBRO COMPRAS
+      clear-cache: RP
+

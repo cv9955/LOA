@@ -1,0 +1,571 @@
+---
+# ====== Page: SIN CONTAR ====================================
+id: 17
+identification: 
+  name: SIN CONTAR
+  alias: SIN-CONTAR
+  title: SIN CONTAR
+  page-group: Terminado # 12664871773700413
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: ACCESS CONTROL - TERMINADO # 178746748376973285
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: SIN CONTAR ==================================
+  id: 207891019245308489
+  identification: 
+    name: SIN CONTAR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT p.id                                                                                               id
+            ,p.fecha                                                                                            fecha
+            ,p.articulo_id                                                                                      articulo_id
+            ,p.cantidad                                                                                         cantidad
+            ,p.status                                                                                           status
+            ,p.obs
+            ,DIV_PLANCHAS_PRODUCCION(P.ID,'APP')  planchas
+            ,DIV_ARTICULO(P.ARTICULO_ID,'CODIGO') CODIGO
+            ,DIV_ARTICULO(P.ARTICULO_ID,'MEDIDAS') medidas
+            ,S_ARTICULO(P.ARTICULO_ID,'IMPRESION') impresion
+            ,CASE p.status
+          WHEN 1 THEN '<i class="fa fa-gear fa-anim-spin u-color-8-text"></i>'
+          WHEN 0 THEN '<DIV class="u-bold">'||p.ix||'</DIV>'
+              END                                                                                                icon_status
+        FROM PRODS  p
+       WHERE p.status = 2
+          AND FECHA > SYSDATE -30
+          ORDER BY FECHA DESC
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent2
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: First Column
+      style: Default Break Formatting
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 24307450983449631
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: FINAL
+      alignment: center
+
+    layout: 
+      sequence: 131
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:14:&SESSION.::&DEBUG.:14:P14_ID:#ID#'
+        page: 14 # PRODUCCION_TERMINADO
+        clear-cache: 14
+        values: 
+          p14_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 24307802870449632
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: start
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 24308251353449633
+    identification: 
+      column-name: ARTICULO_ID
+      type: Link
+
+    heading: 
+      heading: O/F
+      alignment: center
+
+    layout: 
+      sequence: 141
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.::P16_ID:#ARTICULO_ID#'
+        page: 16 # PRINT_ARTICULO
+        values: 
+          p16_id: '#ARTICULO_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: ACCESS CONTROL - GERENCIA # 176989969286772098
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 24308650951449634
+    identification: 
+      column-name: CANTIDAD
+      type: Hidden
+
+    layout: 
+      sequence: 41
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 24309017169449635
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 51
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 24309884986449637
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 121
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-danger
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PLANCHAS ====================================
+    id: 24310206319449638
+    identification: 
+      column-name: PLANCHAS
+      type: Plain Text
+
+    heading: 
+      heading: Planchas
+      alignment: center
+
+    layout: 
+      sequence: 101
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CODIGO ======================================
+    id: 24311065533449640
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 21
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 24311402408449641
+    identification: 
+      column-name: MEDIDAS
+      type: Plain Text
+
+    heading: 
+      heading: Medidas
+      alignment: center
+
+    layout: 
+      sequence: 71
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: IMPRESION ===================================
+    id: 24311801201449642
+    identification: 
+      column-name: IMPRESION
+      type: Plain Text
+
+    heading: 
+      heading: Tinta
+      alignment: center
+
+    layout: 
+      sequence: 111
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ICON_STATUS =================================
+    id: 24312234085449643
+    identification: 
+      column-name: ICON_STATUS
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+page-items: 
+- # ====== Page Item: P17_INICIO ===============================
+  id: 202729603769540766
+  identification: 
+    name: P17_INICIO
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: SIN CONTAR # 207891019245308489
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: INICIO ==============================
+  id: 24313166663449675
+  identification: 
+    name: INICIO
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P17_INICIO
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 24313588124449681
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'MOVIL_APP.produccion_start(:P17_INICIO);'
+      items-to-submit: 
+      - P17_INICIO
+
+    execution: 
+      sequence: 10
+      event: INICIO # 24313166663449675
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 24314580335449685
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SIN CONTAR # 207891019245308489
+
+    execution: 
+      sequence: 50
+      event: INICIO # 24313166663449675
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

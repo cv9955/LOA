@@ -1,0 +1,1093 @@
+---
+# ====== Page: CORRUGADO =====================================
+id: 15
+identification: 
+  name: CORRUGADO
+  alias: CORR_MAIN
+  title: Planilla Corrugado
+  page-group: Corrugado # 12664751500698601
+
+appearance: 
+  page-mode: Normal
+  page-template: MOVIL
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #f2f2f2}
+    
+    .t-ContentRow-title {
+        width:100%;
+    }
+    
+    .t-ContentRow-content{
+        width:100%;
+    }
+    
+    .status-0 {
+        background-color : white;
+        
+    }
+    
+    .status-1 {
+          background-color : lightgray;
+    }
+    
+    .status-ON {
+          background-color : lightgreen;
+    }
+    
+    .detalle {
+        text-align: center;
+        font-weight: 400;
+        border-bottom: 1px gray solid;
+    }
+    
+    .t-ContentRow-misc {
+          BORDER: SOLID 2PX red;
+          
+    }
+    
+    .t-ContentRow-misc a{
+          font-size: 20px;
+    }
+    
+    .t-ContentRow-actions {
+          BORDER: SOLID 2PX green;
+    }
+    
+    .t-ContentRow-actions a{
+          font-size: 20px;
+    }
+    
+    .btn_success
+    {
+        background-color: var(--ut-palette-success);
+        color: var(--ut-palette-success-contrast);
+        BORDER: 2PX SOLID DARKGREEN;
+        font-weight: 700!important;
+    }
+
+security: 
+  authorization-scheme: ACCESS CONTROL - CORRUGADO # 176990878554773950
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: No - Prevent page from being re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: CORRUGADO ===================================
+  id: 371798981524316743
+  identification: 
+    name: CORRUGADO
+    type: Timeline
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          c.nro                        nro_orden
+         ,CASE
+               WHEN status=0 THEN 'F '||c.formato||' - '||cal.key
+               ELSE to_char(inicio,'hh24:mi')||' - '||to_char(final,'hh24:mi')
+           END                          formato
+         ,CASE
+               WHEN status=0 AND inicio IS NOT NULL THEN '<a href=javascript:$s("P15_FINAL",'||c.id||') class="fa fa-check btn_success">FIN</a> '
+               ||round(c.m1)||' mts.'
+               ELSE round(c.m1)||'mts.'
+           END                          AS misc
+         ,c.id
+         ,c.fx
+         ,app_corrugado(c.id,:p15_modo) title
+         ,CASE
+               WHEN status=0 THEN
+                       CASE
+                           WHEN inicio IS NULL THEN 'warning'
+                           ELSE 'info'
+                       END
+               ELSE 'success'
+           END                          item_classes
+         ,CASE status
+              WHEN 0 THEN
+                      CASE
+                          WHEN inicio IS NULL THEN '<a href=javascript:$s("P15_INICIO",'||c.id||') class="fa fa-play u-success"> INICIO </a>'
+                          ELSE '<a href=javascript:$s("P15_CANCEL",'||c.id||') class="fa fa-times u-danger">Cancel</a>'
+                      END
+              ELSE round((final-inicio)*1440)||' Min @ '||round(m1/(final-inicio)/1440)||' Mts'
+           END                          AS actions
+        FROM
+          corrs c
+         ,art_cals  cal
+       WHERE
+              fecha=:p15_fecha --fecha=trunc(sysdate) 
+          AND prov_id IS NULL 
+          AND c.calidad_id=cal.id
+       ORDER BY
+          status DESC
+         ,inicio ASC
+         ,fx ASC;
+    page-items-to-submit: 
+    - P15_MODO
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      user-name: FORMATO
+      date: ACTIONS
+      title: TITLE
+      description: MISC
+      display-avatar: true
+      display-badge: false
+      style: Default
+      apply-theme-colors: false
+
+    avatar: 
+      type: Initials
+      initials: NRO_ORDEN
+      shape: Rounded
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 16638464131575187
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FX ==========================================
+    id: 16638572583575188
+    identification: 
+      name: FX
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: FX
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ITEM_CLASSES ================================
+    id: 16638769286575190
+    identification: 
+      name: ITEM_CLASSES
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: ITEM_CLASSES
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ACTIONS =====================================
+    id: 16638827055575191
+    identification: 
+      name: ACTIONS
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: ACTIONS
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: MISC ========================================
+    id: 16638949411575192
+    identification: 
+      name: MISC
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: MISC
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: NRO_ORDEN ===================================
+    id: 16639281120575195
+    identification: 
+      name: NRO_ORDEN
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: NRO_ORDEN
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FORMATO =====================================
+    id: 16639339564575196
+    identification: 
+      name: FORMATO
+
+    layout: 
+      sequence: 100
+
+    source: 
+      type: Database Column
+      database-column: FORMATO
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: TITLE =======================================
+    id: 16639764221575200
+    identification: 
+      name: TITLE
+
+    layout: 
+      sequence: 130
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  actions: 
+  - # ====== Action: Avatar Link =================================
+    id: 11887019398560223
+    identification: 
+      position: Avatar Link # 2031370881226349124
+
+    layout: 
+      sequence: 20
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.::P28_ID:&ID.'
+        page: 28 # CORR_CANT
+        values: 
+          p28_id: '&ID.'
+
+    security: 
+      authorization-scheme: ACCESS CONTROL - CAV # 176989717152772095
+
+  - # ====== Action: Title Link ==================================
+    id: 16639579178575198
+    identification: 
+      position: Title Link # 1797928271263781082
+
+    layout: 
+      sequence: 10
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.::P7_ID:&ID.'
+        page: 7 # ORDEN 1
+        values: 
+          p7_id: '&ID.'
+
+- # ====== Region: &P15_FECHA. =================================
+  id: 371809049141523032
+  identification: 
+    name: '&P15_FECHA.'
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useRegionTitle
+    render-components: Below Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P15_NEXT =================================
+  id: 195355610530278776
+  identification: 
+    name: P15_NEXT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: CORRUGADO # 371798981524316743
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_PREV =================================
+  id: 195355997310278776
+  identification: 
+    name: P15_PREV
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: CORRUGADO # 371798981524316743
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_FINAL ================================
+  id: 195356384796278776
+  identification: 
+    name: P15_FINAL
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 60
+    region: CORRUGADO # 371798981524316743
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_INICIO ===============================
+  id: 195356736954278777
+  identification: 
+    name: P15_INICIO
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 70
+    region: CORRUGADO # 371798981524316743
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_FECHA ================================
+  id: 195358070124278836
+  identification: 
+    name: P15_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: BODY
+
+  appearance: 
+    format-mask: DD-MON-YYYY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_MODO =================================
+  id: 195358428475278842
+  identification: 
+    name: P15_MODO
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P15_CANCEL ===============================
+  id: 199381235094173407
+  identification: 
+    name: P15_CANCEL
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 80
+    region: CORRUGADO # 371798981524316743
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: DETALLE =====================================
+  id: 12623408522570522
+  identification: 
+    button-name: DETALLE
+    label: Detalle
+
+  layout: 
+    sequence: 30
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    icon: fa-search-plus
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: PLANILLA ====================================
+  id: 12623820580570525
+  identification: 
+    button-name: PLANILLA
+    label: Planilla
+
+  layout: 
+    sequence: 40
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: HELP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    icon: fa-media-list
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.::P11_FECHA:&P15_FECHA.'
+      page: 11 # PLANILLA SLITTER
+      values: 
+        p11_fecha: '&P15_FECHA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: PREV ========================================
+  id: 12624216770570527
+  identification: 
+    button-name: PREV
+    label: <<
+
+  layout: 
+    sequence: 10
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--pillStart
+    icon: fa-backward
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: NEXT ========================================
+  id: 12624623279570528
+  identification: 
+    button-name: NEXT
+    label: '>>'
+
+  layout: 
+    sequence: 20
+    region: '&P15_FECHA.' # 371809049141523032
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--pillEnd
+    icon: fa-forward
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P15_NEXT
+
+dynamic-actions: 
+- # ====== Dynamic Action: FINAL ===============================
+  id: 12626905041570575
+  identification: 
+    name: FINAL
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P15_FINAL
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12627470432570580
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        UPDATE CORRS 
+        SET STATUS = 1, FINAL = SYSDATE
+         WHERE ID = :P15_FINAL;
+      items-to-submit: 
+      - P15_FINAL
+
+    execution: 
+      sequence: 10
+      event: FINAL # 12626905041570575
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 12627986287570584
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO # 371798981524316743
+
+    execution: 
+      sequence: 20
+      event: FINAL # 12626905041570575
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: INICIO ==============================
+  id: 12628338435570585
+  identification: 
+    name: INICIO
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P15_INICIO
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12628803683570586
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'UPDATE CORRS SET INICIO = SYSDATE WHERE ID = :P15_INICIO;'
+      items-to-submit: 
+      - P15_INICIO
+
+    execution: 
+      sequence: 10
+      event: INICIO # 12628338435570585
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 12629396299570587
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO # 371798981524316743
+
+    execution: 
+      sequence: 20
+      event: INICIO # 12628338435570585
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CANCEL ==============================
+  id: 12629789605570588
+  identification: 
+    name: CANCEL
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P15_CANCEL
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12630273966570589
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'UPDATE CORRS SET INICIO = NULL WHERE ID = :P15_CANCEL;'
+      items-to-submit: 
+      - P15_CANCEL
+
+    execution: 
+      sequence: 10
+      event: CANCEL # 12629789605570588
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 12630765735570590
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO # 371798981524316743
+
+    execution: 
+      sequence: 20
+      event: CANCEL # 12629789605570588
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_2 ===============================
+  id: 12631131531570591
+  identification: 
+    name: New_2
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: DETALLE # 12623408522570522
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12631681021570592
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN
+        IF :P15_MODO = 1 THEN
+         :P15_MODO := 2 ;
+        ELSE 
+         :P15_MODO := 1; 
+        END IF;
+        END;
+      items-to-submit: 
+      - P15_MODO
+      items-to-return: 
+      - P15_MODO
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: New_2 # 12631131531570591
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 12632184739570593
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO # 371798981524316743
+
+    execution: 
+      sequence: 20
+      event: New_2 # 12631131531570591
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P15_FECHA ==============================
+  id: 12625988229570571
+  identification: 
+    item-name: P15_FECHA
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P15_FECHA
+
+- # ====== Computation: P15_NEXT ===============================
+  id: 12626275809570572
+  identification: 
+    item-name: P15_NEXT
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select min(trunc(fecha)) 
+      from corrs 
+      where fecha > :P15_FECHA
+      and prov_id is null
+
+- # ====== Computation: P15_PREV ===============================
+  id: 12626627798570573
+  identification: 
+    item-name: P15_PREV
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select max(trunc(fecha)) 
+      from corrs 
+      where fecha < :P15_FECHA
+      and prov_id is null
+
+branches: 
+- # ====== Branch: PREV ========================================
+  id: 12632620193570596
+  identification: 
+    name: PREV
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:15:&SESSION.::&DEBUG.:15:P15_FECHA:&P15_PREV.&success_msg=#SUCCESS_MSG#'
+      page: 15 # CORRUGADO
+      clear-cache: 15
+      values: 
+        p15_fecha: '&P15_PREV.'
+
+  server-side-condition: 
+    when-button-pressed: PREV # 12624216770570527
+    type: Item is NOT NULL
+    item: P15_PREV
+
+- # ====== Branch: NEXT ========================================
+  id: 12633089108570597
+  identification: 
+    name: NEXT
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:15:&SESSION.::&DEBUG.:15:P15_FECHA:&P15_NEXT.&success_msg=#SUCCESS_MSG#'
+      page: 15 # CORRUGADO
+      clear-cache: 15
+      values: 
+        p15_fecha: '&P15_NEXT.'
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 12624623279570528
+    type: Item is NOT NULL
+    item: P15_NEXT
+

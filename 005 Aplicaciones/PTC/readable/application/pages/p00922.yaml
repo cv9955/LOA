@@ -1,0 +1,615 @@
+---
+# ====== Page: FLETES_LIST ===================================
+id: 922
+identification: 
+  name: FLETES_LIST
+  alias: FLETES-LIST
+  title: FLETES_LIST
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: FLETES_LIST =================================
+  id: 4538943776268170
+  identification: 
+    name: FLETES_LIST
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             STATUS,
+             TITLE CARD_TITLE,
+             FLT_CAT_ID,
+             DOMINIO CARD_SUBTITLE,
+             '<div>' || MARCA || ' ' || MODELO || '</div>' card_text,
+             COLOR card_subtext,
+             SEGURO,
+             POLIZA,
+             KM
+             ,(select icon from flt_cats where id = flt_cat_id) card_icon
+        from FLT_LIST
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--displaySubtitle
+      - t-Cards--basic
+      - t-Cards--displayIcons
+      - t-Cards--4cols
+      - t-Cards--animColorFill
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CARD_TITLE ==================================
+    id: 3965165966638316
+    identification: 
+      column-name: CARD_TITLE
+      type: Link
+
+    heading: 
+      heading: Card Title
+      alignment: start
+
+    layout: 
+      sequence: 21
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:923:&SESSION.::&DEBUG.::P923_ID:#ID#'
+        page: 923 # FLETES_ABM
+        values: 
+          p923_id: '#ID#'
+
+      link-text: '#CARD_TITLE#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_SUBTITLE ===============================
+    id: 3965267036638317
+    identification: 
+      column-name: CARD_SUBTITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtitle
+      alignment: start
+
+    layout: 
+      sequence: 31
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 3965349175638318
+    identification: 
+      column-name: CARD_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Text
+      alignment: start
+
+    layout: 
+      sequence: 41
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 3965414128638319
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtext
+      alignment: start
+
+    layout: 
+      sequence: 51
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_ICON ===================================
+    id: 3965700237638322
+    identification: 
+      column-name: CARD_ICON
+      type: Plain Text
+
+    heading: 
+      heading: Card Icon
+      alignment: start
+
+    layout: 
+      sequence: 61
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 4539393074268171
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 0
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:923:&APP_SESSION.::&DEBUG.:RP:P923_ID:\#ID#\'
+        page: 923 # FLETES_ABM
+        clear-cache: RP
+        values: 
+          p923_id: '#ID#'
+
+      link-text: <span role="img" aria-label="Edit"><span class="fa fa-edit" aria-hidden="true" title="Edit"></span></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 4539738929268171
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: end
+
+    layout: 
+      sequence: 2
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FLT_CAT_ID ==================================
+    id: 4540549836268173
+    identification: 
+      column-name: FLT_CAT_ID
+      type: Plain Text
+
+    heading: 
+      heading: Flt Cat Id
+      alignment: end
+
+    layout: 
+      sequence: 4
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SEGURO ======================================
+    id: 4542579467268175
+    identification: 
+      column-name: SEGURO
+      type: Plain Text
+
+    heading: 
+      heading: Seguro
+      alignment: start
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: POLIZA ======================================
+    id: 4542910921268175
+    identification: 
+      column-name: POLIZA
+      type: Plain Text
+
+    heading: 
+      heading: Poliza
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: KM ==========================================
+    id: 4543368997268175
+    identification: 
+      column-name: KM
+      type: Plain Text
+
+    heading: 
+      heading: Km
+      alignment: end
+
+    layout: 
+      sequence: 11
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 4545577918268179
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 2005438132195560
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 4543819913268175
+  identification: 
+    button-name: CREATE
+    label: Create
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 4545577918268179
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:923:&APP_SESSION.::&DEBUG.:923::'
+      page: 923 # FLETES_ABM
+      clear-cache: 923
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 4544157369268175
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: FLETES_LIST # 4538943776268170
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 4544657784268176
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: FLETES_LIST # 4538943776268170
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 4544157369268175
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,805 @@
+---
+# ====== Page: CUENTAS_MENSUAL ===============================
+id: 651
+identification: 
+  name: CUENTAS_MENSUAL
+  alias: CUENTAS-MENSUAL
+  title: RESULTADOS
+  page-group: 600 CONTADURIA # 1929866135622157
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: RESULTADOS ==================================
+  id: 12909995004805907
+  identification: 
+    name: RESULTADOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT cuenta_id
+            ,S_CUENTA(CUENTA_ID,'CTA_TITLE') title
+            ,debe_1
+            ,haber_1
+            ,nvl(debe_1,0)-nvl(haber_1,0)                              saldo_1
+            ,debe_2
+            ,haber_2
+            ,nvl(debe_2,0)-nvl(haber_2,0)                              saldo_2
+            ,nvl(debe_1,0)-nvl(haber_1,0)+nvl(debe_2,0)-nvl(haber_2,0) saldo
+        FROM(
+          SELECT cuenta_id     
+               --   ,SUM(nvl(debe,0)  ) debe
+               --   ,SUM(nvl(haber,0) ) haber
+                  ,SUM(CASE WHEN cta=1 THEN(nvl(debe,0))  END) debe_1
+                  ,SUM(CASE WHEN cta=1 THEN(nvl(haber,0)) END) haber_1
+                  ,SUM(CASE WHEN cta=2 THEN(nvl(debe,0))  END) debe_2
+                  ,SUM(CASE WHEN cta=2 THEN(nvl(haber,0)) END) haber_2
+            FROM pc_TOTAL
+           WHERE MES =:P651_YEAR||:p651_mes
+           GROUP BY cuenta_id
+      )pc
+      ORDER BY TITLE
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: true
+      link-text: Download
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: SALDO =======================================
+    id: 12620291442834080
+    identification: 
+      column-name: SALDO
+      type: Plain Text
+
+    heading: 
+      heading: Saldo
+      alignment: center
+
+    layout: 
+      sequence: 93
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - null
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: A001_CTA
+      value: 2
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_ID ===================================
+    id: 12910414225805930
+    identification: 
+      column-name: CUENTA_ID
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:17:&SESSION.::&DEBUG.::P17_CUENTA_ID,P17_ANO,P17_MES:#CUENTA_ID#,&P651_YEAR.,&P651_MES.'
+        page: 17 # movimientos
+        values: 
+          p17_cuenta_id: '#CUENTA_ID#'
+          p17_ano: '&P651_YEAR.'
+          p17_mes: '&P651_MES.'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+      link-attributes: TARGET="P606"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 12911617870805946
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEBE_1 ======================================
+    id: 16587363121496349
+    identification: 
+      column-name: DEBE_1
+      type: Plain Text
+
+    heading: 
+      heading: Debe 1
+      alignment: center
+
+    layout: 
+      sequence: 23
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-success-text
+      - null
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HABER_1 =====================================
+    id: 16587377885496350
+    identification: 
+      column-name: HABER_1
+      type: Plain Text
+
+    heading: 
+      heading: Haber 1
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-danger-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO_1 =====================================
+    id: 16587539422496351
+    identification: 
+      column-name: SALDO_1
+      type: Plain Text
+
+    heading: 
+      heading: Saldo 1
+      alignment: center
+
+    layout: 
+      sequence: 43
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - null
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEBE_2 ======================================
+    id: 16587625145496352
+    identification: 
+      column-name: DEBE_2
+      type: Plain Text
+
+    heading: 
+      heading: Debe 2
+      alignment: center
+
+    layout: 
+      sequence: 63
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-success-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: A001_CTA
+      value: 2
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HABER_2 =====================================
+    id: 16587722366496353
+    identification: 
+      column-name: HABER_2
+      type: Plain Text
+
+    heading: 
+      heading: Haber 2
+      alignment: center
+
+    layout: 
+      sequence: 53
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-danger-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: A001_CTA
+      value: 2
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO_2 =====================================
+    id: 16587783558496354
+    identification: 
+      column-name: SALDO_2
+      type: Plain Text
+
+    heading: 
+      heading: Saldo 2
+      alignment: center
+
+    layout: 
+      sequence: 83
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - null
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: A001_CTA
+      value: 2
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: TOOLBAR =====================================
+  id: 28971871051393191
+  identification: 
+    name: TOOLBAR
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CONTADURIA ==================================
+  id: 49658020258033294
+  identification: 
+    name: CONTADURIA
+    type: List
+
+  source: 
+    list: MENU_CONTABLE # 2626165322405257
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-heartbeat
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-slide
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P651_YEAR ================================
+  id: 12916815455825789
+  identification: 
+    name: P651_YEAR
+    type: Radio Group
+
+  label: 
+    label: AÑO
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  layout: 
+    sequence: 20
+    region: TOOLBAR # 28971871051393191
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    - margin-top-lg
+    - margin-left-lg
+    - margin-right-lg
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_AÑOS # 110289324833720610
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT(YEAR FROM SYSDATE)
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P651_MES =================================
+  id: 12917122356825799
+  identification: 
+    name: P651_MES
+    type: Radio Group
+
+  label: 
+    label: MES
+    alignment: Left
+
+  settings: 
+    number-of-columns: 2
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  layout: 
+    sequence: 30
+    region: TOOLBAR # 28971871051393191
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    - margin-left-lg
+    - margin-right-lg
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_MONTH # 12380015065838899
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT(MONTH FROM SYSDATE)
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P651_CTA =================================
+  id: 12917953226825800
+  identification: 
+    name: P651_CTA
+    type: Radio Group
+
+  label: 
+    label: Cta
+    alignment: Left
+
+  settings: 
+    number-of-columns: 2
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  layout: 
+    sequence: 50
+    region: TOOLBAR # 28971871051393191
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:CTA 1;1,CTA 2;2'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  server-side-condition: 
+    type: Never
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+

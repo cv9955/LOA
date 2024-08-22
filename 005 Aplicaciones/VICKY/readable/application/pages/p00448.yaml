@@ -1,0 +1,487 @@
+---
+# ====== Page: prov_cuenta_print =============================
+id: 448
+identification: 
+  name: prov_cuenta_print
+  alias: PROV_CUENTA_PRINT
+  title: Cuenta Proveedor
+  page-group: 400 COMPRAS # 13773987234907448
+
+appearance: 
+  page-mode: Normal
+  page-template: CAV_CUENTA_CLIENTE
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+    
+
+css: 
+  file-urls: 
+  - '#APP_IMAGES#css/P148_PRINT_CUENTA_CLIENTE.css'
+  inline: '#BREADZERO{display: none;}'
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Imprimir 2 ==================================
+  id: 31671277144388116
+  identification: 
+    name: Imprimir 2
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      PRINT_CUENTA_PROVEDOR(
+      PID => :P448_ID,
+      DESDE => :P448_DESDE,
+      HASTA => :P448_HASTA,
+      PCTA => 2
+      ) ;
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P448_CTA
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+- # ====== Region: TITULO ======================================
+  id: 47999783546430249
+  identification: 
+    name: TITULO
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    css-classes: 
+    - screenOnly
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Imprimir 1 ==================================
+  id: 103521127994634360
+  identification: 
+    name: Imprimir 1
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      PRINT_CUENTA_PROVEDOR(
+      PID => :P448_ID,
+      DESDE => :P448_DESDE,
+      HASTA => :P448_HASTA,
+      PCTA => 1
+      ) ;
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P448_CTA
+    value: 2
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P448_CTA =================================
+  id: 31671161147388115
+  identification: 
+    name: P448_CTA
+    type: Radio Group
+
+  label: 
+    label: Cta
+    alignment: Left
+
+  settings: 
+    number-of-columns: 3
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  layout: 
+    sequence: 50
+    region: TITULO # 47999783546430249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:CTA 1;1,CTA 2;2'
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: VER TODO
+    null-return-value: 0
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item = Value
+    item: A001_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P448_ID ==================================
+  id: 43854550910877713
+  identification: 
+    name: P448_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: TITULO # 47999783546430249
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P448_PROVEDOR ============================
+  id: 43854775998877761
+  identification: 
+    name: P448_PROVEDOR
+    type: Display Only
+
+  label: 
+    label: Proveedor
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: TITULO # 47999783546430249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'S_PROV(:P448_ID)'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P448_DESDE ===============================
+  id: 43855203129877763
+  identification: 
+    name: P448_DESDE
+    type: Date Picker
+
+  label: 
+    label: Desde
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 30
+    region: TITULO # 47999783546430249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: TO_DATE('01012018','DDMMYYYY')
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P448_HASTA ===============================
+  id: 43855590390877763
+  identification: 
+    name: P448_HASTA
+    type: Date Picker
+
+  label: 
+    label: Hasta
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: TITULO # 47999783546430249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      SYSDATE
+      
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: cambio_fecha ========================
+  id: 43856296099878036
+  identification: 
+    name: cambio_fecha
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P448_DESDE
+    - P448_HASTA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 43856721573878064
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: cambio_fecha # 43856296099878036
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

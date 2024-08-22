@@ -1,0 +1,588 @@
+---
+# ====== Page: ORDEN 1 =======================================
+id: 7
+identification: 
+  name: ORDEN 1
+  alias: ORDEN-1
+  title: ORDEN 1
+  page-group: Corrugado # 12664751500698601
+
+appearance: 
+  page-mode: Normal
+  page-template: MOVIL
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+
+css: 
+  inline: |
+    @media screen and (min-width: 400px) {
+      body {
+      }
+    }
+    .titulo {
+        text-align : center;
+        FONT-SIZE: larger;
+        FONT-WEIGHT: 700;
+    }
+    
+    .grid-pedido {
+        display: inline-grid;
+        /* position: relative; */
+        page-break-inside: avoid;
+        border: 3px ridge;
+        margin-bottom: 10px;
+        min-width: -webkit-fill-available;
+        /* font-family: Arial, Helvetica, sans-serif; */
+    }
+    
+    .grid-info  {
+      display: grid;
+      grid-template-columns: auto auto auto  auto  ;      
+      font-size: 14px; 
+      background-color : LAVENDER;
+      border-bottom : 2px ridge;
+      padding : 2px;
+    }
+    
+    .tc { text-align : center;}
+    .tbold { font-weight: 700;}
+    .tgris { font-weight: 700; color:gray;}
+    .tborde { border : 1px solid lightgray;}
+    .nborde { border : 0px ;}
+    
+    .grid-articulo {
+        display: grid;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        grid-template-columns: 50px 100px auto 50px;
+        font-size: 12px;
+    }
+    
+    .grid-plancha {
+        display: grid;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        grid-template-columns: 40px 100px 40px auto;
+        font-size: 12px;
+    }
+    
+    .grid-trazado {
+      display: grid;
+      grid-auto-flow: column;
+      text-align: center;
+    }
+    
+    .grid-slitter {
+        display: grid;
+        grid-auto-flow: column;
+        text-align: center;
+        font-size: 12px;
+        margin-left: 5px; */
+        margin-right: 5px; */
+    }
+    
+    .grid-slitter > div {
+        padding : 1px;
+        border-top: 1px solid;
+    
+    }
+    .guia {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+        
+    }
+    
+    .corte {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+    }
+    
+    .grid-trazado div{
+      border: 1px solid lightgray;
+    }
+    
+    .grid-articulo div {
+       white-space: nowrap; 
+       text-overflow: ellipsis;
+       overflow: hidden;
+       padding : 1px;
+    }
+    
+    
+    
+    
+    
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: SLITTER =====================================
+  id: 176666807090782007
+  identification: 
+    name: SLITTER
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: 'MOVIL_APP.PLANILLA_SLITTER_2(:P7_ID)'
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+- # ====== Region: ORDEN =======================================
+  id: 176703901815323506
+  identification: 
+    name: ORDEN
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          articulo_id card_initials
+         ,cantidad||' PLANCHAS' card_text
+         ,DIV_ARTICULO(ARTICULO_ID,'PLANCHA')   card_subtitle
+         ,DIV_ARTICULO(ARTICULO_ID)             card_title
+         ,round(cantidad*largo/mult/mx/1000)||' MTS' card_subtext
+         ,rowid
+        FROM
+          corr_pls 
+       WHERE    corrugado_id =:p7_id ORDER BY    cx
+    page-items-to-submit: 
+    - P7_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    - t-Form--noPadding
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--displaySubtitle
+      - t-Cards--featured t-Cards--block force-fa-lg
+      - t-Cards--displayInitials
+      - t-Cards--spanHorizontally
+      - t-Cards--iconsSquare
+      - t-Cards--animRaiseCard
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ROWID =======================================
+    id: 74243800108240918
+    identification: 
+      column-name: ROWID
+      type: Hidden
+
+    layout: 
+      sequence: 16
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 176780838431813034
+    identification: 
+      column-name: CARD_TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Title
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTITLE ===============================
+    id: 176842042170983829
+    identification: 
+      column-name: CARD_SUBTITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtitle
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 176842125651983830
+    identification: 
+      column-name: CARD_TEXT
+      type: Link
+
+    heading: 
+      heading: Card Text
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::P8_ROWID:#ROWID#'
+        page: 8 # CORREGIR_CANTIDAD
+        values: 
+          p8_rowid: '#ROWID#'
+
+      link-text: '#CARD_TEXT#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 176842288019983831
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtext
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_INITIALS ===============================
+    id: 177093285906761803
+    identification: 
+      column-name: CARD_INITIALS
+      type: Plain Text
+
+    heading: 
+      heading: Card Initials
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: FOOTER ======================================
+  id: 177093160463761802
+  identification: 
+    name: FOOTER
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_05
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--stickToBottom
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P7_ID ====================================
+  id: 176706509138323532
+  identification: 
+    name: P7_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: ORDEN # 176703901815323506
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BACK ========================================
+  id: 176779415335813020
+  identification: 
+    button-name: BACK
+    label: Back
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 177093160463761802
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+branches: 
+- # ====== Branch: Go To Page 15 ===============================
+  id: 176748300358252079
+  identification: 
+    name: Go To Page 15
+
+  execution: 
+    sequence: 1
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:15:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 15 # CORRUGADO
+

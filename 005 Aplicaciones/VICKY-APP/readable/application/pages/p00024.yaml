@@ -1,0 +1,832 @@
+---
+# ====== Page: QUICK_END =====================================
+id: 24
+identification: 
+  name: QUICK_END
+  alias: QUICK-END
+  title: QUICK_END
+  page-group: Terminado # 12664871773700413
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PLANCHAS ====================================
+  id: 201251629051207554
+  identification: 
+    name: PLANCHAS
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P24_FECHA ================================
+  id: 183076277592564501
+  identification: 
+    name: P24_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: FECHA
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_ID ===================================
+  id: 183076612469564507
+  identification: 
+    name: P24_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_STATUS ===============================
+  id: 183077037941564509
+  identification: 
+    name: P24_STATUS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STATUS
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Static
+    static-value: 0
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_PROD_TIPO_ID =========================
+  id: 183077435598564510
+  identification: 
+    name: P24_PROD_TIPO_ID
+    type: Select List
+
+  label: 
+    label: Proceso
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 190
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 8
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--large
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: LOV_PROD_TIPO.TITLE # 179656863298169673
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: PROD_TIPO_ID
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_PLANCHA_ID ===========================
+  id: 183077874614564510
+  identification: 
+    name: P24_PLANCHA_ID
+    type: Number Field
+
+  label: 
+    label: Plancha ID
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Text
+
+  layout: 
+    sequence: 80
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 8
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: PLANCHA_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_CODIGO_PL ============================
+  id: 183078263986564510
+  identification: 
+    name: P24_CODIGO_PL
+    type: Text Field
+
+  label: 
+    label: Plancha Utilizada
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_CANT_PL ==============================
+  id: 183079464277564512
+  identification: 
+    name: P24_CANT_PL
+    type: Number Field
+
+  label: 
+    label: Planchas
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Text
+
+  layout: 
+    sequence: 130
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 6
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: CANT_PL
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_ARTICULO_ID ==========================
+  id: 183079821002564512
+  identification: 
+    name: P24_ARTICULO_ID
+    type: Number Field
+
+  label: 
+    label: Articulo ID
+    alignment: Left
+
+  settings: 
+    number-alignment: Center
+    virtual-keyboard: Text
+
+  layout: 
+    sequence: 140
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 8
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ARTICULO_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_CODIGO ===============================
+  id: 183080202402564514
+  identification: 
+    name: P24_CODIGO
+    type: Text Field
+
+  label: 
+    label: Articulo Terminado
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 150
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_CANTIDAD =============================
+  id: 183081394491564514
+  identification: 
+    name: P24_CANTIDAD
+    type: Number Field
+
+  label: 
+    label: Final
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Text
+
+  layout: 
+    sequence: 180
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 6
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: CANTIDAD
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P24_OBS ==================================
+  id: 183081742594564514
+  identification: 
+    name: P24_OBS
+    type: Text Field
+
+  label: 
+    label: Obs
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 200
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 8
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 200
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: OBS
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: INSERT_0 ====================================
+  id: 183087397380564553
+  identification: 
+    button-name: INSERT_0
+    label: PRODUCCION
+
+  layout: 
+    sequence: 210
+    region: PLANCHAS # 201251629051207554
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 10
+    new-column: true
+    column-span: 3
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--gapTop
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P24_ID
+
+dynamic-actions: 
+- # ====== Dynamic Action: ART_PL_CHANGE =======================
+  id: 183091715874564584
+  identification: 
+    name: ART_PL_CHANGE
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P24_PLANCHA_ID
+
+  client-side-condition: 
+    type: Item is not null
+    item: P24_PLANCHA_ID
+
+  actions: 
+  - # ====== Action: Clear =======================================
+    id: 183092205188564587
+    identification: 
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P24_CODIGO_PL
+
+    execution: 
+      sequence: 10
+      event: ART_PL_CHANGE # 183091715874564584
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 183092762666564589
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        :p24_codigo_pl := s_articulo(:p24_plancha_id,'CLIENTE') || ' ' || s_articulo(:p24_plancha_id);
+        
+      items-to-submit: 
+      - P24_PLANCHA_ID
+      items-to-return: 
+      - P24_CODIGO_PL
+      suppress-change-event: true
+
+    execution: 
+      sequence: 40
+      event: ART_PL_CHANGE # 183091715874564584
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: ART_CHANGE_1 ========================
+  id: 183093136607564589
+  identification: 
+    name: ART_CHANGE_1
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P24_ARTICULO_ID
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 183093614995564589
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        :p24_codigo := s_articulo(:p24_ARTICULO_id,'CLIENTE') || ' ' || s_articulo(:p24_ARTICULO_id);
+        
+      items-to-submit: 
+      - P24_ARTICULO_ID
+      items-to-return: 
+      - P24_CODIGO
+      suppress-change-event: true
+
+    execution: 
+      sequence: 20
+      event: ART_CHANGE_1 # 183093136607564589
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: false
+      wait-for-result: false
+
+processes: 
+- # ====== Process: INSERTAR ===================================
+  id: 22491319918433843
+  identification: 
+    name: INSERTAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      begin
+      
+      movil_app.PRODUCCION_NEW ( 
+           pArticulo_id => :P24_ARTICULO_ID
+            , pPlancha_id => :P24_PLANCHA_ID
+            , pCant_pl => :P24_CANT_PL
+            , pProd_tipo_id => :P24_PROD_TIPO_ID
+            );
+      
+      end;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: INSERT_0 # 183087397380564553
+
+- # ====== Process: CLOSE_DIALOG ===============================
+  id: 183090565219564582
+  identification: 
+    name: CLOSE_DIALOG
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+

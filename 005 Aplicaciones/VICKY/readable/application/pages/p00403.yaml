@@ -1,0 +1,2035 @@
+---
+# ====== Page: prov_compras_abm ==============================
+id: 403
+identification: 
+  name: prov_compras_abm
+  alias: PROV_COMPRAS_ABM
+  title: Factura Compra
+  page-group: 400 COMPRAS # 13773987234907448
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  width: 900
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  function-and-global-variable-declaration: |
+    
+    function p403_calcularTotales()
+    {
+            var CTA = parseFloat($v("P403_CTA")||1);
+    	var exento = parseFloat($v("P403_EXENTO")||0);  
+      
+            if (CTA == 1) {
+    
+    	var monotrib= parseFloat($v("P403_MONOTRIB")||0);
+    
+    	var neto10 = parseFloat($v("P403_NETO_10")||0);
+    	var neto21 = parseFloat($v("P403_NETO_21")||0);
+    	var neto27 = parseFloat($v("P403_NETO_27")||0);
+    
+    	var perciva  = parseFloat($v("P403_PERC_IVA")||0);
+    	var perciibb = parseFloat($v("P403_PERC_IIBB")||0);
+    
+    	
+    	var totalneto = exento + neto10 + neto21 + neto27;
+    	var iva10 = Math.round(neto10 * 10.5) /100;
+     	var iva21 = Math.round(neto21 * 21 )  /100;
+    	var iva27 = Math.round(neto27 * 27 )  /100;
+    
+    	var totaliva =  iva10 + iva21 + iva27; 
+    
+    	var total =  monotrib + totalneto + totaliva + perciva + perciibb;
+    
+    
+    	$x("P403_TOTAL_NETO").value = totalneto;
+    	$x("P403_IVA_10").value = iva10;
+    	$x("P403_IVA_21").value = iva21;
+    	$x("P403_IVA_27").value = iva27;
+    	$x("P403_TOTAL_IVA").value = totaliva;
+    	$x("P403_TOTAL").value = total.toFixed(2);
+                    
+            }  else
+              {
+                	$x("P403_TOTAL").value = exento;
+              }
+    
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Factura Compra ==============================
+  id: 9082208709497607
+  identification: 
+    name: Factura Compra
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,cab_tipo_id
+            ,cta
+            ,pto_venta
+            ,nro_cab
+            ,status
+            ,provedor_id
+            ,cuenta_id
+            ,mes
+            ,fecha
+            ,S_PROV(provedor_id,'CUIT')cuit
+            ,obs
+            ,monotrib
+            ,exento
+            ,perc_iva
+            ,perc_iibb
+            ,neto_21
+            ,neto_27
+            ,neto_10
+            ,iva_10
+            ,iva_21
+            ,iva_27
+            ,total_neto
+            ,total_iva
+            ,total
+        FROM prov_compras 
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 9082906781497619
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: TOTAL =======================================
+  id: 9624689305444649
+  identification: 
+    name: TOTAL
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: Factura Compra # 9082208709497607
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: DETALLE =====================================
+  id: 9624759745444650
+  identification: 
+    name: DETALLE
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: Factura Compra # 9082208709497607
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item != Value
+    item: P403_CAB_TIPO_ID
+    value: 2001
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P403_IVA_10 ==============================
+  id: 9028076241528666
+  identification: 
+    name: P403_IVA_10
+    type: Number Field
+
+  label: 
+    label: Iva 10,5 %
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - 'style="background-color:'
+    - palegreen;"
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: IVA_10
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_ID ==================================
+  id: 9085693613497643
+  identification: 
+    name: P403_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_PROVEDOR_ID =========================
+  id: 9086076626497668
+  identification: 
+    name: P403_PROVEDOR_ID
+    type: Select List
+
+  label: 
+    label: Proveedor Id
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PROVEDOR.TITLE # 9095101793516991
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: PROVEDOR_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_MES =================================
+  id: 9086357225497676
+  identification: 
+    name: P403_MES
+    type: Text Field
+
+  label: 
+    label: MES
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 6
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: MES
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: "TO_CHAR(SYSDATE,'YYYYMM') "
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_FECHA ===============================
+  id: 9086751973497677
+  identification: 
+    name: P403_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 80
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 10
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_CAB_TIPO_ID =========================
+  id: 9087193934497678
+  identification: 
+    name: P403_CAB_TIPO_ID
+    type: Select List
+
+  label: 
+    label: Cab Tipo Id
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: "SELECT TITLE,ID FROM T_CAB_TIPO WHERE T_MODO = 'PROV_COMPRAS' AND CTA = :P403_CTA"
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: CAB_TIPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_PTO_VENTA ===========================
+  id: 9087590945497679
+  identification: 
+    name: P403_PTO_VENTA
+    type: Text Field
+
+  label: 
+    label: Pto Venta
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 20
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: PTO_VENTA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_NRO_CAB =============================
+  id: 9087953277497680
+  identification: 
+    name: P403_NRO_CAB
+    type: Text Field
+
+  label: 
+    label: Nro Cab
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 20
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: NRO_CAB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_CUIT ================================
+  id: 9088339149497681
+  identification: 
+    name: P403_CUIT
+    type: Display Only
+
+  label: 
+    label: Cuit
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 110
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: CUIT
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_MONOTRIB ============================
+  id: 9088780393497682
+  identification: 
+    name: P403_MONOTRIB
+    type: Number Field
+
+  label: 
+    label: Monotrib
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: MONOTRIB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Item = Value
+    item: P403_CTA
+    value: 2
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_EXENTO ==============================
+  id: 9089207384497682
+  identification: 
+    name: P403_EXENTO
+    type: Number Field
+
+  label: 
+    label: Exento
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: EXENTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_TOTAL_NETO ==========================
+  id: 9089606166497683
+  identification: 
+    name: P403_TOTAL_NETO
+    type: Number Field
+
+  label: 
+    label: Total Neto
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 130
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    custom-attributes: 
+    - 'style="background-color:'
+    - LIGHTGRAY;"
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: TOTAL_NETO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_TOTAL_IVA ===========================
+  id: 9089935270497684
+  identification: 
+    name: P403_TOTAL_IVA
+    type: Number Field
+
+  label: 
+    label: Total IVA
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 140
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    custom-attributes: 
+    - 'style="background-color:'
+    - LIGHTGRAY;"
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: TOTAL_IVA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_PERC_IVA ============================
+  id: 9090390113497685
+  identification: 
+    name: P403_PERC_IVA
+    type: Number Field
+
+  label: 
+    label: Perc Iva
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 120
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: PERC_IVA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_PERC_IIBB ===========================
+  id: 9090769529497685
+  identification: 
+    name: P403_PERC_IIBB
+    type: Number Field
+
+  label: 
+    label: Perc Iibb
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 90
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: PERC_IIBB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_TOTAL ===============================
+  id: 9091184627497689
+  identification: 
+    name: P403_TOTAL
+    type: Number Field
+
+  label: 
+    label: Total
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 20
+    region: TOTAL # 9624689305444649
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    format-mask: 999G999G999G999G990D00
+    width: 32
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: TOTAL
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_NETO_21 =============================
+  id: 9091581535497690
+  identification: 
+    name: P403_NETO_21
+    type: Number Field
+
+  label: 
+    label: Neto 21
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: NETO_21
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_NETO_27 =============================
+  id: 9091976585497691
+  identification: 
+    name: P403_NETO_27
+    type: Number Field
+
+  label: 
+    label: Neto 27
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 100
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: NETO_27
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_NETO_10 =============================
+  id: 9092356284497691
+  identification: 
+    name: P403_NETO_10
+    type: Number Field
+
+  label: 
+    label: Neto 10
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    custom-attributes: 
+    - onchange="p403_calcularTotales()";
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: NETO_10
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_IVA_27 ==============================
+  id: 9104577400568017
+  identification: 
+    name: P403_IVA_27
+    type: Number Field
+
+  label: 
+    label: Iva 27 %
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 110
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - 'style="background-color:'
+    - palegreen;"
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: IVA_27
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_IVA_21 ==============================
+  id: 9104651788568018
+  identification: 
+    name: P403_IVA_21
+    type: Number Field
+
+  label: 
+    label: Iva 21 %
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: DETALLE # 9624759745444650
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 99999999990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    custom-attributes: 
+    - 'style="background-color:'
+    - palegreen;"
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: IVA_21
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P403_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_CTA =================================
+  id: 10228911926721864
+  identification: 
+    name: P403_CTA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: CTA
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_OBS =================================
+  id: 10423683022562423
+  identification: 
+    name: P403_OBS
+    type: Text Field
+
+  label: 
+    label: Obs
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: TOTAL # 9624689305444649
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 200
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_CUENTA_ID ===========================
+  id: 12617829235834055
+  identification: 
+    name: P403_CUENTA_ID
+    type: Select List
+
+  label: 
+    label: Cuenta
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 120
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CUENTAS.PROV_COMPRAS # 44131963100191554
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: CUENTA_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT CUENTA_ID FROM PROVS WHERE ID = :P403_PROVEDOR_ID'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P403_STATUS ==============================
+  id: 31673361683388137
+  identification: 
+    name: P403_STATUS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Factura Compra # 9082208709497607
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Factura Compra # 9082208709497607
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 9082539685497619
+  identification: 
+    button-name: CREATE
+    label: NUEVO
+
+  layout: 
+    sequence: 50
+    region: Buttons # 9082906781497619
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P403_ID
+
+- # ====== Button: SAVE ========================================
+  id: 9082636459497619
+  identification: 
+    button-name: SAVE
+    label: Apply Changes
+
+  layout: 
+    sequence: 40
+    region: Buttons # 9082906781497619
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P403_ID
+
+- # ====== Button: DELETE ======================================
+  id: 9082768403497619
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 30
+    region: Buttons # 9082906781497619
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Default
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P403_ID
+
+- # ====== Button: CANCEL ======================================
+  id: 9083305079497620
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 20
+    region: Buttons # 9082906781497619
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 9083374124497620
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 9083305079497620
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 9084165304497631
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 9083374124497620
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 14538935476973850
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Item != Value
+    item: P403_CAB_TIPO_ID
+    value: 2001
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 14539070270973851
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: p403_calcularTotales();
+
+    execution: 
+      sequence: 10
+      event: New_1 # 14538935476973850
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Fetch Row from PROV_COMPRAS ================
+  id: 9093194062497697
+  identification: 
+    name: Fetch Row from PROV_COMPRAS
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Factura Compra # 9082208709497607
+
+  execution: 
+    sequence: 10
+    point: After Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process Row PROV_COMPRAS ===================
+  id: 9093559950497700
+  identification: 
+    name: Process Row PROV_COMPRAS
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: Factura Compra # 9082208709497607
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: false
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Action Processed.
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: reset page =================================
+  id: 9093998119497700
+  identification: 
+    name: reset page
+    type: Clear Session State
+    execution-chain: None
+
+  settings: 
+    type: Clear all Items on the Current Page
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 9082768403497619
+
+- # ====== Process: Close Dialog ===============================
+  id: 9094354940497700
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

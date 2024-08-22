@@ -1,0 +1,3804 @@
+---
+# ====== Page: corrugado 22 ==================================
+id: 22003
+identification: 
+  name: corrugado 22
+  alias: CORRUGADO-22
+  title: corrugado 22
+  page-group: 200 PRODUCCION # 4255674501624938
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  file-urls: 
+  - '#WORKSPACE_FILES#js/bobinas_corrugado#MIN#.js'
+
+css: 
+  inline: |
+    #mycanvas{border:1px solid #d9d9d9; width: 100%; height: 260px;}
+    #P13_R1_control_panel { display : none;}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: BOBINAS =====================================
+  id: 34483792626454617
+  identification: 
+    name: BOBINAS
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - is-expanded
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: B - ONDA ====================================
+  id: 34483902663454618
+  identification: 
+    name: B - ONDA
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID
+          ,bobina_id BOB_ID
+          , BOB_TIPO_ID TIPO
+          , FORMATO
+          , GRAMAJE
+          ,INICIO_DIAM || '->' || FINAL_DIAM AS DIAMETRO 
+          , METROS 
+          , TO_CHAR(INICIO_FEC,'HH24:MI') INICIO
+          , TO_CHAR(FINAL_FEC,'HH24:MI') FINAL 
+      	,'<a href=javascript:$s("P22003_ID_TO_DELETE",'||ID||') class="fa fa-trash" ></a>' delete_link
+      	,'<a href=javascript:$s("P22003_ID_A_SUBIR",'||ID||') class="fa fa-arrow-up" ></a>' ||
+      	    '<a href=javascript:$s("P22003_ID_A_BAJAR",'||ID||') class="fa fa-arrow-down" ></a>' as link
+      	FROM BOB_USO_info
+      	WHERE FECHA = :P22003_FECHA 
+      	AND LUGAR = 2
+      	ORDER BY ix
+
+  layout: 
+    sequence: 140
+    parent-region: BOBINAS # 34483792626454617
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: TABLE_B
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: BOB_ID ======================================
+    id: 34483967533454619
+    identification: 
+      column-name: BOB_ID
+      type: Plain Text
+
+    heading: 
+      heading: Bobina
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TIPO ========================================
+    id: 34484049942454620
+    identification: 
+      column-name: TIPO
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: T
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.KEY # 3647310943257166
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 34484231637454621
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: For
+      alignment: center
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GRAMAJE =====================================
+    id: 34484271662454622
+    identification: 
+      column-name: GRAMAJE
+      type: Hidden
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: METROS ======================================
+    id: 34484405392454623
+    identification: 
+      column-name: METROS
+      type: Plain Text
+
+    heading: 
+      heading: Metros
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIAMETRO ====================================
+    id: 34484481492454624
+    identification: 
+      column-name: DIAMETRO
+      type: Plain Text
+
+    heading: 
+      heading: Diametro
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 34484615569454625
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      heading: Mover
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+  - # ====== Column: DELETE_LINK =================================
+    id: 34484732983454626
+    identification: 
+      column-name: DELETE_LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+  - # ====== Column: ID ==========================================
+    id: 34484739618454627
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 34484878325454628
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 34485024932454629
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: C - EXTERIOR ================================
+  id: 34485124199454630
+  identification: 
+    name: C - EXTERIOR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID
+          ,bobina_id BOB_ID
+          , BOB_TIPO_ID TIPO
+          , FORMATO
+          , GRAMAJE
+          ,INICIO_DIAM || '->' || FINAL_DIAM AS DIAMETRO 
+          , METROS 
+          , TO_CHAR(INICIO_FEC,'HH24:MI') INICIO
+          , TO_CHAR(FINAL_FEC,'HH24:MI') FINAL 
+      	,'<a href=javascript:$s("P22003_ID_TO_DELETE",'||ID||') class="fa fa-trash" ></a>' delete_link
+      	,'<a href=javascript:$s("P22003_ID_A_SUBIR",'||ID||') class="fa fa-arrow-up" ></a>' ||
+      	    '<a href=javascript:$s("P22003_ID_A_BAJAR",'||ID||') class="fa fa-arrow-down" ></a>' as link
+      	FROM BOB_USO_info
+      	WHERE FECHA = :P22003_FECHA 
+      	AND LUGAR = 3
+      	ORDER BY ix
+
+  layout: 
+    sequence: 150
+    parent-region: BOBINAS # 34483792626454617
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: TABLE_C
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: BOB_ID ======================================
+    id: 34485142898454631
+    identification: 
+      column-name: BOB_ID
+      type: Plain Text
+
+    heading: 
+      heading: Bobina
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TIPO ========================================
+    id: 34485297822454632
+    identification: 
+      column-name: TIPO
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: T
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.KEY # 3647310943257166
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 34485368199454633
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: For
+      alignment: center
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GRAMAJE =====================================
+    id: 34485473336454634
+    identification: 
+      column-name: GRAMAJE
+      type: Hidden
+
+    layout: 
+      sequence: 40
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: METROS ======================================
+    id: 34485628724454635
+    identification: 
+      column-name: METROS
+      type: Plain Text
+
+    heading: 
+      heading: Metros
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIAMETRO ====================================
+    id: 34485638042454636
+    identification: 
+      column-name: DIAMETRO
+      type: Plain Text
+
+    heading: 
+      heading: Diametro
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 34485808265454637
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      heading: Mover
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+  - # ====== Column: DELETE_LINK =================================
+    id: 34485851804454638
+    identification: 
+      column-name: DELETE_LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+  - # ====== Column: ID ==========================================
+    id: 34485941769454639
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 34486044495454640
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 34486138636454641
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: tabs ========================================
+  id: 34486319031454642
+  identification: 
+    name: tabs
+    type: Region Display Selector
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Tabs Container
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - t-TabsRegion-mod--pill
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': false
+      remember-selection: By User
+
+- # ====== Region: A - INTERIOR ================================
+  id: 72104681415818505
+  identification: 
+    name: A - INTERIOR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID
+          ,bobina_id BOB_ID
+          , BOB_TIPO_ID TIPO
+          , FORMATO
+          , GRAMAJE
+          ,INICIO_DIAM || '->' || FINAL_DIAM AS DIAMETRO 
+          , METROS 
+          , TO_CHAR(INICIO_FEC,'HH24:MI') INICIO
+          , TO_CHAR(FINAL_FEC,'HH24:MI') FINAL 
+      	,'<a href=javascript:$s("P22003_ID_TO_DELETE",'||ID||') class="fa fa-trash" ></a>' delete_link
+      	,'<a href=javascript:$s("P22003_ID_A_SUBIR",'||ID||') class="fa fa-arrow-up" ></a>' ||
+      	    '<a href=javascript:$s("P22003_ID_A_BAJAR",'||ID||') class="fa fa-arrow-down" ></a>' as link
+      	FROM BOB_USO_info
+      	WHERE FECHA = :P22003_FECHA 
+      	AND LUGAR = 1
+      	ORDER BY ix
+
+  layout: 
+    sequence: 130
+    parent-region: BOBINAS # 34483792626454617
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: TABLE_A
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 35650589649596194
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 9
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BOB_ID ======================================
+    id: 35650937356596197
+    identification: 
+      column-name: BOB_ID
+      type: Plain Text
+
+    heading: 
+      heading: Bobina
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TIPO ========================================
+    id: 35651430432596197
+    identification: 
+      column-name: TIPO
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: T
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.KEY # 3647310943257166
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 35651786234596199
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: For
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GRAMAJE =====================================
+    id: 35652220744596199
+    identification: 
+      column-name: GRAMAJE
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIAMETRO ====================================
+    id: 35652619362596200
+    identification: 
+      column-name: DIAMETRO
+      type: Plain Text
+
+    heading: 
+      heading: Diametro
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: METROS ======================================
+    id: 35652974334596201
+    identification: 
+      column-name: METROS
+      type: Plain Text
+
+    heading: 
+      heading: Metros
+      alignment: start
+
+    layout: 
+      sequence: 5
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 35653378282596202
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FINAL =======================================
+    id: 35653758417596203
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DELETE_LINK =================================
+    id: 35654229306596204
+    identification: 
+      column-name: DELETE_LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+  - # ====== Column: LINK ========================================
+    id: 35654570789596205
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      heading: Mover
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+      escape-special-characters: false
+
+- # ====== Region: New =========================================
+  id: 106356907052391481
+  identification: 
+    name: New
+    type: Static Content
+
+  layout: 
+    sequence: 90
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noBorder
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CORRUGADO DIARIO ============================
+  id: 108941807326444758
+  identification: 
+    name: CORRUGADO DIARIO
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT c.nro   id_corr
+            ,c.formato
+            ,c.calidad_ID CALIDAD
+            ,ROUND(c.m1) METROS
+            ,c.ONDA
+            ,c.id
+            ,c.fx 
+            ,case when c.INICIO is null then 
+               '<span style ="white-space: nowrap;">'|| to_char(c.fx,'000') ||'<a href=javascript:$s("P22003_ORDEN_A_SUBIR",' || c.id || 
+            ') class="fa fa-arrow-up" ></a><a href=javascript:$s("P22003_ORDEN_A_BAJAR",' || c.id || ') class="fa fa-arrow-down" ></a></span>'
+            else
+            TO_CHAR(c.INICIO,'HH24:MI')
+            END INICIO      
+            
+            ,c.FINAL
+            ,c.minutos  
+            ,CASE WHEN c.MINUTOS > 0 THEN round(c.m1 /c.minutos,1) END velocidad
+            ,CASE c.status
+                  WHEN 1   THEN
+                      '<a href=javascript:$s("P22003_ORDEN_A_DESBLOQUEAR",' || c.id || ') class="fa fa-reply" ></a>'
+                  ELSE
+                      '<a href=javascript:$s("P22003_ORDEN_A_BLOQUEAR",' || c.id || ') class="fa fa-lock" ></a>'
+              END AS link2
+              
+              
+            ,CASE c.status
+                  WHEN 1   THEN
+                      '<i class="fa fa-check-circle u-color-4-text" ></i>'
+                  ELSE
+                  case when c.inicio is null then 
+                      '<a href=javascript:$s("P22003_ORDEN_A_BORRAR",' || c.id || ') class="fa fa-trash" ></a>'
+                  else
+                     '<i class="fa fa-gear fa-anim-spin u-color-8-text" ></i>'
+                  end
+              END AS link3
+              
+            ,CASE
+                  WHEN c.articulos = 2 THEN
+                      '<a href=javascript:$s("P22003_ORDEN_A_INVERTIR",' || c.id || ') class="fa fa-random" ></a>'
+              END AS link4
+            ,COR_PKG.div_corrugado(c.id,'MODO_CORRUGANDO') detalle
+      
+      FROM corrs c
+      WHERE fecha = :P22003_FECHA
+      AND c.PROV_ID IS NULL
+      ORDER BY c.STATUS DESC,c.INICIO ASC NULLS LAST, c.fx ASC;
+    page-items-to-submit: 
+    - P22003_FECHA
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    column-css-classes: 
+    - .col-fabri
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent14
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    static-id: CORRUGADO
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Customizable and Shown By Default
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: First
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID_CORR =====================================
+    id: 93846867302214824
+    identification: 
+      column-name: ID_CORR
+      type: Plain Text
+
+    heading: 
+      heading: Ord
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 93847289125214835
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: For
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CALIDAD =====================================
+    id: 93848136739214836
+    identification: 
+      column-name: CALIDAD
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cal
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: METROS ======================================
+    id: 93848532901214836
+    identification: 
+      column-name: METROS
+      type: Plain Text
+
+    heading: 
+      heading: Mts
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 93848876807214838
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22002:&SESSION.::&DEBUG.:RP,:P22002_ID:#ID#'
+        page: 22002 # CORR 22
+        clear-cache: RP
+        values: 
+          p22002_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK2 =======================================
+    id: 93849365274214838
+    identification: 
+      column-name: LINK2
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Never
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: LINK3 =======================================
+    id: 93849751405214838
+    identification: 
+      column-name: LINK3
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: DETALLE =====================================
+    id: 93850156715214839
+    identification: 
+      column-name: DETALLE
+      type: Plain Text
+
+    heading: 
+      heading: Detalle
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: LINK4 =======================================
+    id: 93850471529214839
+    identification: 
+      column-name: LINK4
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: FX ==========================================
+    id: 94055750161899556
+    identification: 
+      column-name: FX
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ONDA ========================================
+    id: 116061399165937233
+    identification: 
+      column-name: ONDA
+      type: Plain Text
+
+    heading: 
+      heading: Onda
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-color
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: INICIO ======================================
+    id: 173267852512590134
+    identification: 
+      column-name: INICIO
+      type: Plain Text
+
+    heading: 
+      heading: Inicio
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'HH24:MI'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: FINAL =======================================
+    id: 173267882737590135
+    identification: 
+      column-name: FINAL
+      type: Plain Text
+
+    heading: 
+      heading: Final
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'HH24:MI'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MINUTOS =====================================
+    id: 173267985068590136
+    identification: 
+      column-name: MINUTOS
+      type: Plain Text
+
+    heading: 
+      heading: Min
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VELOCIDAD ===================================
+    id: 173268080003590137
+    identification: 
+      column-name: VELOCIDAD
+      type: Plain Text
+
+    heading: 
+      heading: M/m
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: GRAFICO =====================================
+  id: 109098649137206366
+  identification: 
+    name: GRAFICO
+    type: Static Content
+
+  source: 
+    html-code: |
+      <div id="div">
+      <canvas id="mycanvas"></canvas>
+      </div>
+
+  layout: 
+    sequence: 30
+    parent-region: tabs # 34486319031454642
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PRODUCCION ==================================
+  id: 150193340491521850
+  identification: 
+    name: PRODUCCION
+    type: List
+
+  source: 
+    list: MENU_FABRI # 743079948322539
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-gears
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: CAMBIO_FECHA ================================
+  id: 154796686933234649
+  identification: 
+    name: CAMBIO_FECHA
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Combinados ==================================
+  id: 223669574171080268
+  identification: 
+    name: Combinados
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT c.id
+            ,c.nro
+            ,c.formato
+            ,c.calidad_id art_calidad_id
+            ,c.m1 metros
+            ,c.onda
+            ,cal.style    calidad_style
+            ,cal.key      calidad
+            ,cor_pkg.div_corrugado(c.id,'MODO_COMBINACION') detalle
+      FROM corrs c
+      ,art_cals cal
+      WHERE c.status =-1 
+          and c.calidad_id = cal.id
+          AND PROV_ID IS NULL
+      ORDER BY c.formato
+              ,c.calidad_id
+
+  layout: 
+    sequence: 10
+    parent-region: tabs # 34486319031454642
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: REPORT CALIDAD
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--hideNoPagination
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      report-sum-label: TOTAL METROS
+      break-columns: First Column
+      style: Default Break Formatting
+      report-break-format: 'METROS '
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DERIVED$01 ==================================
+    id: 91471448977286577
+    identification: 
+      column-name: DERIVED$01
+      type: Link
+
+    heading: 
+      heading: '&nbsp;'
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P22003_CORRUGAR","#ID#")'
+      link-text: <i class="fa fa-gears"></i><i class="fa fa-arrow-up"></i>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO =========================================
+    id: 93877587769224899
+    identification: 
+      column-name: NRO
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 93877981780224907
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: ORDEN
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22002:&SESSION.::&DEBUG.:RP,22002:P22002_ID:#ID#'
+        page: 22002 # CORR 22
+        clear-cache: RP,22002
+        values: 
+          p22002_id: '#ID#'
+
+      link-text: <span class="u-bold;">#NRO#</span>
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      css-style: 
+      - 'font-size:1.6rem;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 93878380737224907
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: Formato
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-color-9-text
+      css-style: 
+      - 'font-size:2rem;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CALIDAD =====================================
+    id: 93878866571224907
+    identification: 
+      column-name: CALIDAD
+      type: Plain Text
+
+    heading: 
+      heading: Calidad
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      css-style: 
+      - 'font-size:1.4rem;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: METROS ======================================
+    id: 93879247153224908
+    identification: 
+      column-name: METROS
+      type: Plain Text
+
+    heading: 
+      heading: Metros
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-color-15-text
+      css-style: 
+      - 'font-size:1.4rem;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CALIDAD_STYLE ===============================
+    id: 93879649968224908
+    identification: 
+      column-name: CALIDAD_STYLE
+      type: Hidden
+
+    layout: 
+      sequence: 7
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DETALLE =====================================
+    id: 93880012466224908
+    identification: 
+      column-name: DETALLE
+      type: Plain Text
+
+    heading: 
+      heading: Detalle
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ONDA ========================================
+    id: 93880789605224908
+    identification: 
+      column-name: ONDA
+      type: Plain Text
+
+    heading: 
+      heading: Onda
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      css-style: 
+      - 'font-size:1.4rem;'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_CALIDAD_ID ==============================
+    id: 94210234401526333
+    identification: 
+      column-name: ART_CALIDAD_ID
+      type: Hidden
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P22003_PREV ==============================
+  id: 93845794832214789
+  identification: 
+    name: P22003_PREV
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: PRODUCCION # 150193340491521850
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT MAX(FECHA) FROM CORRS WHERE  FECHA < NVL(:P22003_FECHA,SYSDATE) AND PROV_ID IS NULL'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_NEXT ==============================
+  id: 93846238140214811
+  identification: 
+    name: P22003_NEXT
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: PRODUCCION # 150193340491521850
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT MIN(FECHA) FROM CORRS WHERE FECHA > NVL(:P22003_FECHA,SYSDATE) AND PROV_ID IS NULL'
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_SUBIR =====================
+  id: 93852500283214849
+  identification: 
+    name: P22003_ORDEN_A_SUBIR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_BAJAR =====================
+  id: 93852942919214849
+  identification: 
+    name: P22003_ORDEN_A_BAJAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_BORRAR ====================
+  id: 93853732048214850
+  identification: 
+    name: P22003_ORDEN_A_BORRAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 40
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_BLOQUEAR ==================
+  id: 93854116007214850
+  identification: 
+    name: P22003_ORDEN_A_BLOQUEAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 50
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_DESBLOQUEAR ===============
+  id: 93854479486214852
+  identification: 
+    name: P22003_ORDEN_A_DESBLOQUEAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 60
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ROWS ==============================
+  id: 93854877073214852
+  identification: 
+    name: P22003_ROWS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 70
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: 30
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_ORDEN_A_INVERTIR ==================
+  id: 93855308125214852
+  identification: 
+    name: P22003_ORDEN_A_INVERTIR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 80
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_CORRUGAR ==========================
+  id: 93859920505214867
+  identification: 
+    name: P22003_CORRUGAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Combinados # 223669574171080268
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_FECHA =============================
+  id: 93861367636214871
+  identification: 
+    name: P22003_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 10
+    region: New # 106356907052391481
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    format-mask: DD-MM-YY
+    width: 12
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-7
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE()
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P22003_NEW_DATE ==========================
+  id: 93862544526214874
+  identification: 
+    name: P22003_NEW_DATE
+    type: Date Picker
+
+  label: 
+    label: 'Mover todo a '
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 20
+    region: CAMBIO_FECHA # 154796686933234649
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: PLANILLA_1 ==================================
+  id: 93850954173214839
+  identification: 
+    button-name: PLANILLA_1
+    label: Planilla (Emiliano)
+
+  layout: 
+    sequence: 30
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--hoverIconSpin
+    - t-Button--pillStart
+    - t-Button--padRight
+    icon: 'fa fa-print '
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:163:&SESSION.::&DEBUG.:RP:P163_FECHA:&P22003_FECHA.'
+      page: 163 # CORRUGADO
+      clear-cache: RP
+      values: 
+        p163_fecha: '&P22003_FECHA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: PLANILLA_2 ==================================
+  id: 93851319203214846
+  identification: 
+    button-name: PLANILLA_2
+    label: Orden (Edgardo)
+
+  layout: 
+    sequence: 40
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    - t-Button--hoverIconSpin
+    - t-Button--pillEnd
+    - t-Button--padLeft
+    icon: 'fa fa-print '
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:162:&SESSION.::&DEBUG.:RP:P162_FECHA:&P22003_FECHA.'
+      page: 162 # PRINT_ORDEN_CORRUGADO
+      clear-cache: RP
+      values: 
+        p162_fecha: '&P22003_FECHA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    custom-attributes: 
+    - 'Style="background-color:green;"'
+
+- # ====== Button: BOBINAS =====================================
+  id: 93851689019214847
+  identification: 
+    button-name: BOBINAS
+    label: Bobinas
+
+  layout: 
+    sequence: 50
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconRight
+    - t-Button--gapLeft
+    - t-Button--gapRight
+    icon: fa-database-pointer
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:303:&SESSION.::&DEBUG.:RP,303:P303_FECHA:&P22003_FECHA.'
+      page: 303 # BOBINAS CORRUGADO
+      clear-cache: RP,303
+      values: 
+        p303_fecha: '&P22003_FECHA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  advanced: 
+    custom-attributes: 
+    - TARGET
+    - ="P303"
+
+- # ====== Button: CORREGIR_FECHA ==============================
+  id: 93852124333214849
+  identification: 
+    button-name: CORREGIR_FECHA
+    label: Corregir Fecha
+
+  layout: 
+    sequence: 60
+    region: CORRUGADO DIARIO # 108941807326444758
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+- # ====== Button: PREV ========================================
+  id: 93860571638214869
+  identification: 
+    button-name: PREV
+    label: '&P22003_PREV.'
+
+  layout: 
+    sequence: 10
+    region: New # 106356907052391481
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--primary
+    - t-Button--iconLeft
+    - t-Button--gapRight
+    icon: fa-arrow-left-alt
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:22003:&SESSION.::&DEBUG.:RP:P22003_FECHA:&P22003_PREV.'
+      page: 22003 # corrugado 22
+      clear-cache: RP
+      values: 
+        p22003_fecha: '&P22003_PREV.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: NEXT ========================================
+  id: 93861045832214871
+  identification: 
+    button-name: NEXT
+    label: '&P22003_NEXT.'
+
+  layout: 
+    sequence: 20
+    region: New # 106356907052391481
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--large
+    - t-Button--primary
+    - t-Button--iconRight
+    - t-Button--gapRight
+    icon: fa-arrow-right-alt
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:22003:&SESSION.::&DEBUG.:RP,13:P22003_FECHA:&P22003_NEXT.'
+      page: 22003 # corrugado 22
+      clear-cache: RP,13
+      values: 
+        p22003_fecha: '&P22003_NEXT.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P22003_NEXT
+
+- # ====== Button: MOVER =======================================
+  id: 93862090502214872
+  identification: 
+    button-name: MOVER
+    label: Mover
+
+  layout: 
+    sequence: 10
+    region: CAMBIO_FECHA # 154796686933234649
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: New_1 ===============================
+  id: 36859991389413740
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 190
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  actions: 
+  - # ====== Action: Hide ========================================
+    id: 36860112391413741
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Region
+      region: BOBINAS # 34483792626454617
+
+    execution: 
+      sequence: 10
+      event: New_1 # 36859991389413740
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    security: 
+      authorization-scheme: AMIL - EXCLUSIVO # 4553329773633362
+
+- # ====== Dynamic Action: subir_orden =========================
+  id: 93863715717214938
+  identification: 
+    name: subir_orden
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_SUBIR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93864143112214952
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'COR_PKG.SUBIR_ORDEN(:P22003_ORDEN_A_SUBIR); '
+      items-to-submit: 
+      - P22003_ORDEN_A_SUBIR
+
+    execution: 
+      sequence: 10
+      event: subir_orden # 93863715717214938
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93864627369214955
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 20
+      event: subir_orden # 93863715717214938
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: bajar_orden =========================
+  id: 93864976328214955
+  identification: 
+    name: bajar_orden
+
+  execution: 
+    sequence: 130
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_BAJAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93865499445214955
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'COR_PKG.BAJAR_ORDEN(:P22003_ORDEN_A_BAJAR);'
+      items-to-submit: 
+      - P22003_ORDEN_A_BAJAR
+
+    execution: 
+      sequence: 10
+      event: bajar_orden # 93864976328214955
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93866022613214957
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 40
+      event: bajar_orden # 93864976328214955
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: borrar_orden ========================
+  id: 93866442716214957
+  identification: 
+    name: borrar_orden
+
+  execution: 
+    sequence: 140
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_BORRAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93866912010214957
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'COR_PKG.BORRAR_ORDEN(:P22003_ORDEN_A_BORRAR);'
+      items-to-submit: 
+      - P22003_ORDEN_A_BORRAR
+
+    execution: 
+      sequence: 10
+      event: borrar_orden # 93866442716214957
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93867389510214957
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 30
+      event: borrar_orden # 93866442716214957
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 94053378037899533
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Combinados # 223669574171080268
+
+    execution: 
+      sequence: 40
+      event: borrar_orden # 93866442716214957
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BLOQUEAR_orden ======================
+  id: 93867791119214958
+  identification: 
+    name: BLOQUEAR_orden
+
+  execution: 
+    sequence: 150
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_BLOQUEAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93868331743214958
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'cor_pkg.lock_orden(:P22003_ORDEN_A_BLOQUEAR);'
+      items-to-submit: 
+      - P22003_ORDEN_A_BLOQUEAR
+
+    execution: 
+      sequence: 10
+      event: BLOQUEAR_orden # 93867791119214958
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93868783054214958
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 20
+      event: BLOQUEAR_orden # 93867791119214958
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: DESBLOQUEAR_orden ===================
+  id: 93869247833214960
+  identification: 
+    name: DESBLOQUEAR_orden
+
+  execution: 
+    sequence: 160
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_DESBLOQUEAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93869759541214960
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'cor_pkg.unlock_orden(:P22003_ORDEN_A_DESBLOQUEAR);'
+      items-to-submit: 
+      - P22003_ORDEN_A_DESBLOQUEAR
+
+    execution: 
+      sequence: 10
+      event: DESBLOQUEAR_orden # 93869247833214960
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93870182481214960
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 20
+      event: DESBLOQUEAR_orden # 93869247833214960
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CAMBIO_FECHA ========================
+  id: 93870664105214960
+  identification: 
+    name: CAMBIO_FECHA
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_FECHA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 93871083003214961
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: FECHA
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: CAMBIO_FECHA # 93870664105214960
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: corrugado refreshh ==================
+  id: 93871544270214963
+  identification: 
+    name: corrugado refreshh
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: CORRUGADO DIARIO # 108941807326444758
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 93871967847214964
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: DibujarUso();
+
+    execution: 
+      sequence: 20
+      event: corrugado refreshh # 93871544270214963
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 93872503952214964
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: corrugado refreshh # 93871544270214963
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: corrugar orden ======================
+  id: 93872867126214966
+  identification: 
+    name: corrugar orden
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_CORRUGAR
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 93873957070214966
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: CORRUGADO
+      show-processing: true
+
+    execution: 
+      sequence: 20
+      event: corrugar orden # 93872867126214966
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 93874294991214966
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 180
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CORREGIR_FECHA # 93852124333214849
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 93874854057214967
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: CAMBIO_FECHA # 154796686933234649
+
+    execution: 
+      sequence: 10
+      event: New # 93874294991214966
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: INVERTIR_orden ======================
+  id: 93875201745214967
+  identification: 
+    name: INVERTIR_orden
+
+  execution: 
+    sequence: 170
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P22003_ORDEN_A_INVERTIR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 93875714930214969
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'COR_PKG.INVERTIR_ORDEN(:P22003_ORDEN_A_INVERTIR);'
+      items-to-submit: 
+      - P22003_ORDEN_A_INVERTIR
+
+    execution: 
+      sequence: 10
+      event: INVERTIR_orden # 93875201745214967
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 93876186211214969
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CORRUGADO DIARIO # 108941807326444758
+
+    execution: 
+      sequence: 20
+      event: INVERTIR_orden # 93875201745214967
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: CORRUGAR ===================================
+  id: 93862931271214932
+  identification: 
+    name: CORRUGAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'COR_PKG.CORRUGAR(:P22003_CORRUGAR,:P22003_FECHA);'
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: CORRUGADO
+
+- # ====== Process: MOVER_FECHA ================================
+  id: 93863329574214936
+  identification: 
+    name: MOVER_FECHA
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE CORRS
+      SET FECHA = :P22003_NEW_DATE
+      WHERE ID IN (SELECT ID FROM CORRS WHERE FECHA = :P22003_FECHA);
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: MOVER # 93862090502214872
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+

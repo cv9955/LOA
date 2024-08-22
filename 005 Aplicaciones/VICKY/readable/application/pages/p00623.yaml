@@ -1,0 +1,1473 @@
+---
+# ====== Page: CARTERA DE CHEQUES ============================
+id: 623
+identification: 
+  name: CARTERA DE CHEQUES
+  alias: CARTERA-DE-CHEQUES
+  title: CARTERA DE CHEQUES
+  page-group: 600 CONTADURIA # 1929866135622157
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    .a-IRR-table tr.selected td {
+        background-color: #2d7bbb;
+        color: #fff;
+    }
+    .a-IRR-table tr.selected:hover td {
+        background-color: #399bea;
+        color: #fff;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: DEPOSITO ====================================
+  id: 52160118737665611
+  identification: 
+    name: DEPOSITO
+    type: Static Content
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent6
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CONTADURIA ==================================
+  id: 88082804491884418
+  identification: 
+    name: CONTADURIA
+    type: List
+
+  source: 
+    list: MENU_CONTABLE # 2626165322405257
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-heartbeat
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-slide
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: CHEQUES EN CARTERA ==========================
+  id: 119367013266650136
+  identification: 
+    name: CHEQUES EN CARTERA
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+      
+            ,doc_tipo_id
+            ,cta
+            ,key
+            ,fecha
+            ,vencimiento
+            ,numero
+            ,banco_num
+            ,cuenta_num
+            ,rsocial
+            ,banco_id
+            ,importe
+            ,vta_recibo_id
+            ,S_RECIBO(VTA_RECIBO_ID) recibo
+            ,cliente_id
+            ,OBS
+            ,CASE WHEN NOALAORDEN = 1 THEN '<i class="fa fa-check" title="No A la Orden"></i>' end no_a_la_orden
+            ,case when instr(:P623_IDS, '|' || ID || '|') > 0 then 'checked' else '' end as selected
+        FROM doc_cheques ch
+        WHERE STATUS = 'EN CARTERA'
+      
+    page-items-to-submit: 
+    - P623_IDS
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    static-id: myreport
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 119367090912650137
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: true
+      maximum-rows-to-process: 100000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: false
+      group-by: true
+      pivot: false
+      flashback: false
+      save-report: true
+      save-public-report: true
+      save-public-report-authorization: ACCESS CONTROL - VICTORIA # 285793758003850
+      reset: true
+      help: true
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 119415560418816691
+      identification: 
+        name: Primary Report
+        alias: 672419
+
+    columns: 
+    - # ====== Column: NO_A_LA_ORDEN ===============================
+      id: 52159150263665602
+      identification: 
+        column-name: NO_A_LA_ORDEN
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '#NO_A_LA_ORDEN##OBS#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: SELECTED ====================================
+      id: 52159550723665606
+      identification: 
+        column-name: SELECTED
+        type: Hidden
+
+      heading: 
+        heading: Selected
+
+      layout: 
+        sequence: 200
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 52160275345665613
+      identification: 
+        column-name: OBS
+        type: Hidden
+
+      heading: 
+        heading: Obs
+
+      layout: 
+        sequence: 220
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 119367131006650138
+      identification: 
+        column-name: ID
+        type: Plain Text
+
+      heading: 
+        heading: <input type="checkbox" value="all">
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<input type="checkbox" #SELECTED# value="#ID#">'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VTA_RECIBO_ID ===============================
+      id: 119367270008650139
+      identification: 
+        column-name: VTA_RECIBO_ID
+        type: Hidden
+
+      heading: 
+        heading: Vta Recibo id
+
+      layout: 
+        sequence: 210
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: DOC_TIPO_ID =================================
+      id: 119367509851650141
+      identification: 
+        column-name: DOC_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: FECHA =======================================
+      id: 119367596495650142
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: RECIBO ======================================
+      id: 119367668341650143
+      identification: 
+        column-name: RECIBO
+        type: Plain Text
+
+      heading: 
+        heading: Recibo
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BANCO_NUM ===================================
+      id: 119367784072650144
+      identification: 
+        column-name: BANCO_NUM
+        type: Plain Text
+
+      heading: 
+        heading: Banco
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999-999-9999
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUENTA_NUM ==================================
+      id: 119367829268650145
+      identification: 
+        column-name: CUENTA_NUM
+        type: Plain Text
+
+      heading: 
+        heading: Cuenta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 99-99999999-9
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: BANCO_ID ====================================
+      id: 119367966039650146
+      identification: 
+        column-name: BANCO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: LOV_BANCOS # 10917609778647614
+
+      heading: 
+        heading: Banco
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: RSOCIAL =====================================
+      id: 119368092261650147
+      identification: 
+        column-name: RSOCIAL
+        type: Plain Text
+
+      heading: 
+        heading: Rsocial
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 119368207777650148
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CTA =========================================
+      id: 119368223460650149
+      identification: 
+        column-name: CTA
+        type: Plain Text
+
+      heading: 
+        heading: Cta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      server-side-condition: 
+        type: Item = Value
+        item: A001_CTA
+        value: 2
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: VENCIMIENTO =================================
+      id: 119368405208650150
+      identification: 
+        column-name: VENCIMIENTO
+        type: Plain Text
+
+      heading: 
+        heading: Vencimiento
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IMPORTE =====================================
+      id: 119368422919650151
+      identification: 
+        column-name: IMPORTE
+        type: Plain Text
+
+      heading: 
+        heading: Importe
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: KEY =========================================
+      id: 119368573898650152
+      identification: 
+        column-name: KEY
+        type: Plain Text
+
+      heading: 
+        heading: Key
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NUMERO ======================================
+      id: 119368830379650155
+      identification: 
+        column-name: NUMERO
+        type: Plain Text
+
+      heading: 
+        heading: Numero
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 00000000
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+  column-groups: 
+  - # ====== Column Group: BANCO =================================
+    id: 119369316349650160
+    heading: 
+      heading: BANCO
+
+  - # ====== Column Group: CHEQUE ================================
+    id: 119369428500650161
+    heading: 
+      heading: CHEQUE
+
+  - # ====== Column Group: CUENTA ================================
+    id: 119369540618650162
+    heading: 
+      heading: CUENTA
+
+  - # ====== Column Group: RECIBO ================================
+    id: 119369616148650163
+    heading: 
+      heading: RECIBO
+
+page-items: 
+- # ====== Page Item: P623_IDS =================================
+  id: 52160394590665614
+  identification: 
+    name: P623_IDS
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: DEPOSITO # 52160118737665611
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P623_TOTAL ===============================
+  id: 122091818305110693
+  identification: 
+    name: P623_TOTAL
+    type: Number Field
+
+  label: 
+    label: Total
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 20
+    region: DEPOSITO # 52160118737665611
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-usd
+    format-mask: 999G999G999G999G990D00
+    width: 30
+    value-placeholder: 0.00
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P623_DESTINO =============================
+  id: 122092062224110695
+  identification: 
+    name: P623_DESTINO
+    type: Select List
+
+  label: 
+    label: Destino
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: DEPOSITO # 52160118737665611
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CUENTA_BANCOS # 49395191852073284
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P623_FECHA_DEPOSITO ======================
+  id: 122618316808149847
+  identification: 
+    name: P623_FECHA_DEPOSITO
+    type: Date Picker
+
+  label: 
+    label: Fecha Deposito
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: false
+    appearance-&-behavior: 'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON'
+    days-outside-month: Visible
+    show-on: Item Focus
+
+  layout: 
+    sequence: 40
+    region: DEPOSITO # 52160118737665611
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: SUBMIT ======================================
+  id: 52188714247763044
+  identification: 
+    button-name: SUBMIT
+    label: Enviar
+
+  layout: 
+    sequence: 60
+    region: DEPOSITO # 52160118737665611
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-send-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: check click =========================
+  id: 52159686283665607
+  identification: 
+    name: check click
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Region
+    region: CHEQUES EN CARTERA # 119367013266650136
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 52159833319665608
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        var cb$, checked, allRows$,
+            sel$ = $("#P623_IDS"),
+            event = this.browserEvent,
+            target$ = $(event.target),
+            th$ = target$.closest("th"),
+            tr$ = target$.closest("tr");
+        
+        if (th$.length) {
+            // the click was on the "select all"
+            // checkbox or checkbox cell
+            cb$ = th$.find("input");
+            if (cb$.length && cb$.val() === "all") {
+                checked = cb$[0].checked;
+                if (target$[0].nodeName !== 'INPUT') {
+                    // only do this if the click was not on the checkbox
+                    // because the checkbox will check itself
+                    checked = cb$[0].checked = !checked;
+                }
+                if (sel$.val() === "") {
+                    sel$.val("|");
+                }
+                $("#myreport").find("td input").each(function() {
+                    this.checked = checked;
+                    // give a visual style to the [un]selected row
+                    $(this).closest("tr").toggleClass("selected", checked);
+                    // update the hidden selected item
+                    sel$.val(sel$.val().replace("|" + this.value + "|", "|"));
+                    if (checked) {
+                        sel$.val(sel$.val() + this.value + "|");
+                    }
+                });
+            }
+        } else if (tr$.length) {
+            // the click was on some other data row
+            cb$ = tr$.find("td").first().find("input");
+            checked = cb$[0].checked;
+            if (target$[0].nodeName !== 'INPUT') {
+                // only do this if the click was not on the checkbox
+                // because the checkbox will check itself
+                checked = cb$[0].checked = !checked;
+            }
+            // give a visual style to the [un]selected row
+            tr$.toggleClass("selected", checked);
+            // update the hidden selected item
+            if (checked) {
+                if (sel$.val() === "") {
+                    sel$.val("|");
+                }
+                sel$.val(sel$.val() + cb$.val() + "|");
+            } else {
+                sel$.val(sel$.val().replace("|" + cb$.val() + "|", "|"));        
+            }
+            // update the select all checkbox state
+            allRows$ = $("#myreport").find("td input");
+            checked = (allRows$.length === allRows$.filter(":checked").length);
+            $("#myreport").find("th input")[0].checked = checked;
+        }
+
+    execution: 
+      sequence: 10
+      event: check click # 52159686283665607
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 52160190148665612
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT SUM(IMPORTE) FROM DOC_CHEQUES
+         WHERE INSTR('|'||:P623_IDS||'|','|'||ID||'|') <> 0
+         AND STATUS = 'EN CARTERA'
+         ;
+      items-to-submit: 
+      - P623_IDS
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P623_TOTAL
+
+    execution: 
+      sequence: 20
+      event: check click # 52159686283665607
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New =================================
+  id: 52160641810665617
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Debounce
+    time: 5
+    immediate: false
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P623_TOTAL
+
+  client-side-condition: 
+    type: Item is null
+    item: P623_TOTAL
+
+  actions: 
+  - # ====== Action: Hide ========================================
+    id: 52160813665665618
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Button
+      button: SUBMIT # 52188714247763044
+
+    execution: 
+      sequence: 10
+      event: New # 52160641810665617
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 52160867822665619
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Button
+      button: SUBMIT # 52188714247763044
+
+    execution: 
+      sequence: 10
+      event: New # 52160641810665617
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+computations: 
+- # ====== Computation: P623_TOTAL =============================
+  id: 52159485741665605
+  identification: 
+    item-name: P623_TOTAL
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT SUM(IMPORTE) FROM DOC_CHEQUES
+       WHERE INSTR('|'||:P623_IDS||'|','|'||ID||'|') <> 0
+       AND STATUS = 'EN CARTERA'
+       ;
+      
+      
+
+- # ====== Computation: P623_FECHA_DEPOSITO ====================
+  id: 52160026114665610
+  identification: 
+    item-name: P623_FECHA_DEPOSITO
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P623_FECHA_DEPOSITO
+
+processes: 
+- # ====== Process: DEPOSITO ===================================
+  id: 52160506979665615
+  identification: 
+    name: DEPOSITO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE DOC_CHEQUES 
+      SET CUENTA_DEPOSITO = :P623_DESTINO
+          , FECHA_DEPOSITO = :P623_FECHA_DEPOSITO
+          WHERE INSTR('|'||:P623_IDS||'|','|'||ID||'|') <> 0
+          AND STATUS = 'EN CARTERA'
+      ;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SUBMIT # 52188714247763044
+
+- # ====== Process: CLEAR ======================================
+  id: 52160585396665616
+  identification: 
+    name: CLEAR
+    type: Clear Session State
+    execution-chain: None
+
+  settings: 
+    type: Clear all Items on the Current Page
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SUBMIT # 52188714247763044
+

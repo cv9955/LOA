@@ -1,0 +1,1564 @@
+---
+# ====== Page: LISTA DE PEDIDOS ==============================
+id: 507
+identification: 
+  name: LISTA DE PEDIDOS
+  title: LISTA DE PEDIDOS
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Right Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    td[headers="LUGAR_ENTREGA"] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    
+    td[headers="CODIGO"] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: A FABRI =====================================
+  id: 455181927447565
+  identification: 
+    name: A FABRI
+    type: Static Content
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PEDIDOS =====================================
+  id: 12682068928635170
+  identification: 
+    name: PEDIDOS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT p.id                               pedido
+            ,p.cliente_id                       link_cliente
+            ,p.cliente_id
+            ,p.articulo_id                      articulo
+            ,s_articulo(p.articulo_id,'MEDIDAS') medidas
+            ,s_articulo(p.articulo_id)           codigo
+            ,p.cantidad                         cant
+            ,p.precio
+            ,p.orden_compra_id
+            ,oc.orden_compra
+            ,p.fecha                            fecha_ped
+            ,NVL(p.fecha_entrega,oc.FECHA_ENTREGA)                    fecha_ent
+            ,p.obs
+            ,p.impresion
+            ,oc.cli_deposito_id                  lugar_entrega
+            ,p.status
+            ,oc.cli_dfiscal_id
+            ,ENTREGADO.TOTAL entregado
+            ,p.audit_col
+            ,CASE WHEN p.status=1 AND p.articulo_id>100 THEN '<i class="fa fa-edit"></i>' END link_fabri
+        FROM pedidos p
+        ,REMITIDO_POR_PEDIDO entregado 
+        ,pedidos_oc OC 
+        WHERE entregado.vta_pedido_id(+) = p.id
+       and entregado.articulo_id(+) = p.articulo_id
+       and p.orden_compra_id = oc.id
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 12760031116120779
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: false
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Pendientes ============================
+      id: 7311244164133621
+      identification: 
+        name: Pendientes
+        alias: 107470
+
+    - # ====== Saved Report: Primary Report ========================
+      id: 12819749334495987
+      identification: 
+        name: Primary Report
+        alias: 29525
+
+    columns: 
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 576376634750127
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: LINK_FABRI ==================================
+      id: 576254741750126
+      identification: 
+        column-name: LINK_FABRI
+        type: Link
+
+      heading: 
+        heading: Fabri
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 'javascript:$s("P507_IDS","#PEDIDO#")'
+        link-text: '#LINK_FABRI#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        authorization-scheme: ACCESS CONTROL - GERENCIA # 285585236988156
+        escape-special-characters: false
+
+    - # ====== Column: PEDIDO ======================================
+      id: 489154428635636
+      identification: 
+        column-name: PEDIDO
+        type: Link
+
+      heading: 
+        heading: Nro
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:508:&SESSION.::&DEBUG.:RP,:P508_ID:#PEDIDO#'
+          page: 508 # PEDIDO_X
+          clear-cache: RP
+          values: 
+            p508_id: '#PEDIDO#'
+
+        link-text: '#PEDIDO#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ARTICULO ====================================
+      id: 488803215635633
+      identification: 
+        column-name: ARTICULO
+        type: Link
+
+      heading: 
+        heading: Art
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:RP:P31_ID:#ARTICULO#'
+          page: 31 # ART_Z
+          clear-cache: RP
+          values: 
+            p31_id: '#ARTICULO#'
+
+        link-text: '#ARTICULO#'
+        link-attributes: target = "ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ORDEN_COMPRA ================================
+      id: 488370145635633
+      identification: 
+        column-name: ORDEN_COMPRA
+        type: Link
+
+      heading: 
+        heading: O/C
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:19:&SESSION.::&DEBUG.::P19_ID:#ORDEN_COMPRA_ID#'
+          page: 19 # PEDIDOS_OC
+          values: 
+            p19_id: '#ORDEN_COMPRA_ID#'
+
+        link-text: '#ORDEN_COMPRA#'
+        link-attributes: target="OC"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FECHA_PED ===================================
+      id: 488023143635628
+      identification: 
+        column-name: FECHA_PED
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: DD-MON-YYYY
+
+      column-formatting: 
+        html-expression: |
+          <div class='u-bold'>#FECHA_PED#</div>
+          <div class='u-textEnd u-textInitCap u-color-44-text' style='font-size: smaller;'>#AUDIT_COL#</div>
+          
+          
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FECHA_ENT ===================================
+      id: 487582739635628
+      identification: 
+        column-name: FECHA_ENT
+        type: Plain Text
+
+      heading: 
+        heading: Entrega
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: DD-MON
+
+      column-formatting: 
+        html-expression: <div class='u-danger-text'>#FECHA_ENT#</div>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 487145231635625
+      identification: 
+        column-name: OBS
+        type: Hidden
+
+      heading: 
+        heading: Obs
+
+      layout: 
+        sequence: 220
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: STATUS ======================================
+      id: 486775753635623
+      identification: 
+        column-name: STATUS
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: PEDIDOS.STATUS # 5478212351692154
+
+      heading: 
+        heading: Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=pedido_#STATUS#>#STATUS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: MEDIDAS =====================================
+      id: 486343314635623
+      identification: 
+        column-name: MEDIDAS
+        type: Plain Text
+
+      heading: 
+        heading: Medidas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=medida_caja>#MEDIDAS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CODIGO ======================================
+      id: 486011262635623
+      identification: 
+        column-name: CODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: |
+          <div style="font-weight:bold;text-overflow: ellipsis;white-space: nowrap;">#CODIGO#</div>
+          <div style="color:darkred;margin:5px; background-color: yellow;text-overflow: ellipsis;WHITE-SPACE: NOWRAP;">#IMPRESION#</div>
+          <div style="color:darkred;margin:5px; background-color: cornsilk;text-overflow: ellipsis;WHITE-SPACE: NOWRAP;">#OBS#</div>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      advanced: 
+        static-id: CODIGO
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CANT ========================================
+      id: 485608750635622
+      identification: 
+        column-name: CANT
+        type: Plain Text
+
+      heading: 
+        heading: Cant
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class=u-bold >#CANT#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ENTREGADO ===================================
+      id: 485153357635622
+      identification: 
+        column-name: ENTREGADO
+        type: Plain Text
+
+      heading: 
+        heading: Entregado
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: |
+          <span parent-class=pedido_#STATUS#>#ENTREGADO#</span>
+          
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LUGAR_ENTREGA ===============================
+      id: 484785534635622
+      identification: 
+        column-name: LUGAR_ENTREGA
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+      heading: 
+        heading: detalle
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: |
+          <div class='u-bold'>#CLI_DFISCAL_ID#</div>
+          <div style="text-overflow: ellipsis;WHITE-SPACE: NOWRAP;">#LUGAR_ENTREGA#</div>
+          
+          
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      advanced: 
+        static-id: LUGAR_ENTREGA
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PRECIO ======================================
+      id: 483968829635620
+      identification: 
+        column-name: PRECIO
+        type: Plain Text
+
+      heading: 
+        heading: Precio
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LINK_CLIENTE ================================
+      id: 6783264461077966
+      identification: 
+        column-name: LINK_CLIENTE
+        type: Link
+
+      heading: 
+        heading: '#'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:107:&SESSION.::&DEBUG.::G_CLIENTE_ID:#LINK_CLIENTE#'
+          page: 107 # CLIENTES_PEDIDOS
+          values: 
+            g_cliente_id: '#LINK_CLIENTE#'
+
+        link-text: '#LINK_CLIENTE#'
+        link-attributes: TARGET="CLI"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ORDEN_COMPRA_ID =============================
+      id: 8367076549607736
+      identification: 
+        column-name: ORDEN_COMPRA_ID
+        type: Hidden
+
+      heading: 
+        heading: Orden Compra Id
+
+      layout: 
+        sequence: 210
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IMPRESION ===================================
+      id: 10166181976689934
+      identification: 
+        column-name: IMPRESION
+        type: Hidden
+
+      heading: 
+        heading: Impresion
+
+      layout: 
+        sequence: 230
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: AUDIT_COL ===================================
+      id: 52161896484665629
+      identification: 
+        column-name: AUDIT_COL
+        type: Plain Text
+
+      heading: 
+        heading: Audit Col
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CLI_DFISCAL_ID ==============================
+      id: 129491084947225560
+      identification: 
+        column-name: CLI_DFISCAL_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLI_DFISCAL.TITLE # 2513212878412000
+
+      heading: 
+        heading: Dfiscal
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+- # ====== Region: VENTAS ======================================
+  id: 32660952113829034
+  identification: 
+    name: VENTAS
+    type: List
+
+  source: 
+    list: MENU_VENTAS # 15192935647770055
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 8
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P507_IDS =================================
+  id: 576181469750125
+  identification: 
+    name: P507_IDS
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: PEDIDOS # 12682068928635170
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P507_A_FABRI =============================
+  id: 505009634684126
+  identification: 
+    name: P507_A_FABRI
+    type: Textarea
+
+  label: 
+    label: A FABRI
+    alignment: Left
+
+  settings: 
+    resizable: true
+    auto-height: true
+    character-counter: false
+    trim-spaces: None
+
+  layout: 
+    sequence: 20
+    region: A FABRI # 455181927447565
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 5000
+    height: 20
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P507_COPY ================================
+  id: 504598562684125
+  identification: 
+    name: P507_COPY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: PEDIDOS # 12682068928635170
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: A_FABRI =====================================
+  id: 505812397684128
+  identification: 
+    button-name: A_FABRI
+    label: ' A FABRI '
+
+  layout: 
+    sequence: 10
+    region: A FABRI # 455181927447565
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Right
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-arrow-right-alt
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  advanced: 
+    static-id: BTN_FABRI
+
+- # ====== Button: MAPA ========================================
+  id: 6967408782104140
+  identification: 
+    button-name: MAPA
+    label: Mapa
+
+  layout: 
+    sequence: 10
+    region: VENTAS # 32660952113829034
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-map
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:103:&SESSION.::&DEBUG.:::'
+      page: 103 # CLIENTES_MAPA
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: BORRAR_SUSPENDIDOS ==========================
+  id: 94882611036881034
+  identification: 
+    button-name: BORRAR_SUSPENDIDOS
+    label: Borrar Suspendidos
+
+  layout: 
+    sequence: 20
+    region: VENTAS # 32660952113829034
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+dynamic-actions: 
+- # ====== Dynamic Action: CHANGE_IDS ==========================
+  id: 576075673750124
+  identification: 
+    name: CHANGE_IDS
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P507_IDS
+
+  client-side-condition: 
+    type: Item is not null
+    item: P507_IDS
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 795731498176937
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ':P507_A_FABRI || :P507_COPY'
+      items-to-submit: 
+      - P507_A_FABRI
+      - P507_COPY
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P507_A_FABRI
+
+    execution: 
+      sequence: 20
+      event: CHANGE_IDS # 576075673750124
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: Set Value ===================================
+    id: 575957994750123
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: 'pedido_to_excel(:P507_IDS)'
+      items-to-submit: 
+      - P507_IDS
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P507_COPY
+
+    execution: 
+      sequence: 10
+      event: CHANGE_IDS # 576075673750124
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Show ========================================
+    id: 455120644447564
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Region
+      region: A FABRI # 455181927447565
+
+    execution: 
+      sequence: 30
+      event: CHANGE_IDS # 576075673750124
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: A_FABRI =============================
+  id: 575445102750118
+  identification: 
+    name: A_FABRI
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: A_FABRI # 505812397684128
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 455351818447567
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P507_A_FABRI
+
+    execution: 
+      sequence: 10
+      event: A_FABRI # 575445102750118
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Clear =======================================
+    id: 455286542447566
+    identification: 
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P507_A_FABRI
+      - P507_IDS
+      - P507_COPY
+
+    execution: 
+      sequence: 20
+      event: A_FABRI # 575445102750118
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: APPLY_CLASS =========================
+  id: 454446840447558
+  identification: 
+    name: APPLY_CLASS
+
+  execution: 
+    sequence: 130
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: PEDIDOS # 12682068928635170
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 454615353447559
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: APPLY_CLASS # 454446840447558
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: New =================================
+  id: 452911446447542
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 140
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: PEDIDOS # 12682068928635170
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 452765683447541
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PEDIDOS # 12682068928635170
+
+    execution: 
+      sequence: 10
+      event: New # 452911446447542
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: BORRR_SUSPENDIDOS ==========================
+  id: 94882686765881035
+  identification: 
+    name: BORRR_SUSPENDIDOS
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: DELETE FROM PEDIDOS WHERE STATUS = -1;
+
+  execution: 
+    sequence: 10
+    point: After Submit
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: BORRAR_SUSPENDIDOS # 94882611036881034
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+

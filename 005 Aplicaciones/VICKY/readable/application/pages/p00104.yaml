@@ -1,0 +1,1349 @@
+---
+# ====== Page: CLIENTE_PRECIOS ===============================
+id: 104
+identification: 
+  name: CLIENTE_PRECIOS
+  alias: PRECIOS_VALIDOS
+  title: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.'
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Buscar ======================================
+  id: 826226465848244
+  identification: 
+    name: Buscar
+    type: Faceted Search
+
+  source: 
+    filtered-region: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.  (&P104_FECHA.)' # 14703714567184636
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: No
+      show-total-row-count: No
+      show-charts: No
+
+  facets: 
+  - # ====== Facet: P104_FILTRO ==================================
+    id: 826363993848245
+    identification: 
+      name: P104_FILTRO
+      type: Search
+
+    label: 
+      label: Filtro
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P104_GRUPO ===================================
+    id: 826626943848248
+    identification: 
+      name: P104_GRUPO
+      type: Radio Group
+
+    label: 
+      label: GRUPO
+      show-label-for-current-facet: true
+
+    settings: 
+      hide-radio-buttons: false
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: 'SELECT TITLE,ID FROM ART_GRUPOS WHERE CLIENTE_ID = :P104_ID'
+      include-null-option: true
+      null-display-value: sin grupo
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: CLI_GRUPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select 1 from articulos 
+        where cliente_id = :P104_ID
+        AND CLI_GRUPO_ID IS NOT NULL
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P104_TIPO ====================================
+    id: 1130862356352370
+    identification: 
+      name: P104_TIPO
+      type: Checkbox Group
+
+    label: 
+      label: Tipo
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: ART_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P104_CALIDAD =================================
+    id: 1130894415352371
+    identification: 
+      name: P104_CALIDAD
+      type: Checkbox Group
+
+    label: 
+      label: Calidad
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.TITLE # 2294723602096546
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: ART_CALIDAD_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P104_VALID ===================================
+    id: 5468411473825359
+    identification: 
+      name: P104_VALID
+      type: Checkbox Group
+
+    label: 
+      label: Valid
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: VALID_COTIZ
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    default: 
+      type: Static
+      static-value: <i class="fa fa-check u-success-text"></i>
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: false
+
+  filters: 
+  - # ====== Filter: P104_FILTRO =================================
+    id: 826363993848245
+    identification: 
+      name: P104_FILTRO
+      type: Search
+
+    label: 
+      label: Filtro
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P104_GRUPO ==================================
+    id: 826626943848248
+    identification: 
+      name: P104_GRUPO
+      type: Radio Group
+
+    label: 
+      label: GRUPO
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: SQL Query
+      sql-query: 'SELECT TITLE,ID FROM ART_GRUPOS WHERE CLIENTE_ID = :P104_ID'
+      include-null-option: true
+      null-display-value: sin grupo
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: CLI_GRUPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: |
+        select 1 from articulos 
+        where cliente_id = :P104_ID
+        AND CLI_GRUPO_ID IS NOT NULL
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P104_TIPO ===================================
+    id: 1130862356352370
+    identification: 
+      name: P104_TIPO
+      type: Checkbox Group
+
+    label: 
+      label: Tipo
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ART_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P104_CALIDAD ================================
+    id: 1130894415352371
+    identification: 
+      name: P104_CALIDAD
+      type: Checkbox Group
+
+    label: 
+      label: Calidad
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.TITLE # 2294723602096546
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ART_CALIDAD_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P104_VALID ==================================
+    id: 5468411473825359
+    identification: 
+      name: P104_VALID
+      type: Checkbox Group
+
+    label: 
+      label: Valid
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: VALID_COTIZ
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    default: 
+      type: Static
+      static-value: <i class="fa fa-check u-success-text"></i>
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: false
+
+- # ====== Region: &G_CLIENTE_ID. - &G_CLIENTE_TITLE.  (&P104_FE
+  id: 14703714567184636
+  identification: 
+    name: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.  (&P104_FECHA.)'
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT art.id
+            ,art.cli_grupo_id
+            ,s_articulo(art.id) codigo
+            ,art.cod_aleta
+            ,art.art_tipo_id
+            ,largo
+            ,ancho
+            ,alto
+            ,art.art_calidad_id
+            ,art.impresion
+            ,art.obs
+            ,art.status
+            ,cot.precio          precio_actual
+            ,cot.fecha           precio_fec
+            ,round(7/art.m2)*100 minimo
+            ,CASE
+                  WHEN cot.status=1 THEN '<i class="fa fa-check u-success-text"></i>'
+                  ELSE '<i class="fa fa-times u-danger-text"></i>'
+              END                 valid_cotiz
+        FROM arts      art
+            ,art_cotiz cot
+       WHERE art.id=cot.articulo_id
+       AND cot.cliente_id=:p104_id
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--stacked
+    - t-Region--scrollBody
+    css-classes: 
+    - u-color-15-border
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 200
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (no pagination)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: true
+      csv-separator: ','
+      csv-enclosed-by: '"'
+      link-text: Download
+      filename: '&G_CLIENTE_TITLE.'
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 1136127522366560
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 1136887074366564
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      default-sequence: 2
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_TIPO_ID =================================
+    id: 1137273496366564
+    identification: 
+      column-name: ART_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LARGO =======================================
+    id: 1137753359366566
+    identification: 
+      column-name: LARGO
+      type: Plain Text
+
+    heading: 
+      heading: Largo
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ANCHO =======================================
+    id: 1138142866366567
+    identification: 
+      column-name: ANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Ancho
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALTO ========================================
+    id: 1138564293366567
+    identification: 
+      column-name: ALTO
+      type: Plain Text
+
+    heading: 
+      heading: Alto
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_CALIDAD_ID ==============================
+    id: 1138897471366567
+    identification: 
+      column-name: ART_CALIDAD_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Calidad
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALS.TITLE # 4529656589416212
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CLI_GRUPO_ID ================================
+    id: 1140898923366572
+    identification: 
+      column-name: CLI_GRUPO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPRESION ===================================
+    id: 1141270360366572
+    identification: 
+      column-name: IMPRESION
+      type: Plain Text
+
+    heading: 
+      heading: Imp
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: OBS =========================================
+    id: 1141738122366574
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: P104_OBS
+      value: 1
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: STATUS ======================================
+    id: 1142070369366574
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO_ACTUAL ===============================
+    id: 1142543025366574
+    identification: 
+      column-name: PRECIO_ACTUAL
+      type: Plain Text
+
+    heading: 
+      heading: Precio
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-success-text
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO_FEC ==================================
+    id: 1142950759366575
+    identification: 
+      column-name: PRECIO_FEC
+      type: Plain Text
+
+    heading: 
+      heading: Precio Fec
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MINIMO ======================================
+    id: 1145695858366578
+    identification: 
+      column-name: MINIMO
+      type: Plain Text
+
+    heading: 
+      heading: Minimo
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 80
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VALID_COTIZ =================================
+    id: 5468306818825358
+    identification: 
+      column-name: VALID_COTIZ
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 17
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: COD_ALETA ===================================
+    id: 67243545703644968
+    identification: 
+      column-name: COD_ALETA
+      type: Plain Text
+
+    heading: 
+      heading: Ext
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: 'select 1 from articulos where cliente_id = :G_CLIENTE_ID AND COD_ALETA IS NOT NULL'
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: MENU CLIENTE ================================
+  id: 28247732149595318
+  identification: 
+    name: MENU CLIENTE
+    type: List
+
+  source: 
+    list: MENU CLIENTE # 5512870084115675
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    - t-Form--noPadding
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: New =========================================
+  id: 145957957881908674
+  identification: 
+    name: New
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P104_FECHA ===============================
+  id: 1131086534352373
+  identification: 
+    name: P104_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: MENU CLIENTE # 28247732149595318
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT
+          MAX(fecha)
+        FROM
+          art_cotiz
+       WHERE
+          cliente_id = :P104_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P104_ID ==================================
+  id: 140942965224854837
+  identification: 
+    name: P104_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: MENU CLIENTE # 28247732149595318
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P104_OBS =================================
+  id: 145957796383908673
+  identification: 
+    name: P104_OBS
+    type: Checkbox Group
+
+  label: 
+    label: Observaciones
+    alignment: Left
+
+  settings: 
+    number-of-columns: 1
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 30
+    region: New # 145957957881908674
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Mostrar Observaciones;1'
+    display-extra-values: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+computations: 
+- # ====== Computation: P104_ID ================================
+  id: 140942970335854838
+  identification: 
+    item-name: P104_ID
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: G_CLIENTE_ID
+

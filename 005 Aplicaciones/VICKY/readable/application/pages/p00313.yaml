@@ -1,0 +1,591 @@
+---
+# ====== Page: Bobinas w3 ====================================
+id: 313
+identification: 
+  name: Bobinas w3
+  alias: BOB_W3
+  title: Ingreso de Papel
+  page-group: 300 BOBINAS # 4255325950619063
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Wizard Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  height: 400
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: '#BREADZERO{ DISPLAY: none;}'
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Wizard Progress =============================
+  id: 8429355194422174
+  identification: 
+    name: Wizard Progress
+    type: List
+
+  source: 
+    list: Wizard Progress List-24436433076143581 # 6166166925422379
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Wizard Progress
+
+- # ====== Region: wEtiquetas ==================================
+  id: 8429363088422174
+  identification: 
+    name: wEtiquetas
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select n001 as id,n002 as tipo,n003 as formato,n004 as gramaje from apex_collections where collection_name = 'W2'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 12688606071463786
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: None
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 13947225183488343
+      identification: 
+        name: Primary Report
+        alias: 79131
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 6193677378442978
+      identification: 
+        column-name: ID
+        type: Plain Text
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TIPO ========================================
+      id: 6194129960442984
+      identification: 
+        column-name: TIPO
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: BOB_TIPO.TITLE # 1964908075239213
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: FORMATO =====================================
+      id: 6194516898442984
+      identification: 
+        column-name: FORMATO
+        type: Plain Text
+
+      heading: 
+        heading: Formato
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GRAMAJE =====================================
+      id: 6194927623442985
+      identification: 
+        column-name: GRAMAJE
+        type: Plain Text
+
+      heading: 
+        heading: Gramaje
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+- # ====== Region: Buttons =====================================
+  id: 8429504077422174
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P313_ORDEN ===============================
+  id: 3084343499471756
+  identification: 
+    name: P313_ORDEN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: wEtiquetas # 8429363088422174
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 6191778328442963
+  identification: 
+    button-name: CANCEL
+    label: Cancelar
+
+  layout: 
+    sequence: 10
+    region: Buttons # 8429504077422174
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: PREVIOUS ====================================
+  id: 6192216015442964
+  identification: 
+    button-name: PREVIOUS
+    label: Anterior
+
+  layout: 
+    sequence: 20
+    region: Buttons # 8429504077422174
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-chevron-left
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: FINISH ======================================
+  id: 6192940652442964
+  identification: 
+    button-name: FINISH
+    label: Terminar
+
+  layout: 
+    sequence: 40
+    region: Buttons # 8429504077422174
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 6196524012442997
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 6191778328442963
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 6196989909442998
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 6196524012442997
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: GENERAR_BOBINAS ============================
+  id: 6196110457442996
+  identification: 
+    name: GENERAR_BOBINAS
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+      	CURSOR CX IS
+      		SELECT n001 tipo,n002 formato,n003 gramaje ,n004 cant 
+      			from apex_collections 
+      			where collection_name = 'W1';
+      	item cx%ROWTYPE;
+      
+      BEGIN
+      	INSERT INTO BOB_ALTAS (BOB_PROV_ID,REMITO,FECHA)
+      		VALUES (:P311_PROVEEDOR,:P311_REMITO,:P311_FECHA)
+      		RETURNING ID into :P313_ORDEN;
+      
+      	OPEN CX;
+      	LOOP FETCH CX into item;
+      		EXIT WHEN CX%NOTFOUND;
+      
+      		FOR I IN 1..item.cant LOOP
+      			INSERT INTO BOBINAS(BOB_TIPO_ID,FORMATO,GRAMAJE,BOB_ALTA_ID)
+      				VALUES(item.tipo,item.formato,item.gramaje,:P313_ORDEN);
+      		END LOOP;	 
+      	END LOOP;
+      	CLOSE CX;
+      END;   
+      
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: BOBINAS CARGADAS OK!
+
+  error: 
+    error-message: error en cargar
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: FINISH # 6192940652442964
+
+branches: 
+- # ====== Branch: Back to w2 ==================================
+  id: 6198382937442999
+  identification: 
+    name: Back to w2
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:312:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 312 # Bobinas w2
+
+  server-side-condition: 
+    when-button-pressed: PREVIOUS # 6192216015442964
+
+- # ====== Branch: finish ======================================
+  id: 6198753806443000
+  identification: 
+    name: finish
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:314:&SESSION.::&DEBUG.:RP,314:P314_ID:&P313_ORDEN.&success_msg=#SUCCESS_MSG#'
+      page: 314 # BOBINAS INGRESO
+      clear-cache: RP,314
+      values: 
+        p314_id: '&P313_ORDEN.'
+
+  server-side-condition: 
+    when-button-pressed: FINISH # 6192940652442964
+

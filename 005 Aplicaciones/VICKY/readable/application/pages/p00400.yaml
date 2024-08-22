@@ -1,0 +1,1062 @@
+---
+# ====== Page: prov_list =====================================
+id: 400
+identification: 
+  name: prov_list
+  alias: PROV_LIST
+  title: Lista de Proveedores
+  page-group: 400 COMPRAS # 13773987234907448
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: REPORT ======================================
+  id: 5773059402190767
+  identification: 
+    name: REPORT
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |2
+      	
+       SELECT p.id
+            ,p.title
+            ,P.rsocial
+            ,to_cuit(P.cuit) cuit
+            ,P.SERVICIO
+            ,p.cuenta_id
+            ,p.obs
+            ,nvl(pc.SALDO_A,0) - nvl(pp.SALDO_A,0)  
+             + nvl(pc.SALDO_B,0) - nvl(pp.SALDO_B,0) SALDO
+            ,nvl(pc.SALDO_A,0) - nvl(pp.SALDO_A,0) SALDO_1 
+            ,nvl(pc.SALDO_B,0) - nvl(pp.SALDO_B,0) SALDO_2 
+            ,nvl(pc.CORTE_A,0) - nvl(pp.CORTE_A,0) corte_1
+            ,nvl(pc.CORTE_B,0) - nvl(pp.CORTE_B,0) corte_2
+       FROM provs p
+       LEFT JOIN (
+           SELECT provedor_id
+                 ,SUM(case when cta = 1 then signo * total end) SALDO_A
+                 ,SUM(case when cta = 2 then signo * total end) SALDO_B
+                 ,SUM(case when fecha < :P400_FECHA and cta = 1 then signo * total end) CORTE_A
+                 ,SUM(case when fecha < :P400_FECHA and cta = 2 then signo * total end) CORTE_B
+           FROM prov_compras
+           GROUP BY provedor_id
+       ) pc ON p.id = pc.provedor_id
+       LEFT JOIN (
+           SELECT provedor_id
+                 ,SUM(case when cta = 1 then total end) SALDO_A
+                 ,SUM(case when cta = 2 then total end) SALDO_B
+                 ,SUM(case when fecha < :P400_FECHA and cta = 1 then total end) CORTE_A
+                 ,SUM(case when fecha < :P400_FECHA and cta = 2 then total end) CORTE_B
+           FROM prov_pagos
+           GROUP BY provedor_id
+       ) pp ON p.id = pp.provedor_id
+       
+    page-items-to-submit: 
+    - P400_FECHA
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 49105313696752248
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:404:&SESSION.::&DEBUG.::P404_ID:#ID#'
+        page: 404 # dialog Proveedor
+        values: 
+          p404_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: SALDO PROVEEDORES =====================
+      id: 9925207787702415
+      identification: 
+        name: SALDO PROVEEDORES
+        alias: 281955
+
+    - # ====== Saved Report: Primary Report ========================
+      id: 50021210719428211
+      identification: 
+        name: Primary Report
+        alias: 534570
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 49105384003752249
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: $
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:402:&SESSION.::&DEBUG.::P402_ID:#ID#'
+          page: 402 # prov_cuenta_report
+          values: 
+            p402_id: '#ID#'
+
+        link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TITLE =======================================
+      id: 49105531839752250
+      identification: 
+        column-name: TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Title
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class="u-bold">#TITLE#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: RSOCIAL =====================================
+      id: 49105593363752251
+      identification: 
+        column-name: RSOCIAL
+        type: Plain Text
+
+      heading: 
+        heading: Rsocial
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CUENTA_ID ===================================
+      id: 49105793606752253
+      identification: 
+        column-name: CUENTA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CUENTA.TITLE # 12690372091894103
+
+      heading: 
+        heading: Cuenta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CUIT ========================================
+      id: 49105878320752254
+      identification: 
+        column-name: CUIT
+        type: Plain Text
+
+      heading: 
+        heading: Cuit
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SALDO =======================================
+      id: 49106227036752257
+      identification: 
+        column-name: SALDO
+        type: Plain Text
+
+      heading: 
+        heading: Saldo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-bold u-danger-text">#SALDO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 49106429555752259
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SERVICIO ====================================
+      id: 110330063662464064
+      identification: 
+        column-name: SERVICIO
+        type: Plain Text
+
+      heading: 
+        heading: Servicio
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SALDO_1 =====================================
+      id: 140942526993854833
+      identification: 
+        column-name: SALDO_1
+        type: Plain Text
+
+      heading: 
+        heading: Saldo 1
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-color-1-text u-bold">#SALDO_1#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SALDO_2 =====================================
+      id: 140942648362854834
+      identification: 
+        column-name: SALDO_2
+        type: Plain Text
+
+      heading: 
+        heading: Saldo 2
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-color-1-text">#SALDO_2#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CORTE_1 =====================================
+      id: 140942696930854835
+      identification: 
+        column-name: CORTE_1
+        type: Plain Text
+
+      heading: 
+        heading: Corte 1
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-color-4-text u-bold">#CORTE_1#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CORTE_2 =====================================
+      id: 140942832917854836
+      identification: 
+        column-name: CORTE_2
+        type: Plain Text
+
+      heading: 
+        heading: Corte 2
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-color-4-text">#CORTE_2#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: REPORT
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: COMPRAS =====================================
+  id: 70184873883703438
+  identification: 
+    name: COMPRAS
+    type: List
+
+  source: 
+    list: MENU_COMPRAS # 6050082615896961
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-bag
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+
+- # ====== Region: control_box =================================
+  id: 71652974708081577
+  identification: 
+    name: control_box
+    type: Static Content
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    - t-ButtonRegion--noPadding
+    - t-ButtonRegion--noUI
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P400_FECHA ===============================
+  id: 71653118503081578
+  identification: 
+    name: P400_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha de corte
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 10
+    region: control_box # 71652974708081577
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: Alta_proveedor ==============================
+  id: 9176030209112672
+  identification: 
+    button-name: Alta_proveedor
+    label: Alta Proveedor
+
+  layout: 
+    sequence: 10
+    region: REPORT # 5773059402190767
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:404:&SESSION.::&DEBUG.:404::'
+      page: 404 # dialog Proveedor
+      clear-cache: 404
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: REMINEDER ===================================
+  id: 60870635275234026
+  identification: 
+    button-name: REMINEDER
+    label: Remineder
+
+  layout: 
+    sequence: 10
+    region: control_box # 71652974708081577
+    slot: PREVIOUS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    icon: fa-alarm-clock
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:51:&SESSION.::&DEBUG.:51:P51_TABLA:2'
+      page: 51 # Entidad
+      clear-cache: 51
+      values: 
+        p51_tabla: 2
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 11143733352255848
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: REPORT # 5773059402190767
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 11143822950255849
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: REPORT # 5773059402190767
+
+    execution: 
+      sequence: 10
+      event: New # 11143733352255848
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 71653236511081579
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P400_FECHA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 71653288421081580
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: New_1 # 71653236511081579
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P400_FECHA =============================
+  id: 34481943800454599
+  identification: 
+    item-name: P400_FECHA
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: TO_DATE('0101'|| EXTRACT(YEAR FROM SYSDATE),'DDMMYYYY')
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P400_FECHA
+

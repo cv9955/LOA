@@ -1,0 +1,854 @@
+---
+# ====== Page: Nuevo Remito ==================================
+id: 510
+identification: 
+  name: Nuevo Remito
+  title: Nuevo Remito
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Wizard Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  maximum-width: 600
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Nuevo Remito ================================
+  id: 14284192910692457
+  identification: 
+    name: Nuevo Remito
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Buttons =====================================
+  id: 14284322245692457
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P510_CLI_CUENTA_ID =======================
+  id: 5445904833789644
+  identification: 
+    name: P510_CLI_CUENTA_ID
+    type: Select List
+
+  label: 
+    label: Cuenta
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'select title, id from cli_CUENTAS where CLIENTE_ID = :P510_CLIENTE_ID'
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P510_CLIENTE_ID
+    items-to-submit: 
+    - P510_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_CLI_DFISCAL_ID ======================
+  id: 14252056782396947
+  identification: 
+    name: P510_CLI_DFISCAL_ID
+    type: Select List
+
+  label: 
+    label: Razon Social
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 40
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'select title, id from cli_dfiscal where CLIENTE_ID = :P510_CLIENTE_ID AND STATUS = 1'
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P510_CLIENTE_ID
+    items-to-submit: 
+    - P510_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_CLIENTE_ID ==========================
+  id: 14285908568692472
+  identification: 
+    name: P510_CLIENTE_ID
+    type: Select List
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 2084520149913047
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_VTA_REMITO_ID =======================
+  id: 14367469202163234
+  identification: 
+    name: P510_VTA_REMITO_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 70
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_CTA =================================
+  id: 17531747853527148
+  identification: 
+    name: P510_CTA
+    type: Radio Group
+
+  label: 
+    label: '&nbsp;'
+    alignment: Left
+
+  settings: 
+    number-of-columns: 2
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 10
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 3
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Remito;1,Entrega;2'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  read-only: 
+    type: Item = Value
+    item: A001_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_CAB_TIPO_ID =========================
+  id: 17533280981527163
+  identification: 
+    name: P510_CAB_TIPO_ID
+    type: Select List
+
+  label: 
+    label: Comprobante
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,ID FROM T_CAB_TIPO 
+      WHERE T_MODO = 'VTA_REMITOS'
+      AND CTA = :P510_CTA
+      AND SALDO_INICIAL IS NULL
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P510_CTA
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P510_CLI_DEPOSITO_ID =====================
+  id: 143994877567071155
+  identification: 
+    name: P510_CLI_DEPOSITO_ID
+    type: Select List
+
+  label: 
+    label: Entrega
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: Nuevo Remito # 14284192910692457
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: "select title || ' - ' || direccion, id from cli_DEPOSITOS where CLIENTE_ID = :P510_CLIENTE_ID AND STATUS >= 0"
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: Retira Cliente
+    null-return-value: 0
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P510_CLIENTE_ID
+    items-to-submit: 
+    - P510_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 14286216572692474
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 14284322245692457
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: false
+
+- # ====== Button: NEXT ========================================
+  id: 14286522871692474
+  identification: 
+    button-name: NEXT
+    label: Next
+
+  layout: 
+    sequence: 30
+    region: Buttons # 14284322245692457
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-chevron-right
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 14286594720692476
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 14286216572692474
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 14287427305692482
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 14286594720692476
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 19189244014112236
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P510_CTA
+
+  client-side-condition: 
+    type: Item = Value
+    item: P510_CTA
+    value: 1
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 2914802156294523
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: NULL
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_DFISCAL_ID
+
+    execution: 
+      sequence: 20
+      event: New # 19189244014112236
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 6780603091077940
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: NULL
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_DFISCAL_ID
+      - P510_CLI_CUENTA_ID
+
+    execution: 
+      sequence: 20
+      event: New # 19189244014112236
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Hide ========================================
+    id: 6780722155077941
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_CUENTA_ID
+
+    execution: 
+      sequence: 30
+      event: New # 19189244014112236
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 6780801106077942
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_DFISCAL_ID
+
+    execution: 
+      sequence: 30
+      event: New # 19189244014112236
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 19189354990112237
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_DFISCAL_ID
+
+    execution: 
+      sequence: 10
+      event: New # 19189244014112236
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Show ========================================
+    id: 19189496666112238
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P510_CLI_DFISCAL_ID
+      - P510_CLI_CUENTA_ID
+
+    execution: 
+      sequence: 10
+      event: New # 19189244014112236
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+processes: 
+- # ====== Process: CREAR_REMITO_1 =============================
+  id: 14367418412163233
+  identification: 
+    name: CREAR_REMITO_1
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      INSERT INTO VTA_REMITOS (CLIENTE_ID,CLI_DFISCAL_ID,CLI_CUENTA_ID,CTA,CAB_TIPO_ID,cli_deposito_id)
+      VALUES (:P510_CLIENTE_ID,:P510_CLI_DFISCAL_ID,NULL,1,:P510_CAB_TIPO_ID,:P510_CLI_DEPOSITO_ID)
+      RETURNING ID INTO :P510_VTA_REMITO_ID ;
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 14286522871692474
+    type: Item = Value
+    item: P510_CTA
+    value: 1
+
+- # ====== Process: CREAR_REMITO_2 =============================
+  id: 28576292366599281
+  identification: 
+    name: CREAR_REMITO_2
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      INSERT INTO VTA_REMITOS (CLIENTE_ID,CLI_DFISCAL_ID,CLI_CUENTA_ID,CTA,CAB_TIPO_ID,CLI_DEPOSITO_ID)
+      VALUES (:P510_CLIENTE_ID,NULL,:P510_CLI_CUENTA_ID,2,:P510_CAB_TIPO_ID,:P510_CLI_DEPOSITO_ID)
+      RETURNING ID INTO :P510_VTA_REMITO_ID ;
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 14286522871692474
+    type: Item = Value
+    item: P510_CTA
+    value: 2
+
+branches: 
+- # ====== Branch: Go To Page 502 ==============================
+  id: 14288134209692488
+  identification: 
+    name: Go To Page 502
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.:502:P502_ID:&P510_VTA_REMITO_ID.&success_msg=#SUCCESS_MSG#'
+      page: 502 # VTA_REMITO
+      clear-cache: 502
+      values: 
+        p502_id: '&P510_VTA_REMITO_ID.'
+
+  server-side-condition: 
+    when-button-pressed: NEXT # 14286522871692474
+

@@ -1,0 +1,137 @@
+---
+# ====== Page: Home ==========================================
+id: 1
+identification: 
+  name: Home
+  alias: HOME
+  title: HOME
+
+appearance: 
+  page-mode: Normal
+  page-template: MOVIL
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #f2f2f2}
+    
+    .t-ContentRow-title {
+        width:100%;
+    }
+    
+    .t-ContentRow-content{
+        width:100%;
+    }
+    
+    .status-0 {
+        background-color : white;
+        
+    }
+    
+    .status-1 {
+          background-color : lightgray;
+    }
+    
+    .status-ON {
+          background-color : lightgreen;
+    }
+    
+    .detalle {
+        text-align: center;
+        font-weight: 400;
+        border-bottom: 1px gray solid;
+    }
+    
+
+security: 
+  authorization-scheme: Must Not Be Public User
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: VICTORIA CORRUGADOS =========================
+  id: 3950920947205401
+  identification: 
+    name: VICTORIA CORRUGADOS
+    type: List
+
+  source: 
+    list: Desktop Navigation Menu # 176310356884037909
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--h1
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--featured t-Cards--block force-fa-lg
+      - t-Cards--displayIcons
+      - t-Cards--float
+      - t-Cards--hideBody
+      - t-Cards--iconsSquare
+      - t-Cards--animColorFill
+

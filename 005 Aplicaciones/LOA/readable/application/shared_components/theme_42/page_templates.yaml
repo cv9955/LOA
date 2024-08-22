@@ -1,0 +1,3375 @@
+---
+- # ====== Page Template: Drawer ===============================
+  id: 25820328666151322
+  identification: 
+    name: Drawer
+    identifier: DRAWER
+    class: Custom 4
+
+  subscription: 
+    master: 
+      referenced-id: 1659739787629394056
+
+  advanced: 
+    translatable: false
+
+  template-options: 
+    preset: 
+    - js-dialog-class-t-Drawer--pullOutEnd
+
+  page: 
+    type: Dialog Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-Drawer-page t-PageTemplate--drawer #DIALOG_CSS_CLASSES# #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD#>
+      #FORM_OPEN#
+    body: |
+      <div class="t-Drawer" role="dialog" aria-label="#TITLE#">
+        <div class="t-Drawer-header">#REGION_POSITION_01#</div>
+        <div class="t-Drawer-bodyWrapperOut">
+          <div class="t-Drawer-bodyWrapperIn">
+            <div class="t-Drawer-body" role="main">#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION##BODY#</div>
+          </div>
+        </div>
+        <div class="t-Drawer-footer">#REGION_POSITION_03#</div>
+      </div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.modalDialog();
+    dialog-initialization-code: "apex.theme42.dialog(#PAGE_URL#,{title:#TITLE#,w:#DIALOG_WIDTH#,mxw:#DIALOG_MAX_WIDTH#,modal:#IS_MODAL#,dialog:#DIALOG#,dlgCls:'t-Drawer-page--standard '+#DIALOG_CSS_CLASSES#,#DIALOG_ATTRIBUTES#},#PAGE_CSS_CLASSES#,#TRIGGERING_ELEMENT#)"
+    dialog-closure-code: apex.theme42.dialog.close(#IS_MODAL#,#TARGET#)
+    dialog-cancel-code: apex.theme42.dialog.cancel(#IS_MODAL#)
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  dialog: 
+    width: 720
+    height: auto
+    maximum-width: 960
+    allow-embed-in-frame: 
+    - Modal Dialog
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Extra Large ========================
+    id: 25821721781151329
+    identification: 
+      name: Extra Large
+      identifier: DRAWER_SIZE_EXTRA_LARGE
+      group: Size
+      sequence: 40
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--xl
+
+  - # ====== Template Option: Large ==============================
+    id: 25821884063151329
+    identification: 
+      name: Large
+      identifier: DRAWER_SIZE_LARGE
+      group: Size
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--lg
+
+  - # ====== Template Option: Medium =============================
+    id: 25822143532151330
+    identification: 
+      name: Medium
+      identifier: DRAWER_SIZE_MEDIUM
+      group: Size
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--md
+
+  - # ====== Template Option: Small ==============================
+    id: 25822337105151330
+    identification: 
+      name: Small
+      identifier: DRAWER_SIZE_SMALL
+      group: Size
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--sm
+
+  - # ====== Template Option: End ================================
+    id: 25822683815151330
+    identification: 
+      name: End
+      identifier: POSITION_END
+      group: Position
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--pullOutEnd
+
+  - # ====== Template Option: Start ==============================
+    id: 25822884649151330
+    identification: 
+      name: Start
+      identifier: POSITION_START
+      group: Position
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-dialog-class-t-Drawer--pullOutStart
+
+  - # ====== Template Option: Remove Body Padding ================
+    id: 25823123636151330
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Dialog--noPadding
+
+  slots: 
+  - # ====== Slot: Content Body ==================================
+    id: 25820629610151327
+    identification: 
+      name: Content Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Dialog Header =================================
+    id: 25820913118151327
+    identification: 
+      name: Dialog Header
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Dialog Footer =================================
+    id: 25821262002151327
+    identification: 
+      name: Dialog Footer
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+- # ====== Page Template: Marquee ==============================
+  id: 25823205677151330
+  identification: 
+    name: Marquee
+    identifier: MASTER_DETAIL
+    class: No Tabs with Sidebar
+
+  subscription: 
+    master: 
+      referenced-id: 1996914646461572319
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody t-PageBody--masterDetail t-PageBody--hideLeft no-anim t-PageTemplate--marquee #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <script>(sessionStorage.getItem("ORA_WWV_apex.toggleCore.right.&APP_ID..&APP_PAGE_ID..preferenceForExpanded") === "true") ? document.getElementById('t_PageBody').classList.add('js-rightExpanded') : document.getElementById('t_PageBody').classList.add('js-rightCollapsed')</script>
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." title="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." id="t_Button_navControl" type="button"><span class="t-Header-controlsIcon" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+        <div class="t-Header-nav">#TOP_GLOBAL_NAVIGATION_LIST##REGION_POSITION_06#</div>
+      </header>
+    body: |
+      <div class="t-Body">
+        #SIDE_GLOBAL_NAVIGATION_LIST#
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main id="main" class="t-Body-mainContent">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-info" id="t_Body_info">#REGION_POSITION_02#</div>
+              <div class="t-Body-contentInner" role="main">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+        <div class="t-Body-actions" id="t_Body_actions">
+          <button class="t-Body-actionsToggle" title="#EXPAND_COLLAPSE_SIDE_COL_LABEL#" id="t_Button_rightControlButton" type="button"><span class="t-Body-actionsControlsIcon" aria-hidden="true"></span></button>
+          <div class="t-Body-actionsContent" role="complementary">#REGION_POSITION_03#</div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    file-urls: 
+    - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.stickyTableHeader#MIN#.js?v=#APEX_VERSION#'
+    - '#APEX_FILES#libraries/apex/#MIN_DIRECTORY#widget.apexTabs#MIN#.js?v=#APEX_VERSION#'
+    execute-when-page-loads: apex.theme42.initializePage.masterDetail();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+    sidebar-position: REGION_POSITION_03
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25827145640151332
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25823492781151331
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25823865524151331
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25824090626151331
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25824420528151331
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25824680184151331
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Master Detail =================================
+    id: 25825055648151331
+    identification: 
+      name: Master Detail
+      template-substitution: REGION_POSITION_02
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Right Side Column =============================
+    id: 25825315867151331
+    identification: 
+      name: Right Side Column
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25825610858151331
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25825937312151331
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25826264263151332
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25826500678151332
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25826806176151332
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+- # ====== Page Template: Modal Dialog =========================
+  id: 25827254956151332
+  identification: 
+    name: Modal Dialog
+    identifier: MODAL_DIALOG
+    class: No Tabs
+
+  subscription: 
+    master: 
+      referenced-id: 2098960803539086924
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Dialog Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-Dialog-page t-Dialog-page--standard t-PageTemplate--dialog #DIALOG_CSS_CLASSES# #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD#>
+      #FORM_OPEN#
+    body: |
+      <div class="t-Dialog" role="dialog" aria-label="#TITLE#">
+        <div class="t-Dialog-header">#REGION_POSITION_01#</div>
+        <div class="t-Dialog-bodyWrapperOut">
+          <div class="t-Dialog-bodyWrapperIn">
+            <div class="t-Dialog-body" role="main">#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION##BODY#</div>
+          </div>
+        </div>
+        <div class="t-Dialog-footer">#REGION_POSITION_03#</div>
+      </div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.modalDialog();
+    dialog-initialization-code: "apex.theme42.dialog(#PAGE_URL#,{title:#TITLE#,h:#DIALOG_HEIGHT#,w:#DIALOG_WIDTH#,mxw:#DIALOG_MAX_WIDTH#,modal:#IS_MODAL#,dialog:#DIALOG#,dlgCls:'t-Dialog-page--standard '+#DIALOG_CSS_CLASSES#,#DIALOG_ATTRIBUTES#},#PAGE_CSS_CLASSES#,#TRIGGERING_ELEMENT#)"
+    dialog-closure-code: apex.theme42.dialog.close(#IS_MODAL#,#TARGET#)
+    dialog-cancel-code: apex.theme42.dialog.cancel(#IS_MODAL#)
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  dialog: 
+    width: 720
+    height: auto
+    maximum-width: 960
+    allow-embed-in-frame: 
+    - Modal Dialog
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Remove Body Padding ================
+    id: 25828419675151333
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Dialog--noPadding
+
+  - # ====== Template Option: Stretch to Fit Window ==============
+    id: 25828602401151333
+    identification: 
+      name: Stretch to Fit Window
+      identifier: STRETCH_TO_FIT_WINDOW
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - ui-dialog--stretch
+
+    help: 
+      help-text: Stretch the dialog to fit the browser window.
+
+  slots: 
+  - # ====== Slot: Content Body ==================================
+    id: 25827491044151332
+    identification: 
+      name: Content Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Dialog Header =================================
+    id: 25827801025151332
+    identification: 
+      name: Dialog Header
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Dialog Footer =================================
+    id: 25828124657151333
+    identification: 
+      name: Dialog Footer
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+- # ====== Page Template: Login ================================
+  id: 25828755613151333
+  identification: 
+    name: Login
+    identifier: LOGIN
+    class: Login
+
+  subscription: 
+    master: 
+      referenced-id: 2099711150063350616
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody--login t-PageTemplate--login no-anim #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD#>
+      #FORM_OPEN#
+      <div class="t-Login-bg">
+        #BACKGROUND_IMAGE#
+        <div class="t-Login-bgImg"></div>
+      </div>
+    body: |
+      <div class="t-Login-container">
+        <header class="t-Login-containerHeader">#REGION_POSITION_01#</header>
+        <main class="t-Login-containerBody" id="main">#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION##BODY#</main>
+        <footer class="t-Login-containerFooter">#REGION_POSITION_02#</footer>
+      </div>
+      
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.appLogin();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Background 1 =======================
+    id: 25830411595151334
+    identification: 
+      name: Background 1
+      identifier: PAGE_BACKGROUND_1
+      group: Page Background
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-LoginPage--bg1
+
+  - # ====== Template Option: Background 2 =======================
+    id: 25830585225151334
+    identification: 
+      name: Background 2
+      identifier: PAGE_BACKGROUND_2
+      group: Page Background
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-LoginPage--bg2
+
+  - # ====== Template Option: Background 3 =======================
+    id: 25830846497151334
+    identification: 
+      name: Background 3
+      identifier: PAGE_BACKGROUND_3
+      group: Page Background
+      sequence: 30
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-LoginPage--bg3
+
+  - # ====== Template Option: Split ==============================
+    id: 25831189272151334
+    identification: 
+      name: Split
+      identifier: PAGE_LAYOUT_SPLIT
+      group: Page Layout
+      sequence: 1
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-LoginPage--split
+
+  slots: 
+  - # ====== Slot: Background Image ==============================
+    id: 25829072484151333
+    identification: 
+      name: Background Image
+      template-substitution: BACKGROUND_IMAGE
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 12
+      new-row: false
+
+  - # ====== Slot: Content Body ==================================
+    id: 25829319545151333
+    identification: 
+      name: Content Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Body Header ===================================
+    id: 25829656641151333
+    identification: 
+      name: Body Header
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Body Footer ===================================
+    id: 25829902369151333
+    identification: 
+      name: Body Footer
+      template-substitution: REGION_POSITION_02
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+- # ====== Page Template: Wizard Modal Dialog ==================
+  id: 25831349041151334
+  identification: 
+    name: Wizard Modal Dialog
+    identifier: WIZARD_MODAL_DIALOG
+    class: No Tabs
+
+  subscription: 
+    master: 
+      referenced-id: 2120348229686426515
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Dialog Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-Dialog-page t-Dialog-page--wizard t-PageTemplate--wizard #DIALOG_CSS_CLASSES# #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD#>
+      #FORM_OPEN#
+    body: |
+      <div class="t-Dialog" role="dialog" aria-label="#TITLE#">
+        <div class="t-Dialog-header">#REGION_POSITION_01#</div>
+        <div class="t-Dialog-bodyWrapperOut">
+          <div class="t-Dialog-bodyWrapperIn">
+            <div class="t-Dialog-body" role="main">#SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION##BODY#</div>
+          </div>
+        </div>
+        <div class="t-Dialog-footer">#REGION_POSITION_03#</div>
+      </div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.wizardModal();
+    dialog-initialization-code: "apex.theme42.dialog(#PAGE_URL#,{title:#TITLE#,h:#DIALOG_HEIGHT#,w:#DIALOG_WIDTH#,mxw:#DIALOG_MAX_WIDTH#,modal:#IS_MODAL#,dialog:#DIALOG#,dlgCls:'t-Dialog-page--wizard '+#DIALOG_CSS_CLASSES#,#DIALOG_ATTRIBUTES#},#PAGE_CSS_CLASSES#,#TRIGGERING_ELEMENT#)"
+    dialog-closure-code: apex.theme42.dialog.close(#IS_MODAL#,#TARGET#)
+    dialog-cancel-code: apex.theme42.dialog.cancel(#IS_MODAL#)
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  dialog: 
+    width: 720
+    height: auto
+    maximum-width: 960
+    allow-embed-in-frame: 
+    - Modal Dialog
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Remove Body Padding ================
+    id: 25832540438151335
+    identification: 
+      name: Remove Body Padding
+      identifier: REMOVE_BODY_PADDING
+      sequence: 20
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - t-Dialog--noPadding
+
+  - # ====== Template Option: Stretch to Fit Window ==============
+    id: 25832741859151335
+    identification: 
+      name: Stretch to Fit Window
+      identifier: STRETCH_TO_FIT_WINDOW
+      sequence: 10
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - ui-dialog--stretch
+
+    help: 
+      help-text: Stretch the dialog to fit the browser window.
+
+  slots: 
+  - # ====== Slot: Wizard Body ===================================
+    id: 25831615570151334
+    identification: 
+      name: Wizard Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Wizard Progress Bar ===========================
+    id: 25831966297151334
+    identification: 
+      name: Wizard Progress Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Wizard Buttons ================================
+    id: 25832238926151334
+    identification: 
+      name: Wizard Buttons
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+- # ====== Page Template: Left Side Column =====================
+  id: 25832828580151335
+  identification: 
+    name: Left Side Column
+    identifier: LEFT_SIDE_COLUMN
+    class: No Tabs with Sidebar
+
+  subscription: 
+    master: 
+      referenced-id: 2525196570560608698
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody t-PageBody--showLeft t-PageBody--hideActions no-anim t-PageTemplate--leftCol #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." title="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." id="t_Button_navControl" type="button"><span class="t-Header-controlsIcon" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+        <div class="t-Header-nav">#TOP_GLOBAL_NAVIGATION_LIST##REGION_POSITION_06#</div>
+      </header>
+      
+    body: |
+      <div class="t-Body">
+        #SIDE_GLOBAL_NAVIGATION_LIST#
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-side" id="t_Body_side">#REGION_POSITION_02#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main class="t-Body-mainContent" id="main">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-contentInner">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.leftSideCol();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25836446860151336
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25833082610151335
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25833461596151335
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25833695713151335
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25834036949151335
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25834369208151335
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Left Column ===================================
+    id: 25834657046151335
+    identification: 
+      name: Left Column
+      template-substitution: REGION_POSITION_02
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25834929512151335
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25835185599151336
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25835498542151336
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25835801918151336
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25836094717151336
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: false
+
+- # ====== Page Template: Right Side Column ====================
+  id: 25836475841151336
+  identification: 
+    name: Right Side Column
+    identifier: RIGHT_SIDE_COLUMN
+    class: No Tabs with Sidebar
+
+  subscription: 
+    master: 
+      referenced-id: 2525200116240651575
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8"> 
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody t-PageBody--hideLeft no-anim t-PageTemplate--rightSideCol #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <script>(sessionStorage.getItem("ORA_WWV_apex.toggleCore.right.&APP_ID..&APP_PAGE_ID..preferenceForExpanded") === "true") ? document.getElementById('t_PageBody').classList.add('js-rightExpanded') : document.getElementById('t_PageBody').classList.add('js-rightCollapsed')</script>
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." title="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." id="t_Button_navControl" type="button"><span class="t-Header-controlsIcon" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+        <div class="t-Header-nav">#TOP_GLOBAL_NAVIGATION_LIST##REGION_POSITION_06#</div>
+      </header>
+    body: |
+      <div class="t-Body">
+        #SIDE_GLOBAL_NAVIGATION_LIST#
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main id="main" class="t-Body-mainContent">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-contentInner">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+        <div class="t-Body-actions" id="t_Body_actions">
+          <button class="t-Body-actionsToggle" aria-label="#EXPAND_COLLAPSE_SIDE_COL_LABEL#" title="#EXPAND_COLLAPSE_SIDE_COL_LABEL#" id="t_Button_rightControlButton" type="button"><span class="t-Body-actionsControlsIcon" aria-hidden="true"></span></button>
+          <div class="t-Body-actionsContent" role="complementary">#REGION_POSITION_03#</div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.rightSideCol();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+    sidebar-position: REGION_POSITION_03
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25840156329151337
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25836854660151336
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25837123248151336
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25837443375151337
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25837747571151337
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25838004389151337
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Right Column ==================================
+    id: 25838369018151337
+    identification: 
+      name: Right Column
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25838628727151337
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25838885509151337
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25839268566151337
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25839485070151337
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25839869536151337
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 8
+      new-row: true
+
+- # ====== Page Template: Left and Right Side Columns ==========
+  id: 25840210770151337
+  identification: 
+    name: Left and Right Side Columns
+    identifier: LEFT_AND_RIGHT_SIDE_COLUMNS
+    class: No Tabs with Sidebar
+
+  subscription: 
+    master: 
+      referenced-id: 2525203692562657055
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">  
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      </head>
+      <body class="t-PageBody t-PageBody--showLeft no-anim t-PageTemplate--leftRightCol #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <script>(sessionStorage.getItem("ORA_WWV_apex.toggleCore.right.&APP_ID..&APP_PAGE_ID..preferenceForExpanded") === "true") ? document.getElementById('t_PageBody').classList.add('js-rightExpanded') : document.getElementById('t_PageBody').classList.add('js-rightCollapsed')</script>
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." title="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." id="t_Button_navControl" type="button"><span class="t-Header-controlsIcon" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+        <div class="t-Header-nav">#TOP_GLOBAL_NAVIGATION_LIST##REGION_POSITION_06#</div>
+      </header>
+      
+    body: |
+      <div class="t-Body">
+        #SIDE_GLOBAL_NAVIGATION_LIST#
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-side" id="t_Body_side">#REGION_POSITION_02#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main id="main" class="t-Body-mainContent">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-contentInner">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+        <div class="t-Body-actions" id="t_Body_actions">
+          <button class="t-Body-actionsToggle" title="#EXPAND_COLLAPSE_SIDE_COL_LABEL#" id="t_Button_rightControlButton" type="button"><span class="t-Body-actionsControlsIcon" aria-hidden="true"></span></button>
+          <div class="t-Body-actionsContent" role="complementary">#REGION_POSITION_03#</div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.bothSideCols();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Success').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header t-Button--navBar" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" onclick="apex.jQuery('#t_Alert_Notification').remove();" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+    sidebar-position: REGION_POSITION_03
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25844130619151339
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25840539192151338
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25840776354151338
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25841168482151338
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25841467940151338
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 6
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25841679699151338
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Left Column ===================================
+    id: 25842031382151338
+    identification: 
+      name: Left Column
+      template-substitution: REGION_POSITION_02
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 3
+      new-row: true
+
+  - # ====== Slot: Right Column ==================================
+    id: 25842301827151338
+    identification: 
+      name: Right Column
+      template-substitution: REGION_POSITION_03
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 3
+      new-row: false
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25842598769151338
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25842916873151339
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 6
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25843252260151339
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25843483011151339
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25843851366151339
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 6
+      new-row: false
+
+- # ====== Page Template: Minimal (No Navigation) ==============
+  id: 25844226595151339
+  identification: 
+    name: Minimal (No Navigation)
+    identifier: MINIMAL_NO_NAVIGATION
+    class: Popup
+
+  subscription: 
+    master: 
+      referenced-id: 2977628563533209425
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#  
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody t-PageBody--hideLeft t-PageBody--hideActions no-anim #PAGE_CSS_CLASSES# t-PageBody--noNav t-PageTemplate--minimal" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="#EXPAND_COLLAPSE_NAV_LABEL#" title="#EXPAND_COLLAPSE_NAV_LABEL#" id="t_Button_navControl" type="button"><span class="t-Icon fa fa-bars" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+      </header>
+          
+    body: |
+      <div class="t-Body">
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main id="main" class="t-Body-mainContent">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-contentInner">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+      
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.noSideCol();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar t-NavigationBar--classic" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25847487034151340
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25844521134151339
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25844793034151339
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25845173026151339
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25845463006151340
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25845677250151340
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25846045373151340
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25846350698151340
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25846671707151340
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25846932920151340
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25847262994151340
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+- # ====== Page Template: Standard =============================
+  id: 25847671405151340
+  identification: 
+    name: Standard
+    identifier: STANDARD
+    class: One Level Tabs
+
+  subscription: 
+    master: 
+      referenced-id: 4070909157481059304
+
+  advanced: 
+    translatable: false
+
+  page: 
+    type: Normal Page
+    header: |
+      <!DOCTYPE html>
+      <html class="no-js #RTL_CLASS# page-&APP_PAGE_ID. app-&APP_ALIAS." lang="&BROWSER_LANGUAGE." #TEXT_DIRECTION#>
+      <head>
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <meta charset="utf-8">
+        <title>#TITLE#</title>
+        #APEX_CSS#
+        #THEME_CSS#
+        #TEMPLATE_CSS#
+        #THEME_STYLE_CSS#
+        #APPLICATION_CSS#
+        #PAGE_CSS#
+        #FAVICONS#
+        #HEAD#
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body class="t-PageBody t-PageBody--hideLeft t-PageBody--hideActions no-anim t-PageTemplate--standard #PAGE_CSS_CLASSES#" #TEXT_DIRECTION# #ONLOAD# id="t_PageBody">
+      <a href="#main" id="t_Body_skipToContent">&APP_TEXT$UI_PAGE_SKIP_TO_CONTENT.</a>
+      #FORM_OPEN#
+      <header class="t-Header" id="t_Header" role="banner">
+        #REGION_POSITION_07#
+        <div class="t-Header-branding">
+          <div class="t-Header-controls">
+            <button class="t-Button t-Button--icon t-Button--header t-Button--headerTree" aria-label="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." title="&"APP_TEXT$APEX.TEMPLATE.MAIN_NAV_LABEL"." id="t_Button_navControl" type="button"><span class="t-Header-controlsIcon" aria-hidden="true"></span></button>
+          </div>
+          <div class="t-Header-logo">
+            <a href="#HOME_LINK#" class="t-Header-logo-link">#LOGO#</a>
+            #AFTER_LOGO#
+          </div>
+          <div class="t-Header-navBar">
+            <div class="t-Header-navBar--start">#BEFORE_NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--center">#NAVIGATION_BAR#</div>
+            <div class="t-Header-navBar--end">#AFTER_NAVIGATION_BAR#</div>
+          </div>
+        </div>
+        <div class="t-Header-nav">#TOP_GLOBAL_NAVIGATION_LIST##REGION_POSITION_06#</div>
+      </header>
+      
+    body: |
+      <div class="t-Body">
+        #SIDE_GLOBAL_NAVIGATION_LIST#
+        <div class="t-Body-main">
+          <div class="t-Body-title" id="t_Body_title">#REGION_POSITION_01#</div>
+          <div class="t-Body-content" id="t_Body_content">
+            <main id="main" class="t-Body-mainContent">
+              #SUCCESS_MESSAGE##NOTIFICATION_MESSAGE##GLOBAL_NOTIFICATION#
+              <div class="t-Body-fullContent">#REGION_POSITION_08#</div>
+              <div class="t-Body-contentInner">#BODY#</div>
+            </main>
+            <footer class="t-Footer" id="t_Footer" role="contentinfo">
+              <div class="t-Footer-body">
+                <div class="t-Footer-content">#REGION_POSITION_05#</div>
+                <div class="t-Footer-apex">
+                  <div class="t-Footer-version">#APP_VERSION#</div>
+                  <div class="t-Footer-customize">#CUSTOMIZE#</div>
+                  #BUILT_WITH_LOVE_USING_APEX#
+                </div>
+              </div>
+              <div class="t-Footer-top">
+                <a href="#top" class="t-Footer-topButton" id="t_Footer_topButton" title="&"APP_TEXT$APEX.UI.BACK_TO_TOP"." aria-label="&"APP_TEXT$APEX.UI.BACK_TO_TOP"."><span class="a-Icon icon-up-chevron" aria-hidden="true"></span></a>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="t-Body-inlineDialogs" id="t_Body_inlineDialogs">#REGION_POSITION_04#</div>
+    footer: |
+      #FORM_CLOSE#
+      #DEVELOPER_TOOLBAR#
+      #APEX_JAVASCRIPT#
+      #GENERATED_CSS#
+      #THEME_JAVASCRIPT#
+      #TEMPLATE_JAVASCRIPT#
+      #APPLICATION_JAVASCRIPT#
+      #PAGE_JAVASCRIPT#  
+      #GENERATED_JAVASCRIPT#
+      </body>
+      </html>
+      
+
+  javascript: 
+    execute-when-page-loads: apex.theme42.initializePage.noSideCol();
+
+  subtemplate: 
+    success-message: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--success t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Success">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-header">
+                <h2 class="t-Alert-title" role="alert">#SUCCESS_MESSAGE#</h2>
+              </div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    navigation-bar: |
+      <ul class="t-NavigationBar t-NavigationBar--classic" data-mode="classic">
+        <li class="t-NavigationBar-item">
+          <span class="t-Button t-Button--icon t-Button--noUI t-Button--header t-Button--navBar t-Button--headerUser">
+            <span class="t-Icon a-Icon icon-user"></span>
+            <span class="t-Button-label">&APP_USER.</span>
+          </span>
+        </li>#BAR_BODY#
+      </ul>
+    navigation-bar-entry: |
+      <li class="t-NavigationBar-item">
+        <a class="t-Button t-Button--icon t-Button--header" href="#LINK#">
+          <span class="t-Icon #IMAGE#"></span>
+          <span class="t-Button-label">#TEXT#</span>
+        </a>
+      </li>
+    notification: |
+      <div class="t-Body-alert">
+        <div class="t-Alert t-Alert--defaultIcons t-Alert--warning t-Alert--horizontal t-Alert--page t-Alert--colorBG" id="t_Alert_Notification" role="alert">
+          <div class="t-Alert-wrap">
+            <div class="t-Alert-icon">
+              <span class="t-Icon"></span>
+            </div>
+            <div class="t-Alert-content">
+              <div class="t-Alert-body">#MESSAGE#</div>
+            </div>
+            <div class="t-Alert-buttons">
+              <button class="t-Button t-Button--noUI t-Button--icon t-Button--closeAlert" type="button" title="#CLOSE_NOTIFICATION#"><span class="t-Icon icon-close"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  layout: 
+    type: Fixed Number of Columns
+    maximum-columns: 12
+    always-use-max-columns: true
+    has-column-span: true
+    always-render-layout: true
+    emit-empty-leading-columns: true
+    emit-empty-trailing-columns: false
+    default-label-column-span: 2
+    first-column-attributes: col-start
+    last-column-attributes: col-end
+    container-template: |
+      <div class="container">
+      #ROWS#
+      </div>
+    row-template: |
+      <div class="row #CSS_CLASSES#">
+      #COLUMNS#
+      </div>
+    column-template: '<div class="col col-#COLUMN_SPAN_NUMBER# #CSS_CLASSES# #FIRST_LAST_COLUMN_ATTRIBUTES#" #ATTRIBUTES#>#CONTENT#</div>'
+
+  positions: 
+    breadcrumb-position: REGION_POSITION_01
+
+  error-page: 
+    template: |
+      <div class="t-Alert t-Alert--danger t-Alert--wizard t-Alert--defaultIcons">
+        <div class="t-Alert-wrap">
+          <div class="t-Alert-icon">
+            <span class="t-Icon"></span>
+          </div>
+          <div class="t-Alert-content">
+            <div class="t-Alert-body">
+              <h1 class="t-Alert-errorTitle">#MESSAGE#</h1>
+              <p>#ADDITIONAL_INFO#</p>
+              <div class="t-Alert-inset">#TECHNICAL_INFO#</div>
+            </div>
+          </div>
+          <div class="t-Alert-buttons">
+            <button onclick="#BACK_LINK#" class="t-Button t-Button--hot w50p t-Button--large" type="button">#OK#</button>
+          </div>
+        </div>
+      </div>
+
+  template-options: 
+  - # ====== Template Option: Sticky Header on Mobile ============
+    id: 25850972952151342
+    identification: 
+      name: Sticky Header on Mobile
+      identifier: STICKY_HEADER_ON_MOBILE
+      sequence: 100
+
+    settings: 
+      advanced: false
+
+    appearance: 
+      css-classes: 
+      - js-pageStickyMobileHeader
+
+    help: 
+      help-text: This will position the contents of the Breadcrumb Bar region position so it sticks to the top of the screen for small screens.
+
+  slots: 
+  - # ====== Slot: After Logo ====================================
+    id: 25847884140151341
+    identification: 
+      name: After Logo
+      template-substitution: AFTER_LOGO
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: true
+
+  - # ====== Slot: After Navigation Bar ==========================
+    id: 25848255813151341
+    identification: 
+      name: After Navigation Bar
+      template-substitution: AFTER_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Before Navigation Bar =========================
+    id: 25848531757151341
+    identification: 
+      name: Before Navigation Bar
+      template-substitution: BEFORE_NAVIGATION_BAR
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: false
+      maximum-fixed-columns: 4
+      new-row: false
+
+  - # ====== Slot: Body ==========================================
+    id: 25848873177151341
+    identification: 
+      name: Body
+      template-substitution: BODY
+
+    component-type-support: 
+      regions: true
+      items: true
+      buttons: true
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Breadcrumb Bar ================================
+    id: 25849158924151341
+    identification: 
+      name: Breadcrumb Bar
+      template-substitution: REGION_POSITION_01
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Dialogs, Drawers and Popups ===================
+    id: 25849408808151341
+    identification: 
+      name: Dialogs, Drawers and Popups
+      template-substitution: REGION_POSITION_04
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Footer ========================================
+    id: 25849734211151341
+    identification: 
+      name: Footer
+      template-substitution: REGION_POSITION_05
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+
+  - # ====== Slot: Top Navigation ================================
+    id: 25850018079151341
+    identification: 
+      name: Top Navigation
+      template-substitution: REGION_POSITION_06
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Banner ========================================
+    id: 25850350751151341
+    identification: 
+      name: Banner
+      template-substitution: REGION_POSITION_07
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: false
+      new-row: true
+
+  - # ====== Slot: Full Width Content ============================
+    id: 25850586925151341
+    identification: 
+      name: Full Width Content
+      template-substitution: REGION_POSITION_08
+
+    component-type-support: 
+      regions: true
+      items: false
+      buttons: false
+
+    grid-layout-rendering: 
+      grid: true
+      maximum-fixed-columns: 12
+      new-row: true
+

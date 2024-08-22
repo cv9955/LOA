@@ -1,0 +1,2085 @@
+---
+# ====== Page: CLIENTES_CONJUNTOS ============================
+id: 110
+identification: 
+  name: CLIENTES_CONJUNTOS
+  alias: CLIENTES-CONJUNTOS
+  title: CLIENTES_CONJUNTOS
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authorization-scheme: Must Not Be Public User
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Crear Pedido ================================
+  id: 60871186765234031
+  identification: 
+    name: Crear Pedido
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Inline Dialog
+    template-options: 
+    - '#DEFAULT#'
+    - js-dialog-size600x400
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: LISTA =======================================
+  id: 129491811459225567
+  identification: 
+    name: LISTA
+    type: List View
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT a.id
+            ,a.codigo
+            ,s_articulo(a.id,'GRUPO') grupo
+        FROM articulos a
+       WHERE a.art_tipo_id=11 
+       AND a.cliente_id=:p110_cliente_id
+       AND a.status IN(3,4)
+       AND NVL(a.cli_grupo_id,-1) = :P110_CLI_GRUPO_ID
+       ORDER BY 3,2
+    page-items-to-submit: 
+    - P110_CLIENTE_ID
+    - P110_CLI_GRUPO_ID
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      features: 'SPLIT_BUTTON:INSET'
+      text-column: CODIGO
+      supplemental-information-column: GRUPO
+      link-target: 
+        url: 'f?p=&APP_ID.:110:&SESSION.::&DEBUG.::P110_ART_ID:&ID.'
+        page: 110 # CLIENTES_CONJUNTOS
+        values: 
+          p110_art_id: '&ID.'
+
+      split-button-target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::P30_ID:&ID.'
+        page: 30 # ART_X
+        values: 
+          p30_id: '&ID.'
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+- # ====== Region: MENU CLIENTE ================================
+  id: 142686806976014348
+  identification: 
+    name: MENU CLIENTE
+    type: List
+
+  source: 
+    list: MENU CLIENTE # 5512870084115675
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    - t-Form--noPadding
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-slide
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: &P110_CODIGO. ===============================
+  id: 164033306354111355
+  identification: 
+    name: '&P110_CODIGO.'
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ARTICULOS
+    include-rowid-column: false
+    where-clause: 'ID = :P110_ART_ID'
+    page-items-to-submit: 
+    - P110_ART_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent3
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      lost-update-type: Row Values
+
+    edit-authorization: 
+      update: CAV - EXCLUSIVO # 47047883483758502
+
+- # ====== Region: Detalle =====================================
+  id: 346071440666008567
+  identification: 
+    name: Detalle
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT art.part_id id
+            ,art.cli_grupo_id
+            ,art.codigo 
+            ,art.art_tipo_id
+            ,art.largo
+            ,art.ancho
+            ,art.alto
+            ,art.art_calidad_id
+            ,art.impresion
+            ,art.obs
+            ,art.status
+            ,Art.CANT
+            ,Art.COD_ALETA
+            ,cot.precio   precio_actual
+            ,cot.fecha    precio_fec
+            ,ARTICULOS_PKG.GET_PRECIO_ARTICULO(ART.part_ID) calculado
+            ,cot.fecha
+            ,CASE  cot.STATUS WHEN 1 THEN
+               '<i class="fa fa-check u-success-text"></i>'
+               ELSE
+               '<i class="fa fa-times u-danger-text"></i>'
+               END  valid_cotiz
+       FROM ART_CONJUNTOS art
+           ,art_cotiz cot  
+       where art.part_id = cot.articulo_id(+)
+       and cot.cliente_id(+) =  :P110_CLIENTE_ID
+       and Art.ART_ID = :P110_ART_ID
+      
+    page-items-to-submit: 
+    - P110_ART_ID
+    - P110_CLIENTE_ID
+
+  layout: 
+    sequence: 30
+    parent-region: '&P110_CODIGO.' # 164033306354111355
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--accent3
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Below Content
+
+  advanced: 
+    static-id: PRECIOS
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CANT ========================================
+    id: 164033060572111352
+    identification: 
+      column-name: CANT
+      type: Plain Text
+
+    heading: 
+      heading: Cant
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CALCULADO ===================================
+    id: 169583692124382402
+    identification: 
+      column-name: CALCULADO
+      type: Link
+
+    heading: 
+      heading: Calc
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.::P29_ID,P29_CLIENTE_ID:#ID#,&P140_CLIENTE_ID.'
+        page: 29 # QUICK_COTIZ
+        values: 
+          p29_id: '#ID#'
+          p29_cliente_id: '&P140_CLIENTE_ID.'
+
+      link-text: '#CALCULADO#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VALID_COTIZ =================================
+    id: 169584093933382403
+    identification: 
+      column-name: VALID_COTIZ
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 18
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: COD_ALETA ===================================
+    id: 169584505445382405
+    identification: 
+      column-name: COD_ALETA
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Rows returned
+      sql-query: 'select 1 from articulos where cliente_id = :G_CLIENTE_ID AND COD_ALETA IS NOT NULL'
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 169584874016382405
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 169585355386382407
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_TIPO_ID =================================
+    id: 169585731524382407
+    identification: 
+      column-name: ART_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LARGO =======================================
+    id: 169586149831382407
+    identification: 
+      column-name: LARGO
+      type: Plain Text
+
+    heading: 
+      heading: Largo
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ANCHO =======================================
+    id: 169586565834382408
+    identification: 
+      column-name: ANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Ancho
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALTO ========================================
+    id: 169586952885382408
+    identification: 
+      column-name: ALTO
+      type: Plain Text
+
+    heading: 
+      heading: Alto
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+      - u-info-text
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_CALIDAD_ID ==============================
+    id: 169587313183382410
+    identification: 
+      column-name: ART_CALIDAD_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Calidad
+      alignment: start
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CLI_GRUPO_ID ================================
+    id: 169587731208382410
+    identification: 
+      column-name: CLI_GRUPO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPRESION ===================================
+    id: 169588109419382410
+    identification: 
+      column-name: IMPRESION
+      type: Hidden
+
+    layout: 
+      sequence: 14
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: OBS =========================================
+    id: 169588486769382411
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 15
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    server-side-condition: 
+      type: Item = Value
+      item: P110_OBS
+      value: 1
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: STATUS ======================================
+    id: 169588938093382411
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 11
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO_ACTUAL ===============================
+    id: 169589284282382411
+    identification: 
+      column-name: PRECIO_ACTUAL
+      type: Plain Text
+
+    heading: 
+      heading: Precio
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-success-text
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO_FEC ==================================
+    id: 169589692148382413
+    identification: 
+      column-name: PRECIO_FEC
+      type: Hidden
+
+    layout: 
+      sequence: 16
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 169615622720604656
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 17
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P110_CANTIDAD ============================
+  id: 60871273481234032
+  identification: 
+    name: P110_CANTIDAD
+    type: Number Field
+
+  label: 
+    label: Cantidad
+    alignment: Left
+
+  settings: 
+    minimum-value: 1
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 10
+    region: Crear Pedido # 60871186765234031
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_CLIENTE_ID ==========================
+  id: 133755420189165411
+  identification: 
+    name: P110_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: LISTA # 129491811459225567
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_LISTA_PRECIO ========================
+  id: 133755817727165413
+  identification: 
+    name: P110_LISTA_PRECIO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: MENU CLIENTE # 142686806976014348
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT LISTA_PRECIO FROM CLIENTES WHERE ID =:G_CLIENTE_ID'
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ART_ID ==============================
+  id: 133782412794664042
+  identification: 
+    name: P110_ART_ID
+    type: Display Only
+
+  label: 
+    label: conjunto
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_PRECIO_CONJUNTO =====================
+  id: 164033101984111353
+  identification: 
+    name: P110_PRECIO_CONJUNTO
+    type: Display Only
+
+  label: 
+    label: Precio Conjunto
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: Detalle # 346071440666008567
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 9
+    label-column-span: 4
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    format-mask: FML999G999G999G999G990D00
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    - u-success-text
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT
+          to_char(SUM(a11.cant*cot.precio)
+                 ,'FML999G999G999G999G990D00')
+        FROM
+           art_11 a11
+          ,art_cotiz cot 
+          where a11.part_id=cot.articulo_id 
+          AND cot.cliente_id=:P110_CLIENTE_ID
+          AND A11.ART_ID = :P110_ART_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_CLI_GRUPO_ID ========================
+  id: 164033252109111354
+  identification: 
+    name: P110_CLI_GRUPO_ID
+    type: Select List
+
+  label: 
+    label: 'Grupo '
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: LISTA # 129491811459225567
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,ID FROM CLI_GRUPOS
+      WHERE ID IN (SELECT CLI_GRUPO_ID FROM ARTICULOS WHERE CLIENTE_ID = :P110_CLIENTE_ID AND ART_TIPO_ID = 11)
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: Sin Grupo
+    null-return-value: '-1'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_CODIGO ==============================
+  id: 164033885527111361
+  identification: 
+    name: P110_CODIGO
+    type: Text Field
+
+  label: 
+    label: Codigo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 50
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: CODIGO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_LARGO ===============================
+  id: 164034173166111364
+  identification: 
+    name: P110_LARGO
+    type: Number Field
+
+  label: 
+    label: Largo
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: LARGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ANCHO ===============================
+  id: 164034316113111365
+  identification: 
+    name: P110_ANCHO
+    type: Number Field
+
+  label: 
+    label: Ancho
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: ANCHO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ALTO ================================
+  id: 164034427996111366
+  identification: 
+    name: P110_ALTO
+    type: Number Field
+
+  label: 
+    label: Alto
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: ALTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_ART_CALIDAD_ID ======================
+  id: 164034530670111367
+  identification: 
+    name: P110_ART_CALIDAD_ID
+    type: Select List
+
+  label: 
+    label: Calidad
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ART_CALS.TITLE # 4529656589416212
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: ART_CALIDAD_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_OBS =================================
+  id: 164035001901111372
+  identification: 
+    name: P110_OBS
+    type: Text Field
+
+  label: 
+    label: Obs
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 400
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_COD_ALETA ===========================
+  id: 169614946864604649
+  identification: 
+    name: P110_COD_ALETA
+    type: Text Field
+
+  label: 
+    label: Cod Aleta
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 20
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: COD_ALETA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_CLI_GRUPO_ID_1 ======================
+  id: 169615561084604655
+  identification: 
+    name: P110_CLI_GRUPO_ID_1
+    type: Select List
+
+  label: 
+    label: 'Grupo '
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,ID FROM CLI_GRUPOS
+      WHERE ID IN (SELECT CLI_GRUPO_ID FROM ARTICULOS WHERE CLIENTE_ID = :P110_CLIENTE_ID AND ART_TIPO_ID = 11)
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: CLI_GRUPO_ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P110_STATUS ==============================
+  id: 169615714514604657
+  identification: 
+    name: P110_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: ARTICULOS.STATUS # 12486902465965205
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: '&P110_CODIGO.' # 164033306354111355
+    column: STATUS
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 60871413733234033
+  identification: 
+    button-name: CREATE
+    label: Create
+
+  layout: 
+    sequence: 10
+    region: Crear Pedido # 60871186765234031
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: PEDIDO ======================================
+  id: 60871867932234038
+  identification: 
+    button-name: PEDIDO
+    label: Pedido
+
+  layout: 
+    sequence: 10
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P110_ART_ID
+
+- # ====== Button: SAVE ========================================
+  id: 169615443517604654
+  identification: 
+    button-name: SAVE
+    label: Save
+
+  layout: 
+    sequence: 10
+    region: '&P110_CODIGO.' # 164033306354111355
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+dynamic-actions: 
+- # ====== Dynamic Action: New_1 ===============================
+  id: 60871982679234039
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: PEDIDO # 60871867932234038
+
+  actions: 
+  - # ====== Action: Open Region =================================
+    id: 60872063454234040
+    identification: 
+      action: Open Region
+
+    affected-elements: 
+      selection-type: Region
+      region: Crear Pedido # 60871186765234031
+
+    execution: 
+      sequence: 10
+      event: New_1 # 60871982679234039
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: ELEGIR TIPO =========================
+  id: 133761552548165441
+  identification: 
+    name: ELEGIR TIPO
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P110_ART_TIPO_ID
+
+  client-side-condition: 
+    type: Item is not null
+    item: P110_ART_TIPO_ID
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 133762498665165442
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: NUEVO_ARTICULO
+      show-processing: false
+
+    execution: 
+      sequence: 20
+      event: ELEGIR TIPO # 133761552548165441
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 133762959433165442
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P110_VER
+
+computations: 
+- # ====== Computation: P110_CLIENTE_ID ========================
+  id: 133758121507165435
+  identification: 
+    item-name: P110_CLIENTE_ID
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: G_CLIENTE_ID
+
+processes: 
+- # ====== Process: PEDIDO =====================================
+  id: 60871524490234034
+  identification: 
+    name: PEDIDO
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Procedure or Function
+    owner: PARSING SCHEMA
+    procedure-or-function: GENERAR_OC_CONJUNTOS
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: CREATE # 60871413733234033
+
+  parameters: 
+  - # ====== Parameter: p_cliente ================================
+    id: 60871591253234035
+    identification: 
+      name: p_cliente
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P110_CLIENTE_ID
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_conjunto ===============================
+    id: 60871681994234036
+    identification: 
+      name: p_conjunto
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P110_ART_ID
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_cantidad ===============================
+    id: 60871778025234037
+    identification: 
+      name: p_cantidad
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P110_CANTIDAD
+
+    advanced: 
+      display-sequence: 30
+
+- # ====== Process: Initialize form CLIENTES_CONJUNTOS =========
+  id: 164033448411111356
+  identification: 
+    name: Initialize form CLIENTES_CONJUNTOS
+    type: Form - Initialization
+    execution-chain: None
+    form-region: '&P110_CODIGO.' # 164033306354111355
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form ARTICULO ======================
+  id: 169615331120604653
+  identification: 
+    name: Process form ARTICULO
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: '&P110_CODIGO.' # 164033306354111355
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SAVE # 169615443517604654
+
+branches: 
+- # ====== Branch: Go To Page 101 ==============================
+  id: 133764272407165446
+  identification: 
+    name: Go To Page 101
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.:RP,101::&success_msg=#SUCCESS_MSG#'
+      page: 101 # BUSCAR_CLIENTE
+      clear-cache: RP,101
+
+  server-side-condition: 
+    type: Item is NULL
+    item: G_CLIENTE_ID
+

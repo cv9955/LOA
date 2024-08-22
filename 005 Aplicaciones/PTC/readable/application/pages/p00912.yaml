@@ -1,0 +1,789 @@
+---
+# ====== Page: GRUPOS_LIST ===================================
+id: 912
+identification: 
+  name: GRUPOS_LIST
+  alias: GRUPOS-LIST
+  title: LISTADO DE GRUPOS
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: LISTADO DE GRUPOS ===========================
+  id: 3944673221578490
+  identification: 
+    name: LISTADO DE GRUPOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             TITLE card_title,
+             GRP_CAT_ID card_subtitle,
+             YEAR,
+             '<div>Modelo: ' || MODELO || '</div><div>Nro Serie: ' || NRO_SERIE || '</div>' ||
+             '<div>Motor: ' || MARCA_MOTOR || ' ' || MODELO_MOTOR || ' - Nro: ' || NRO_MOTOR || '</div>' ||
+             '<div>Alternador: ' || MODELO_ALT || ' - Nro: ' || NRO_ALT || '</div>' ||
+             '<div>Controlador: ' || MODELO_CNTRL || '</div>'  Card_text,
+             '<div>Horometro: ' || HOROM || ' Hs.</div>'  Card_subtext,
+      
+             PARAM01,
+             PARAM02,
+             PARAM03,
+             PARAM04,
+             PARAM05,
+             PARAM06,
+             PARAM07,
+             PARAM08,
+             PARAM09,
+             STATUS
+      
+        from GRP_LIST
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--displaySubtitle
+      - t-Cards--basic
+      - t-Cards--displayIcons
+      - t-Cards--4cols
+      - t-Cards--animColorFill
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 3945072001578493
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 0
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:913:&APP_SESSION.::&DEBUG.:RP:P913_ID:\#ID#\'
+        page: 913 # GRUPOS_ABM
+        clear-cache: RP
+        values: 
+          p913_id: '#ID#'
+
+      link-text: <span role="img" aria-label="Edit"><span class="fa fa-edit" aria-hidden="true" title="Edit"></span></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: YEAR ========================================
+    id: 3946294094578493
+    identification: 
+      column-name: YEAR
+      type: Plain Text
+
+    heading: 
+      heading: Año
+      alignment: end
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM01 =====================================
+    id: 3949438590578495
+    identification: 
+      column-name: PARAM01
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO GASOIL DE LINEA
+      alignment: start
+
+    layout: 
+      sequence: 120
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM02 =====================================
+    id: 3949859100578495
+    identification: 
+      column-name: PARAM02
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO ACEITE
+      alignment: start
+
+    layout: 
+      sequence: 130
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM03 =====================================
+    id: 3950257500578496
+    identification: 
+      column-name: PARAM03
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO GASOIL PRIMARIO
+      alignment: start
+
+    layout: 
+      sequence: 140
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM04 =====================================
+    id: 3950642576578496
+    identification: 
+      column-name: PARAM04
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO GASOIL SECUNDARIO
+      alignment: start
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM05 =====================================
+    id: 3951005134578496
+    identification: 
+      column-name: PARAM05
+      type: Plain Text
+
+    heading: 
+      heading: N* AGUA
+      alignment: start
+
+    layout: 
+      sequence: 160
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM06 =====================================
+    id: 3951489812578496
+    identification: 
+      column-name: PARAM06
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO AIRE PRIMARIO
+      alignment: start
+
+    layout: 
+      sequence: 170
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM07 =====================================
+    id: 3951800879578496
+    identification: 
+      column-name: PARAM07
+      type: Plain Text
+
+    heading: 
+      heading: N* FILTRO AIRE SECUNDARIO
+      alignment: start
+
+    layout: 
+      sequence: 180
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM08 =====================================
+    id: 3952268168578496
+    identification: 
+      column-name: PARAM08
+      type: Plain Text
+
+    heading: 
+      heading: ACEITE MOTOR TIPO
+      alignment: start
+
+    layout: 
+      sequence: 190
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARAM09 =====================================
+    id: 3952627789578496
+    identification: 
+      column-name: PARAM09
+      type: Plain Text
+
+    heading: 
+      heading: CANTIDAD LITROS ACEITE
+      alignment: start
+
+    layout: 
+      sequence: 200
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 3955054658578498
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: end
+
+    layout: 
+      sequence: 220
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 3964635870638311
+    identification: 
+      column-name: CARD_TITLE
+      type: Link
+
+    heading: 
+      heading: Card Title
+      alignment: start
+
+    layout: 
+      sequence: 230
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:913:&SESSION.::&DEBUG.::P913_ID:#ID#'
+        page: 913 # GRUPOS_ABM
+        values: 
+          p913_id: '#ID#'
+
+      link-text: '#CARD_TITLE#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_SUBTITLE ===============================
+    id: 3964815696638313
+    identification: 
+      column-name: CARD_SUBTITLE
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Card Subtitle
+      alignment: end
+
+    layout: 
+      sequence: 240
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: GRUPOS.CAT # 4621224300351050
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 3964964116638314
+    identification: 
+      column-name: CARD_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Text
+      alignment: start
+
+    layout: 
+      sequence: 250
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 3965026714638315
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtext
+      alignment: start
+
+    layout: 
+      sequence: 260
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 3957265051578503
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 2005438132195560
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 3955578756578498
+  identification: 
+    button-name: CREATE
+    label: Create
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 3957265051578503
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:913:&APP_SESSION.::&DEBUG.:913::'
+      page: 913 # GRUPOS_ABM
+      clear-cache: 913
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 3955865930578498
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: LISTADO DE GRUPOS # 3944673221578490
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 3956377525578500
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: LISTADO DE GRUPOS # 3944673221578490
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 3955865930578498
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

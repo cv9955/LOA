@@ -1,0 +1,2438 @@
+---
+# ====== Page: PEDIDO_X ======================================
+id: 508
+identification: 
+  name: PEDIDO_X
+  title: PEDIDO
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  width: 1000
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: ARTICULO ====================================
+  id: 2740274699644754
+  identification: 
+    name: ARTICULO
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: PEDIDO &P508_ID. # 2823975034831680
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 12
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--accent14
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PEDIDO &P508_ID. ============================
+  id: 2823975034831680
+  identification: 
+    name: PEDIDO &P508_ID.
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT p.id
+            ,p.articulo_id
+            ,p.cliente_id
+            ,p.cantidad
+            ,p.precio
+            ,p.NETO total
+            ,p.orden_compra_id
+            ,p.fecha             fecha_ped
+            ,p.fecha_entrega     fecha_ent
+            ,p.obs
+            ,p.impresion
+            ,p.status
+            ,total_remitido_por_pedido(p_pedido_id=>p.id,p_articulo_id=>p.articulo_id) entregado
+            ,CASE    WHEN p.status IN(0,1,2)THEN 'UD'    WHEN p.status IN 3 THEN 'U' ELSE 'LOCK' END   row_edit
+            ,audit_col
+        FROM  pedidos p
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--accent15
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      allowed-row-operations-column: ROW_EDIT
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 2833985633831724
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: DETALLES ====================================
+  id: 64240548287816246
+  identification: 
+    name: DETALLES
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          A11.PART_ID id
+         ,a11.art_id parent_id
+         ,S_ARTICULO(A11.PART_ID) scodigo
+         ,S_ARTICULO(A11.PART_ID,'MEDIDAS') medidas
+         ,a11.cant
+         ,a11.cod_aleta
+        FROM
+          art_11  a11
+       WHERE
+          a11.art_id=:p508_articulo_id
+
+  layout: 
+    sequence: 20
+    parent-region: PEDIDO &P508_ID. # 2823975034831680
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: 'SELECT 1 FROM art_11 WHERE ART_ID = :P508_ARTICULO_ID'
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CANT ========================================
+    id: 64240845094816249
+    identification: 
+      column-name: CANT
+      type: Plain Text
+
+    heading: 
+      heading: Cant
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 64240900608816250
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: COD_ALETA ===================================
+    id: 64241547495816256
+    identification: 
+      column-name: COD_ALETA
+      type: Plain Text
+
+    heading: 
+      heading: Cod Aleta
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 64241617977816257
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Scodigo
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 64241686330816258
+    identification: 
+      column-name: MEDIDAS
+      type: Plain Text
+
+    heading: 
+      heading: Medidas
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PARENT_ID ===================================
+    id: 64241832276816259
+    identification: 
+      column-name: PARENT_ID
+      type: Hidden
+
+    layout: 
+      sequence: 8
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: ENTREGA =====================================
+  id: 64242125994816262
+  identification: 
+    name: ENTREGA
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT it.articulo_id
+            ,s_articulo(it.articulo_id) codigo
+            ,it.cantidad
+            ,it.precio
+            ,it.detalle
+            ,r.fecha
+            ,r.nro_remito
+        FROM vta_remito_its it
+            ,vta_remitos r
+       WHERE it.vta_remito_id=r.id 
+       AND it.vta_pedido_id = :P508_ID;
+
+  layout: 
+    sequence: 30
+    parent-region: PEDIDO &P508_ID. # 2823975034831680
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      SELECT 1
+      FROM vta_remito_its
+      WHERE vta_pedido_id = :P508_ID;
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ARTICULO_ID =================================
+    id: 64242776107816269
+    identification: 
+      column-name: ARTICULO_ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 64242893948816270
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 64243006465816271
+    identification: 
+      column-name: CANTIDAD
+      type: Plain Text
+
+    heading: 
+      heading: Cantidad
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRECIO ======================================
+    id: 64243134371816272
+    identification: 
+      column-name: PRECIO
+      type: Plain Text
+
+    heading: 
+      heading: Precio
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DETALLE =====================================
+    id: 64243180631816273
+    identification: 
+      column-name: DETALLE
+      type: Plain Text
+
+    heading: 
+      heading: Detalle
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 67243728682644970
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_REMITO ==================================
+    id: 67243803449644971
+    identification: 
+      column-name: NRO_REMITO
+      type: Plain Text
+
+    heading: 
+      heading: Nro Remito
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P508_FECHA_PED ===========================
+  id: 454048898447554
+  identification: 
+    name: P508_FECHA_PED
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 60
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: FECHA_PED
+    data-type: DATE
+    query-only: true
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_FECHA_ENT ===========================
+  id: 453977039447553
+  identification: 
+    name: P508_FECHA_ENT
+    type: Date Picker
+
+  label: 
+    label: Fecha Entrega
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 150
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: FECHA_ENT
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_TOTAL ===============================
+  id: 453753717447551
+  identification: 
+    name: P508_TOTAL
+    type: Number Field
+
+  label: 
+    label: Total
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 140
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: TOTAL
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_CODIGO ==============================
+  id: 48297291974953
+  identification: 
+    name: P508_CODIGO
+    type: Text Field
+
+  label: 
+    label: Codigo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ART_CALIDAD =========================
+  id: 48196860974952
+  identification: 
+    name: P508_ART_CALIDAD
+    type: Text Field
+
+  label: 
+    label: Calidad
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_MEDIDAS =============================
+  id: 48077807974951
+  identification: 
+    name: P508_MEDIDAS
+    type: Text Field
+
+  label: 
+    label: Medidas
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ID ==================================
+  id: 2824269436831694
+  identification: 
+    name: P508_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ARTICULO_ID =========================
+  id: 2827413507831717
+  identification: 
+    name: P508_ARTICULO_ID
+    type: Number Field
+
+  label: 
+    label: Articulo
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: ARTICULO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_CANTIDAD ============================
+  id: 2827799839831717
+  identification: 
+    name: P508_CANTIDAD
+    type: Number Field
+
+  label: 
+    label: Cantidad
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 120
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 2
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: CANTIDAD
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_PRECIO ==============================
+  id: 2828198523831717
+  identification: 
+    name: P508_PRECIO
+    type: Number Field
+
+  label: 
+    label: Precio
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 130
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: 999G999G999G999G990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: PRECIO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_OBS =================================
+  id: 2828578786831717
+  identification: 
+    name: P508_OBS
+    type: Text Field
+
+  label: 
+    label: NOTAS ADMINISTRATIVAS
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 170
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 25
+
+  validation: 
+    value-required: false
+    maximum-length: 30
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_STATUS ==============================
+  id: 2829004977831717
+  identification: 
+    name: P508_STATUS
+    type: Select List
+
+  label: 
+    label: STATUS
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: PEDIDOS.STATUS # 5478212351692154
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ROW_EDIT ============================
+  id: 2829368897831719
+  identification: 
+    name: P508_ROW_EDIT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: ROW_EDIT
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_CLIENTE_ID ==========================
+  id: 38691984052062140
+  identification: 
+    name: P508_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ENTREGADO ===========================
+  id: 43065349832794604
+  identification: 
+    name: P508_ENTREGADO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 80
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: ENTREGADO
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_AUDIT_COL ===========================
+  id: 52161820876665628
+  identification: 
+    name: P508_AUDIT_COL
+    type: Display Only
+
+  label: 
+    label: Audit
+    alignment: Left
+
+  settings: 
+    format: HTML
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 90
+    region: Buttons # 2833985633831724
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: AUDIT_COL
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_ORDEN_COMPRA_ID =====================
+  id: 143993453796071140
+  identification: 
+    name: P508_ORDEN_COMPRA_ID
+    type: SkillBuilders Super LOV (3.0)
+
+  label: 
+    label: Orden de Compra
+    alignment: Left
+
+  settings: 
+    dialog-title: Orden de Compra
+    item-display-&-return-columns: 2,1
+    searchable-columns: 2,3
+    enterable: Enterable - Restrictred to LOV
+    use-value-validation: true
+    max-rows-per-page: 15
+    show-null-values-as: '&nbsp;'
+
+  layout: 
+    sequence: 50
+    region: PEDIDO &P508_ID. # 2823975034831680
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 6
+    label-column-span: 2
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT ID,TITLE ORDEN_COMPRA,FECHA FROM PEDIDOS_OC WHERE CLIENTE_ID = :P508_CLIENTE_ID
+      ORDER BY FECHA DESC
+    display-extra-values: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P508_CLIENTE_ID
+    items-to-submit: 
+    - P508_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: ORDEN_COMPRA_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_CLIENTE =============================
+  id: 144739098229792059
+  identification: 
+    name: P508_CLIENTE
+    type: Text Field
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 30
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P508_IMPRESION ===========================
+  id: 180156612699125659
+  identification: 
+    name: P508_IMPRESION
+    type: Text Field
+
+  label: 
+    label: NOTAS PRODUCCION
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 160
+    region: ARTICULO # 2740274699644754
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: 2
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 25
+    value-placeholder: ...
+
+  validation: 
+    value-required: false
+    maximum-length: 30
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+    column: IMPRESION
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: DESBLOQUEAR =================================
+  id: 453488239447548
+  identification: 
+    button-name: DESBLOQUEAR
+    label: Desbloquear
+
+  layout: 
+    sequence: 20
+    region: Buttons # 2833985633831724
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-warning
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P508_STATUS IN (-2,-1,3)'
+
+- # ====== Button: COMPLETO ====================================
+  id: 453333154447546
+  identification: 
+    button-name: COMPLETO
+    label: COMPLETO
+
+  layout: 
+    sequence: 30
+    region: Buttons # 2833985633831724
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - u-success
+    icon: fa-check
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P508_STATUS IN (1,2) AND :P508_ENTREGADO > 0'
+
+- # ====== Button: SUSPENDER ===================================
+  id: 453191771447545
+  identification: 
+    button-name: SUSPENDER
+    label: Suspender
+
+  layout: 
+    sequence: 60
+    region: Buttons # 2833985633831724
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-warning
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P508_ID IS NOT NULL AND :P508_STATUS IN (1,2)'
+
+- # ====== Button: DELETE ======================================
+  id: 2835971353831738
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 50
+    region: Buttons # 2833985633831724
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Default
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P508_STATUS IN (-1,0,1,2) and nvl(:P508_ENTREGADO,0) = 0'
+
+- # ====== Button: SAVE ========================================
+  id: 2836399626831739
+  identification: 
+    button-name: SAVE
+    label: Guardar
+
+  layout: 
+    sequence: 70
+    region: Buttons # 2833985633831724
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P508_ID
+
+- # ====== Button: CREATE ======================================
+  id: 2836836748831739
+  identification: 
+    button-name: CREATE
+    label: Create
+
+  layout: 
+    sequence: 80
+    region: Buttons # 2833985633831724
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P508_ID
+
+- # ====== Button: TERMINADO ===================================
+  id: 164032821075111350
+  identification: 
+    button-name: TERMINADO
+    label: TERMINADO
+
+  layout: 
+    sequence: 40
+    region: Buttons # 2833985633831724
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    css-classes: 
+    - u-success
+    icon: fa-send
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P508_ID IS NOT NULL AND :P508_STATUS IN (1)'
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+dynamic-actions: 
+- # ====== Dynamic Action: CARGAR ARTICULO =====================
+  id: 47909225974949
+  identification: 
+    name: CARGAR ARTICULO
+
+  execution: 
+    sequence: 30
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P508_ARTICULO_ID
+
+  client-side-condition: 
+    type: Item is not null
+    item: P508_ARTICULO_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 47735598974948
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "S_ARTICULO(:P508_ARTICULO_ID,'CLIENTE')"
+      items-to-submit: 
+      - P508_ARTICULO_ID
+      escape-special-characters: true
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_CLIENTE
+
+    execution: 
+      sequence: 20
+      event: CARGAR ARTICULO # 47909225974949
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 38692389343062144
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "S_ARTICULO(:P508_ARTICULO_ID,'TITLE')"
+      items-to-submit: 
+      - P508_ARTICULO_ID
+      escape-special-characters: true
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_CODIGO
+
+    execution: 
+      sequence: 30
+      event: CARGAR ARTICULO # 47909225974949
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: Set Value ===================================
+    id: 38692472883062145
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "S_ARTICULO(:P508_ARTICULO_ID,'CALIDAD_KEY')"
+      items-to-submit: 
+      - P508_ARTICULO_ID
+      escape-special-characters: true
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_ART_CALIDAD
+
+    execution: 
+      sequence: 40
+      event: CARGAR ARTICULO # 47909225974949
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: Set Value ===================================
+    id: 38692547719062146
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: "S_ARTICULO(:P508_ARTICULO_ID,'MEDIDAS')"
+      items-to-submit: 
+      - P508_ARTICULO_ID
+      escape-special-characters: true
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_MEDIDAS
+
+    execution: 
+      sequence: 50
+      event: CARGAR ARTICULO # 47909225974949
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: New =================================
+  id: 2961040674945869
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  client-side-condition: 
+    type: Item is not null
+    item: P508_ARTICULO_ID
+
+  actions: 
+  - # ====== Action: Set Focus ===================================
+    id: 2961135198945870
+    identification: 
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_CANTIDAD
+
+    execution: 
+      sequence: 10
+      event: New # 2961040674945869
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Set Focus ===================================
+    id: 114046136913554072
+    identification: 
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_ARTICULO_ID
+
+    execution: 
+      sequence: 10
+      event: New # 2961040674945869
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: BORRAR_DATOS ========================
+  id: 38692828753062148
+  identification: 
+    name: BORRAR_DATOS
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P508_ARTICULO_ID
+
+  actions: 
+  - # ====== Action: Clear =======================================
+    id: 38692689065062147
+    identification: 
+      action: Clear
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P508_CLIENTE
+      - P508_CODIGO
+      - P508_ART_CALIDAD
+      - P508_MEDIDAS
+
+    execution: 
+      sequence: 10
+      event: BORRAR_DATOS # 38692828753062148
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: DESBLOQUEAR ================================
+  id: 453338887447547
+  identification: 
+    name: DESBLOQUEAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE PEDIDOS
+      SET STATUS = 1
+      WHERE ID = :P508_ID;
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DESBLOQUEAR # 453488239447548
+
+- # ====== Process: SUSPENDER ==================================
+  id: 453100747447544
+  identification: 
+    name: SUSPENDER
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE PEDIDOS
+      SET STATUS = -1
+      WHERE ID = :P508_ID;
+
+  execution: 
+    sequence: 70
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: SUSPENDER # 453191771447545
+
+- # ====== Process: COMPLETAR ==================================
+  id: 452954863447543
+  identification: 
+    name: COMPLETAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE PEDIDOS
+      SET STATUS = 3
+      WHERE ID = :P508_ID;
+
+  execution: 
+    sequence: 80
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: COMPLETO # 453333154447546
+
+- # ====== Process: LOAD PEDIDOS ===============================
+  id: 2837224841831741
+  identification: 
+    name: LOAD PEDIDOS
+    type: Form - Initialization
+    execution-chain: None
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form PEDIDO_X ======================
+  id: 2837610778831746
+  identification: 
+    name: Process form PEDIDO_X
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: PEDIDO &P508_ID. # 2823975034831680
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Close Dialog ===============================
+  id: 2837984461831746
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 100
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is NOT contained in Value
+    value: DESBLOQUEAR
+
+- # ====== Process: TERMINADO ==================================
+  id: 164032869321111351
+  identification: 
+    name: TERMINADO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE PEDIDOS
+      SET STATUS = 2
+      WHERE ID = :P508_ID;
+
+  execution: 
+    sequence: 90
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: TERMINADO # 164032821075111350
+

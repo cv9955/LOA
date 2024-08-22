@@ -1,0 +1,1965 @@
+---
+# ====== Page: PREPARACION DE FLETE ==========================
+id: 4
+identification: 
+  name: PREPARACION DE FLETE
+  title: PREPARACION DE FLETE
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: FLETE =======================================
+  id: 8567132905767375
+  identification: 
+    name: FLETE
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             FECHA,
+             FLETE_ID,
+             COSTO,peaje,
+             STATUS,
+             OBS
+        from FLT_VIAJES
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-color12-bg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 8570316665767378
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: REMITOS =====================================
+  id: 20739226996932625
+  identification: 
+    name: REMITOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT rm.id
+            ,rm.flt_viaje_ix ix
+            ,cliente_id
+            ,cli_deposito_id
+            ,nro_remito
+            ,obs
+            ,status
+            ,neto
+            ,M2_REMITO(RM.ID) m2
+            ,1               link_remove
+        FROM vta_remitos    rm
+       WHERE rm.flt_viaje_id=:p4_id
+       ORDER BY flt_viaje_ix;
+    page-items-to-submit: 
+    - P4_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--accent1
+    - t-Region--scrollBody
+    css-classes: 
+    - js-detail-region
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P4_ID
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - t-Report--stretch
+      - '#DEFAULT#'
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      - t-Report--inline
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 5000
+
+    messages: 
+      when-no-data-found: No data found.
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: IX ==========================================
+    id: 8742954825431911
+    identification: 
+      column-name: IX
+      type: Hidden
+
+    layout: 
+      sequence: 10
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 8743284540431913
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 8743673120431913
+    identification: 
+      column-name: CLIENTE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cliente
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLIENTES.TITLE # 2084520149913047
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLI_DEPOSITO_ID =============================
+    id: 8744161252431914
+    identification: 
+      column-name: CLI_DEPOSITO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Deposito
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_REMITO ==================================
+    id: 8744957246431916
+    identification: 
+      column-name: NRO_REMITO
+      type: Plain Text
+
+    heading: 
+      heading: Remito
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 8745360954431917
+    identification: 
+      column-name: OBS
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 8745730086431917
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NETO ========================================
+    id: 8746484899431919
+    identification: 
+      column-name: NETO
+      type: Plain Text
+
+    heading: 
+      heading: Neto
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: M2 ==========================================
+    id: 8747323398431919
+    identification: 
+      column-name: M2
+      type: Plain Text
+
+    heading: 
+      heading: M2
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK_REMOVE =================================
+    id: 8752553729860141
+    identification: 
+      column-name: LINK_REMOVE
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Remove</span>
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P4_REMITO_DEL","#ID#")'
+      link-text: <i class="fa fa-trash"></i>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Remitos preparados para despachar ===========
+  id: 47341159508353865
+  identification: 
+    name: Remitos preparados para despachar
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,nro_remito
+            ,cta
+            ,cliente_id
+            ,m2_remito(rm.id) m2
+            ,cli_deposito_id
+            ,1 link_add
+        FROM vta_remitos rm
+           WHERE status IN(1,3,5,8)
+           AND flt_viaje_id IS NULL
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--scrollBody
+    - t-Form--noPadding
+    - margin-top-lg
+    - margin-bottom-none
+    - margin-left-none
+    - margin-right-none
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P4_STATUS
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlightOff
+      - t-Report--horizontalBorders
+      - t-Report--hideNoPagination
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      break-columns: First Column
+      style: Default Break Formatting
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LINK_ADD ====================================
+    id: 8624957243285674
+    identification: 
+      column-name: LINK_ADD
+      type: Link
+
+    heading: 
+      heading: <span class="u-VisuallyHidden">Add</span>
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P4_REMITO_ADD","#ID#")'
+      link-text: <i class="fa fa-plus"></i>
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 8719047113327922
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 8719413245327925
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_REMITO ==================================
+    id: 8719821348327927
+    identification: 
+      column-name: NRO_REMITO
+      type: Link
+
+    heading: 
+      heading: Remito
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.::P502_ID:#ID#'
+        page: 502 # VTA_REMITO
+        values: 
+          p502_id: '#ID#'
+
+      link-text: '#NRO_REMITO#'
+      link-attributes: TARGET="P502"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CLI_DEPOSITO_ID =============================
+    id: 8721370982327930
+    identification: 
+      column-name: CLI_DEPOSITO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Deposito
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CTA =========================================
+    id: 8722172374327933
+    identification: 
+      column-name: CTA
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 8722584487327933
+    identification: 
+      column-name: CLIENTE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cliente
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLIENTES.TITLE # 2084520149913047
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: M2 ==========================================
+    id: 8723058484327933
+    identification: 
+      column-name: M2
+      type: Plain Text
+
+    heading: 
+      heading: M2
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P4_ID ====================================
+  id: 8623724215285662
+  identification: 
+    name: P4_ID
+    type: Display Only
+
+  label: 
+    label: Viaje ID
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_FECHA =================================
+  id: 8623804777285663
+  identification: 
+    name: P4_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_FLETE_ID ==============================
+  id: 8623917464285664
+  identification: 
+    name: P4_FLETE_ID
+    type: Select List
+
+  label: 
+    label: Flete Id
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FLETES.TITLE # 10541852161253522
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: FLETE_ID
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_COSTO =================================
+  id: 8624001075285665
+  identification: 
+    name: P4_COSTO
+    type: Number Field
+
+  label: 
+    label: Costo
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-warning
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: COSTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_STATUS ================================
+  id: 8624099136285666
+  identification: 
+    name: P4_STATUS
+    type: Display Only
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 50
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_OBS ===================================
+  id: 8624213392285667
+  identification: 
+    name: P4_OBS
+    type: Text Field
+
+  label: 
+    label: Observaciones
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 80
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_REMITO_ADD ============================
+  id: 8624973506285675
+  identification: 
+    name: P4_REMITO_ADD
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Remitos preparados para despachar # 47341159508353865
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_REMITO_DEL ============================
+  id: 8752598658860142
+  identification: 
+    name: P4_REMITO_DEL
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: REMITOS # 20739226996932625
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_PEAJE =================================
+  id: 9175516732112667
+  identification: 
+    name: P4_PEAJE
+    type: Number Field
+
+  label: 
+    label: Peaje
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: FLETE # 8567132905767375
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: FLETE # 8567132905767375
+    column: PEAJE
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P4_REMITOS ===============================
+  id: 36858986942413730
+  identification: 
+    name: P4_REMITOS
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: FLETE # 8567132905767375
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: DELETE ======================================
+  id: 8753262387860148
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 30
+    region: Buttons # 8570316665767378
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select 1 from VTA_REMITOS
+      WHERE FLT_VIAJE_ID = :P4_ID
+
+- # ====== Button: SAVE ========================================
+  id: 8753720245860153
+  identification: 
+    button-name: SAVE
+    label: Save
+
+  layout: 
+    sequence: 20
+    region: Buttons # 8570316665767378
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+- # ====== Button: DESPACHAR ===================================
+  id: 8754634956860162
+  identification: 
+    button-name: DESPACHAR
+    label: Despachar
+
+  layout: 
+    sequence: 10
+    region: Buttons # 8570316665767378
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-arrow-circle-right
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P4_REMITOS > 0 AND :P4_STATUS =1'
+
+- # ====== Button: RECIBIDO ====================================
+  id: 8755738232860173
+  identification: 
+    button-name: RECIBIDO
+    label: Recibido OK
+
+  layout: 
+    sequence: 40
+    region: Buttons # 8570316665767378
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P4_STATUS
+    value: 5
+
+- # ====== Button: UNLOCK ======================================
+  id: 28575329208599271
+  identification: 
+    button-name: UNLOCK
+    label: UNLOCK
+
+  layout: 
+    sequence: 50
+    region: Buttons # 8570316665767378
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    icon: fa-unlock
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P4_STATUS
+    value: 5
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 8625088062285676
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P4_REMITO_ADD
+
+  client-side-condition: 
+    type: Item is not null
+    item: P4_REMITO_ADD
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 8625191470285677
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        UPDATE VTA_REMITOS
+        SET flt_viaje_id = :P4_ID,
+        flt_viaje_ix = :P4_REMITOS + 1
+        WHERE ID = :P4_REMITO_ADD;
+      items-to-submit: 
+      - P4_ID
+      - P4_REMITO_ADD
+      - P4_FLETE_ID
+
+    execution: 
+      sequence: 10
+      event: New # 8625088062285676
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 8625335819285678
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Remitos preparados para despachar # 47341159508353865
+
+    execution: 
+      sequence: 70
+      event: New # 8625088062285676
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 8625392036285679
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: REMITOS # 20739226996932625
+
+    execution: 
+      sequence: 60
+      event: New # 8625088062285676
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 8751872360860135
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ':P4_REMITOS + 1'
+      items-to-submit: 
+      - P4_REMITOS
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P4_REMITOS
+
+    execution: 
+      sequence: 20
+      event: New # 8625088062285676
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 8752717581860143
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P4_REMITO_DEL
+
+  client-side-condition: 
+    type: Item is not null
+    item: P4_REMITO_DEL
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 8752825521860144
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DECLARE
+           pIX NUMBER;
+           pID NUMBER;
+        BEGIN
+          SELECT flt_viaje_ix ,flt_viaje_id  into pIX,pID from vta_remitoS
+          where id = :P4_REMITO_DEL ;
+          
+          UPDATE VTA_REMITOS
+          SET flt_viaje_ix = NULL,
+          flt_viaje_id  = NULL,
+          FLETE_ID = NULL
+          WHERE ID = :P4_REMITO_DEL;
+          
+          UPDATE VTA_REMITOS
+          SET flt_viaje_ix  = flt_viaje_ix  - 1
+          WHERE id in (select id from vta_remitos where flt_viaje_id = pid and  flt_viaje_ix  > pix);
+          
+          END;
+      items-to-submit: 
+      - P4_REMITO_DEL
+
+    execution: 
+      sequence: 10
+      event: New_1 # 8752717581860143
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 8752894070860145
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ':P4_REMITOS - 1'
+      items-to-submit: 
+      - P4_REMITOS
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P4_REMITOS
+
+    execution: 
+      sequence: 20
+      event: New_1 # 8752717581860143
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 8753038039860146
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Remitos preparados para despachar # 47341159508353865
+
+    execution: 
+      sequence: 30
+      event: New_1 # 8752717581860143
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 8753087008860147
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: REMITOS # 20739226996932625
+
+    execution: 
+      sequence: 40
+      event: New_1 # 8752717581860143
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_2 ===============================
+  id: 8753295974860149
+  identification: 
+    name: New_2
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: DELETE # 8753262387860148
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 8753457098860150
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        UPDATE VTA_REMITOS
+        SET flt_viaje_id  = NULL,
+        flt_viaje_ix  = NULL,
+        FLETE_ID = NULL
+        WHERE ID IN (SELECT ID FROM VTA_REMITOS WHERE flt_viaje_id  = :P4_ID);
+      items-to-submit: 
+      - P4_ID
+
+    execution: 
+      sequence: 10
+      event: New_2 # 8753295974860149
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Close Dialog ================================
+    id: 8753492971860151
+    identification: 
+      action: Close Dialog
+
+    execution: 
+      sequence: 20
+      event: New_2 # 8753295974860149
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P4_STATUS ==============================
+  id: 8754668433860163
+  identification: 
+    item-name: P4_STATUS
+
+  execution: 
+    sequence: 30
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 5
+
+  server-side-condition: 
+    type: Request = Value
+    value: DESPACHAR
+
+- # ====== Computation: P4_STATUS ==============================
+  id: 8755867758860175
+  identification: 
+    item-name: P4_STATUS
+
+  execution: 
+    sequence: 40
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 10
+
+  server-side-condition: 
+    type: Request = Value
+    value: RECIBIDO
+
+- # ====== Computation: P4_STATUS ==============================
+  id: 28575443312599272
+  identification: 
+    item-name: P4_STATUS
+
+  execution: 
+    sequence: 50
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 1
+
+  server-side-condition: 
+    type: Request = Value
+    value: UNLOCK
+
+- # ====== Computation: P4_REMITOS =============================
+  id: 36859138938413732
+  identification: 
+    item-name: P4_REMITOS
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT COUNT(1) FROM VTA_REMITOS WHERE flt_viaje_id = :P4_ID'
+
+processes: 
+- # ====== Process: Close Dialog ===============================
+  id: 8574343147767383
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    items-to-return-: 
+    - REQUEST
+    show-success-messages: false
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request != Value
+    value: UNLOCK
+
+- # ====== Process: Initialize form REMITO =====================
+  id: 8623666101285661
+  identification: 
+    name: Initialize form REMITO
+    type: Form - Initialization
+    execution-chain: None
+    form-region: FLETE # 8567132905767375
+
+  execution: 
+    sequence: 20
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: SAVE  ======================================
+  id: 8753640217860152
+  identification: 
+    name: 'SAVE '
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: FLETE # 8567132905767375
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: DESPACHAR ==================================
+  id: 8754811996860164
+  identification: 
+    name: DESPACHAR
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE VTA_REMITOS
+      SET STATUS = 5
+      WHERE flt_viaje_id = :P4_ID;
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DESPACHAR # 8754634956860162
+
+- # ====== Process: RECIBIDO ===================================
+  id: 8755823613860174
+  identification: 
+    name: RECIBIDO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      UPDATE VTA_REMITOS
+      SET STATUS = 9
+      WHERE flt_viaje_id = :P4_ID;
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: RECIBIDO # 8755738232860173
+

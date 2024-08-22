@@ -1,0 +1,1135 @@
+---
+# ====== Page: CLIENTES_STOCK ================================
+id: 108
+identification: 
+  name: CLIENTES_STOCK
+  alias: CLIENTES_STOCK
+  title: '&G_CLIENTE_ID. - &G_CLIENTE_TITLE.'
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: |
+    td[headers="LUGAR_ENTREGA"] {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 150px;
+      white-space: nowrap;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: MENU CLIENTE ================================
+  id: 20404371962074000
+  identification: 
+    name: MENU CLIENTE
+    type: List
+
+  source: 
+    list: MENU CLIENTE # 5512870084115675
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero CLIENTE
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    - t-Form--noPadding
+    - margin-right-lg
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: STOCK =======================================
+  id: 113856448308962002
+  identification: 
+    name: STOCK
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: P250_STOCK
+    include-rowid-column: false
+    where-clause: 'cliente_id = :G_CLIENTE_ID'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 114486886143700953
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 114496316163703241
+      identification: 
+        name: Primary Report
+        alias: 535688
+
+    columns: 
+    - # ====== Column: SCODIGO =====================================
+      id: 50121117520336346
+      identification: 
+        column-name: SCODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 50121217587336347
+      identification: 
+        column-name: CLIENTE_ID
+        type: Hidden
+
+      heading: 
+        heading: Cliente Id
+
+      layout: 
+        sequence: 250
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ART_CALIDAD_ID ==============================
+      id: 50121297270336348
+      identification: 
+        column-name: ART_CALIDAD_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+      heading: 
+        heading: Calidad
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 260
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: '<span parent-class="col-calidad #CALIDAD_STYLE#">#ART_CALIDAD_ID#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: PEDIDO ======================================
+      id: 50121370751336349
+      identification: 
+        column-name: PEDIDO
+        type: Plain Text
+
+      heading: 
+        heading: Pedido
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 270
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=stock_pedido>#PEDIDO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: COMBINADO ===================================
+      id: 50121489880336350
+      identification: 
+        column-name: COMBINADO
+        type: Plain Text
+
+      heading: 
+        heading: Combinado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 280
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="stock_plancha">#COMBINADO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CORRUGANDO ==================================
+      id: 50121666025336351
+      identification: 
+        column-name: CORRUGANDO
+        type: Plain Text
+
+      heading: 
+        heading: Corrugando
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 290
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class=stock_plancha>#CORRUGANDO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 50125879353337928
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:RP,:P31_ID:#ID#'
+          page: 31 # ART_Z
+          clear-cache: RP
+          values: 
+            p31_id: '#ID#'
+
+        link-text: '#ID#'
+        link-attributes: target = "ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TERMINADO ===================================
+      id: 50126331202337928
+      identification: 
+        column-name: TERMINADO
+        type: Link
+
+      heading: 
+        heading: Terminado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:212:&SESSION.::&DEBUG.::P212_ID:#ID#'
+          page: 212 # Grid_produccion
+          values: 
+            p212_id: '#ID#'
+
+        link-text: '#TERMINADO#'
+        link-attributes: parent-class="stock_terminado"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: true
+        compute: true
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LARGO =======================================
+      id: 50127094877337930
+      identification: 
+        column-name: LARGO
+        type: Plain Text
+
+      heading: 
+        heading: Largo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#LARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ANCHO =======================================
+      id: 50127480001337930
+      identification: 
+        column-name: ANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Ancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#ANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ALTO ========================================
+      id: 50127871198337930
+      identification: 
+        column-name: ALTO
+        type: Plain Text
+
+      heading: 
+        heading: Alto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#ALTO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLARGO ======================================
+      id: 50128757315337932
+      identification: 
+        column-name: PLARGO
+        type: Plain Text
+
+      heading: 
+        heading: Plargo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha">#PLARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PANCHO ======================================
+      id: 50129161180337932
+      identification: 
+        column-name: PANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Pancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha" title="#TRAZADOS#">#PANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TRAZADOS ====================================
+      id: 50129498453337933
+      identification: 
+        column-name: TRAZADOS
+        type: Plain Text
+
+      heading: 
+        heading: Trazados
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha">#TRAZADOS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIN_CONTAR ==================================
+      id: 50129907885337935
+      identification: 
+        column-name: SIN_CONTAR
+        type: Link
+
+      heading: 
+        heading: Sin Contar
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:241:&SESSION.::&DEBUG.::P241_ID:#SIN_CONTAR_ID#'
+          page: 241 # QUICK_END
+          values: 
+            p241_id: '#SIN_CONTAR_ID#'
+
+        link-text: '#SIN_CONTAR#'
+        link-attributes: parent-class="stock_produccion"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIN_CONTAR_ID ===============================
+      id: 50130334527337936
+      identification: 
+        column-name: SIN_CONTAR_ID
+        type: Hidden
+
+      heading: 
+        heading: Sin Contar Id
+
+      layout: 
+        sequence: 210
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: PLANCHAS ====================================
+      id: 50130681419337939
+      identification: 
+        column-name: PLANCHAS
+        type: Link
+
+      heading: 
+        heading: Planchas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:241:&SESSION.::&DEBUG.:241:P241_PLANCHA_ID,P241_CANT_PL,P241_ARTICULO_ID:#ID#,#PLANCHAS#,#ID#'
+          page: 241 # QUICK_END
+          clear-cache: 241
+          values: 
+            p241_plancha_id: '#ID#'
+            p241_cant_pl: '#PLANCHAS#'
+            p241_articulo_id: '#ID#'
+
+        link-text: '#PLANCHAS#'
+        link-attributes: parent-class="stock_plancha"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: false
+        sort: true
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: true
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRODUCCION ==================================
+      id: 50131147824337939
+      identification: 
+        column-name: PRODUCCION
+        type: Link
+
+      heading: 
+        heading: Produccion
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:241:&SESSION.::&DEBUG.::P241_ID:#PRODUCCION_ID#'
+          page: 241 # QUICK_END
+          values: 
+            p241_id: '#PRODUCCION_ID#'
+
+        link-text: '#PRODUCCION#'
+        link-attributes: parent-class="stock_produccion"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRODUCCION_ID ===============================
+      id: 50131552373337941
+      identification: 
+        column-name: PRODUCCION_ID
+        type: Hidden
+
+      heading: 
+        heading: Produccion Id
+
+      layout: 
+        sequence: 220
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ART_TIPO_ID =================================
+      id: 50132358427337941
+      identification: 
+        column-name: ART_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="col-tipo">#ART_TIPO_ID#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: true
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: CALIDAD_STYLE ===============================
+      id: 50132739699337942
+      identification: 
+        column-name: CALIDAD_STYLE
+        type: Hidden
+
+      heading: 
+        heading: Calidad Style
+
+      layout: 
+        sequence: 230
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 8.5
+        height: 11
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#9bafde'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#efefef'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 50121700063336352
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: STOCK # 113856448308962002
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 50121787572336353
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: New # 50121700063336352
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+

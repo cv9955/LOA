@@ -1,0 +1,1592 @@
+---
+# ====== Page: PRINT_ARTICULO ================================
+id: 160
+identification: 
+  name: PRINT_ARTICULO
+  title: PRINT_ARTICULO
+
+appearance: 
+  page-mode: Normal
+  page-template: CAV_OFABRI
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  file-urls: 
+  - '#APP_FILES#js/canvas#MIN#.js'
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+    
+
+css: 
+  inline: |2
+     @page {    size : A4 PORTRAIT; }
+    
+        
+    @media all {
+        #PALLET {
+            POSITION : FIXED;
+            bottom: 1cm;
+            right: 0cm;
+            border : 2px solid;  
+        }   
+    
+        #P160_IMAGEN { 
+            POSITION : FIXED;
+            bottom: 1cm;
+            left: 0mm;
+            max-width: 19cm;
+            max-height : 13cm;
+        }   
+        
+        #P160_PALLET_IMG {
+            POSITION : FIXED;
+            bottom: 2cm;
+            right: 4.5cm;
+            width : 3cm;
+            border : 2px solid;
+        } 
+    
+        #myplano {
+            margin: 2mm;
+            max-width: 18cm;
+            max-height : 13cm;
+        }
+    
+    }    
+    
+    @media print {
+        #GRILLA {
+            POSITION : FIXED;
+            bottom: 1cm;
+            left : 0cm;
+            border : 2px solid;
+        } 
+        #P160_IMAGEN { top: 11cm; }
+    
+    }
+    
+    @media screen {    
+        #GRILLA { visibility:hidden; }  
+        #P160_IMAGEN { bottom: 1cm; }   
+    }     
+    
+    .grid-container {
+        display: grid;
+        border: 2px solid;   
+        padding : 0px;  
+        margin-bottom : 5px;  
+    }
+    
+    .grid-title {
+        text-align: left;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid;
+        padding : 5px;
+        background-color: lightgray;
+    }
+    
+    .grid-title-center {
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid;
+        background-color: lightgray;
+        padding : 5px;
+    }
+    
+    .grid-item {
+        font-size: 15px;
+        text-align: center;
+        font-weight: bold;   
+        border: 1px solid;
+        padding : 5px;
+        background-color: rgba(234, 238, 12, 0.795);
+    
+    }
+    
+    .grid-valor{
+        text-align: center;
+        font-size : 18px;
+        font-weight: bold;
+        border: 1px solid;
+        padding-top : 6px;  
+    }
+    
+    .grid-param{
+        text-align: center;
+        font-size : 14px;
+        font-weight: bold;
+        border: 1px solid;
+        padding-top : 5px;
+    }
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: MAIN ========================================
+  id: 19191746615112261
+  identification: 
+    name: MAIN
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      BEGIN
+      RETURN ORDEN_SLOTTER_APP2(:P160_ID,'HEADER');
+      END
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+
+- # ====== Region: Planchas ====================================
+  id: 19192179410112265
+  identification: 
+    name: Planchas
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select e.part_id,e.cant,a.codigo , a.largo,a.ancho,a.alto 
+      
+      from art_10V e inner join articulos a on e.part_id = a.id
+      
+      where e.art_id = :P160_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    static-id: REPORT_1
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P160_ART_TIPO_ID
+    value: 10
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      - t-Report--horizontalBorders
+      - t-Report--hideNoPagination
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: PART_ID =====================================
+    id: 21214393612729418
+    identification: 
+      column-name: PART_ID
+      type: Plain Text
+
+    heading: 
+      heading: Part Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CANT ========================================
+    id: 21214494969729419
+    identification: 
+      column-name: CANT
+      type: Plain Text
+
+    heading: 
+      heading: Cant
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 21214616666729420
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LARGO =======================================
+    id: 21214709736729421
+    identification: 
+      column-name: LARGO
+      type: Plain Text
+
+    heading: 
+      heading: Largo
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ANCHO =======================================
+    id: 21214746410729422
+    identification: 
+      column-name: ANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Ancho
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALTO ========================================
+    id: 21214871480729423
+    identification: 
+      column-name: ALTO
+      type: Plain Text
+
+    heading: 
+      heading: Alto
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Plano =======================================
+  id: 19646971786499403
+  identification: 
+    name: Plano
+    type: Static Content
+
+  source: 
+    html-code: '<canvas id="myplano" width="730px" height="350px" style="width:700px;height:350px;"></canvas>'
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: GRILLA ======================================
+  id: 27584203350273239
+  identification: 
+    name: GRILLA
+    type: Static Content
+
+  source: 
+    html-code: |
+      <div id="GRILLA" class="grid-container" style = "border: 2px; grid-template-columns: 3.5cm 2.5cm 2.5cm 2.5cm;grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px;">
+      <div class="grid-title-center">FECHA</div>
+      <div class="grid-title-center">IMPRESION</div>
+      <div class="grid-title-center">PLANCHAS</div>
+      <div class="grid-title-center">FINAL</div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>  
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>   
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor">____/____/____</div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      <div class="grid-valor"></div>
+      </div> 
+      
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: PALLET ======================================
+  id: 27584257256273240
+  identification: 
+    name: PALLET
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      declare vret clob;
+      begin
+      select  
+          '<div id="PALLET" class="grid-container" style = "border: 2px; grid-template-columns: 2cm 2.5cm; grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px;">' ||
+          '<div class="grid-title-center" style="grid-column: 1/3;">'||VSTOW.Detalle||'</div>'||
+          '<div class="grid-title">Pallet</div><div class="grid-param" >'||VSTOW.PALLET_BASE||'</div>'||
+          '<div class="grid-title">Paquete</div><div class="grid-param" >'||VSTOW.Paquete||' u </div>'||
+          '<div class="grid-title">Suncho</div><div class="grid-param" >'||VSTOW.Sunchos||'</div>'|| 
+          '<div class="grid-title">Esquinero</div><div class="grid-param" >'||VSTOW.esquinero||'</div>'||   
+          '<div class="grid-title">Alto</div><div class="grid-param" >'||VSTOW.PALLET_alto||'</div>'||
+          '<div class="grid-title">Vertical</div><div class="grid-param" >'||PALLET_VERT||'</div>' ||    
+          '<div class="grid-title-center" style="grid-column: 1/3;" >TOTAL CAJAS: '||VSTOW.PALLET_TOTAL||'</div></div>' 
+      into vret
+      from art_SLOTTER vstow
+          where id = :P160_ID;
+      
+      return vret;
+      End;
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P160_ART_PALLET_ID
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+
+- # ====== Region: DATOS =======================================
+  id: 27584390713273241
+  identification: 
+    name: DATOS
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_SLOTTER
+    include-rowid-column: false
+
+  layout: 
+    sequence: 1
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: false
+
+- # ====== Region: Imprimir ====================================
+  id: 33135368363704047
+  identification: 
+    name: Imprimir
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      begin
+          return ORDEN_SLOTTER_APP2(:P160_ID,'OF');
+      end;
+
+  layout: 
+    sequence: 10
+    parent-region: MAIN # 19191746615112261
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+
+page-items: 
+- # ====== Page Item: P160_PALLET_IMG ==========================
+  id: 1596578358322153
+  identification: 
+    name: P160_PALLET_IMG
+    type: Display Image
+
+  label: 
+    label: Pallet Img
+    alignment: Left
+
+  settings: 
+    based-on: BLOB Column specified in Item Source
+
+  layout: 
+    sequence: 10
+    region: PALLET # 27584257256273240
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PALLET_IMG
+    data-type: BLOB
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P160_ART_PALLET_ID
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PAQUETE =============================
+  id: 27584722224273244
+  identification: 
+    name: P160_PAQUETE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PAQUETE
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ART_PALLET_ID =======================
+  id: 28598544751072600
+  identification: 
+    name: P160_ART_PALLET_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ART_PALLET_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_DETALLE =============================
+  id: 28598992413072604
+  identification: 
+    name: P160_DETALLE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: DETALLE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ART_TIPO_ID =========================
+  id: 28599884207072613
+  identification: 
+    name: P160_ART_TIPO_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ART_TIPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_IMAGEN ==============================
+  id: 28600000111072614
+  identification: 
+    name: P160_IMAGEN
+    type: Display Image
+
+  label: 
+    label: Imagen
+    alignment: Left
+
+  settings: 
+    based-on: BLOB Column specified in Item Source
+
+  layout: 
+    sequence: 10
+    region: Plano # 19646971786499403
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: IMAGEN
+    data-type: BLOB
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P160_TIENE_IMAGEN
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ID ==================================
+  id: 28600187002072616
+  identification: 
+    name: P160_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_LARGO ===============================
+  id: 28600278416072617
+  identification: 
+    name: P160_LARGO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 80
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: LARGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ANCHO ===============================
+  id: 28600352939072618
+  identification: 
+    name: P160_ANCHO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 90
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ANCHO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ALTO ================================
+  id: 28600519156072619
+  identification: 
+    name: P160_ALTO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 100
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ALTO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PLARGO ==============================
+  id: 28600615975072620
+  identification: 
+    name: P160_PLARGO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 110
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PLARGO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PANCHO ==============================
+  id: 28600700624072621
+  identification: 
+    name: P160_PANCHO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 120
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PANCHO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_TRAZADOS ============================
+  id: 28600820963072622
+  identification: 
+    name: P160_TRAZADOS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 130
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: TRAZADOS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_SLOTTER =============================
+  id: 28600890891072623
+  identification: 
+    name: P160_SLOTTER
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 140
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: SLOTTER
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_MULT_X ==============================
+  id: 28601005248072624
+  identification: 
+    name: P160_MULT_X
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 150
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: MULT_X
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_MULT_Y ==============================
+  id: 28601122458072625
+  identification: 
+    name: P160_MULT_Y
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 160
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: MULT_Y
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_TIENE_IMAGEN ========================
+  id: 28601195154072626
+  identification: 
+    name: P160_TIENE_IMAGEN
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 170
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: TIENE_IMAGEN
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_SUNCHOS =============================
+  id: 28601368737072628
+  identification: 
+    name: P160_SUNCHOS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 180
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: SUNCHOS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_ESQUINERO ===========================
+  id: 28601480917072629
+  identification: 
+    name: P160_ESQUINERO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 190
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: ESQUINERO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PALLET_BASE =========================
+  id: 28601562084072630
+  identification: 
+    name: P160_PALLET_BASE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 200
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PALLET_BASE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PALLET_ALTO =========================
+  id: 28601726728072631
+  identification: 
+    name: P160_PALLET_ALTO
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 210
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PALLET_ALTO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PALLET_TOTAL ========================
+  id: 28601808134072632
+  identification: 
+    name: P160_PALLET_TOTAL
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 220
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PALLET_TOTAL
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P160_PALLET_VERT =========================
+  id: 28601866992072633
+  identification: 
+    name: P160_PALLET_VERT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 230
+    region: DATOS # 27584390713273241
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: DATOS # 27584390713273241
+    column: PALLET_VERT
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 6034269630695481
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: Plano # 19646971786499403
+
+  actions: 
+  - # ====== Action: DIBUJAR CANVAS ==============================
+    id: 6034384795695482
+    identification: 
+      name: DIBUJAR CANVAS
+      action: Execute JavaScript Code
+
+    settings: 
+      code: dibujar_canvas(pCanvas = "myplano",escala = 0);
+
+    affected-elements: 
+      selection-type: Region
+      region: Plano # 19646971786499403
+
+    execution: 
+      sequence: 10
+      event: New # 6034269630695481
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    client-side-condition: 
+      type: Item = Value
+      item: P160_TIENE_IMAGEN
+      value: 0
+
+- # ====== Dynamic Action: print ===============================
+  id: 7986592379198115
+  identification: 
+    name: print
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 7987032447198120
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: window.print();
+
+    affected-elements: 
+      selection-type: Event Source
+
+    execution: 
+      sequence: 10
+      event: print # 7986592379198115
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Initialize form PRINT_ARTICULO =============
+  id: 27584513018273242
+  identification: 
+    name: Initialize form PRINT_ARTICULO
+    type: Form - Initialization
+    execution-chain: None
+    form-region: DATOS # 27584390713273241
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+

@@ -1,0 +1,5746 @@
+---
+# ====== Page: VTA_RECIBO ====================================
+id: 541
+identification: 
+  name: VTA_RECIBO
+  alias: VTA_RECIBO
+  title: RECIBO &P541_NRO_CAB.
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: RETENCIONES =================================
+  id: 546230169725648
+  identification: 
+    name: RETENCIONES
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |2
+        SELECT DOC_TIPO_ID
+          ,CUENTA_IN
+          ,FECHA 
+          ,IMPORTE 
+          ,NUMERO 
+          ,OBS
+                  ,apex_page.get_url( 
+                    p_page => 28, 
+                    p_clear_cache => 28, 
+                    p_items => 'p28_id', 
+                    p_values =>  ID
+                  ) DOC_LINK
+        FROM DOC_RETEN
+       WHERE VTA_RECIBO_ID = :P541_ID
+      
+      
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_CTA
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DOC_TIPO_ID =================================
+    id: 546751975725653
+    identification: 
+      column-name: DOC_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 120
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 547035128725656
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 150
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 547250088725658
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUMERO ======================================
+    id: 547421370725660
+    identification: 
+      column-name: NUMERO
+      type: Plain Text
+
+    heading: 
+      heading: Numero
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 80
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_IN ===================================
+    id: 48528639229184531
+    identification: 
+      column-name: CUENTA_IN
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cuenta
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CUENTA.TITLE # 12690372091894103
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48528744913184532
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 48528834644184533
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: CTA1 ========================================
+  id: 12010276468227164
+  identification: 
+    name: CTA1
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_CTA
+    value: 1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CTA2 ========================================
+  id: 12010457568227165
+  identification: 
+    name: CTA2
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_CTA
+    value: 2
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: CHEQUES FISICOS =============================
+  id: 12235546472519569
+  identification: 
+    name: CHEQUES FISICOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          doc_tipo_id
+        , vencimiento
+        , importe
+        , numero
+        , BANCO_ID
+        , key
+         ,apex_page.get_url( 
+            p_page => 25, 
+            p_clear_cache => 25, 
+            p_items => 'p25_id', 
+            p_values =>  ID
+          ) DOC_LINK 
+         , OBS
+        FROM
+          doc_cheques
+       WHERE
+          vta_recibo_id = :p541_id
+          AND DOC_TIPO_ID = 11
+      
+      
+    page-items-to-submit: 
+    - P541_ID
+
+  layout: 
+    sequence: 60
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      report-sum-label: subtotal
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DOC_TIPO_ID =================================
+    id: 12236108289519575
+    identification: 
+      column-name: DOC_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 80
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: KEY =========================================
+    id: 12236206369519576
+    identification: 
+      column-name: KEY
+      type: Plain Text
+
+    heading: 
+      heading: Key
+      alignment: center
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 12236466676519578
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 200
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUMERO ======================================
+    id: 12236792919519582
+    identification: 
+      column-name: NUMERO
+      type: Plain Text
+
+    heading: 
+      heading: Numero
+      alignment: center
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48677143423376945
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 48677240684376946
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VENCIMIENTO =================================
+    id: 48677406067376947
+    identification: 
+      column-name: VENCIMIENTO
+      type: Plain Text
+
+    heading: 
+      heading: Venc
+      alignment: start
+
+    layout: 
+      sequence: 60
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BANCO_ID ====================================
+    id: 48848737731511401
+    identification: 
+      column-name: BANCO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Banco
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_BANCOS # 10917609778647614
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: RECIBO_X ====================================
+  id: 15964116053332395
+  identification: 
+    name: RECIBO_X
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             CTA,
+             CAB_TIPO_ID,
+             PUNTO_VENTA,
+             NRO_CAB,
+             FECHA,
+             CLIENTE_ID,
+             CLI_DFISCAL_ID,
+             CLI_CUENTA_ID,
+             OBS,
+             TOTAL,
+             STATUS,
+             saldo,
+             CASE WHEN STATUS = 1 THEN 'UD'  WHEN STATUS = 2 THEN 'U'
+             ELSE 'LOCK' END ROW_EDIT
+        from VTA_RECIBOS
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 2
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      - Delete Row
+      allowed-row-operations-column: ROW_EDIT
+      lost-update-type: Row Values
+
+    edit-authorization: 
+      update: ACCESS CONTROL - VICTORIA # 285793758003850
+      delete: ACCESS CONTROL - VICTORIA # 285793758003850
+
+- # ====== Region: CAJA ========================================
+  id: 29035973911249500
+  identification: 
+    name: CAJA
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |2
+       SELECT DOC_TIPO_ID 
+               ,FECHA 
+               ,IMPORTE 
+               ,CUENTA_IN
+               ,OBS 
+               ,apex_page.get_url( 
+                    p_page => 26, 
+                    p_clear_cache => 26, 
+                    p_items => 'p26_id', 
+                    p_values =>  ID
+                  ) DOC_LINK 
+        FROM DOC_CAJAS
+       WHERE VTA_RECIBO_ID = :P541_ID
+      
+    page-items-to-submit: 
+    - P541_ID
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      report-sum-label: subtotal
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DOC_TIPO_ID =================================
+    id: 264325039254076
+    identification: 
+      column-name: DOC_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 200
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 544941767725635
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 150
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 545755564725643
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 100
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CUENTA_IN ===================================
+    id: 12305921563189834
+    identification: 
+      column-name: CUENTA_IN
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cuenta
+      alignment: center
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CUENTA.TITLE # 12690372091894103
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 48528516722184529
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48528543941184530
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: FACTURAS APLICADAS ==========================
+  id: 29051658408282523
+  identification: 
+    name: FACTURAS APLICADAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,importe
+            ,vta_factura_id
+            ,fecha
+            ,nro_cab
+            ,cab_tipo_id
+            ,total total_factura
+            ,total - importe deuda
+            ,CASE
+                  WHEN(
+                      SELECT status
+                        FROM vta_recibos
+                       WHERE id=vta_recibo_id
+                  )=1 THEN '<a href=javascript:$s("P541_CBTE_DELETE","'||id||'") class="fa fa-trash" ></a>'
+                  ELSE '<i class="fa fa-check"></i>'
+              END   link
+        FROM vta_facturas_rec
+       WHERE vta_recibo_id=:p541_id
+
+  layout: 
+    sequence: 30
+    parent-region: CTA1 # 12010276468227164
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hiddenOverflow
+    css-classes: 
+    - CTA-1
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: IMPORTE =====================================
+    id: 263760472254070
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 263789573254071
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_CAB =====================================
+    id: 263895637254072
+    identification: 
+      column-name: NRO_CAB
+      type: Plain Text
+
+    heading: 
+      heading: Nro
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CAB_TIPO_ID =================================
+    id: 264000273254073
+    identification: 
+      column-name: CAB_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cbte
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CAB_TIPO.KEY # 19276984906001829
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 12010193391227163
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ID ==========================================
+    id: 15862895157676858
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VTA_FACTURA_ID ==============================
+    id: 15863116110676860
+    identification: 
+      column-name: VTA_FACTURA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TOTAL_FACTURA ===============================
+    id: 16423486567650282
+    identification: 
+      column-name: TOTAL_FACTURA
+      type: Plain Text
+
+    heading: 
+      heading: Total Factura
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEUDA =======================================
+    id: 43975616623140534
+    identification: 
+      column-name: DEUDA
+      type: Plain Text
+
+    heading: 
+      heading: Deuda
+      alignment: end
+
+    layout: 
+      sequence: 18
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: ENTREGAS APLICADAS ==========================
+  id: 29126176755713432
+  identification: 
+    name: ENTREGAS APLICADAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,importe
+            ,vta_remito_id
+            ,fecha
+            ,nro_remito
+            ,neto
+            ,CASE
+                  WHEN (select status from vta_recibos where id = vta_recibo_id) = 1  
+                  THEN '<a href=javascript:$s("P541_REMITO_DELETE","'||id||'") class="fa fa-trash" ></a>'
+                  ELSE '<i class="fa fa-check"></i>'
+              END          AS link
+        FROM vta_remitos_rec
+       WHERE vta_recibo_id=:p541_id
+    page-items-to-submit: 
+    - P541_ID
+    - P541_STATUS
+
+  layout: 
+    sequence: 30
+    parent-region: CTA2 # 12010457568227165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-2
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: LINK ========================================
+    id: 12306257573189837
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ID ==========================================
+    id: 15863500569676864
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 15863626197676865
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 16027084394498117
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_REMITO ==================================
+    id: 16027194658498118
+    identification: 
+      column-name: NRO_REMITO
+      type: Plain Text
+
+    heading: 
+      heading: Nro
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NETO ========================================
+    id: 16027244151498119
+    identification: 
+      column-name: NETO
+      type: Plain Text
+
+    heading: 
+      heading: Neto
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VTA_REMITO_ID ===============================
+    id: 16421547423650262
+    identification: 
+      column-name: VTA_REMITO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 2
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: ENTREGAS SIN APLICAR ========================
+  id: 43331000600566207
+  identification: 
+    name: ENTREGAS SIN APLICAR
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,title_remito (id) cbte
+            ,neto
+            ,nro_remito
+            ,signo*neto-nvl(apply2,0) saldo
+            ,'<a href=javascript:$s("P541_REMITO_APPLY","'|| ID || '") class="fa fa-check" ></a>' link
+        FROM vta_remitos
+       WHERE cli_cuenta_id=:P541_CLI_CUENTA_ID 
+       AND signo*neto !=nvl(apply2,0)
+    page-items-to-submit: 
+    - P541_CLI_CUENTA_ID
+
+  layout: 
+    sequence: 80
+    parent-region: CTA2 # 12010457568227165
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent13
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 43331217747566209
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    messages: 
+      when-no-data-found: No hay remitos pendientes
+
+    search-bar: 
+      include-search-bar: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 43359411610298309
+      identification: 
+        name: Primary Report
+        alias: 157799
+
+    columns: 
+    - # ====== Column: CBTE ========================================
+      id: 12341433160450561
+      identification: 
+        column-name: CBTE
+        type: Plain Text
+
+      heading: 
+        heading: Cbte
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NETO ========================================
+      id: 12341773809450564
+      identification: 
+        column-name: NETO
+        type: Plain Text
+
+      heading: 
+        heading: Neto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: NRO_REMITO ==================================
+      id: 12342190070450564
+      identification: 
+        column-name: NRO_REMITO
+        type: Plain Text
+
+      heading: 
+        heading: Nro Remito
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ID ==========================================
+      id: 12342592994450564
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: FECHA =======================================
+      id: 12343011198450564
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SALDO =======================================
+      id: 12343446775450566
+      identification: 
+        column-name: SALDO
+        type: Plain Text
+
+      heading: 
+        heading: Saldo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LINK ========================================
+      id: 12343836694450566
+      identification: 
+        column-name: LINK
+        type: Plain Text
+
+      heading: 
+        heading: Link
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+- # ====== Region: ASIENTO CONTABLE ============================
+  id: 43973141414140510
+  identification: 
+    name: ASIENTO CONTABLE
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select cuenta_id, debe,haber,S_CUENTA(CUENTA_ID,'CTA_NUM') || ' - ' || S_CUENTA(CUENTA_ID)  title
+      from (
+      SELECT 
+            cuenta_id
+            ,sum(debe) debe
+            ,sum(haber) haber
+        FROM pc_recibos
+        WHERE CAB_ID = :P541_ID
+        group by cuenta_id)
+      
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CUENTA_ID ===================================
+    id: 43974116128140519
+    identification: 
+      column-name: CUENTA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 90
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DEBE ========================================
+    id: 43974143336140520
+    identification: 
+      column-name: DEBE
+      type: Plain Text
+
+    heading: 
+      heading: Debe
+      alignment: end
+
+    layout: 
+      sequence: 110
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: HABER =======================================
+    id: 43974288458140521
+    identification: 
+      column-name: HABER
+      type: Plain Text
+
+    heading: 
+      heading: Haber
+      alignment: end
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 43975515980140533
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: CHEQUES ELECTRONICOS ========================
+  id: 48675897723376932
+  identification: 
+    name: CHEQUES ELECTRONICOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          doc_tipo_id
+        , vencimiento
+        , importe
+        , numero
+        , BANCO_ID
+        , key
+         ,apex_page.get_url( 
+            p_page => 25, 
+            p_clear_cache => 25, 
+            p_items => 'p25_id', 
+            p_values =>  ID
+          ) DOC_LINK 
+         , OBS
+        FROM
+          doc_cheques
+       WHERE
+          vta_recibo_id = :p541_id
+          AND DOC_TIPO_ID = 13
+      
+      
+    page-items-to-submit: 
+    - P541_ID
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P541_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: false
+
+    break-formatting: 
+      report-sum-label: subtotal
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DOC_TIPO_ID =================================
+    id: 48676128275376934
+    identification: 
+      column-name: DOC_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: DOC_TIPOS.TITLE # 10892351144594729
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      cell-width: 80
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: KEY =========================================
+    id: 48676227965376935
+    identification: 
+      column-name: KEY
+      type: Plain Text
+
+    heading: 
+      heading: Key
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NUMERO ======================================
+    id: 48676385002376937
+    identification: 
+      column-name: NUMERO
+      type: Plain Text
+
+    heading: 
+      heading: Numero
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: IMPORTE =====================================
+    id: 48676589156376939
+    identification: 
+      column-name: IMPORTE
+      type: Plain Text
+
+    heading: 
+      heading: Importe
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      cell-width: 200
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: VENCIMIENTO =================================
+    id: 48677516547376948
+    identification: 
+      column-name: VENCIMIENTO
+      type: Plain Text
+
+    heading: 
+      heading: Venc
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DOC_LINK ====================================
+    id: 48848620015511399
+    identification: 
+      column-name: DOC_LINK
+      type: Link
+
+    heading: 
+      alignment: start
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: '#DOC_LINK#'
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 48848689599511400
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BANCO_ID ====================================
+    id: 48848887340511402
+    identification: 
+      column-name: BANCO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Banco
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_BANCOS # 10917609778647614
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: COMPROBANTES SIN APLICAR ====================
+  id: 79033985379120008
+  identification: 
+    name: COMPROBANTES SIN APLICAR
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,S_FACTURA(ID) cbte
+            ,signo * total total
+            ,signo * total-nvl(pagado,0) saldo
+            ,'<a href=javascript:$s("P541_CBTE_APPLY","'||id||'") class="fa fa-check" ></a>' link
+        FROM vta_facturas
+       WHERE CLI_DFISCAL_ID = :P541_CLI_DFISCAL_ID
+        AND signo * total !=nvl(pagado,0)
+    page-items-to-submit: 
+    - P541_CLI_DFISCAL_ID
+    - P541_SALDO
+
+  layout: 
+    sequence: 40
+    parent-region: CTA1 # 12010276468227164
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--accent5
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--verticalBorders
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    messages: 
+      when-no-data-found: No hay comprobantes pendientes
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 12054290230654294
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 12054718722654296
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CBTE ========================================
+    id: 12055128823654296
+    identification: 
+      column-name: CBTE
+      type: Plain Text
+
+    heading: 
+      heading: Cbte
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALDO =======================================
+    id: 12055894808654297
+    identification: 
+      column-name: SALDO
+      type: Plain Text
+
+    heading: 
+      heading: Saldo
+      alignment: center
+
+    layout: 
+      sequence: 23
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LINK ========================================
+    id: 12056335010654297
+    identification: 
+      column-name: LINK
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 33
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: TOTAL =======================================
+    id: 38689451391062115
+    identification: 
+      column-name: TOTAL
+      type: Plain Text
+
+    heading: 
+      heading: Total
+      alignment: end
+
+    layout: 
+      sequence: 13
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: RECIBO DE VENTAS ============================
+  id: 98516100525540227
+  identification: 
+    name: RECIBO DE VENTAS
+    type: List
+
+  source: 
+    list: MENU_VENTAS # 15192935647770055
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P541_COPY_CHEQUES ========================
+  id: 126341110159417
+  identification: 
+    name: P541_COPY_CHEQUES
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 90
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_STATUS ==============================
+  id: 263531922254068
+  identification: 
+    name: P541_STATUS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 160
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_ROW_EDIT ============================
+  id: 263610053254069
+  identification: 
+    name: P541_ROW_EDIT
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: ROW_EDIT
+    data-type: VARCHAR2
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_SALDO ===============================
+  id: 11360716807480176
+  identification: 
+    name: P541_SALDO
+    type: Number Field
+
+  label: 
+    label: Saldo
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 150
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: SALDO
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CBTE_APPLY ==========================
+  id: 12060134172661841
+  identification: 
+    name: P541_CBTE_APPLY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: COMPROBANTES SIN APLICAR # 79033985379120008
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CBTE_DELETE =========================
+  id: 12060545815661878
+  identification: 
+    name: P541_CBTE_DELETE
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: FACTURAS APLICADAS # 29051658408282523
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_REMITO_APPLY ========================
+  id: 12344714850456269
+  identification: 
+    name: P541_REMITO_APPLY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: ENTREGAS SIN APLICAR # 43331000600566207
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  server-side-condition: 
+    type: Item is NOT zero
+    item: P541_SALDO
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_REMITO_DELETE =======================
+  id: 12345021985458853
+  identification: 
+    name: P541_REMITO_DELETE
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 260
+    region: ENTREGAS APLICADAS # 29126176755713432
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_ID ==================================
+  id: 15964414220332398
+  identification: 
+    name: P541_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_FECHA ===============================
+  id: 15964788123332409
+  identification: 
+    name: P541_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 70
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_PUNTO_VENTA =========================
+  id: 15965173031332417
+  identification: 
+    name: P541_PUNTO_VENTA
+    type: Number Field
+
+  label: 
+    label: Pto Venta
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: PUNTO_VENTA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P541_CTA'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_NRO_CAB =============================
+  id: 15965569231332417
+  identification: 
+    name: P541_NRO_CAB
+    type: Number Field
+
+  label: 
+    label: Nro Cab
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: NRO_CAB
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CLIENTE_ID ==========================
+  id: 15965970735332419
+  identification: 
+    name: P541_CLIENTE_ID
+    type: Select List
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 2084520149913047
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CLI_DFISCAL_ID ======================
+  id: 15966427077332419
+  identification: 
+    name: P541_CLI_DFISCAL_ID
+    type: Select List
+
+  label: 
+    label: Razon Social
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,ID FROM CLI_DFISCAL WHERE CLIENTE_ID = :P541_CLIENTE_ID
+      AND STATUS = 1
+    display-extra-values: true
+    display-null-value: true
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P541_CLIENTE_ID
+    items-to-submit: 
+    - P541_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: CLI_DFISCAL_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_CTA
+    value: 1
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_OBS =================================
+  id: 15966791173332419
+  identification: 
+    name: P541_OBS
+    type: Text Field
+
+  label: 
+    label: Obs
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 120
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+
+  validation: 
+    value-required: false
+    maximum-length: 400
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CAB_TIPO_ID =========================
+  id: 15970021481332423
+  identification: 
+    name: P541_CAB_TIPO_ID
+    type: Select List
+
+  label: 
+    label: CBTE
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 40
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CAB_TIPO.TITLE # 13778764956984108
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: CAB_TIPO_ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CTA =================================
+  id: 15970368686332425
+  identification: 
+    name: P541_CTA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: CTA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_TOTAL ===============================
+  id: 15970758763332425
+  identification: 
+    name: P541_TOTAL
+    type: Number Field
+
+  label: 
+    label: Total
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 140
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    format-mask: 999G999G999G999G990D00
+    width: 32
+    value-placeholder: 0.00
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-warning
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: TOTAL
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_CLI_CUENTA_ID =======================
+  id: 15972820634332431
+  identification: 
+    name: P541_CLI_CUENTA_ID
+    type: Select List
+
+  label: 
+    label: Cuenta
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 110
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT TITLE,ID FROM CLI_CUENTAS
+      WHERE CLIENTE_ID = :P541_CLIENTE_ID
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P541_CLIENTE_ID
+    items-to-submit: 
+    - P541_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: RECIBO_X # 15964116053332395
+    column: CLI_CUENTA_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_CTA
+    value: 2
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_COPY_ECHEQS =========================
+  id: 48676817248376941
+  identification: 
+    name: P541_COPY_ECHEQS
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 100
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P541_FECHA_PMPE ==========================
+  id: 66341745453824625
+  identification: 
+    name: P541_FECHA_PMPE
+    type: Display Only
+
+  label: 
+    label: Fecha Pmpe
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 80
+    region: RECIBO_X # 15964116053332395
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: RETEN =======================================
+  id: 546527699725651
+  identification: 
+    button-name: RETEN
+    label: Retencion
+
+  layout: 
+    sequence: 10
+    region: RETENCIONES # 546230169725648
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:RP,28:P28_VTA_RECIBO_ID:&P541_ID.'
+      page: 28 # DOC_RETEN
+      clear-cache: RP,28
+      values: 
+        p28_vta_recibo_id: '&P541_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+- # ====== Button: CAJA ========================================
+  id: 547648854725662
+  identification: 
+    button-name: CAJA
+    label: CAJA
+
+  layout: 
+    sequence: 40
+    region: CAJA # 29035973911249500
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.:RP,26:P26_VTA_RECIBO_ID,P26_CTA:&P541_ID.,&P541_CTA.'
+      page: 26 # DOC_CAJAS
+      clear-cache: RP,26
+      values: 
+        p26_vta_recibo_id: '&P541_ID.'
+        p26_cta: '&P541_CTA.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+- # ====== Button: LOCK ========================================
+  id: 1049512437565849
+  identification: 
+    button-name: LOCK
+    label: Lock
+
+  layout: 
+    sequence: 10
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-success
+    icon: fa-unlock
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item != Value
+    item: P541_STATUS
+    value: 2
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - VICTORIA # 285793758003850
+
+- # ====== Button: UNLOCK ======================================
+  id: 1049653848565850
+  identification: 
+    button-name: UNLOCK
+    label: unlock
+
+  layout: 
+    sequence: 20
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    icon: fa-lock
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 2
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - VICTORIA # 285793758003850
+
+- # ====== Button: eCHEQUE =====================================
+  id: 6030982828695448
+  identification: 
+    button-name: eCHEQUE
+    label: eCHEQUE
+
+  layout: 
+    sequence: 30
+    region: CHEQUES ELECTRONICOS # 48675897723376932
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:RP,25:P25_VTA_RECIBO_ID,P25_DOC_TIPO_ID:&P541_ID.,13'
+      page: 25 # DOC_CHEQUES
+      clear-cache: RP,25
+      values: 
+        p25_vta_recibo_id: '&P541_ID.'
+        p25_doc_tipo_id: 13
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+- # ====== Button: CANCEL ======================================
+  id: 15979806782332441
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 40
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    icon: fa-times-square-o
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:540:&SESSION.::&DEBUG.:::'
+      page: 540 # LISTA RECIBOS
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+- # ====== Button: DELETE ======================================
+  id: 15980572304332450
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 50
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Default
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: 'SELECT 1 FROM T_DOCS WHERE VTA_RECIBO_ID = :P541_ID'
+
+- # ====== Button: PRINT =======================================
+  id: 16000166332466403
+  identification: 
+    button-name: PRINT
+    label: Print
+
+  layout: 
+    sequence: 80
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-print
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+- # ====== Button: Imprimir_copia ==============================
+  id: 16000608180466406
+  identification: 
+    button-name: Imprimir_copia
+    label: Copia
+
+  layout: 
+    sequence: 90
+    region: RECIBO DE VENTAS # 98516100525540227
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-file-pdf-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 2
+
+- # ====== Button: CHEQUE ======================================
+  id: 16000978487466408
+  identification: 
+    button-name: CHEQUE
+    label: CHEQUE
+
+  layout: 
+    sequence: 20
+    region: CHEQUES FISICOS # 12235546472519569
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:RP,25:P25_VTA_RECIBO_ID,P25_DOC_TIPO_ID:&P541_ID.,11'
+      page: 25 # DOC_CHEQUES
+      clear-cache: RP,25
+      values: 
+        p25_vta_recibo_id: '&P541_ID.'
+        p25_doc_tipo_id: 11
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 1
+
+- # ====== Button: COPY_CHEQUES ================================
+  id: 16001760486466409
+  identification: 
+    button-name: COPY_CHEQUES
+    label: Copy
+
+  layout: 
+    sequence: 70
+    region: CHEQUES FISICOS # 12235546472519569
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    icon: fa-copy
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 2
+
+- # ====== Button: COPY_ECHEQS =================================
+  id: 48676672624376940
+  identification: 
+    button-name: COPY_ECHEQS
+    label: Copy
+
+  layout: 
+    sequence: 80
+    region: CHEQUES ELECTRONICOS # 48675897723376932
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    icon: fa-copy
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+  server-side-condition: 
+    type: Item = Value
+    item: P541_STATUS
+    value: 2
+
+- # ====== Button: REDONDEO ====================================
+  id: 158373037733818273
+  identification: 
+    button-name: REDONDEO
+    label: Redondeo
+
+  layout: 
+    sequence: 50
+    region: CAJA # 29035973911249500
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-unlink
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P541_SALDO !=0 AND  ABS(:P541_SALDO) < 100 and :P541_status =1'
+
+dynamic-actions: 
+- # ====== Dynamic Action: BUTTON CHEQUE =======================
+  id: 261733586254050
+  identification: 
+    name: BUTTON CHEQUE
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: CHEQUE # 16000978487466408
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 547840064725664
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CHEQUES FISICOS # 12235546472519569
+
+    execution: 
+      sequence: 20
+      event: BUTTON CHEQUE # 261733586254050
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 158372903696818272
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: BUTTON CHEQUE # 261733586254050
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: COPY CHEQUES ========================
+  id: 262749539254060
+  identification: 
+    name: COPY CHEQUES
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: COPY_CHEQUES # 16001760486466409
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 263024131254063
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_COPY_CHEQUES
+
+    execution: 
+      sequence: 20
+      event: COPY CHEQUES # 262749539254060
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BUTTON CAJA =========================
+  id: 547681211725663
+  identification: 
+    name: BUTTON CAJA
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: CAJA # 547648854725662
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 547883958725665
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CAJA # 29035973911249500
+
+    execution: 
+      sequence: 30
+      event: BUTTON CAJA # 547681211725663
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 1049305203565847
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: BUTTON CAJA # 547681211725663
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: BUTTON ECHEQUE ======================
+  id: 6130689860342261
+  identification: 
+    name: BUTTON ECHEQUE
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: eCHEQUE # 6030982828695448
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 6130849017342262
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CHEQUES FISICOS # 12235546472519569
+
+    execution: 
+      sequence: 20
+      event: BUTTON ECHEQUE # 6130689860342261
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 6130951279342263
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: BUTTON ECHEQUE # 6130689860342261
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: CAJA ================================
+  id: 6130983653342264
+  identification: 
+    name: CAJA
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: CAJA # 29035973911249500
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 6131215809342266
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CAJA # 29035973911249500
+
+    execution: 
+      sequence: 20
+      event: CAJA # 6130983653342264
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 6131276438342267
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: CAJA # 6130983653342264
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: BUTTON RETEN ========================
+  id: 12010522308227166
+  identification: 
+    name: BUTTON RETEN
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: RETEN # 546527699725651
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 12010662019227167
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: RETENCIONES # 546230169725648
+
+    execution: 
+      sequence: 20
+      event: BUTTON RETEN # 12010522308227166
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 12010720158227168
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: BUTTON RETEN # 12010522308227166
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: CBTE_APPLY ==========================
+  id: 12067528527706355
+  identification: 
+    name: CBTE_APPLY
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P541_CBTE_APPLY
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 12067890936706363
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: COMPROBANTES SIN APLICAR # 79033985379120008
+
+    execution: 
+      sequence: 40
+      event: CBTE_APPLY # 12067528527706355
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 12068394881706366
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: FACTURAS APLICADAS # 29051658408282523
+
+    execution: 
+      sequence: 30
+      event: CBTE_APPLY # 12067528527706355
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12068926544706367
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        INSERT INTO t_vta_applys(VTA_RECIBO_ID,VTA_FACTURA_ID)
+        VALUES (:P541_ID ,:P541_CBTE_APPLY);
+        
+        
+      items-to-submit: 
+      - P541_CBTE_APPLY
+      - P541_ID
+      items-to-return: 
+      - P541_SALDO
+      suppress-change-event: true
+
+    execution: 
+      sequence: 10
+      event: CBTE_APPLY # 12067528527706355
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 16585789734496334
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT saldo FROM VTA_RECIBOS WHERE ID = :P541_ID'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_SALDO
+
+    execution: 
+      sequence: 20
+      event: CBTE_APPLY # 12067528527706355
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: CBTE_DELETE =========================
+  id: 12069316619709419
+  identification: 
+    name: CBTE_DELETE
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P541_CBTE_DELETE
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 12069682607709419
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: FACTURAS APLICADAS # 29051658408282523
+
+    execution: 
+      sequence: 50
+      event: CBTE_DELETE # 12069316619709419
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 12070681266709421
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: COMPROBANTES SIN APLICAR # 79033985379120008
+
+    execution: 
+      sequence: 60
+      event: CBTE_DELETE # 12069316619709419
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12071228752709421
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DELETE t_vta_applys WHERE ID = :P541_CBTE_DELETE;
+        
+        
+      items-to-submit: 
+      - P541_CBTE_DELETE
+      items-to-return: 
+      - P541_SALDO
+      suppress-change-event: true
+
+    execution: 
+      sequence: 30
+      event: CBTE_DELETE # 12069316619709419
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 16585708772496333
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT saldo FROM VTA_RECIBOS WHERE ID = :P541_ID'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_SALDO
+
+    execution: 
+      sequence: 40
+      event: CBTE_DELETE # 12069316619709419
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: true
+
+- # ====== Dynamic Action: REMITO_DELETE =======================
+  id: 12306307927189838
+  identification: 
+    name: REMITO_DELETE
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P541_REMITO_DELETE
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 12306424335189839
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ENTREGAS APLICADAS # 29126176755713432
+
+    execution: 
+      sequence: 30
+      event: REMITO_DELETE # 12306307927189838
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 12306538609189840
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ENTREGAS SIN APLICAR # 43331000600566207
+
+    execution: 
+      sequence: 40
+      event: REMITO_DELETE # 12306307927189838
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12306645140189841
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DELETE t_vta_applys WHERE ID = :P541_REMITO_DELETE;
+        
+        
+      items-to-submit: 
+      - P541_REMITO_DELETE
+
+    execution: 
+      sequence: 10
+      event: REMITO_DELETE # 12306307927189838
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 16423293637650280
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT saldo FROM VTA_RECIBOS WHERE ID = :P541_ID'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_SALDO
+
+    execution: 
+      sequence: 20
+      event: REMITO_DELETE # 12306307927189838
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: true
+
+- # ====== Dynamic Action: REMITO_APPLY ========================
+  id: 12306704904189842
+  identification: 
+    name: REMITO_APPLY
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P541_REMITO_APPLY
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 12306810560189843
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ENTREGAS APLICADAS # 29126176755713432
+
+    execution: 
+      sequence: 30
+      event: REMITO_APPLY # 12306704904189842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 12306892090189844
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ENTREGAS SIN APLICAR # 43331000600566207
+
+    execution: 
+      sequence: 40
+      event: REMITO_APPLY # 12306704904189842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 12306998420189845
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        INSERT INTO t_vta_applys
+        (VTA_RECIBO_ID,VTA_REMITO_ID)
+        VALUES (:P541_ID ,:P541_REMITO_APPLY);
+        
+        
+      items-to-submit: 
+      - P541_ID
+      - P541_REMITO_APPLY
+
+    execution: 
+      sequence: 10
+      event: REMITO_APPLY # 12306704904189842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Set Value ===================================
+    id: 16423457322650281
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT saldo FROM VTA_RECIBOS WHERE ID = :P541_ID'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_SALDO
+
+    execution: 
+      sequence: 20
+      event: REMITO_APPLY # 12306704904189842
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: New =================================
+  id: 48675445195376928
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 130
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: CHEQUES FISICOS # 12235546472519569
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 48675562091376929
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CHEQUES FISICOS # 12235546472519569
+
+    execution: 
+      sequence: 20
+      event: New # 48675445195376928
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 48675665697376930
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT T_RECIBO(:P541_ID) FROM DUAL'
+      items-to-submit: 
+      - P541_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_TOTAL
+
+    execution: 
+      sequence: 10
+      event: New # 48675445195376928
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: COPY E_CHEQUES ======================
+  id: 48676947037376943
+  identification: 
+    name: COPY E_CHEQUES
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: COPY_ECHEQS # 48676672624376940
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 48677103690376944
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P541_COPY_ECHEQS
+
+    execution: 
+      sequence: 10
+      event: COPY E_CHEQUES # 48676947037376943
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P541_COPY_CHEQUES ======================
+  id: 126494810159418
+  identification: 
+    item-name: P541_COPY_CHEQUES
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'COPY_CHEQUES(:P541_ID,11)'
+
+- # ====== Computation: P541_NRO_CAB ===========================
+  id: 262087540254054
+  identification: 
+    item-name: P541_NRO_CAB
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT MAX(NRO_CAB) + 1 FROM VTA_RECIBOS WHERE CAB_TIPO_ID = :P541_CAB_TIPO_ID AND PUNTO_VENTA = :P541_PUNTO_VENTA'
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P541_NRO_CAB
+
+- # ====== Computation: P541_STATUS ============================
+  id: 263458995254067
+  identification: 
+    item-name: P541_STATUS
+
+  execution: 
+    sequence: 20
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 2
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: LOCK,PRINT
+
+- # ====== Computation: P541_STATUS ============================
+  id: 1049699914565851
+  identification: 
+    item-name: P541_STATUS
+
+  execution: 
+    sequence: 30
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 1
+
+  server-side-condition: 
+    type: Request = Value
+    value: UNLOCK
+
+- # ====== Computation: G_CLIENTE_ID ===========================
+  id: 16028206314498128
+  identification: 
+    item-name: G_CLIENTE_ID
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Item
+    item-name: P541_CLIENTE_ID
+
+- # ====== Computation: P541_COPY_ECHEQS =======================
+  id: 48676842386376942
+  identification: 
+    item-name: P541_COPY_ECHEQS
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'COPY_CHEQUES(:P541_ID,13)'
+
+- # ====== Computation: P541_FECHA_PMPE ========================
+  id: 66341890786824626
+  identification: 
+    item-name: P541_FECHA_PMPE
+
+  execution: 
+    sequence: 40
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select fecha_pmpe from pmpe_recibos where vta_recibo_id = :P541_ID'
+
+processes: 
+- # ====== Process: Initialize form RECIBO_X ===================
+  id: 15982150354332467
+  identification: 
+    name: Initialize form RECIBO_X
+    type: Form - Initialization
+    execution-chain: None
+    form-region: RECIBO_X # 15964116053332395
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form RECIBO_X ======================
+  id: 15982589452332472
+  identification: 
+    name: Process form RECIBO_X
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: RECIBO_X # 15964116053332395
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: SAVE,PRINT,LOCK,UNLOCK,DELETE
+
+- # ====== Process: Redondeo ===================================
+  id: 158373257305818275
+  identification: 
+    name: Redondeo
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      INSERT INTO DOC_CAJAS
+      (FECHA,IMPORTE,DOC_TIPO_ID,VTA_RECIBO_ID,CUENTA_IN)
+      VALUES (:P541_FECHA,-:P541_SALDO,9,:P541_ID,1074);
+      
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: REDONDEO # 158373037733818273
+
+branches: 
+- # ====== Branch: PRINT =======================================
+  id: 263195104254065
+  identification: 
+    name: PRINT
+
+  execution: 
+    sequence: 31
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:542:&SESSION.::&DEBUG.:542:P542_ID,P542_PDF:&P541_ID.,0&success_msg=#SUCCESS_MSG#'
+      page: 542 # VTA_RECIBO_PRINT
+      clear-cache: 542
+      values: 
+        p542_id: '&P541_ID.'
+        p542_pdf: 0
+
+  server-side-condition: 
+    when-button-pressed: PRINT # 16000166332466403
+    type: Item = Value
+    item: P541_CTA
+    value: 1
+
+- # ====== Branch: PDF =========================================
+  id: 263285870254066
+  identification: 
+    name: PDF
+
+  execution: 
+    sequence: 41
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:542:&SESSION.::&DEBUG.:542:P542_ID,P542_PDF:&P541_ID.,1&success_msg=#SUCCESS_MSG#'
+      page: 542 # VTA_RECIBO_PRINT
+      clear-cache: 542
+      values: 
+        p542_id: '&P541_ID.'
+        p542_pdf: 1
+
+  server-side-condition: 
+    when-button-pressed: Imprimir_copia # 16000608180466406
+    type: Item = Value
+    item: P541_CTA
+    value: 1
+
+- # ====== Branch: Go To Page 540 ==============================
+  id: 6032431783695462
+  identification: 
+    name: Go To Page 540
+
+  execution: 
+    sequence: 61
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:540:&SESSION.::&DEBUG.:540::&success_msg=#SUCCESS_MSG#'
+      page: 540 # LISTA RECIBOS
+      clear-cache: 540
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 15980572304332450
+
+- # ====== Branch: Go To Page 540 ==============================
+  id: 15981693267332453
+  identification: 
+    name: Go To Page 540
+
+  execution: 
+    sequence: 51
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:540:&SESSION.::&DEBUG.&success_msg=#SUCCESS_MSG#'
+      page: 540 # LISTA RECIBOS
+
+  server-side-condition: 
+    when-button-pressed: CANCEL # 15979806782332441
+

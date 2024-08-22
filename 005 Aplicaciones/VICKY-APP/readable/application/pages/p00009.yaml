@@ -1,0 +1,1021 @@
+---
+# ====== Page: BOBINAS =======================================
+id: 9
+identification: 
+  name: BOBINAS
+  alias: BOBINAS
+  title: BOBINAS
+  page-group: Bobinas # 12671386400879323
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: A ===========================================
+  id: 14209457791810532
+  identification: 
+    name: A
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             BOBINA_ID BOBINA,
+             INICIO_DIAM INICIO,
+             FINAL_DIAM FIN,
+             USO,
+             REND
+        from BOB_USOS
+         where FECHA = :P9_FECHA AND LUGAR = 1
+    page-items-to-submit: 
+    - P9_FECHA
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - CAV # 176989717152772095
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      title: '&BOBINA.'
+      description: '&INICIO. - &FIN.'
+      display-avatar: false
+      display-badge: false
+      apply-theme-colors: true
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 18362760573831245
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: true
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: BOBINA ======================================
+    id: 18363110053831249
+    identification: 
+      name: BOBINA
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: BOBINA
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: INICIO ======================================
+    id: 18363291986831250
+    identification: 
+      name: INICIO
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: INICIO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FIN =========================================
+    id: 18395633361854601
+    identification: 
+      name: FIN
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: FIN
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: USO =========================================
+    id: 18395709496854602
+    identification: 
+      name: USO
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: USO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: REND ========================================
+    id: 18395867057854603
+    identification: 
+      name: REND
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: REND
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+- # ====== Region: B ===========================================
+  id: 18359523569831213
+  identification: 
+    name: B
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             BOBINA_ID BOBINA,
+             INICIO_DIAM INICIO,
+             FINAL_DIAM FIN,
+             USO,
+             REND
+        from BOB_USOS
+       where FECHA = :P9_FECHA AND LUGAR = 2
+    page-items-to-submit: 
+    - P9_FECHA
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - CAV # 176989717152772095
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      title: '&BOBINA.'
+      description: '&INICIO. - &FIN.'
+      display-avatar: false
+      display-badge: false
+      apply-theme-colors: true
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 18396515130854610
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: true
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: BOBINA ======================================
+    id: 18396918215854614
+    identification: 
+      name: BOBINA
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: BOBINA
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: INICIO ======================================
+    id: 18397050560854615
+    identification: 
+      name: INICIO
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: INICIO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FIN =========================================
+    id: 18397136247854616
+    identification: 
+      name: FIN
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: FIN
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: USO =========================================
+    id: 18397273235854617
+    identification: 
+      name: USO
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: USO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: REND ========================================
+    id: 18397369243854618
+    identification: 
+      name: REND
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: REND
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+- # ====== Region: C ===========================================
+  id: 18361150834831229
+  identification: 
+    name: C
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             BOBINA_ID BOBINA,
+             INICIO_DIAM INICIO,
+             FINAL_DIAM FIN,
+             USO,
+             REND
+        from BOB_USOS
+       where FECHA = :P9_FECHA  AND LUGAR = 3
+    page-items-to-submit: 
+    - P9_FECHA
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - CAV # 176989717152772095
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      title: '&BOBINA.'
+      description: '&INICIO. - &FIN.'
+      display-avatar: false
+      display-badge: false
+      apply-theme-colors: true
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 18398060927854625
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: true
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: BOBINA ======================================
+    id: 18398472089854629
+    identification: 
+      name: BOBINA
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: BOBINA
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: INICIO ======================================
+    id: 18398565667854630
+    identification: 
+      name: INICIO
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: INICIO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FIN =========================================
+    id: 18398635086854631
+    identification: 
+      name: FIN
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: FIN
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: USO =========================================
+    id: 18398737231854632
+    identification: 
+      name: USO
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: USO
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: REND ========================================
+    id: 18398860297854633
+    identification: 
+      name: REND
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: REND
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+- # ====== Region: BOBINAS =====================================
+  id: 176843312686983842
+  identification: 
+    name: BOBINAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT  
+          BU.ID ,
+          CASE BU.LUGAR WHEN 1 THEN 'A' WHEN 2 THEN 'B' WHEN 3 THEN 'C' END CARD_INITIALS,
+          BU.BOBINA_ID CARD_TITLE ,
+          '<DIV>Inicio ' || TO_CHAR(BU.INICIO_FEC ,'HH:MI') || '</DIV><DIV>Diam. ' || BU.INICIO_DIAM || '</DIV>' CARD_SUBTEXT
+       , '<DIV>'||TIPo || '</DIV><DIV>' || b.FORMATO || ' x ' || b.GRAMAJE || 'g</DIV>' CARD_SUBTITLE,
+          '<DIV>'||B.PESO || ' Kg</DIV><DIV>' || BU.METROS || ' Mts</DIV>' CARD_TEXT,
+          apex_page.get_url( 
+            p_page => '10', 
+            p_clear_cache => '10', 
+            p_items => 'p10_id,p10_bobina,p10_inicio', 
+            p_values =>  BU.id||','||BU.BOBINA_ID||','||BU.INICIO_DIAM 
+          ) CARD_LINK,
+            b.u_color CARD_COLOR
+      FROM BOB_USO_INFO BU
+      LEFT JOIN bob_info B ON BU.BOBINA_ID = B.ID  
+      WHERE BU.ID IN (
+          SELECT MAX(ID) ID FROM BOB_USOS 
+          WHERE FECHA = :P9_FECHA AND FINAL_FEC IS NULL GROUP BY  LUGAR )
+      ORDER BY LUGAR;
+    page-items-to-submit: 
+    - P9_FECHA
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--displaySubtitle
+      - t-Cards--featured t-Cards--block force-fa-lg
+      - t-Cards--displayInitials
+      - t-Cards--spanHorizontally
+      - t-Cards--iconsRounded
+      - t-Cards--animColorFill
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 176843583983983844
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 176907789918416510
+    identification: 
+      column-name: CARD_TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Title
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_INITIALS ===============================
+    id: 176907907905416512
+    identification: 
+      column-name: CARD_INITIALS
+      type: Plain Text
+
+    heading: 
+      heading: Card Initials
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 176908048497416513
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtext
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTITLE ===============================
+    id: 176908130483416514
+    identification: 
+      column-name: CARD_SUBTITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtitle
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_COLOR ==================================
+    id: 176908742450416520
+    identification: 
+      column-name: CARD_COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Card Color
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 176908873050416521
+    identification: 
+      column-name: CARD_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Text
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_LINK ===================================
+    id: 176909068624416523
+    identification: 
+      column-name: CARD_LINK
+      type: Plain Text
+
+    heading: 
+      heading: Card Link
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P9_FECHA =================================
+  id: 176910090793416533
+  identification: 
+    name: P9_FECHA
+    type: Date Picker (jQuery) [Deprecated]
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show: On icon click
+    show-other-months: false
+    navigation-list-for: None
+
+  layout: 
+    sequence: 10
+    region: BOBINAS # 176843312686983842
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 181179335218888014
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P9_FECHA
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 181179402812888015
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: FECHA
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: New # 181179335218888014
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

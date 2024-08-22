@@ -1,0 +1,2209 @@
+---
+# ====== Page: ENTREGAS ======================================
+id: 511
+identification: 
+  name: ENTREGAS
+  title: ENTREGAS
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Viajes Preparados ===========================
+  id: 8754910112860165
+  identification: 
+    name: Viajes Preparados
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT fv.id
+            ,fv.sflete              card_title
+            ,div_flt_remitos(fv.id) card_text
+            ,1                      card_subtext
+            ,'fa-truck'             card_icon
+            ,ft.html_color          card_color
+        FROM flt_viajes fv
+        ,fletes ft
+         WHERE fv.flete_id = ft.id 
+         and fv.status=1
+       ORDER BY id DESC
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 1000
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--compact
+      - t-Cards--displayIcons
+      - t-Cards--cols
+      - t-Cards--animColorFill
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: <div class="u-tC">No Records Found</div>
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CARD_ICON ===================================
+    id: 8755082233860167
+    identification: 
+      column-name: CARD_ICON
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 8755203068860168
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: start
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 8755326253860169
+    identification: 
+      column-name: CARD_TITLE
+      type: Link
+
+    heading: 
+      heading: Card Title
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:4:P4_ID:#ID#'
+        page: 4 # PREPARACION DE FLETE
+        clear-cache: 4
+        values: 
+          p4_id: '#ID#'
+
+      link-text: '#CARD_TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_COLOR ==================================
+    id: 8755422560860170
+    identification: 
+      column-name: CARD_COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Card Color
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 8755489938860171
+    identification: 
+      column-name: CARD_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Text
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 8755598821860172
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Link
+
+    heading: 
+      heading: Card Subtext
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:706:&SESSION.::&DEBUG.::P706_ID:#ID#'
+        page: 706 # RECORRIDO
+        values: 
+          p706_id: '#ID#'
+
+      link-text: Map
+      link-attributes: TARGET="P705"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: DESPACHADOS =================================
+  id: 15625247494468126
+  identification: 
+    name: DESPACHADOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT r.id
+            ,r.fecha
+            ,r.nro_remito
+            ,r.cta
+            ,r.neto      
+            ,r.cliente_id
+            ,r.cli_deposito_id
+            ,r.flete_id
+            ,r.flt_viaje_id
+            ,r.obs
+            ,CASE
+                  WHEN status=5 THEN '5-DESPACHADO'
+                  WHEN status=9 THEN '9-RECIBIDO_OK'
+                  ELSE to_char(status)
+                     END estado
+            ,'<a class="fa '||
+              CASE cta
+                  WHEN 1 THEN 'u-success-text '
+                  WHEN 2 THEN 'u-color-42-text '        END        ||
+              CASE
+                  WHEN r.item_sin_cantidad > 0 THEN 'fa-file-text-o fa-anim-flash fam-x fam-is-danger" title="Falta Cantidad"></a>'
+                  WHEN r.item_sin_precio > 0 THEN 'fa-file-text-o fa-anim-flash fam-x fam-is-warning" title="Revisar Precios"></a>'
+                  WHEN r.status IN(5)AND r.cta=1 THEN 'fa-truck fam-check fam-is-success" href=javascript:$s("P511_STATUS_9","'||id||'") title="Recibido Ok"></a>'
+                  WHEN r.status IN(5)AND r.cta=2 THEN 'fa-file-text-o fam-arrow-right fam-is-success" <a href=javascript:$s("P511_STATUS_10","'||id||'") title="LISTO!!"></a>'
+                  WHEN r.cta=2 OR r.neto * r.signo = r.apply1 THEN 'fa-file-text-o fam-arrow-right fam-is-success" <a href=javascript:$s("P511_STATUS_10","'||id||'") title="LISTO!!"></a>'
+                  ELSE 'fa-file-text-o fa-anim-horizontal-shake fam-x fam-is-danger" title="FACTURAR"></a>'
+              END action
+            ,r.apply1  apply
+        FROM vta_remitos r
+         where status IN(5,9)
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 7
+    column-css-classes: 
+    - u-bold
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: NRO_REMITO ==================================
+    id: 6031178539695450
+    identification: 
+      column-name: NRO_REMITO
+      type: Plain Text
+
+    heading: 
+      heading: Nro Remito
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 6031302746695451
+    identification: 
+      column-name: CLIENTE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cliente
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLIENTES.TITLE # 2084520149913047
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLI_DEPOSITO_ID =============================
+    id: 6031510927695453
+    identification: 
+      column-name: CLI_DEPOSITO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Deposito
+      alignment: center
+
+    layout: 
+      sequence: 34
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CTA =========================================
+    id: 6031581997695454
+    identification: 
+      column-name: CTA
+      type: Hidden
+
+    layout: 
+      sequence: 64
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ESTADO ======================================
+    id: 6967957530104145
+    identification: 
+      column-name: ESTADO
+      type: Hidden
+
+    layout: 
+      sequence: 84
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTION ======================================
+    id: 6968016022104146
+    identification: 
+      column-name: ACTION
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 74
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: ID ==========================================
+    id: 15625939157468133
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.::P502_ID:#ID#'
+        page: 502 # VTA_REMITO
+        values: 
+          p502_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+      link-attributes: target="P502"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 15626125677468134
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FLETE_ID ====================================
+    id: 15626438843468138
+    identification: 
+      column-name: FLETE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Flete
+      alignment: center
+
+    layout: 
+      sequence: 24
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: FLETES.TITLE # 10541852161253522
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 15626755496468141
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 44
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: APPLY =======================================
+    id: 36860427949413744
+    identification: 
+      column-name: APPLY
+      type: Plain Text
+
+    heading: 
+      heading: Apply
+      alignment: end
+
+    layout: 
+      sequence: 94
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FLT_VIAJE_ID ================================
+    id: 36860541400413746
+    identification: 
+      column-name: FLT_VIAJE_ID
+      type: Plain Text
+
+    heading: 
+      heading: Viaje Id
+      alignment: end
+
+    layout: 
+      sequence: 14
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NETO ========================================
+    id: 40751303350861834
+    identification: 
+      column-name: NETO
+      type: Plain Text
+
+    heading: 
+      heading: Neto
+      alignment: center
+
+    layout: 
+      sequence: 54
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Viajes en Curso =============================
+  id: 20682377790740568
+  identification: 
+    name: Viajes en Curso
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT fv.id
+            ,fv.sflete              card_title
+            ,div_flt_remitos(fv.id) card_text
+            ,1                      card_subtext
+            ,'fa-truck'             card_icon
+            ,ft.html_color          card_color
+        FROM flt_viajes fv
+        ,fletes ft
+         WHERE fv.flete_id = ft.id 
+         and fv.status=5
+       ORDER BY id DESC
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--stacked
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 1000
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--compact
+      - t-Cards--displayIcons
+      - t-Cards--cols
+      - t-Cards--animColorFill
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: <div class="u-tC">No Records Found</div>
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 8707481221239986
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: start
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 8752058008860136
+    identification: 
+      column-name: CARD_TITLE
+      type: Link
+
+    heading: 
+      heading: Card Title
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:4:P4_ID:#ID#'
+        page: 4 # PREPARACION DE FLETE
+        clear-cache: 4
+        values: 
+          p4_id: '#ID#'
+
+      link-text: '#CARD_TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TEXT ===================================
+    id: 8752203190860138
+    identification: 
+      column-name: CARD_TEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Text
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CARD_SUBTEXT ================================
+    id: 8752428768860140
+    identification: 
+      column-name: CARD_SUBTEXT
+      type: Plain Text
+
+    heading: 
+      heading: Card Subtext
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_ICON ===================================
+    id: 8753968926860156
+    identification: 
+      column-name: CARD_ICON
+      type: Plain Text
+
+    heading: 
+      heading: Card Icon
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_COLOR ==================================
+    id: 8754541693860161
+    identification: 
+      column-name: CARD_COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Card Color
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: PREPARADOS ==================================
+  id: 35186689851292578
+  identification: 
+    name: PREPARADOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,fecha
+            ,nvl(to_char(nro_remito) ,'<span class="fa fa-sticky-note"></span>') nro_remito
+            ,cta
+            ,cliente_id
+            ,CASE cta WHEN 1 THEN cli_dfiscal_id ELSE cli_cuenta_id END cli_cuenta_id
+            ,FLT_VIAJE_ID 
+            ,M2_REMITO(ID) m2
+            ,cli_deposito_id
+            ,flete_id
+            ,obs
+            ,status
+            ,neto
+            ,CASE WHEN length(obs)>1 THEN '<span class="fa fa-exclamation-circle" aria-hidden="true" title="'||obs||'"></span>' END icon_obs
+            ,'<i class="fa fa-truck '||
+              CASE cta
+                  WHEN 1 THEN 'u-color-35-text'
+                  WHEN 2 THEN 'u-color-42-text'
+              END        ||
+              CASE
+                  WHEN status=8 THEN ' fam-x fam-is-danger"  title="Rechazado"></i>'
+                  WHEN ITEM_SIN_CANTIDAD > 0 THEN ' fam-play fam-is-danger" title="Falta Cantidad"></i>'
+                  WHEN ITEM_SIN_PRECIO > 0  THEN ' fam-play fam-is-warning"  title="Falta Precio"></i>'
+                  ELSE ' fam-play fam-is-info"></i>'
+              END icon_class
+        FROM vta_remitos
+       WHERE status IN(1,3,8)
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: CLI_DEPOSITO_ID =============================
+    id: 6031830852695456
+    identification: 
+      column-name: CLI_DEPOSITO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Deposito
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FLETE_ID ====================================
+    id: 6031907600695457
+    identification: 
+      column-name: FLETE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Flete
+      alignment: center
+
+    layout: 
+      sequence: 25
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: FLETES.TITLE # 10541852161253522
+
+    sorting: 
+      default-sequence: 2
+      direction: Descending
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CTA =========================================
+    id: 6032131814695459
+    identification: 
+      column-name: CTA
+      type: Hidden
+
+    layout: 
+      sequence: 35
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 6032205491695460
+    identification: 
+      column-name: CLIENTE_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Cliente
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: CLIENTES.TITLE # 2084520149913047
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLI_CUENTA_ID ===============================
+    id: 6784630835077980
+    identification: 
+      column-name: CLI_CUENTA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NETO ========================================
+    id: 6784738864077981
+    identification: 
+      column-name: NETO
+      type: Plain Text
+
+    heading: 
+      heading: Neto
+      alignment: center
+
+    layout: 
+      sequence: 95
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_OBS ====================================
+    id: 6784844639077982
+    identification: 
+      column-name: ICON_OBS
+      type: Hidden
+
+    layout: 
+      sequence: 105
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: M2 ==========================================
+    id: 8620895680285634
+    identification: 
+      column-name: M2
+      type: Plain Text
+
+    heading: 
+      heading: M2
+      alignment: center
+
+    layout: 
+      sequence: 85
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 15189225291744534
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 15189269382744535
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 65
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NRO_REMITO ==================================
+    id: 15189421714744536
+    identification: 
+      column-name: NRO_REMITO
+      type: Link
+
+    heading: 
+      heading: Remito
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.::P502_ID:#ID#'
+        page: 502 # VTA_REMITO
+        values: 
+          p502_id: '#ID#'
+
+      link-text: '#NRO_REMITO#'
+      link-attributes: TARGET="P502"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: STATUS ======================================
+    id: 15190078694744543
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 45
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 15190309887744545
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 75
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 15624661359468120
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 55
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: FLT_VIAJE_ID ================================
+    id: 36860651532413747
+    identification: 
+      column-name: FLT_VIAJE_ID
+      type: Plain Text
+
+    heading: 
+      heading: Viaje Id
+      alignment: end
+
+    layout: 
+      sequence: 15
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: VENTAS ======================================
+  id: 64366161002353611
+  identification: 
+    name: VENTAS
+    type: List
+
+  source: 
+    list: MENU_VENTAS # 15192935647770055
+
+  layout: 
+    sequence: 80
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P511_STATUS_9 ============================
+  id: 15607664674460094
+  identification: 
+    name: P511_STATUS_9
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: PREPARADOS # 35186689851292578
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P511_STATUS_10 ===========================
+  id: 15608518421460094
+  identification: 
+    name: P511_STATUS_10
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: PREPARADOS # 35186689851292578
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P511_COPY ================================
+  id: 15609246899460095
+  identification: 
+    name: P511_COPY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 50
+    region: PREPARADOS # 35186689851292578
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: FLETE_NEW ===================================
+  id: 8755003904860166
+  identification: 
+    button-name: FLETE_NEW
+    label: Flete
+
+  layout: 
+    sequence: 10
+    region: Viajes Preparados # 8754910112860165
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:3::'
+      page: 3 # VIAJES
+      clear-cache: 3
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: CONTROL_FLETES ==============================
+  id: 9076019767443468
+  identification: 
+    button-name: CONTROL_FLETES
+    label: Control Fletes
+
+  layout: 
+    sequence: 10
+    region: VENTAS # 64366161002353611
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:704:&SESSION.::&DEBUG.:RP,::'
+      page: 704 # grid fletes
+      clear-cache: RP
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: REMITO_NEW ==================================
+  id: 15607350392460092
+  identification: 
+    button-name: REMITO_NEW
+    label: Remito
+
+  layout: 
+    sequence: 10
+    region: PREPARADOS # 35186689851292578
+    slot: COPY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:510:&SESSION.::&DEBUG.:RP,510:P510_CTA,P510_CAB_TIPO_ID:1,1201'
+      page: 510 # Nuevo Remito
+      clear-cache: RP,510
+      values: 
+        p510_cta: 1
+        p510_cab_tipo_id: 1201
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: READY ===============================
+  id: 1054057116445946
+  identification: 
+    name: READY
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P511_STATUS_10
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 1053997341445945
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DESPACHADOS # 15625247494468126
+
+    execution: 
+      sequence: 20
+      event: READY # 1054057116445946
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 6968130475104147
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'update vta_remitos set status = 10 where id = :P511_STATUS_10;'
+      items-to-submit: 
+      - P511_STATUS_10
+
+    execution: 
+      sequence: 10
+      event: READY # 1054057116445946
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: COPY_REMITO =========================
+  id: 15609635335460114
+  identification: 
+    name: COPY_REMITO
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P511_COPY
+
+  actions: 
+  - # ====== Action: Copy to clipboard ===========================
+    id: 15610176378460116
+    identification: 
+      action: Copy to clipboard
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P511_COPY
+
+    execution: 
+      sequence: 10
+      event: COPY_REMITO # 15609635335460114
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: ENTREGADO_OK ========================
+  id: 15610619616460116
+  identification: 
+    name: ENTREGADO_OK
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P511_STATUS_9
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 15611112338460117
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'update vta_remitos set status = 9 where id = :P511_STATUS_9;'
+      items-to-submit: 
+      - P511_STATUS_9
+
+    execution: 
+      sequence: 10
+      event: ENTREGADO_OK # 15610619616460116
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 15611569062460117
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DESPACHADOS # 15625247494468126
+
+    execution: 
+      sequence: 30
+      event: ENTREGADO_OK # 15610619616460116
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_2 ===============================
+  id: 15611970937460117
+  identification: 
+    name: New_2
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P511_VTA_FACTURA_ID
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 15612489884460119
+    identification: 
+      action: Submit Page
+
+    settings: 
+      request-/-button-name: FACTURADO
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: New_2 # 15611970937460117
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 15612901402460119
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P511_STATUS_9_2
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 15613368668460119
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'update vta_remitos set status = 9 where id = :P511_STATUS_9_2;'
+      items-to-submit: 
+      - P511_STATUS_9_2
+
+    execution: 
+      sequence: 10
+      event: New # 15612901402460119
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 15613885149460119
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DESPACHADOS # 15625247494468126
+
+    execution: 
+      sequence: 40
+      event: New # 15612901402460119
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 36859309976413733
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: Viajes Preparados # 8754910112860165
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 36859404688413734
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Viajes en Curso # 20682377790740568
+
+    execution: 
+      sequence: 10
+      event: New_1 # 36859309976413733
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 36859440965413735
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Viajes Preparados # 8754910112860165
+
+    execution: 
+      sequence: 20
+      event: New_1 # 36859309976413733
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+branches: 
+- # ====== Branch: FACTURA 502 =================================
+  id: 15614345124460120
+  identification: 
+    name: FACTURA 502
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:502:&SESSION.::&DEBUG.:RP:P502_ID:&P511_STATUS_10.&success_msg=#SUCCESS_MSG#'
+      page: 502 # VTA_REMITO
+      clear-cache: RP
+      values: 
+        p502_id: '&P511_STATUS_10.'
+
+  server-side-condition: 
+    type: Request = Value
+    value: FACTURAR
+

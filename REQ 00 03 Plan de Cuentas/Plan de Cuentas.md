@@ -15,6 +15,7 @@
     CUENTA_CONFIG	VARCHAR2(200 BYTE)
     BLOQ_DESDE	    DATE
     BLOQ_HASTA	    DATE
+    
 
 
 ![Diagrama Entidad Relacion](DER.png)

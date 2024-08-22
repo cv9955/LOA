@@ -1,0 +1,628 @@
+---
+# ====== Page: BOBINAS =======================================
+id: 300
+identification: 
+  name: BOBINAS
+  title: BOBINAS
+  page-group: 300 BOBINAS # 4255325950619063
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Stock de Bobinas ============================
+  id: 1278701144863589
+  identification: 
+    name: Stock de Bobinas
+    type: Chart
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT  B.BOB_TIPO_ID  TIPO, B.FORMATO ,
+      CASE :P300_VALOR WHEN '1' THEN  B.METROS WHEN '2' THEN B.KILOS END VALOR ,
+      T.title TIPO_PAPEL 
+      
+        FROM  ( 
+          SELECT FORMATO , BOB_TIPO_ID , SUM(PESO_ACTUAL) AS KILOS , SUM(METROS_ACTUAL) AS METROS 
+            FROM BOB_INFO  
+            WHERE STATUS IN (1,2)
+            GROUP BY FORMATO,BOB_TIPO_ID 
+      ) B, BOB_TIPOS T
+        WHERE B.BOB_TIPO_ID = T.ID
+    page-items-to-submit: 
+    - P300_VALOR
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 1279119821863591
+    chart: 
+      type: Bar
+
+    appearance: 
+      orientation: Vertical
+      stack: true
+      stack-label: false
+
+    layout: 
+      height: 500
+
+    data-cursor: 
+      cursor: Automatic
+      behavior: Automatic
+      dim-on-hover: true
+
+    multi-series-chart-data: 
+      fill-gaps-in-chart-data: true
+      sort-order: Label - Ascending
+      render-gap-as-zero: true
+
+    settings: 
+      zoom-and-scroll: No
+
+    animation: 
+      on-display: Automatic
+      on-data-change: Automatic
+
+    tooltip: 
+      show: true
+      show-series-name: true
+      show-group-name: true
+      show-value: true
+
+    legend: 
+      show: true
+      position: Top
+      hide-and-show-behavior: Rescale
+
+    series: 
+    - # ====== Series: Series 1 ====================================
+      id: 1280831975863599
+      identification: 
+        name: Series 1
+
+      execution: 
+        sequence: 10
+
+      source: 
+        location: Region Source
+
+      column-mapping: 
+        series-name: TIPO_PAPEL
+        label: FORMATO
+        value-aggregation: No Aggregation
+        value: VALOR
+        legend-tooltip: FORMATO
+
+      appearance: 
+        assigned-to-y2-axis: false
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:301:&SESSION.::&DEBUG.:RP:P301_FORMATO,P301_TIPO:&FORMATO.,&TIPO.'
+          page: 301 # STOCK X FORMATO
+          clear-cache: RP
+          values: 
+            p301_formato: '&FORMATO.'
+            p301_tipo: '&TIPO.'
+
+      label: 
+        show: true
+        position: Automatic
+
+    axes: 
+    - # ====== Axis: x =============================================
+      id: 1279546553863595
+      identification: 
+        name: x
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+        rotation: true
+        position: Outside
+
+    - # ====== Axis: y =============================================
+      id: 1280191690863598
+      identification: 
+        name: y
+        show-axis: true
+
+      value: 
+        format-scaling: Automatic
+        baseline-scaling: Zero
+        scale: Linear
+
+      appearance: 
+        position: Automatic
+
+      major-ticks: 
+        show: Automatic
+
+      minor-ticks: 
+
+      tick-label: 
+        show: true
+
+- # ====== Region: New =========================================
+  id: 13691792092230847
+  identification: 
+    name: New
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: STOCK =======================================
+  id: 23287264292455448
+  identification: 
+    name: STOCK
+    type: Badge List
+
+  source: 
+    sql-query: |
+      SELECT
+          SUM(peso_actual) AS valor,
+          'KILOS'          AS label
+      FROM
+          bob_info
+      WHERE
+          status IN ( 1, 2 )
+      UNION
+      SELECT
+          COUNT(id) AS valor,
+          'BOBINAS' AS label
+      FROM
+          bob_info
+      WHERE
+          status IN ( 1, 2 )
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 5
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    - t-Form--slimPadding
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: LABEL
+      value-column: VALOR
+      link-target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:RP::'
+        page: 10 # ART_LISTA
+        clear-cache: RP
+
+      layout: Fit to Page
+      chart-type: Rectangular
+      color: Yes
+
+- # ====== Region: COMPRAS &P300_YEAR. =========================
+  id: 23287577173458918
+  identification: 
+    name: COMPRAS &P300_YEAR.
+    type: Badge List
+
+  source: 
+    sql-query: |
+      SELECT
+          to_char(SUM(b.peso),'999G999G990') AS valor,
+          'KILOS'                label
+      FROM
+          bob_INFO  b
+      WHERE
+        EXTRACT(YEAR FROM b.fecha_ALTA) = :p300_year
+    page-items-to-submit: 
+    - P300_YEAR
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: LABEL
+      value-column: VALOR
+      link-target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.:RP::'
+        page: 12 # IMAGEN
+        clear-cache: RP
+
+      layout: Fit to Page
+      chart-type: Rectangular
+      color: No
+
+- # ====== Region: CORRUGADO &P300_YEAR. =======================
+  id: 23913910741009367
+  identification: 
+    name: CORRUGADO &P300_YEAR.
+    type: Badge List
+
+  source: 
+    sql-query: |
+      select TO_CHAR(COUNT(DISTINCT FECHA)) as valor
+      ,'DIAS' as label from BOB_USOS  U
+      WHERE EXTRACT(YEAR FROM FECHA) = :P300_YEAR
+      UNION 
+      select TO_CHAR(sum(KILOS),'999G999G990') as valor
+      ,'KILOS' as label from BOB_USO_INFO U 
+      WHERE  EXTRACT(YEAR FROM FECHA) = :P300_YEAR
+      
+      
+      
+      
+    page-items-to-submit: 
+    - P300_YEAR
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      label-column: LABEL
+      value-column: VALOR
+      link-target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.:RP::'
+        page: 12 # IMAGEN
+        clear-cache: RP
+
+      layout: Fit to Page
+      chart-type: Rectangular
+      color: No
+
+- # ====== Region: BOBINAS =====================================
+  id: 35742080166870138
+  identification: 
+    name: BOBINAS
+    type: List
+
+  source: 
+    list: MENU_BOBINAS # 13402772259154749
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-database
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+
+page-items: 
+- # ====== Page Item: P300_YEAR ================================
+  id: 13129970265655437
+  identification: 
+    name: P300_YEAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: CORRUGADO &P300_YEAR. # 23913910741009367
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P300_VALOR ===============================
+  id: 13691882177230848
+  identification: 
+    name: P300_VALOR
+    type: Radio Group
+
+  label: 
+    label: VALOR
+    alignment: Left
+
+  settings: 
+    number-of-columns: 2
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 10
+    region: New # 13691792092230847
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:METROS ;1,KILOS ;2'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: 1
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 27470975787868344
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P300_VALOR
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 27471102566868345
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Stock de Bobinas # 1278701144863589
+
+    execution: 
+      sequence: 10
+      event: New # 27470975787868344
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P300_YEAR ==============================
+  id: 13130096085655438
+  identification: 
+    item-name: P300_YEAR
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: EXTRACT(YEAR FROM SYSDATE)
+

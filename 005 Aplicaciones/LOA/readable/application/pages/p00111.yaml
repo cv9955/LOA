@@ -1,0 +1,702 @@
+---
+# ====== Page: Dialog_asociar ================================
+id: 111
+identification: 
+  name: Dialog_asociar
+  alias: DIALOG-ASOCIAR
+  title: Asociar CUIT
+  page-group: REQ 01 01 DATOS FISCALES # 24241595491096871
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Asociar Cliente =============================
+  id: 17433497917410929
+  identification: 
+    name: Asociar Cliente
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: FOOTER ======================================
+  id: 17434436598410938
+  identification: 
+    name: FOOTER
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P111_PROVEDOR_ID =========================
+  id: 9040043838775501
+  identification: 
+    name: P111_PROVEDOR_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Asociar Cliente # 17433497917410929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P111_CUIT ================================
+  id: 17433600933410930
+  identification: 
+    name: P111_CUIT
+    type: Text Field
+
+  label: 
+    label: Cuit
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Asociar Cliente # 17433497917410929
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P111_RSOCIAL =============================
+  id: 17433705821410931
+  identification: 
+    name: P111_RSOCIAL
+    type: Text Field
+
+  label: 
+    label: Rsocial
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Asociar Cliente # 17433497917410929
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P111_CLIENTE_ID ==========================
+  id: 17433849569410932
+  identification: 
+    name: P111_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Asociar Cliente # 17433497917410929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P111_DFISCAL_ID ==========================
+  id: 17433942831410933
+  identification: 
+    name: P111_DFISCAL_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 50
+    region: Asociar Cliente # 17433497917410929
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: ASOCIAR_PROVEEDOR ===========================
+  id: 9040192583775502
+  identification: 
+    button-name: ASOCIAR_PROVEEDOR
+    label: Asociar Proveedor
+
+  layout: 
+    sequence: 20
+    region: FOOTER # 17434436598410938
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ASOCIAR_CLIENTE =============================
+  id: 17434526945410939
+  identification: 
+    button-name: ASOCIAR_CLIENTE
+    label: Asociar Cliente
+
+  layout: 
+    sequence: 10
+    region: FOOTER # 17434436598410938
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: cuit change =========================
+  id: 17434057776410934
+  identification: 
+    name: cuit change
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P111_CUIT
+
+  actions: 
+  - # ====== Action: buscar cuit =================================
+    id: 17434140100410935
+    identification: 
+      name: buscar cuit
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'dfiscales_pkg.buscar_cuit(:P111_CUIT,:P111_DFISCAL_ID,:P111_RSOCIAL);'
+      items-to-submit: 
+      - P111_CUIT
+      items-to-return: 
+      - P111_DFISCAL_ID
+      - P111_RSOCIAL
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: cuit change # 17434057776410934
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: cuit valido =========================
+  id: 17434216439410936
+  identification: 
+    name: cuit valido
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P111_DFISCAL_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P111_DFISCAL_ID
+    value: 0
+
+  actions: 
+  - # ====== Action: show asociar PROVEEDOR ======================
+    id: 9040257610775503
+    identification: 
+      name: show asociar PROVEEDOR
+      action: Show
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR_PROVEEDOR # 9040192583775502
+
+    execution: 
+      sequence: 20
+      event: cuit valido # 17434216439410936
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    client-side-condition: 
+      type: Item is not null
+      item: P111_PROVEDOR_ID
+
+  - # ====== Action: hide asociar ================================
+    id: 9040326042775504
+    identification: 
+      name: hide asociar
+      action: Hide
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR_PROVEEDOR # 9040192583775502
+
+    execution: 
+      sequence: 20
+      event: cuit valido # 17434216439410936
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: show asociar CLIENTE ========================
+    id: 17434366703410937
+    identification: 
+      name: show asociar CLIENTE
+      action: Show
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR_CLIENTE # 17434526945410939
+
+    execution: 
+      sequence: 10
+      event: cuit valido # 17434216439410936
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    client-side-condition: 
+      type: Item is not null
+      item: P111_CLIENTE_ID
+
+  - # ====== Action: hide asociar ================================
+    id: 17434672221410940
+    identification: 
+      name: hide asociar
+      action: Hide
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR_CLIENTE # 17434526945410939
+
+    execution: 
+      sequence: 10
+      event: cuit valido # 17434216439410936
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Alert =======================================
+    id: 17434731413410941
+    identification: 
+      action: Alert
+
+    settings: 
+      title: Cuit No Encontrado
+      message: 'El nro de cuit no se encuantra en el padron '
+      style: Default
+
+    execution: 
+      sequence: 30
+      event: cuit valido # 17434216439410936
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: asociar provvedor ==========================
+  id: 9040477038775505
+  identification: 
+    name: asociar provvedor
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: DFISCALES_PKG
+    procedure-or-function: ASOCIAR_PROVEEDOR
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: ASOCIAR_PROVEEDOR # 9040192583775502
+
+  parameters: 
+  - # ====== Parameter: p_cuit ===================================
+    id: 9040589548775506
+    identification: 
+      name: p_cuit
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P111_CUIT
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_dfiscal_id =============================
+    id: 9040721300775508
+    identification: 
+      name: p_dfiscal_id
+
+    parameter: 
+      direction: Out
+      data-type: NUMBER
+      ignore-output: false
+
+    value: 
+      item: P111_DFISCAL_ID
+
+    advanced: 
+      display-sequence: 30
+
+  - # ====== Parameter: p_prov_id ================================
+    id: 9040865814775509
+    identification: 
+      name: p_prov_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P111_PROVEDOR_ID
+
+    advanced: 
+      display-sequence: 40
+
+- # ====== Process: asociar cliente ============================
+  id: 17434850804410942
+  identification: 
+    name: asociar cliente
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: DFISCALES_PKG
+    procedure-or-function: ASOCIAR_CLIENTE
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: ASOCIAR_CLIENTE # 17434526945410939
+
+  parameters: 
+  - # ====== Parameter: p_cuit ===================================
+    id: 17434992745410943
+    identification: 
+      name: p_cuit
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P111_CUIT
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_cliente_id =============================
+    id: 17825875387832294
+    identification: 
+      name: p_cliente_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P111_CLIENTE_ID
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_dfiscal_id =============================
+    id: 17825965881832295
+    identification: 
+      name: p_dfiscal_id
+
+    parameter: 
+      direction: Out
+      data-type: NUMBER
+      ignore-output: false
+
+    value: 
+      item: P111_DFISCAL_ID
+
+    advanced: 
+      display-sequence: 30
+
+- # ====== Process: Close Dialog ===============================
+  id: 17826077736832296
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    items-to-return-: 
+    - P111_DFISCAL_ID
+    show-success-messages: true
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
