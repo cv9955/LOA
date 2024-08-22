@@ -1,0 +1,847 @@
+---
+# ====== Page: PARAMETROS ====================================
+id: 900
+identification: 
+  name: PARAMETROS
+  alias: PARAMETROS
+  title: PARAMETROS
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+  - t-PageBody--noContentPadding
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PARAMETROS ==================================
+  id: 4724263403820119
+  identification: 
+    name: PARAMETROS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             '<span aria-hidden="true" class="fa ' || ICON || ' fa-lg"></span>' icon_html,
+             case when key is not null then ' <' || key || '> ' end || TITLE TITLE,
+             VALOR   misc ,
+             DETALLE description,
+             STATUS
+             
+        from PARAMS
+       where PID = :P900_PID
+      order by key,id
+    page-items-to-submit: 
+    - P900_PID
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-ContentRow--hideSelection
+      - t-ContentRow--hideActions
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 8827039637967222
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 20
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 8827149370967223
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:901:&SESSION.::&DEBUG.::P901_ID,P901_PID:#ID#,&P900_PID.'
+        page: 901 # PARAMETROS_FORM
+        values: 
+          p901_id: '#ID#'
+          p901_pid: '&P900_PID.'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 8827549821967227
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: end
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MISC ========================================
+    id: 8827698029967228
+    identification: 
+      column-name: MISC
+      type: Plain Text
+
+    heading: 
+      heading: Misc
+      alignment: end
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D0000
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 8827790325967229
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 8828245689967234
+    identification: 
+      column-name: ICON_HTML
+      type: Plain Text
+
+    heading: 
+      heading: Icon Html
+      alignment: start
+
+    layout: 
+      sequence: 110
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: PID =========================================
+  id: 4769124040096545
+  identification: 
+    name: PID
+    type: List View
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             TITLE,KEY,LIST_DIVIDER,icon      
+        from PARAMS
+       where PID = 0 and id > 0
+      order by LIST_DIVIDER,TITLE
+    page-items-to-submit: 
+    - P900_PID
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      features: 'ADVANCED_FORMATTING:DIVIDER:SEARCH'
+      text-formatting: "&TITLE.<i class='fa &ICON.'></i>"
+      list-divider-column: LIST_DIVIDER
+      link-target: 'javascript:$s(P900_PID,&ID.)'
+      search-type: 'Server: Like & Ignore Case'
+      search-column: TITLE
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+- # ====== Region: Breadcrumb ==================================
+  id: 4773322107096554
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 2005438132195560
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P900_PID =================================
+  id: 4724822544820125
+  identification: 
+    name: P900_PID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 4773322107096554
+    slot: SMART_FILTERS
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P900_TITLE ===============================
+  id: 8969574545732842
+  identification: 
+    name: P900_TITLE
+    type: Display Only
+
+  label: 
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: PARAMETROS # 4724263403820119
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-13
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--large
+    - margin-left-lg
+    - t-Form-fieldContainer--boldDisplay
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CREATE_1 ====================================
+  id: 4725140308820128
+  identification: 
+    button-name: CREATE_1
+    label: PARAMETRO
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 4773322107096554
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:901:&SESSION.::&DEBUG.:901::'
+      page: 901 # PARAMETROS_FORM
+      clear-cache: 901
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: Parameter Add # 11501522360912533
+
+- # ====== Button: PARAM0 ======================================
+  id: 8969397181732840
+  identification: 
+    button-name: PARAM0
+    label: Param0
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 4773322107096554
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--iconLeft
+    icon: fa-radiation
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:900:&SESSION.::&DEBUG.::P900_PID:0'
+      page: 900 # PARAMETROS
+      values: 
+        p900_pid: 0
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: Administration Rights # 2294687169196356
+
+- # ====== Button: COTIZ =======================================
+  id: 11613040504259835
+  identification: 
+    button-name: COTIZ
+    label: Cotizaciones
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 4773322107096554
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:902:&SESSION.::&DEBUG.:::'
+      page: 902 # COTIZACIONES
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: Administration Rights # 2294687169196356
+
+dynamic-actions: 
+- # ====== Dynamic Action: New_1 ===============================
+  id: 4725619953820133
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: CREATE_1 # 4725140308820128
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 4725721743820134
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PARAMETROS # 4724263403820119
+
+    execution: 
+      sequence: 10
+      event: New_1 # 4725619953820133
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Edit Report - Dialog Closed =========
+  id: 4771925037096553
+  identification: 
+    name: Edit Report - Dialog Closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: PID # 4769124040096545
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 4725455316820131
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P900_PID
+
+    execution: 
+      sequence: 20
+      event: Edit Report - Dialog Closed # 4771925037096553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 4725554450820132
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: Dialog Return Item
+      return-item: P901_PID
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P900_PID
+
+    execution: 
+      sequence: 30
+      event: Edit Report - Dialog Closed # 4771925037096553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 4772479598096553
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PID # 4769124040096545
+
+    execution: 
+      sequence: 10
+      event: Edit Report - Dialog Closed # 4771925037096553
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: P900_PID_CHANGE =====================
+  id: 8826777262967219
+  identification: 
+    name: P900_PID_CHANGE
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P900_PID
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 8826878013967220
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PARAMETROS # 4724263403820119
+
+    execution: 
+      sequence: 20
+      event: P900_PID_CHANGE # 8826777262967219
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Refresh =====================================
+    id: 8828834766967240
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PID # 4769124040096545
+
+    execution: 
+      sequence: 30
+      event: P900_PID_CHANGE # 8826777262967219
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Set Value ===================================
+    id: 8969646337732843
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT TITLE FROM PARAMS WHERE PID= 0 AND ID = :P900_PID'
+      items-to-submit: 
+      - P900_PID
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P900_TITLE
+
+    execution: 
+      sequence: 10
+      event: P900_PID_CHANGE # 8826777262967219
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: New_3 ===============================
+  id: 8828356856967235
+  identification: 
+    name: New_3
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: PARAMETROS # 4724263403820119
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 8828454535967236
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PARAMETROS # 4724263403820119
+
+    execution: 
+      sequence: 10
+      event: New_3 # 8828356856967235
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

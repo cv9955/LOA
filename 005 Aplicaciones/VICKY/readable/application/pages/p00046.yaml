@@ -1,0 +1,494 @@
+---
+# ====== Page: Asociar Cuit Cliente ==========================
+id: 46
+identification: 
+  name: Asociar Cuit Cliente
+  alias: ASOCIAR-CUIT-CLIENTE
+  title: Asociar Cuit Cliente
+  page-group: 400 COMPRAS # 13773987234907448
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: FORM ========================================
+  id: 88465803784245955
+  identification: 
+    name: FORM
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--noBorder
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P46_CLIENTE_ID ===========================
+  id: 65369759047086639
+  identification: 
+    name: P46_CLIENTE_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: FORM # 88465803784245955
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P46_RSOCIAL ==============================
+  id: 65369962340086641
+  identification: 
+    name: P46_RSOCIAL
+    type: Text Field
+
+  label: 
+    label: Rsocial
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: FORM # 88465803784245955
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P46_CUIT =================================
+  id: 65370057784086642
+  identification: 
+    name: P46_CUIT
+    type: Text Field
+
+  label: 
+    label: Cuit
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: FORM # 88465803784245955
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P46_DFISCAL_ID ===========================
+  id: 149934872916689524
+  identification: 
+    name: P46_DFISCAL_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 30
+    region: FORM # 88465803784245955
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: ASOCIAR =====================================
+  id: 66294758155881693
+  identification: 
+    button-name: ASOCIAR
+    label: Asociar
+
+  layout: 
+    sequence: 10
+    region: FORM # 88465803784245955
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+dynamic-actions: 
+- # ====== Dynamic Action: CAMBIO CUIT =========================
+  id: 65370309131086644
+  identification: 
+    name: CAMBIO CUIT
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P46_CUIT
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 65370402669086645
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        DFISCALES_PKG.BUSCAR_CUIT(
+            p_cuit=>:P46_CUIT,
+            p_dfiscal_id =>:P46_DFISCAL_ID,
+            p_title=>:P46_RSOCIAL
+            );
+      items-to-submit: 
+      - P46_CUIT
+      items-to-return: 
+      - P46_RSOCIAL
+      - P46_DFISCAL_ID
+      suppress-change-event: false
+
+    execution: 
+      sequence: 10
+      event: CAMBIO CUIT # 65370309131086644
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: CUIT VALIDO =========================
+  id: 66306203379881836
+  identification: 
+    name: CUIT VALIDO
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P46_DFISCAL_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P46_DFISCAL_ID
+    value: 0
+
+  actions: 
+  - # ====== Action: MOSTRAR ASOCIAR =============================
+    id: 66306729965881839
+    identification: 
+      name: MOSTRAR ASOCIAR
+      action: Show
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR # 66294758155881693
+
+    execution: 
+      sequence: 10
+      event: CUIT VALIDO # 66306203379881836
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: HIDEASOCIAR =================================
+    id: 66307233688881840
+    identification: 
+      name: HIDEASOCIAR
+      action: Hide
+
+    affected-elements: 
+      selection-type: Button
+      button: ASOCIAR # 66294758155881693
+
+    execution: 
+      sequence: 10
+      event: CUIT VALIDO # 66306203379881836
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+  - # ====== Action: Alert =======================================
+    id: 66307724896881841
+    identification: 
+      action: Alert
+
+    settings: 
+      title: CUIT NO EXISTE EN EL PADRON
+      message: 'CUIT NO EXISTE '
+      style: Danger
+
+    execution: 
+      sequence: 20
+      event: CUIT VALIDO # 66306203379881836
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Close Dialog ===============================
+  id: 66303117457881816
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: ASOCIAR CUIT ===============================
+  id: 66303478052881817
+  identification: 
+    name: ASOCIAR CUIT
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: DFISCALES_PKG
+    procedure-or-function: ASOCIAR_CLIENTE
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: ASOCIAR # 66294758155881693
+
+  parameters: 
+  - # ====== Parameter: p_cliente_id =============================
+    id: 65370187868086643
+    identification: 
+      name: p_cliente_id
+
+    parameter: 
+      direction: In
+      data-type: PL/SQL INTEGER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P46_CLIENTE_ID
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_cuit ===================================
+    id: 66303973236881825
+    identification: 
+      name: p_cuit
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P46_CUIT
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_dfiscal_id =============================
+    id: 66304961664881827
+    identification: 
+      name: p_dfiscal_id
+
+    parameter: 
+      direction: Out
+      data-type: NUMBER
+      ignore-output: false
+
+    value: 
+      item: P46_DFISCAL_ID
+
+    advanced: 
+      display-sequence: 30
+

@@ -10,5 +10,6 @@ grant all privileges to LOA;
 CREATE USER CAV IDENTIFIED BY A24 default tablespace LOA;
 grant dba to CAV;
 
+
 select * from dba_users
 WHERE ACCOUNT_STATUS = 'OPEN';

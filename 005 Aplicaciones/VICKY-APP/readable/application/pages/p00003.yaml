@@ -1,0 +1,104 @@
+---
+# ====== Page: STOCK DE PAPEL ================================
+id: 3
+identification: 
+  name: STOCK DE PAPEL
+  alias: STOCK-DE-PAPEL
+  title: STOCK DE PAPEL
+  page-group: Bobinas # 12671386400879323
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: ACCESS CONTROL - CORRUGADO # 176990878554773950
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: STOCK DE PAPEL ==============================
+  id: 176630429009461078
+  identification: 
+    name: STOCK DE PAPEL
+    type: List View
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select DISTINCT(FORMATO)
+        from BOBINAS
+        WHERE STATUS IN (1,2)
+       ORDER BY 1
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      text-column: FORMATO
+      link-target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.:4:P4_FORMATO:&FORMATO.'
+        page: 4 # STOCK_2
+        clear-cache: 4
+        values: 
+          p4_formato: '&FORMATO.'
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+

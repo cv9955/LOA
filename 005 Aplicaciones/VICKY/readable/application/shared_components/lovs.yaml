@@ -1,0 +1,2098 @@
+---
+- # ====== List of Values: PROD_TIPO.TITLE =====================
+  id: 221431734215559
+  identification: 
+    name: PROD_TIPO.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select id, to_char(id,'00') || '-' || title  title from prod_tipo order by id
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: FEEDBACK_RATING =====================
+  id: 729139691363378
+  identification: 
+    name: FEEDBACK_RATING
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Positive =====================================
+    id: 729428063363391
+    entry: 
+      sequence: 1
+      display: Positive
+      return: 3
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-smile-o fa-2x feedback-positive" aria-hidden="true" ></span></span>
+
+  - # ====== Entry: Neutral ======================================
+    id: 729793120363399
+    entry: 
+      sequence: 2
+      display: Neutral
+      return: 2
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-emoji-neutral fa-2x feedback-neutral" aria-hidden="true" ></span></span>
+
+  - # ====== Entry: Negative =====================================
+    id: 730225236363399
+    entry: 
+      sequence: 3
+      display: Negative
+      return: 1
+
+    globalization: 
+      template: <span title="#DISPLAY_VALUE#" aria-label="#DISPLAY_VALUE#"><span class="fa fa-frown-o fa-2x feedback-negative" aria-hidden="true" ></span></span>
+
+- # ====== List of Values: FEEDBACK_STATUS =====================
+  id: 739219184363460
+  identification: 
+    name: FEEDBACK_STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: No Action ====================================
+    id: 739510262363460
+    entry: 
+      sequence: 1
+      display: No Action
+      return: 0
+
+  - # ====== Entry: Acknowledged =================================
+    id: 739922734363466
+    entry: 
+      sequence: 2
+      display: Acknowledged
+      return: 1
+
+  - # ====== Entry: Open =========================================
+    id: 740325826363466
+    entry: 
+      sequence: 3
+      display: Open
+      return: 3
+
+  - # ====== Entry: Closed =======================================
+    id: 740677293363466
+    entry: 
+      sequence: 4
+      display: Closed
+      return: 4
+
+- # ====== List of Values: VENDEDOR.TITLE ======================
+  id: 1450671573559921
+  identification: 
+    name: VENDEDOR.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_VENDORS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ART_PALLET_LOV ======================
+  id: 1608143604455810
+  identification: 
+    name: ART_PALLET_LOV
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_PALLET
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: ARTICULOS.TIPO ======================
+  id: 1892364726520679
+  identification: 
+    name: ARTICULOS.TIPO
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_CONFIG
+    where-clause: KEY = 'TIP'
+
+  column-mapping: 
+    return: ART_TIPO_ID
+    display: TITLE
+    default-sort: IX
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: BOB_TIPO.TITLE ======================
+  id: 1964908075239213
+  identification: 
+    name: BOB_TIPO.TITLE
+
+  subscription: 
+    master: 
+      referenced-id: 1975399942340990
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_TIPOS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ART_CALIDAD.CODIGO ==================
+  id: 1966651704367350
+  identification: 
+    name: ART_CALIDAD.CODIGO
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select KEY, ID
+        from ART_CALS 
+        order by ix
+
+  column-mapping: 
+    return: ID
+    display: KEY
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CLIENTES.TITLE ======================
+  id: 2084520149913047
+  identification: 
+    name: CLIENTES.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select TITLE, ID  from CLIENTES
+      
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: ART_TINTAS_LOV ======================
+  id: 2156068247123796
+  identification: 
+    name: ART_TINTAS_LOV
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_TINTAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: ART_CALIDAD.TITLE ===================
+  id: 2294723602096546
+  identification: 
+    name: ART_CALIDAD.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select KEY || ' - ' || TITLE TITLE, ID
+        from ART_CALS order by IX
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CLI_DEPOSITOS.TITLE =================
+  id: 2512982720406887
+  identification: 
+    name: CLI_DEPOSITOS.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+      case when id = 0 then '* Retira Cliente' else nvl(title,NVL(LOCALITY,ROUTE)) end TITLE, ID   
+      from CLI_DEPOSITOS
+      
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CLI_DFISCAL.TITLE ===================
+  id: 2513212878412000
+  identification: 
+    name: CLI_DFISCAL.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_DFISCAL
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: LOV_TIPO_AFIP =======================
+  id: 2793720039595581
+  identification: 
+    name: LOV_TIPO_AFIP
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select KEY as d,
+             COD_AFIP as r
+        from t_CAB_TIPO
+        WHERE COD_AFIP is not null
+       order by 1
+
+- # ====== List of Values: ART_CALIDAD_STYLE ===================
+  id: 3483719748088190
+  identification: 
+    name: ART_CALIDAD_STYLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select  '<span parent-class="'||STYLE||'u-bold u-textCenter" >'||TITLE||'</span>' title , ID
+        from ART_CALS 
+        order by ix
+      
+       
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+  advanced: 
+    oracle-text-index-column: TITLE
+
+- # ====== List of Values: BOB_TIPO.KEY ========================
+  id: 3647310943257166
+  identification: 
+    name: BOB_TIPO.KEY
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_TIPOS
+
+  column-mapping: 
+    return: ID
+    display: KEY
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: BOB_LUGAR ===========================
+  id: 3649072216257171
+  identification: 
+    name: BOB_LUGAR
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_LUGAR
+
+  column-mapping: 
+    return: ID
+    display: KEY
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CLI_CUENTAS_ALL =====================
+  id: 3915103874676140
+  identification: 
+    name: CLI_CUENTAS_ALL
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select id, title
+      from cli_cuentas_all
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: BOB_PROVS ===========================
+  id: 4345746315768574
+  identification: 
+    name: BOB_PROVS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_PROVS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: ART_CALS.TITLE ======================
+  id: 4529656589416212
+  identification: 
+    name: ART_CALS.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select TITLE, ID
+        from ART_CALS order by IX
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CLI_GRUPO.TITLE =====================
+  id: 4699541894671125
+  identification: 
+    name: CLI_GRUPO.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_GRUPOS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CLI_GRUPOS.G_CLIENTE_ID =============
+  id: 4885124065687957
+  identification: 
+    name: CLI_GRUPOS.G_CLIENTE_ID
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_GRUPOS
+    where-clause: 'CLIENTE_ID = :G_CLIENTE_ID'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: PEDIDOS.STATUS ======================
+  id: 5478212351692154
+  identification: 
+    name: PEDIDOS.STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: PENDIENTE ====================================
+    id: 5478451672692201
+    entry: 
+      sequence: 1
+      display: PENDIENTE
+      return: 1
+
+  - # ====== Entry: TERMINADO ====================================
+    id: 5478901114692208
+    entry: 
+      sequence: 2
+      display: TERMINADO
+      return: 2
+
+  - # ====== Entry: COMPLETO =====================================
+    id: 5479313668692208
+    entry: 
+      sequence: 3
+      display: COMPLETO
+      return: 3
+
+  - # ====== Entry: SUSPENDIDO ===================================
+    id: 5479679076692209
+    entry: 
+      sequence: 4
+      display: SUSPENDIDO
+      return: '-1'
+
+  - # ====== Entry: PROFORMA =====================================
+    id: 144685331824327314
+    entry: 
+      sequence: 0
+      display: PROFORMA
+      return: 0
+
+  - # ====== Entry: ANULADO ======================================
+    id: 145774988277956507
+    entry: 
+      sequence: 5
+      display: ANULADO
+      return: '-2'
+
+- # ====== List of Values: BOB_PROVS_OK ========================
+  id: 6165537791422343
+  identification: 
+    name: BOB_PROVS_OK
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_PROVS
+    where-clause: status = 1
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: T_ARTICULOS.CODIGO ==================
+  id: 6771203579008243
+  identification: 
+    name: T_ARTICULOS.CODIGO
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_ARTICULOS
+
+  column-mapping: 
+    return: ID
+    display: CODIGO
+    default-sort: CODIGO
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: ART_PROVS_LOV =======================
+  id: 7155335538639321
+  identification: 
+    name: ART_PROVS_LOV
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: ART_PROVS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: BOB_FORMATOS ========================
+  id: 7200354771401332
+  identification: 
+    name: BOB_FORMATOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_FORMATOS
+
+  column-mapping: 
+    return: FORMATO
+    display: FORMATO
+    default-sort: FORMATO
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: DATA_LOAD_OPTION ====================
+  id: 7674011164859707
+  identification: 
+    name: DATA_LOAD_OPTION
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Upload file, comma separated (*.csv) or tab de
+    id: 7674360998859713
+    entry: 
+      sequence: 10
+      display: Upload file, comma separated (*.csv) or tab delimited
+      return: UPLOAD
+
+  - # ====== Entry: Copy and Paste ===============================
+    id: 7674816917859716
+    entry: 
+      sequence: 20
+      display: Copy and Paste
+      return: PASTE
+
+- # ====== List of Values: DATE_FORMAT_OPT =====================
+  id: 7682481375859736
+  identification: 
+    name: DATE_FORMAT_OPT
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Use application standard format masks ========
+    id: 7682888446859736
+    entry: 
+      sequence: 10
+      display: Use application standard format masks
+      return: Y
+
+  - # ====== Entry: Provide custom formats for uploaded columns ==
+    id: 7683253317859738
+    entry: 
+      sequence: 20
+      display: Provide custom formats for uploaded columns
+      return: N
+
+- # ====== List of Values: DATA_LOAD_CHARSET ===================
+  id: 7684492405859740
+  identification: 
+    name: DATA_LOAD_CHARSET
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Unicode UTF-16 Little Endian =================
+    id: 7684918875859744
+    entry: 
+      sequence: 1
+      display: Unicode UTF-16 Little Endian
+      return: utf-16le
+
+  - # ====== Entry: Unicode UTF-16 Big Endian ====================
+    id: 7685296468859745
+    entry: 
+      sequence: 1
+      display: Unicode UTF-16 Big Endian
+      return: utf-16be
+
+  - # ====== Entry: US-ASCII =====================================
+    id: 7685668226859745
+    entry: 
+      sequence: 1
+      display: US-ASCII
+      return: us-ascii
+
+  - # ====== Entry: Arabic ISO-8859-6 ============================
+    id: 7686128954859746
+    entry: 
+      sequence: 1
+      display: Arabic ISO-8859-6
+      return: iso-8859-6
+
+  - # ====== Entry: Arabic Windows 1256 ==========================
+    id: 7686458348859746
+    entry: 
+      sequence: 1
+      display: Arabic Windows 1256
+      return: windows-1256
+
+  - # ====== Entry: Chinese Big5 =================================
+    id: 7686919226859746
+    entry: 
+      sequence: 1
+      display: Chinese Big5
+      return: big5
+
+  - # ====== Entry: Chinese GBK ==================================
+    id: 7687315210859747
+    entry: 
+      sequence: 1
+      display: Chinese GBK
+      return: gbk
+
+  - # ====== Entry: Cyrilic ISO-8859-5 ===========================
+    id: 7687706783859747
+    entry: 
+      sequence: 1
+      display: Cyrilic ISO-8859-5
+      return: iso-8859-5
+
+  - # ====== Entry: Cyrilic KOI8-R ===============================
+    id: 7688091872859747
+    entry: 
+      sequence: 1
+      display: Cyrilic KOI8-R
+      return: koi8-r
+
+  - # ====== Entry: Cyrilic KOI8-U ===============================
+    id: 7688488374859748
+    entry: 
+      sequence: 1
+      display: Cyrilic KOI8-U
+      return: koi8-u
+
+  - # ====== Entry: Cyrilic Windows 1251 =========================
+    id: 7688843122859748
+    entry: 
+      sequence: 1
+      display: Cyrilic Windows 1251
+      return: windows-1251
+
+  - # ====== Entry: Eastern European ISO-8859-2 ==================
+    id: 7689304201859748
+    entry: 
+      sequence: 1
+      display: Eastern European ISO-8859-2
+      return: iso-8859-2
+
+  - # ====== Entry: Eastern European Windows 1250 ================
+    id: 7689664682859749
+    entry: 
+      sequence: 1
+      display: Eastern European Windows 1250
+      return: windows-1250
+
+  - # ====== Entry: Greek ISO-8859-7 =============================
+    id: 7690067039859749
+    entry: 
+      sequence: 1
+      display: Greek ISO-8859-7
+      return: iso-8859-7
+
+  - # ====== Entry: Greek Windows 1253 ===========================
+    id: 7690514001859750
+    entry: 
+      sequence: 1
+      display: Greek Windows 1253
+      return: windows-1253
+
+  - # ====== Entry: Hebrew ISO-8859-8-i ==========================
+    id: 7690893732859751
+    entry: 
+      sequence: 1
+      display: Hebrew ISO-8859-8-i
+      return: iso-8859-8-i
+
+  - # ====== Entry: Hebrew Windows 1255 ==========================
+    id: 7691284986859751
+    entry: 
+      sequence: 1
+      display: Hebrew Windows 1255
+      return: windows-1255
+
+  - # ====== Entry: Japanese EUC =================================
+    id: 7691683700859752
+    entry: 
+      sequence: 1
+      display: Japanese EUC
+      return: euc-jp
+
+  - # ====== Entry: Japanese Shift JIS ===========================
+    id: 7692123983859752
+    entry: 
+      sequence: 1
+      display: Japanese Shift JIS
+      return: shift_jis
+
+  - # ====== Entry: Korean EUC ===================================
+    id: 7692435564859753
+    entry: 
+      sequence: 1
+      display: Korean EUC
+      return: euc-kr
+
+  - # ====== Entry: Northern European ISO-8859-4 =================
+    id: 7692919413859753
+    entry: 
+      sequence: 1
+      display: Northern European ISO-8859-4
+      return: iso-8859-4
+
+  - # ====== Entry: Northern European Windows 1257 ===============
+    id: 7693328466859754
+    entry: 
+      sequence: 1
+      display: Northern European Windows 1257
+      return: windows-1257
+
+  - # ====== Entry: Southern European ISO-8859-3 =================
+    id: 7693699427859754
+    entry: 
+      sequence: 1
+      display: Southern European ISO-8859-3
+      return: iso-8859-3
+
+  - # ====== Entry: Thai TIS-620 =================================
+    id: 7694101098859754
+    entry: 
+      sequence: 1
+      display: Thai TIS-620
+      return: tis-620
+
+  - # ====== Entry: Turkish ISO-8859-9 ===========================
+    id: 7694444674859755
+    entry: 
+      sequence: 1
+      display: Turkish ISO-8859-9
+      return: iso-8859-9
+
+  - # ====== Entry: Turkish Windows 1254 =========================
+    id: 7694879560859755
+    entry: 
+      sequence: 1
+      display: Turkish Windows 1254
+      return: windows-1254
+
+  - # ====== Entry: Unicode UTF-8 ================================
+    id: 7695327524859756
+    entry: 
+      sequence: 1
+      display: Unicode UTF-8
+      return: utf-8
+
+  - # ====== Entry: Vietnamese Windows 1258 ======================
+    id: 7695702028859756
+    entry: 
+      sequence: 1
+      display: Vietnamese Windows 1258
+      return: windows-1258
+
+  - # ====== Entry: Western European ISO-8859-1 ==================
+    id: 7696106922859756
+    entry: 
+      sequence: 1
+      display: Western European ISO-8859-1
+      return: iso-8859-1
+
+  - # ====== Entry: Western European Windows 1252 ================
+    id: 7696513827859757
+    entry: 
+      sequence: 1
+      display: Western European Windows 1252
+      return: windows-1252
+
+- # ====== List of Values: LOV_ESTADO_ENTREGA ==================
+  id: 7956055943421976
+  identification: 
+    name: LOV_ESTADO_ENTREGA
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: PREPARADO ====================================
+    id: 7956412128421983
+    entry: 
+      sequence: 1
+      display: PREPARADO
+      return: 1
+
+  - # ====== Entry: ENTREGADO ====================================
+    id: 7956791805421988
+    entry: 
+      sequence: 2
+      display: ENTREGADO
+      return: 3
+
+  - # ====== Entry: FACTURADO ====================================
+    id: 7957221504421988
+    entry: 
+      sequence: 3
+      display: FACTURADO
+      return: 4
+
+  - # ====== Entry: ANULADO ======================================
+    id: 7957559254421989
+    entry: 
+      sequence: 4
+      display: ANULADO
+      return: '-1'
+
+- # ====== List of Values: PROVEDOR.TITLE ======================
+  id: 9095101793516991
+  identification: 
+    name: PROVEDOR.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: PROVS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_PROVINCIA =======================
+  id: 9234255353752883
+  identification: 
+    name: LOV_PROVINCIA
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select PROVINCIA as d,
+             ID as r
+        from LOV_PROVINCIAS
+       order by 2
+
+- # ====== List of Values: LOV_PARTIDOS ========================
+  id: 9234484986759454
+  identification: 
+    name: LOV_PARTIDOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select PARTIDO as d,
+             ID as r
+        from LOV_PARTIDOS
+       order by 1
+
+- # ====== List of Values: FLETES.TITLE ========================
+  id: 10541852161253522
+  identification: 
+    name: FLETES.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: FLETES
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: BOBINAS.STATUS ======================
+  id: 10761204245803843
+  identification: 
+    name: BOBINAS.STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: NUEVA ========================================
+    id: 10761440070803879
+    entry: 
+      sequence: 1
+      display: NUEVA
+      return: 0
+
+  - # ====== Entry: ENTERA =======================================
+    id: 10761842205803883
+    entry: 
+      sequence: 2
+      display: ENTERA
+      return: 1
+
+  - # ====== Entry: PUCHO ========================================
+    id: 10762254285803883
+    entry: 
+      sequence: 3
+      display: PUCHO
+      return: 2
+
+  - # ====== Entry: USADA ========================================
+    id: 10762657209803884
+    entry: 
+      sequence: 4
+      display: USADA
+      return: 3
+
+  - # ====== Entry: ANULADA ======================================
+    id: 10763094649803885
+    entry: 
+      sequence: 5
+      display: ANULADA
+      return: '-1'
+
+  - # ====== Entry: NO SE ENTREGO ================================
+    id: 10763463795803885
+    entry: 
+      sequence: 6
+      display: NO SE ENTREGO
+      return: '-2'
+
+  - # ====== Entry: BLOQUEADO ====================================
+    id: 46514427855675944
+    entry: 
+      sequence: 7
+      display: BLOQUEADO
+      return: '-3'
+
+- # ====== List of Values: DOC_TIPOS.TITLE =====================
+  id: 10892351144594729
+  identification: 
+    name: DOC_TIPOS.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: DOC_TIPOS_LOV
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: DOC_MODO
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_BANCOS ==========================
+  id: 10917609778647614
+  identification: 
+    name: LOV_BANCOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select BANCO as d,
+             ID as r
+        from LOV_BANCOS
+       order by 1
+
+- # ====== List of Values: TIPO_PAGO ===========================
+  id: 11121424489673212
+  identification: 
+    name: TIPO_PAGO
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ORDEN PAGO ===================================
+    id: 11121712851673235
+    entry: 
+      sequence: 1
+      display: ORDEN PAGO
+      return: 1
+
+  - # ====== Entry: COMPENSACION =================================
+    id: 11122108131673238
+    entry: 
+      sequence: 2
+      display: COMPENSACION
+      return: 2
+
+- # ====== List of Values: DOC_TIPOS.KEY =======================
+  id: 11796206057251207
+  identification: 
+    name: DOC_TIPOS.KEY
+
+  subscription: 
+    master: 
+      referenced-id: 14328084404328097
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: DOC_TIPOS_LOV
+
+  column-mapping: 
+    return: ID
+    display: KEY
+    default-sort: KEY
+    sort-direction: Ascending (Nulls Last)
+    group: DOC_MODO
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_MONTH ===========================
+  id: 12380015065838899
+  identification: 
+    name: LOV_MONTH
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ENE ==========================================
+    id: 12380318847838916
+    entry: 
+      sequence: 1
+      display: ENE
+      return: 01
+
+  - # ====== Entry: FEB ==========================================
+    id: 12380719269838924
+    entry: 
+      sequence: 2
+      display: FEB
+      return: 02
+
+  - # ====== Entry: MAR ==========================================
+    id: 12380970140838924
+    entry: 
+      sequence: 3
+      display: MAR
+      return: 03
+
+  - # ====== Entry: ABR ==========================================
+    id: 12381393836838924
+    entry: 
+      sequence: 4
+      display: ABR
+      return: 04
+
+  - # ====== Entry: MAY ==========================================
+    id: 12381826987838925
+    entry: 
+      sequence: 5
+      display: MAY
+      return: 05
+
+  - # ====== Entry: JUN ==========================================
+    id: 12382189425838925
+    entry: 
+      sequence: 6
+      display: JUN
+      return: 06
+
+  - # ====== Entry: JUL ==========================================
+    id: 12382661237838927
+    entry: 
+      sequence: 7
+      display: JUL
+      return: 07
+
+  - # ====== Entry: AGO ==========================================
+    id: 12383064948838928
+    entry: 
+      sequence: 8
+      display: AGO
+      return: 08
+
+  - # ====== Entry: SEP ==========================================
+    id: 12383412202838928
+    entry: 
+      sequence: 9
+      display: SEP
+      return: 09
+
+  - # ====== Entry: OCT ==========================================
+    id: 12383852319838928
+    entry: 
+      sequence: 10
+      display: OCT
+      return: 10
+
+  - # ====== Entry: NOV ==========================================
+    id: 12384254857838928
+    entry: 
+      sequence: 11
+      display: NOV
+      return: 11
+
+  - # ====== Entry: DIC ==========================================
+    id: 12384634919838928
+    entry: 
+      sequence: 12
+      display: DIC
+      return: 12
+
+- # ====== List of Values: ARTICULOS.STATUS ====================
+  id: 12486902465965205
+  identification: 
+    name: ARTICULOS.STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: NUEVO ========================================
+    id: 12487153944965211
+    entry: 
+      sequence: 1
+      display: NUEVO
+      return: 1
+
+  - # ====== Entry: SIN REVISAR ==================================
+    id: 12487592971965212
+    entry: 
+      sequence: 2
+      display: SIN REVISAR
+      return: 2
+
+  - # ====== Entry: GUARDADO =====================================
+    id: 12488018764965212
+    entry: 
+      sequence: 3
+      display: GUARDADO
+      return: 3
+
+  - # ====== Entry: FIRMADO ======================================
+    id: 12488339656965214
+    entry: 
+      sequence: 4
+      display: FIRMADO
+      return: 4
+
+  - # ====== Entry: USO INTERNO ==================================
+    id: 12488820074965214
+    entry: 
+      sequence: 5
+      display: USO INTERNO
+      return: 6
+
+  - # ====== Entry: ANULADO ======================================
+    id: 12489156360965214
+    entry: 
+      sequence: 6
+      display: ANULADO
+      return: 0
+
+  - # ====== Entry: ANULADO ======================================
+    id: 12489576486965216
+    entry: 
+      sequence: 7
+      display: ANULADO
+      return: '-1'
+
+- # ====== List of Values: CLI_CUENTAS.TITLE ===================
+  id: 12527581932290510
+  identification: 
+    name: CLI_CUENTAS.TITLE
+
+  subscription: 
+    master: 
+      referenced-id: 6417408524537809
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_CUENTAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CUENTA.TITLE ========================
+  id: 12690372091894103
+  identification: 
+    name: CUENTA.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_LOV
+
+  column-mapping: 
+    return: ID
+    display: CTA_TITLE
+    default-sort: CTA_TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: GROUP_BY
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CLI_DFISCAL.G_CLIENTE_ID ============
+  id: 13088311080018281
+  identification: 
+    name: CLI_DFISCAL.G_CLIENTE_ID
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_DFISCAL
+    where-clause: 'CLIENTE_ID = :G_CLIENTE_ID'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CLI_DEPOSITOS.G_CLIENTE_ID ==========
+  id: 13088586138024139
+  identification: 
+    name: CLI_DEPOSITOS.G_CLIENTE_ID
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_DEPOSITOS
+    where-clause: 'CLIENTE_ID = :G_CLIENTE_ID'
+
+  column-mapping: 
+    return: ID
+    display: DIRECCION
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: LOV_STATUS ==========================
+  id: 13100581222138236
+  identification: 
+    name: LOV_STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 0 ID  , 'SIN DEFINIR' TITLE , 'fam-minus fam-is-disabled' ICON FROM DUAL
+      UNION ALL
+      SELECT 1 ID  , 'ACTIVO' TITLE , 'fam-check fam-is-success' ICON FROM DUAL
+      UNION ALL
+      SELECT 2 ID  , 'DEFAULT' TITLE , 'fam-heart fam-is-info' ICON FROM DUAL
+      UNION ALL
+      SELECT -1 ID  , 'INACTIVO' TITLE , 'fam-x fam-is-danger' ICON FROM DUAL
+      
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+    icon: ICON
+
+- # ====== List of Values: CLI_DEPOSITOS.DIRECCION =============
+  id: 13105024210200191
+  identification: 
+    name: CLI_DEPOSITOS.DIRECCION
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CLI_DEPOSITOS
+
+  column-mapping: 
+    return: ID
+    display: DIRECCION
+    default-sort: DIRECCION
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CAB_TIPO.TITLE ======================
+  id: 13778764956984108
+  identification: 
+    name: CAB_TIPO.TITLE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: LOV_MONTH.LARGE =====================
+  id: 13917006372221347
+  identification: 
+    name: LOV_MONTH.LARGE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ENERO ========================================
+    id: 13917312141221352
+    entry: 
+      sequence: 1
+      display: ENERO
+      return: 01
+
+  - # ====== Entry: FEBRERO ======================================
+    id: 13917686234221358
+    entry: 
+      sequence: 2
+      display: FEBRERO
+      return: 02
+
+  - # ====== Entry: MARZO ========================================
+    id: 13918077926221358
+    entry: 
+      sequence: 3
+      display: MARZO
+      return: 03
+
+  - # ====== Entry: ABRIL ========================================
+    id: 13918512569221359
+    entry: 
+      sequence: 4
+      display: ABRIL
+      return: 04
+
+  - # ====== Entry: MAYO =========================================
+    id: 13918860292221360
+    entry: 
+      sequence: 5
+      display: MAYO
+      return: 05
+
+  - # ====== Entry: JUNIO ========================================
+    id: 13919257015221361
+    entry: 
+      sequence: 6
+      display: JUNIO
+      return: 06
+
+  - # ====== Entry: JULIO ========================================
+    id: 13919664898221362
+    entry: 
+      sequence: 7
+      display: JULIO
+      return: 07
+
+  - # ====== Entry: AGOSTO =======================================
+    id: 13920109637221363
+    entry: 
+      sequence: 8
+      display: AGOSTO
+      return: 08
+
+  - # ====== Entry: SEPTIEMBRE ===================================
+    id: 13920475593221363
+    entry: 
+      sequence: 9
+      display: SEPTIEMBRE
+      return: 09
+
+  - # ====== Entry: OCTUBRE ======================================
+    id: 13920928477221364
+    entry: 
+      sequence: 10
+      display: OCTUBRE
+      return: 10
+
+  - # ====== Entry: NOVIEMBRE ====================================
+    id: 13921291307221364
+    entry: 
+      sequence: 11
+      display: NOVIEMBRE
+      return: 11
+
+  - # ====== Entry: DICIEMBRE ====================================
+    id: 13921691463221366
+    entry: 
+      sequence: 12
+      display: DICIEMBRE
+      return: 12
+
+- # ====== List of Values: VTA_REMITO_STATUS ===================
+  id: 17795819510016808
+  identification: 
+    name: VTA_REMITO_STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: X - Anulado ==================================
+    id: 17796067158016824
+    entry: 
+      sequence: 1
+      display: X - Anulado
+      return: '-1'
+
+  - # ====== Entry: 1 - Preparado ================================
+    id: 17796469941016826
+    entry: 
+      sequence: 2
+      display: 1 - Preparado
+      return: 1
+
+  - # ====== Entry: 3 - Despachado ===============================
+    id: 17796881678016827
+    entry: 
+      sequence: 3
+      display: 3 - Despachado
+      return: 3
+
+  - # ====== Entry: 8 - No Entregado =============================
+    id: 17797298464016828
+    entry: 
+      sequence: 5
+      display: 8 - No Entregado
+      return: 8
+
+  - # ====== Entry: 9 - Recibido Ok ==============================
+    id: 17797703657016829
+    entry: 
+      sequence: 6
+      display: 9 - Recibido Ok
+      return: 9
+
+  - # ====== Entry: 10 - Facturado ===============================
+    id: 17798110449016829
+    entry: 
+      sequence: 7
+      display: 10 - Facturado
+      return: 10
+
+  - # ====== Entry: 5 - en curso =================================
+    id: 43878668100758997
+    entry: 
+      sequence: 4
+      display: 5 - en curso
+      return: 5
+
+- # ====== List of Values: CLIENTES.STATUS =====================
+  id: 18355222121272839
+  identification: 
+    name: CLIENTES.STATUS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: ACTIVO =======================================
+    id: 18355529268272846
+    entry: 
+      sequence: 1
+      display: ACTIVO
+      return: 1
+
+  - # ====== Entry: INACTIVO =====================================
+    id: 18356322256272848
+    entry: 
+      sequence: 5
+      display: INACTIVO
+      return: 0
+
+  - # ====== Entry: JUDICIAL =====================================
+    id: 27008400660501000
+    entry: 
+      sequence: 6
+      display: JUDICIAL
+      return: 3
+
+  - # ====== Entry: BLOQUEADO ====================================
+    id: 108213665841444036
+    entry: 
+      sequence: 2
+      display: BLOQUEADO
+      return: '-1'
+
+  - # ====== Entry: ELIMINADO ====================================
+    id: 108213959773447494
+    entry: 
+      sequence: 4
+      display: ELIMINADO
+      return: '-2'
+
+- # ====== List of Values: CAB_TIPO.KEY ========================
+  id: 19276984906001829
+  identification: 
+    name: CAB_TIPO.KEY
+
+  subscription: 
+    master: 
+      referenced-id: 15496631586850792
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+
+  column-mapping: 
+    return: ID
+    display: KEY
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: CAB_TIPO.VTA_FACTURAS ===============
+  id: 35860784943074893
+  identification: 
+    name: CAB_TIPO.VTA_FACTURAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+    where-clause: T_MODO = 'VTA_FACTURAS'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CAB_TIPO.FACTURA_VENTA ==============
+  id: 35861419322087644
+  identification: 
+    name: CAB_TIPO.FACTURA_VENTA
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+    where-clause: |
+      T_MODO = 'VTA_FACTURAS'
+      AND T_TIPO = 'FACTURA'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CAB_TIPO.PROV_COMPRAS ===============
+  id: 35861863546120164
+  identification: 
+    name: CAB_TIPO.PROV_COMPRAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+    where-clause: T_MODO = 'PROV_COMPRAS'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CAB_TIPO.VTA_REMITOS ================
+  id: 35862533304158632
+  identification: 
+    name: CAB_TIPO.VTA_REMITOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: T_CAB_TIPO
+    where-clause: T_MODO = 'VTA_REMITOS'
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTAS.PROV_COMPRAS ================
+  id: 44131963100191554
+  identification: 
+    name: CUENTAS.PROV_COMPRAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_LOV
+    where-clause: flg_prov_compras = 1
+
+  column-mapping: 
+    return: ID
+    display: CTA_TITLE
+    default-sort: CTA_TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: GROUP_BY
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTA_IN ===========================
+  id: 44148613944121150
+  identification: 
+    name: CUENTA_IN
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_LOV
+    where-clause: FLG_IN = 1
+
+  column-mapping: 
+    return: ID
+    display: CTA_TITLE
+    default-sort: CTA_TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: GROUP_BY
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTA_OUT ==========================
+  id: 44148769205122632
+  identification: 
+    name: CUENTA_OUT
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_LOV
+    where-clause: FLG_OUT = 1
+
+  column-mapping: 
+    return: ID
+    display: CTA_TITLE
+    default-sort: CTA_TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: GROUP_BY
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTA_BANCOS =======================
+  id: 49395191852073284
+  identification: 
+    name: CUENTA_BANCOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTAS_LOV
+    where-clause: FLG_BANCO = 1
+
+  column-mapping: 
+    return: ID
+    display: CTA_TITLE
+    default-sort: CTA_TITLE
+    sort-direction: Ascending (Nulls Last)
+    group: GROUP_BY
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: CUENTA_TREE =========================
+  id: 49412103447516316
+  identification: 
+    name: CUENTA_TREE
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: CUENTA_TREE
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+    group: PARENT
+    group-sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_STATUS_EMPRESAS =================
+  id: 59432140020336376
+  identification: 
+    name: LOV_STATUS_EMPRESAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_STATUS_EMPRESAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_STATUS_PERSONAS =================
+  id: 59432356819339701
+  identification: 
+    name: LOV_STATUS_PERSONAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_STATUS_PERSONAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_SEMANA ==========================
+  id: 60081747332142542
+  identification: 
+    name: LOV_SEMANA
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: DIAS_DE_SEMANA
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: STICKYS.TIPOS =======================
+  id: 60865676766196238
+  identification: 
+    name: STICKYS.TIPOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select id,title,icon from table(sticky.tipos)
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+    icon: ICON
+
+- # ====== List of Values: STICKYS.TABLAS ======================
+  id: 61056470199592090
+  identification: 
+    name: STICKYS.TABLAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: select id,title from table(sticky.tablas)
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: STAT00 ==============================
+  id: 107639881552460982
+  identification: 
+    name: STAT00
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_STARS
+
+  column-mapping: 
+    return: IX
+    display: KEY
+    default-sort: IX
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: STAT02_CREDITO ======================
+  id: 107646370262475311
+  identification: 
+    name: STAT02_CREDITO
+
+  subscription: 
+    master: 
+      referenced-id: 111075614812194350
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_STARS
+    where-clause: CAT=2
+
+  column-mapping: 
+    return: IX
+    display: KEY
+    default-sort: IX
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: STAT03_PAGO =========================
+  id: 107653604203494019
+  identification: 
+    name: STAT03_PAGO
+
+  subscription: 
+    master: 
+      referenced-id: 111075614812194350
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: LOV_STARS
+    where-clause: CAT = 3
+
+  column-mapping: 
+    return: IX
+    display: KEY
+    default-sort: IX
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_AÑOS ============================
+  id: 110289324833720610
+  identification: 
+    name: LOV_AÑOS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      with  
+      Anios as ( 
+                select extract(year from (sysdate + 40)) a from dual 
+      union all select extract(year from (sysdate + 40)) - 1 from dual 
+      union all select extract(year from (sysdate + 40)) - 2 from dual 
+      union all select extract(year from (sysdate + 40)) - 3 from dual 
+      union all select extract(year from (sysdate + 40)) - 4 from dual 
+      ) 
+      select A ID,A LABEL
+        from Anios
+
+  column-mapping: 
+    return: ID
+    display: LABEL
+    default-sort: ID
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: LOV_ZONAS ===========================
+  id: 150733005749243039
+  identification: 
+    name: LOV_ZONAS
+
+  subscription: 
+    version-number: 1
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: FLT_ZONAS
+
+  column-mapping: 
+    return: ID
+    display: TITLE
+    default-sort: TITLE
+    sort-direction: Ascending (Nulls First)
+

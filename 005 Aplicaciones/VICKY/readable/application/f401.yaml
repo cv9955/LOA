@@ -1,0 +1,356 @@
+---
+# ====== Application: VICKY 2023 =============================
+id: 400
+identification: 
+  name: VICKY 2023
+  alias: VICKY2
+  version: release 3.0
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: false
+  allow-feedback: true
+  logging: true
+  debugging: true
+  compatibility-mode: 21.2 to 24.1
+  accessible-read-only-items: false
+  pass-ecid: N
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: APEX # 1433304420048690
+
+authorization: 
+  authorization-scheme: Must Not Be Public User
+  run-on-public-pages: false
+  run-on-background-job: false
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Enabled for Public Sessions
+  maximum-session-length: 43200
+  maximum-session-idle-time: 7200
+  session-timeout-warning: 0
+
+session-state-protection: 
+  enabled: false
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin-when-cross-origin
+  html-escaping-mode: Extended
+
+database-session: 
+  parsing-schema: VIC
+
+globalization: 
+  primary-language: English (United States) (en-us)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+application-format-masks: 
+  date: DD-MM-YY
+  date-time: 'DD-MM-YY HH24:MI'
+  timestamp: 'DD-MM-YY HH:MIPM'
+  timestamp-time-zone: 'DD-MM-YY HH24:MI'
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Image
+  image-url: '#APP_IMAGES#app-420-logo.png'
+
+progressive-web-app: 
+  enable: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Home
+
+  login-url: 
+    url: 'f?p=&APP_ID.:LOGIN_DESKTOP:&SESSION.'
+    page: LOGIN_DESKTOP
+
+navigation-menu: 
+  list-template: Top Navigation Mega Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-menu-callout
+  list-position: Top
+  list: DESKTOP_MENU # 1380841973048458
+
+navigation-bar: 
+  implementation: List
+  list: DESKTOP_BAR # 1432999802048642
+  list-template: Navigation Bar
+  template-options: 
+  - '#DEFAULT#'
+
+javascript: 
+  file-urls: 
+  - '#APP_FILES#js/pagZero#MIN#.js'
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#APP_IMAGES#css/Pedidos.css'
+  - '#APP_IMAGES#css/Articulos.css'
+  - '#APP_IMAGES#css/vicky2.css'
+  - '#APP_IMAGES#css/vicky2_print.css'
+
+attributes: 
+  theme: Universal Theme # 399
+  global-page: 0
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: false
+  auto-dismiss-success-messages: false
+
+component-settings: 
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 16853364826306274
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  settings: 
+    attribute-1: separated
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 16852833628306274
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 16852306913306274
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 16851766513306273
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 415196365622145
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  settings: 
+    attribute-1: fa-star
+    attribute-4: '#VALUE#'
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 96372729405623
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  settings: 
+    attribute-1: 'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON'
+    attribute-2: VISIBLE
+    attribute-3: 15
+    attribute-4: FOCUS
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 96508595405623
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+    attribute-2: N
+    attribute-3: 'POPUP:ITEM'
+    attribute-4: default
+    attribute-6: LIST
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 96551554405623
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 96700155405623
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-2: N
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 1380331022048456
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 1380505816048458
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 1380556220048458
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-3: N
+    attribute-5: SWITCH
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 1380710282048458
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  settings: 
+    attribute-1: FULL
+    attribute-2: POPUP
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.JK64.HEATMAP ==========
+  id: 1387166284826902
+  identification: 
+    name: PLUGIN_COM.JK64.HEATMAP
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP 
+  id: 1635132904045892
+  identification: 
+    name: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_BE.CTB.SELECT2 ============
+  id: 2204514684123977
+  identification: 
+    name: PLUGIN_BE.CTB.SELECT2
+    type: Item
+
+  settings: 
+    attribute-7: SELECT2
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM_SKILLBUILDERS_SUPER_LOV
+  id: 6419911452834729
+  identification: 
+    name: PLUGIN_COM_SKILLBUILDERS_SUPER_LOV
+    type: Item
+
+  settings: 
+    attribute-1: CONTAINS_IGNORE
+    attribute-3: DEFAULT
+    attribute-4: bar
+    attribute-6: 400
+    attribute-7: Y
+    attribute-8: Your search returned no results.
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP_
+  id: 12039952617927902
+  identification: 
+    name: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP_R1
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+application-settings: 
+- # ====== Application Setting: FEEDBACK_ATTACHMENTS_YN ========
+  id: 724163900363227
+  identification: 
+    name: FEEDBACK_ATTACHMENTS_YN
+
+  value: 
+    value: Y
+    required: false
+
+  advanced: 
+    valid-values: Y, N
+    on-upgrade-keep-value: true
+
+  subscription: 
+    version-number: 1
+
+  configuration: 
+    build-option: 'Feature: Feedback' # 723782702363157
+

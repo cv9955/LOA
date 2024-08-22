@@ -1,0 +1,267 @@
+---
+# ====== Page: PLANILLA SLITTER ==============================
+id: 11
+identification: 
+  name: PLANILLA SLITTER
+  alias: PLANILLA-SLITTER
+  title: PLANILLA SLITTER
+  page-group: Terminado # 12664871773700413
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+
+css: 
+  inline: |
+    .titulo {
+        text-align : center;
+        FONT-SIZE: larger;
+        FONT-WEIGHT: 700;
+    }
+    
+    .grid-pedido {
+       display: grid;
+    
+        /*    display: inline-grid;
+        /* position: relative; */
+        page-break-inside: avoid;
+        border: 3px ridge;
+        margin-bottom: 10px;
+        min-width: -webkit-fill-available;
+        /* font-family: Arial, Helvetica, sans-serif; */
+    }
+    
+    .grid-info  {
+        
+      display: grid;
+      grid-template-columns: auto auto auto  auto  ;      
+      font-size: 14px; 
+      background-color : LAVENDER;
+      border-bottom : 2px ridge;
+      padding : 2px;
+    }
+    
+    .tc { text-align : center;}
+    .tbold { font-weight: 700;}
+    .tgris { font-weight: 700; color:gray;}
+    .tborde { border : 1px solid lightgray;}
+    .nborde { border : 0px ;}
+    
+    .grid-articulo {
+        display: grid;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        grid-template-columns: 50px 100px auto 50px;
+        font-size: 12px;
+    }
+    
+    .grid-plancha {
+        display: grid;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        grid-template-columns: 40px 100px 40px auto;
+        font-size: 12px;
+    }
+    
+    .grid-trazado {
+      display: grid;
+      grid-auto-flow: column;
+      text-align: center;
+    }
+    
+    .grid-slitter {
+        display: grid;
+        grid-auto-flow: column;
+        text-align: center;
+        font-size: 12px;
+        margin-left: 5px; */
+        margin-right: 5px; */
+    }
+    
+    .grid-slitter > div {
+        padding : 1px;
+        border-top: 1px solid;
+    
+    }
+    .guia {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+        
+    }
+    
+    .corte {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+    }
+    
+    .grid-trazado div{
+      border: 1px solid lightgray;
+    }
+    
+    .grid-articulo div {
+       white-space: nowrap; 
+       text-overflow: ellipsis;
+       overflow: hidden;
+       padding : 1px;
+    }
+    
+    
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: New =========================================
+  id: 353736656893245208
+  identification: 
+    name: New
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: 'MOVIL_APP.PLANILLA_SLITTER(:P11_FECHA);'
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P11_FECHA ================================
+  id: 176666980673782008
+  identification: 
+    name: P11_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: New # 353736656893245208
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: SYSDATE
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BACK ========================================
+  id: 177093084671761801
+  identification: 
+    button-name: BACK
+    label: Back
+
+  layout: 
+    sequence: 30
+    region: New # 353736656893245208
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+      page: 1 # Home
+
+    warn-on-unsaved-changes: Do Not Check
+
+branches: 
+- # ====== Branch: Go To Page 1 ================================
+  id: 177074448983463268
+  identification: 
+    name: Go To Page 1
+
+  execution: 
+    sequence: 1
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.&success_msg=#SUCCESS_MSG#'
+      page: 1 # Home
+

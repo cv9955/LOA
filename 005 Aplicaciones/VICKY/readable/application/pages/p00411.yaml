@@ -1,0 +1,156 @@
+---
+# ====== Page: prov_pagos_print ==============================
+id: 411
+identification: 
+  name: prov_pagos_print
+  alias: PROV_PAGOS_PRINT
+  title: Orden de Pago
+  page-group: 400 COMPRAS # 13773987234907448
+
+appearance: 
+  page-mode: Normal
+  page-template: CAV_REMITO
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+    
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/P411_ORDEN_PAGO_PROVEEDOR#MIN#.css'
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Imprimir ====================================
+  id: 85811288193731686
+  identification: 
+    name: Imprimir
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      BEGIN
+      RETURN ORDEN_PAGO(:P411_ID);
+      END;
+      
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+
+page-items: 
+- # ====== Page Item: P411_ID ==================================
+  id: 43975679022140535
+  identification: 
+    name: P411_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Imprimir # 85811288193731686
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: print ===============================
+  id: 46525045011046856
+  identification: 
+    name: print
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 46525565039046862
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: window.print();
+
+    affected-elements: 
+      selection-type: Event Source
+
+    execution: 
+      sequence: 10
+      event: print # 46525045011046856
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

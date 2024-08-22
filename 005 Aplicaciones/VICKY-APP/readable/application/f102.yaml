@@ -1,0 +1,319 @@
+---
+# ====== Application: APP ====================================
+id: 102
+identification: 
+  name: APP
+  alias: APP
+  version: Vickycor 2023
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: false
+  logging: true
+  debugging: true
+  compatibility-mode: 21.2 to 24.1
+  accessible-read-only-items: false
+  pass-ecid: N
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: Application Express Authentication # 176309512082037906
+
+authorization: 
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Enabled for Public Sessions
+  maximum-session-length: 43200
+  maximum-session-idle-time: 43200
+  session-timeout-warning: 600
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Disabled
+  browser-cache: Enabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin-when-cross-origin
+  html-escaping-mode: Extended
+
+database-session: 
+  parsing-schema: VIC
+
+globalization: 
+  primary-language: English (en)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+application-format-masks: 
+  date: DD-MM-RR
+  date-time: 'DD-MM-YYYY HH24:MI'
+  timestamp: DD-MM-YYYY HH24.MI.SSXFF
+  timestamp-time-zone: DD-MM-YYYY HH.MI.SSXFF PM TZR
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: Victoria Corrugados
+
+progressive-web-app: 
+  enable: true
+  installable: true
+  display: Fullscreen
+  screen-orientation: Any
+  ios-status-bar-style: Black
+  enable-push-notifications: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Home
+
+  login-url: 
+    url: 'f?p=&APP_ID.:LOGIN:&APP_SESSION.::&DEBUG.:::'
+    page: LOGIN
+
+navigation-menu: 
+  list-template: Side Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-defaultCollapsed
+  - js-navCollapsed--hidden
+  - t-TreeNav--styleA
+  list-position: Side
+  list: Desktop Navigation Menu # 176310356884037909
+
+navigation-bar: 
+  implementation: List
+  list: Desktop Navigation Bar # 176448034447038079
+  list-template: Navigation Bar
+  template-options: 
+  - '#DEFAULT#'
+
+javascript: 
+  file-urls: 
+  - '#APP_FILES#js/parent_class#MIN#.js'
+  include-jquery-migrate: false
+
+css: 
+  file-urls: 
+  - '#APP_IMAGES#app-icon.css?version=#APP_VERSION#'
+
+attributes: 
+  theme: Universal Theme # 42
+  global-page: 0
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: false
+  auto-dismiss-success-messages: false
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: CORRUGADO
+
+component-settings: 
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 1416778083414928
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  settings: 
+    attribute-1: separated
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 1417287876414928
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 1417781041414928
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 1418270724414929
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 231511637
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 1800701798206062
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  settings: 
+    attribute-1: 'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON'
+    attribute-2: VISIBLE
+    attribute-3: 15
+    attribute-4: FOCUS
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 1800822374206062
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+    attribute-2: N
+    attribute-3: 'POPUP:ITEM'
+    attribute-4: default
+    attribute-6: LIST
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 1800965262206062
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 1801052512206062
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-2: N
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 176307434093037900
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 176308050898037901
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 176308618099037901
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  settings: 
+    attribute-1: FULL
+    attribute-2: POPUP
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 176308969049037901
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  settings: 
+    attribute-1: fa-star
+    attribute-4: '#VALUE#'
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 176309221410037901
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-3: N
+    attribute-5: SWITCH_CB
+
+  subscription: 
+    version-number: 1
+
+pwa-shortcuts: 
+- # ====== PWA Shortcut: icon_app.png ==========================
+  id: 3601908576071302
+  identification: 
+    name: icon_app.png
+
+  layout: 
+    sequence: 10
+
+  link: 
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.'
+      page: 1 # Home
+
+  configuration: 
+    icon-url: pwa/shortcut-icon-10.png
+
+pwa-screenshots: 
+- # ====== PWA Screenshot: screenshot.png ======================
+  id: 3601286072059623
+  label: 
+    label: screenshot.png
+
+  layout: 
+    sequence: 10
+
+  configuration: 
+    screenshot-url: pwa/screenshot.png
+

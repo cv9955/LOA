@@ -1,0 +1,5809 @@
+---
+# ====== Page: EVENTO_DASH ===================================
+id: 210
+identification: 
+  name: EVENTO_DASH
+  alias: EVENTO-DASH
+  title: '&P210_ID. - &P210_TITLE.'
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  inline: '.zona-activa { background-color : orange;}'
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: MATERIALES ==================================
+  id: 3612055666197114
+  identification: 
+    name: MATERIALES
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select *
+        from EVE_ARTS E
+        WHERE E.EVENTO_ID = :P210_ID
+      
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 50
+    parent-region: TAB # 9315171988217739
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 3612125712197115
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.::P34_IX,P34_EVENTO_ID:#IX#,#EVENTO_ID#'
+        page: 34 # EVE_ART_FORM
+        values: 
+          p34_ix: '#IX#'
+          p34_evento_id: '#EVENTO_ID#'
+
+      link-icon: <img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 3666740590531832
+      identification: 
+        name: Primary Report
+        alias: 36668
+
+    columns: 
+    - # ====== Column: IX ==========================================
+      id: 3612228819197116
+      identification: 
+        column-name: IX
+        type: Hidden
+
+      heading: 
+        heading: Ix
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EVENTO_ID ===================================
+      id: 3612353707197117
+      identification: 
+        column-name: EVENTO_ID
+        type: Hidden
+
+      heading: 
+        heading: Evento Id
+
+      layout: 
+        sequence: 20
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MONEDA_ID ===================================
+      id: 3612795957197121
+      identification: 
+        column-name: MONEDA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: MONEDAS.LOV # 4622076220364560
+
+      heading: 
+        heading: Moneda
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: EVE_ZNA_ID ==================================
+      id: 3613719654197131
+      identification: 
+        column-name: EVE_ZNA_ID
+        type: Hidden
+
+      heading: 
+        heading: Eve Zna Id
+
+      layout: 
+        sequence: 80
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_CAT_ID ==================================
+      id: 3613868036197132
+      identification: 
+        column-name: ART_CAT_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ARTICULOS.CAT # 4621806552361625
+
+      heading: 
+        heading: Articulo
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: ART_CANT ====================================
+      id: 3613985527197133
+      identification: 
+        column-name: ART_CANT
+        type: Plain Text
+
+      heading: 
+        heading: Cantidad
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_VALOR ===================================
+      id: 3614035310197134
+      identification: 
+        column-name: ART_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Subtotal
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: UNIDAD_ID ===================================
+      id: 3614186476197135
+      identification: 
+        column-name: UNIDAD_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: UNIDADES.LOV # 4622255269366473
+
+      heading: 
+        heading: Unidad
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: MATERIALES
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: DISTRIBUCION ================================
+  id: 3965836536638323
+  identification: 
+    name: DISTRIBUCION
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select d.EVENTO_ID,
+             d.IX,
+             d.EVE_ZNA_ID,
+             d.DIST_CAT_ID,
+             d.DIST_VALOR,
+             d.DIST_DIAS,
+             d.DIST_AJ,
+             d.MONEDA_ID,
+             z.zna_pot_id,
+             z.zna_tipo_id,
+             z.zna_icon,
+             Z.zna_title,
+             z.zna_desc
+        from EVE_DIST d left join eve_znas_plus z
+        on d.eve_zna_id = z.ix
+        and d.evento_id = z.evento_id
+           where d.EVENTO_ID = :P210_ID
+      
+      
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 10
+    parent-region: TAB # 9315171988217739
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 3965910297638324
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.::P35_EVENTO_ID,P35_IX:#EVENTO_ID#,#IX#'
+        page: 35 # EVE_DIST_FORM
+        values: 
+          p35_evento_id: '#EVENTO_ID#'
+          p35_ix: '#IX#'
+
+      link-icon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 4589187593191690
+      identification: 
+        name: Primary Report
+        alias: 45892
+
+    columns: 
+    - # ====== Column: EVENTO_ID ===================================
+      id: 3966041815638325
+      identification: 
+        column-name: EVENTO_ID
+        type: Hidden
+
+      heading: 
+        heading: Evento Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 3966184623638326
+      identification: 
+        column-name: IX
+        type: Hidden
+
+      heading: 
+        heading: Ix
+
+      layout: 
+        sequence: 20
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DIST_CAT_ID =================================
+      id: 3966305489638328
+      identification: 
+        column-name: DIST_CAT_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: DIST.CAT # 3656215483437120
+
+      heading: 
+        heading: Tipo
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: DIST_VALOR ==================================
+      id: 3966453430638329
+      identification: 
+        column-name: DIST_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Costo Distribucion
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DIST_DIAS ===================================
+      id: 3966502706638330
+      identification: 
+        column-name: DIST_DIAS
+        type: Plain Text
+
+      heading: 
+        heading: Dias
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: DIST_AJ =====================================
+      id: 3966663862638331
+      identification: 
+        column-name: DIST_AJ
+        type: Plain Text
+
+      heading: 
+        heading: Ajuste
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MONEDA_ID ===================================
+      id: 3966722485638332
+      identification: 
+        column-name: MONEDA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: MONEDAS.LOV # 4622076220364560
+
+      heading: 
+        heading: Moneda
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: EVE_ZNA_ID ==================================
+      id: 3967016344638335
+      identification: 
+        column-name: EVE_ZNA_ID
+        type: Hidden
+
+      heading: 
+        heading: Zona
+
+      layout: 
+        sequence: 100
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ZNA_POT_ID ==================================
+      id: 3967140481638336
+      identification: 
+        column-name: ZNA_POT_ID
+        type: Hidden
+
+      heading: 
+        heading: Zna Pot Id
+
+      layout: 
+        sequence: 110
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ZNA_TIPO_ID =================================
+      id: 3967274302638337
+      identification: 
+        column-name: ZNA_TIPO_ID
+        type: Hidden
+
+      heading: 
+        heading: Zna Tipo Id
+
+      layout: 
+        sequence: 120
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ZNA_ICON ====================================
+      id: 3967384688638338
+      identification: 
+        column-name: ZNA_ICON
+        type: Hidden
+
+      heading: 
+        heading: Zna Icon
+
+      layout: 
+        sequence: 130
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ZNA_TITLE ===================================
+      id: 3967416168638339
+      identification: 
+        column-name: ZNA_TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Zona
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ZNA_DESC ====================================
+      id: 3967575219638340
+      identification: 
+        column-name: ZNA_DESC
+        type: Hidden
+
+      heading: 
+        heading: Zna Desc
+
+      layout: 
+        sequence: 150
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: DISTRIBUCION
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: PERSONAL EXTRA ==============================
+  id: 8967210731732819
+  identification: 
+    name: PERSONAL EXTRA
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select E.IX,
+             E.EVENTO_ID,
+             E.EVE_ZNA_ID,
+             E.EMP_CAT_ID,
+             E.EMP_CANT,
+             E.EMP_JORN,
+      
+             E.EMP_VALOR,
+             E.MONEDA_ID,
+             Z.ZNA_TITLE
+      
+        from EVE_EMPS E
+        left join EVE_ZNAS_plus Z 
+        ON E.EVENTO_ID = Z.EVENTO_ID AND E.EVE_ZNA_ID = Z.IX
+        WHERE E.EVENTO_ID = :P210_ID
+      
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 40
+    parent-region: TAB # 9315171988217739
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 8967374149732820
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:33:&SESSION.::&DEBUG.::P33_IX,P33_EVENTO_ID:#IX#,#EVENTO_ID#'
+        page: 33 # EVE_EMP_FORM
+        values: 
+          p33_ix: '#IX#'
+          p33_evento_id: '#EVENTO_ID#'
+
+      link-icon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 10627703808182123
+      identification: 
+        name: Primary Report
+        alias: 106278
+
+    columns: 
+    - # ====== Column: EVE_ZNA_ID ==================================
+      id: 3682716020766702
+      identification: 
+        column-name: EVE_ZNA_ID
+        type: Hidden
+
+      heading: 
+        heading: Eve Zna Id
+
+      layout: 
+        sequence: 30
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 8967446260732821
+      identification: 
+        column-name: IX
+        type: Hidden
+
+      heading: 
+        heading: Ix
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EVENTO_ID ===================================
+      id: 8967527219732822
+      identification: 
+        column-name: EVENTO_ID
+        type: Hidden
+
+      heading: 
+        heading: Evento Id
+
+      layout: 
+        sequence: 20
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EMP_CAT_ID ==================================
+      id: 8967633541732823
+      identification: 
+        column-name: EMP_CAT_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: EMPLEADOS.CAT # 4621651413357442
+
+      heading: 
+        heading: Categoria
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: EMP_CANT ====================================
+      id: 8967748929732824
+      identification: 
+        column-name: EMP_CANT
+        type: Plain Text
+
+      heading: 
+        heading: Cantidad
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EMP_VALOR ===================================
+      id: 8967810740732825
+      identification: 
+        column-name: EMP_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Costo Total
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MONEDA_ID ===================================
+      id: 8967965607732826
+      identification: 
+        column-name: MONEDA_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: MONEDAS.LOV # 4622076220364560
+
+      heading: 
+        heading: Moneda
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: ZNA_TITLE ===================================
+      id: 10813993372498302
+      identification: 
+        column-name: ZNA_TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Zna Title
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EMP_JORN ====================================
+      id: 10816441924498327
+      identification: 
+        column-name: EMP_JORN
+        type: Plain Text
+
+      heading: 
+        heading: Jornadas
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: PERSONAL EXTRA
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: UBICACION ===================================
+  id: 8970212184732849
+  identification: 
+    name: UBICACION
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select IX,
+             NVL(TITLE,DIRECCION) TITLE,
+             STATUS,
+             CALLE || ' ' || NRO DESCRIPTION,
+             PARTIDO,
+             PROVINCIA,
+             TRUNC(MAPS_DISTANCIA(LNG,LAT)) KMS
+        from EVE_MAPS
+       where EVENTO_ID = :P210_ID
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-useLocalStorage
+    - t-Region--controlsPosEnd
+    - is-collapsed
+    - t-Region--accent3
+    - t-Region--stacked
+    - t-Region--scrollBody
+    - t-Form--slimPadding
+    - margin-top-none
+    - margin-bottom-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: false
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Rows returned
+    sql-query: |
+      select 1
+        from EVE_MAPS
+       where EVENTO_ID = :P210_ID
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      overline: '&PROVINCIA.'
+      title: '&TITLE.'
+      description: '&DESCRIPTION.'
+      miscellaneous: '&KMS. km'
+      display-avatar: false
+      display-badge: false
+      apply-theme-colors: false
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      initial-entities-count: 1
+      show-total-count: false
+
+    messages: 
+      when-no-data-found: agregar ubicacion
+
+  columns: 
+  - # ====== Column: IX ==========================================
+    id: 11609695745259801
+    identification: 
+      name: IX
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: IX
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: TITLE =======================================
+    id: 11609701232259802
+    identification: 
+      name: TITLE
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: STATUS ======================================
+    id: 11609841605259803
+    identification: 
+      name: STATUS
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: STATUS
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: PARTIDO =====================================
+    id: 11610208660259807
+    identification: 
+      name: PARTIDO
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: PARTIDO
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: PROVINCIA ===================================
+    id: 11610349405259808
+    identification: 
+      name: PROVINCIA
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: PROVINCIA
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 11610973058259814
+    identification: 
+      name: DESCRIPTION
+
+    layout: 
+      sequence: 100
+
+    source: 
+      type: Database Column
+      database-column: DESCRIPTION
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: KMS =========================================
+    id: 11611061332259815
+    identification: 
+      name: KMS
+
+    layout: 
+      sequence: 110
+
+    source: 
+      type: Database Column
+      database-column: KMS
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  actions: 
+  - # ====== Action: Full Row Link ===============================
+    id: 11611122379259816
+    identification: 
+      position: Full Row Link # 1797746164228765720
+
+    layout: 
+      sequence: 10
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:13:&SESSION.::&DEBUG.::P13_EVENTO_ID,P13_IX:&P210_ID.,&IX.'
+        page: 13 # EVE_MAPS_PLUGGION
+        values: 
+          p13_evento_id: '&P210_ID.'
+          p13_ix: '&IX.'
+
+- # ====== Region: ZONAS =======================================
+  id: 9312916979217717
+  identification: 
+    name: ZONAS
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select IX,
+             STATUS,
+             CASE WHEN IX = :P210_ZNA_ID THEN 'zona-activa' END flg_active,
+             get_param_icon (p_KEY => 'ZNA_TIPO',p_ID =>ZNA_TIPO_ID) ICON_HTML,
+             CASE WHEN TITLE IS NULL THEN get_param_title(p_KEY => 'ZNA_TIPO',p_ID =>ZNA_TIPO_ID) ELSE TITLE END TITLE,
+             get_param_title(p_KEY => 'ZNA_POT',p_ID =>ZNA_POT_ID) DESCRIPTION,
+             case when FEC_INI IS NOT NULL THEN TO_CHAR(FEC_INI, 'DD/MM') end ||  
+             case when FEC_FIN IS NOT NULL THEN ' >> ' || TO_CHAR(FEC_FIN, 'DD/MM') end fecha, 
+             zna_pot_id
+        from EVE_ZNAS
+       where EVENTO_ID = :P210_ID
+    page-items-to-submit: 
+    - P210_ID
+    - P210_ZNA_ID
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - js-useLocalStorage
+    - t-Region--controlsPosEnd
+    - is-expanded
+    - t-Region--accent4
+    - t-Region--stacked
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: false
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      overline: '&FECHA.'
+      title: '&TITLE.'
+      description: '&DESCRIPTION.'
+      display-avatar: true
+      display-badge: false
+      apply-theme-colors: false
+
+    avatar: 
+      type: Icon
+      icon: '&ICON_HTML.'
+      shape: No Shape
+      size: Medium
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: FECHA =======================================
+    id: 8969227213732839
+    identification: 
+      name: FECHA
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: FECHA
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: IX ==========================================
+    id: 9424310912962610
+    identification: 
+      name: IX
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: IX
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: STATUS ======================================
+    id: 9424423858962611
+    identification: 
+      name: STATUS
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: STATUS
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FLG_ACTIVE ==================================
+    id: 9424589347962612
+    identification: 
+      name: FLG_ACTIVE
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: FLG_ACTIVE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 9424644886962613
+    identification: 
+      name: DESCRIPTION
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: DESCRIPTION
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 9424732114962614
+    identification: 
+      name: ICON_HTML
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: ICON_HTML
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: TITLE =======================================
+    id: 9424850299962615
+    identification: 
+      name: TITLE
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ZNA_POT_ID ==================================
+    id: 9424938264962616
+    identification: 
+      name: ZNA_POT_ID
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: ZNA_POT_ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  actions: 
+  - # ====== Action: Full Row Link ===============================
+    id: 8968649368732833
+    identification: 
+      position: Full Row Link # 1797746164228765720
+
+    layout: 
+      sequence: 20
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:211:&SESSION.::&DEBUG.:211:P211_EVENTO_ID,P211_IX:&P210_ID.,&IX.'
+        page: 211 # EVENTO_ZONA_FORM
+        clear-cache: 211
+        values: 
+          p211_evento_id: '&P210_ID.'
+          p211_ix: '&IX.'
+
+- # ====== Region: EVENTO ======================================
+  id: 9313064887217718
+  identification: 
+    name: EVENTO
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: EVENTOS
+    include-rowid-column: false
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--stacked
+    - t-Region--scrollBody
+    - margin-top-none
+    - margin-bottom-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: TAB =========================================
+  id: 9315171988217739
+  identification: 
+    name: TAB
+    type: Region Display Selector
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Tabs Container
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - t-TabsRegion-mod--simple
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P210_ID
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: true
+      include-'show-all': true
+      remember-selection: By User
+
+- # ====== Region: GRUPOS ======================================
+  id: 9315271755217740
+  identification: 
+    name: GRUPOS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select g.IX,
+             g.EVENTO_ID,
+             g.EVE_ZNA_ID,
+             g.GRP_CAT_ID,
+             g.GRP_CONF_ID,
+             g.GRP_TIME_ID,
+             g.GRP_VALOR,   
+      
+             g.FLT_CAT_ID,
+             g.FLT_VALOR,
+            
+             g.GAS_MODO_ID,
+             g.GAS_VALOR, 
+             g.GAS_HORAS, 
+      
+            Z.zna_title
+      
+        from EVE_GRPS g left join eve_znas_plus z
+        on g.eve_zna_id = z.ix
+        and g.evento_id = z.evento_id
+           where 
+       g.EVENTO_ID = :P210_ID
+      
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 20
+    parent-region: TAB # 9315171988217739
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 9315354806217741
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_EVENTO_ID,P31_IX:&P210_ID.,#IX#'
+        page: 31 # EVE_GRP_FORM
+        values: 
+          p31_evento_id: '&P210_ID.'
+          p31_ix: '#IX#'
+
+      link-icon: <span role="img" aria-label="Edit" class="fa fa-edit" title="Edit"></span>
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: false
+      save-report: true
+      save-public-report: false
+      reset: true
+      help: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 9435639873964046
+      identification: 
+        name: Primary Report
+        alias: 94357
+
+    column-groups: 
+    - # ====== Column Group: Grupos ================================
+      id: 8966630002732813
+      identification: 
+        name: Grupos
+
+      layout: 
+        sequence: 10
+
+    - # ====== Column Group: Trer ==================================
+      id: 8966752997732814
+      identification: 
+        name: Trer
+
+      layout: 
+        sequence: 20
+
+    - # ====== Column Group: Zona ==================================
+      id: 8967191280732818
+      identification: 
+        name: Zona
+
+      layout: 
+        sequence: 30
+
+    - # ====== Column Group: Gasoil ================================
+      id: 11885836072560211
+      identification: 
+        name: Gasoil
+
+      layout: 
+        sequence: 40
+
+    columns: 
+    - # ====== Column: GAS_HORAS ===================================
+      id: 6444792573210620
+      identification: 
+        column-name: GAS_HORAS
+        type: Plain Text
+
+      heading: 
+        heading: Horas
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 260
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ZNA_TITLE ===================================
+      id: 8966877829732815
+      identification: 
+        column-name: ZNA_TITLE
+        type: Plain Text
+
+      heading: 
+        heading: Zona
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: start
+        group: Zona # 8967191280732818
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 9315436875217742
+      identification: 
+        column-name: IX
+        type: Hidden
+
+      heading: 
+        heading: Ix
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EVENTO_ID ===================================
+      id: 9315562765217743
+      identification: 
+        column-name: EVENTO_ID
+        type: Hidden
+
+      heading: 
+        heading: Evento Id
+
+      layout: 
+        sequence: 20
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GRP_CAT_ID ==================================
+      id: 9315686115217744
+      identification: 
+        column-name: GRP_CAT_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GRUPOS.CAT # 4621224300351050
+
+      heading: 
+        heading: Categoria
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+        group: Grupos # 8966630002732813
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: GRP_CONF_ID =================================
+      id: 9315713945217745
+      identification: 
+        column-name: GRP_CONF_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GRP_CONF_LOV # 10454129571892807
+
+      heading: 
+        heading: Configuracion
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+        group: Grupos # 8966630002732813
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: GRP_TIME_ID =================================
+      id: 9315899779217746
+      identification: 
+        column-name: GRP_TIME_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GRP_TIME_LOV # 10454351423894291
+
+      heading: 
+        heading: Tiempo
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: end
+        group: Grupos # 8966630002732813
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: FLT_CAT_ID ==================================
+      id: 9315921678217747
+      identification: 
+        column-name: FLT_CAT_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: FLETES.CAT # 4621495778355634
+
+      heading: 
+        heading: Flete
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+        group: Trer # 8966752997732814
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: GRP_VALOR ===================================
+      id: 9316158058217749
+      identification: 
+        column-name: GRP_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Costo Grupo
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+        group: Grupos # 8966630002732813
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FLT_VALOR ===================================
+      id: 9316220958217750
+      identification: 
+        column-name: FLT_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Costo Flete
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+        group: Trer # 8966752997732814
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EVE_ZNA_ID ==================================
+      id: 9424094874962607
+      identification: 
+        column-name: EVE_ZNA_ID
+        type: Hidden
+
+      heading: 
+        heading: Zona
+
+      layout: 
+        sequence: 30
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: GAS_MODO_ID =================================
+      id: 11886318813560216
+      identification: 
+        column-name: GAS_MODO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: GAS_MODO_LOV # 12215950524804089
+
+      heading: 
+        heading: Consumo
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: end
+        group: Gasoil # 11885836072560211
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: GAS_VALOR ===================================
+      id: 11886641012560219
+      identification: 
+        column-name: GAS_VALOR
+        type: Plain Text
+
+      heading: 
+        heading: Gas Valor
+        alignment: end
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 230
+        column-alignment: end
+        group: Gasoil # 11885836072560211
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+- # ====== Region: &P210_ID. - &P210_TITLE. ====================
+  id: 9347192402335697
+  identification: 
+    name: '&P210_ID. - &P210_TITLE.'
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 2005438132195560
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useRegionTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: DISTRIBUCION ================================
+  id: 9608199028784841
+  identification: 
+    name: DISTRIBUCION
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_05
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--h3
+    - t-Form--slimPadding
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Presupuestos ================================
+  id: 9641675158688810
+  identification: 
+    name: Presupuestos
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: 'select id,fecha from t_presupuestos where evento_id = :P210_ID'
+    page-items-to-submit: 
+    - P210_ID
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Collapsible
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--controlsPosEnd
+    - is-expanded
+    - t-Region--accent9
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      title: '&FECHA.'
+      display-avatar: false
+      display-badge: false
+      apply-theme-colors: true
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 15
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 9641741751688811
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: FECHA =======================================
+    id: 9641868473688812
+    identification: 
+      name: FECHA
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: FECHA
+      data-type: DATE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  actions: 
+  - # ====== Action: Full Row Link ===============================
+    id: 9641980947688813
+    identification: 
+      position: Full Row Link # 1797746164228765720
+
+    layout: 
+      sequence: 10
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:41:&SESSION.::&DEBUG.::P41_ID:&ID.'
+        page: 41 # PRESUP001
+        values: 
+          p41_id: '&ID.'
+
+      link-attributes: TARGET = "P41"
+
+- # ====== Region: GRUPOS ======================================
+  id: 10815551790498318
+  identification: 
+    name: GRUPOS
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_05
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Content Block
+    template-options: 
+    - '#DEFAULT#'
+    - t-ContentBlock--h3
+    - t-Form--slimPadding
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: COTIZACIONES ================================
+  id: 11614386651259848
+  identification: 
+    name: COTIZACIONES
+    type: Badge
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: COTIZ
+    include-rowid-column: false
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: 8
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region-orderBy--end
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      label: '&TITLE.'
+      value: VALOR
+      icon: fa-usd
+      display-label: true
+      style: Default
+      shape: Default
+      size: Default
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      initial-entities-count: 3
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 10816691737498329
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: KEY =========================================
+    id: 10816709118498330
+    identification: 
+      name: KEY
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: KEY
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: TITLE =======================================
+    id: 10816872325498331
+    identification: 
+      name: TITLE
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: STATUS ======================================
+    id: 10816900290498332
+    identification: 
+      name: STATUS
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: STATUS
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: VALOR =======================================
+    id: 10817034819498333
+    identification: 
+      name: VALOR
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: VALOR
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: FECHA =======================================
+    id: 10817162146498334
+    identification: 
+      name: FECHA
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: FECHA
+      data-type: DATE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+page-items: 
+- # ====== Page Item: P210_CANT_DIAS ===========================
+  id: 3611894134197112
+  identification: 
+    name: P210_CANT_DIAS
+    type: Display Only
+
+  label: 
+    label: Cant Dias
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 110
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-clock-o
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: CANT_DIAS
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_CLI_DFISCAL_ID ======================
+  id: 3611941477197113
+  identification: 
+    name: P210_CLI_DFISCAL_ID
+    type: Select List
+
+  label: 
+    label: Razon Social
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'select title,id from cli_dfiscal where cliente_id = :P210_CLIENTE_ID'
+    display-extra-values: true
+    display-null-value: true
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P210_CLIENTE_ID
+    items-to-submit: 
+    - P210_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: CLI_DFISCAL_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_DIST_1 ===========================
+  id: 3682821402766703
+  identification: 
+    name: P210_ST_DIST_1
+    type: Number Field
+
+  label: 
+    label: Distribucion
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_ARTS_1 ===========================
+  id: 3682933015766704
+  identification: 
+    name: P210_ST_ARTS_1
+    type: Number Field
+
+  label: 
+    label: Total Materiales
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_DIST =============================
+  id: 3683049116766705
+  identification: 
+    name: P210_ST_DIST
+    type: Number Field
+
+  label: 
+    label: Distribucion
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 20
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_ARTS =============================
+  id: 3683140888766706
+  identification: 
+    name: P210_ST_ARTS
+    type: Number Field
+
+  label: 
+    label: Total Materiales
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_TT_DIST =============================
+  id: 3683260573766707
+  identification: 
+    name: P210_TT_DIST
+    type: Number Field
+
+  label: 
+    label: TOTAL DISTRIBUCION
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-success
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_TT_DIST_1 ===========================
+  id: 3683354649766708
+  identification: 
+    name: P210_TT_DIST_1
+    type: Number Field
+
+  label: 
+    label: TOTAL DISTRIBUCION
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 90
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-success
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ID ==================================
+  id: 9313293118217720
+  identification: 
+    name: P210_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: EVENTO # 9313064887217718
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_TITLE ===============================
+  id: 9313326011217721
+  identification: 
+    name: P210_TITLE
+    type: Text Field
+
+  label: 
+    label: Evento
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 40
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: TITLE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_STATUS ==============================
+  id: 9313548500217723
+  identification: 
+    name: P210_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: EVE.STATUS # 5748218114679882
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_CLIENTE_ID ==========================
+  id: 9313658610217724
+  identification: 
+    name: P210_CLIENTE_ID
+    type: Select List
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 3736475304094515
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_FEC_INI =============================
+  id: 9313737216217725
+  identification: 
+    name: P210_FEC_INI
+    type: Date Picker
+
+  label: 
+    label: Inicio
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 90
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: FEC_INI
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_FEC_FIN =============================
+  id: 9313824274217726
+  identification: 
+    name: P210_FEC_FIN
+    type: Date Picker
+
+  label: 
+    label: Hasta
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 100
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: FEC_FIN
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_JORNADAS ============================
+  id: 9313977407217727
+  identification: 
+    name: P210_JORNADAS
+    type: Number Field
+
+  label: 
+    label: Jornadas
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 120
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVENTO # 9313064887217718
+    column: JORNADAS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ZNA_ID ==============================
+  id: 9424168223962608
+  identification: 
+    name: P210_ZNA_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: ZONAS # 9312916979217717
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_GRUPOS ===========================
+  id: 10815679338498319
+  identification: 
+    name: P210_ST_GRUPOS
+    type: Number Field
+
+  label: 
+    label: St Grupos
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 10
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_FLETES ===========================
+  id: 10815800091498321
+  identification: 
+    name: P210_ST_FLETES
+    type: Number Field
+
+  label: 
+    label: St Fletes
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_EMPS =============================
+  id: 10815941390498322
+  identification: 
+    name: P210_ST_EMPS
+    type: Number Field
+
+  label: 
+    label: Total Empleados
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_TT_GRUPOS ===========================
+  id: 10816233420498325
+  identification: 
+    name: P210_TT_GRUPOS
+    type: Number Field
+
+  label: 
+    label: TOTAL GRUPOS
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 70
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-success
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_GASOIL ===========================
+  id: 11613152757259836
+  identification: 
+    name: P210_ST_GASOIL
+    type: Number Field
+
+  label: 
+    label: St Gasoil
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-usd
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_GRUPOS_1 =========================
+  id: 11613274916259837
+  identification: 
+    name: P210_ST_GRUPOS_1
+    type: Number Field
+
+  label: 
+    label: Total Grupos
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 20
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_FLETES_1 =========================
+  id: 11613378723259838
+  identification: 
+    name: P210_ST_FLETES_1
+    type: Number Field
+
+  label: 
+    label: Total Fletes
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_GASOIL_1 =========================
+  id: 11613449303259839
+  identification: 
+    name: P210_ST_GASOIL_1
+    type: Number Field
+
+  label: 
+    label: Total Gasoil
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_TT_GRUPOS_1 =========================
+  id: 11613588382259840
+  identification: 
+    name: P210_TT_GRUPOS_1
+    type: Number Field
+
+  label: 
+    label: TOTAL GRUPOS
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 90
+    region: GRUPOS # 10815551790498318
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-success
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_COTIZ ===============================
+  id: 11613775077259842
+  identification: 
+    name: P210_COTIZ
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: COTIZACIONES # 11614386651259848
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_GASOIL ==============================
+  id: 11614441600259849
+  identification: 
+    name: P210_GASOIL
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: COTIZACIONES # 11614386651259848
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P210_ST_EMPS_1 ===========================
+  id: 11884876710560201
+  identification: 
+    name: P210_ST_EMPS_1
+    type: Number Field
+
+  label: 
+    label: Total Empleados
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 50
+    region: DISTRIBUCION # 9608199028784841
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-bold
+    icon: fa-money
+    format-mask: S999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-color-21-bg
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: ADD_MATERIAL ================================
+  id: 3614263884197136
+  identification: 
+    button-name: ADD_MATERIAL
+    label: Add Material
+
+  layout: 
+    sequence: 20
+    region: MATERIALES # 3612055666197114
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.:34:P34_EVENTO_ID:&P210_ID.'
+      page: 34 # EVE_ART_FORM
+      clear-cache: 34
+      values: 
+        p34_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+- # ====== Button: ADD_DIST ====================================
+  id: 3966989404638334
+  identification: 
+    button-name: ADD_DIST
+    label: Add Distribucion
+
+  layout: 
+    sequence: 20
+    region: DISTRIBUCION # 3965836536638323
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.:35:P35_EVENTO_ID:&P210_ID.'
+      page: 35 # EVE_DIST_FORM
+      clear-cache: 35
+      values: 
+        p35_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+- # ====== Button: PRESUP ======================================
+  id: 6447272926210645
+  identification: 
+    button-name: PRESUP
+    label: PRESUPUESTO
+
+  layout: 
+    sequence: 140
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconLeft
+    - t-Button--stretch
+    - t-Button--gapTop
+    icon: fa-print
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  confirmation: 
+    message: Confirma la Emision del Nuevo Presupuesto? El Evento pasa a estado 2 y se bloquea
+    style: Information
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+  security: 
+    authorization-scheme: CAV # 11501169374902368
+
+- # ====== Button: ADD_GRUPO ===================================
+  id: 8968152596732828
+  identification: 
+    button-name: ADD_GRUPO
+    label: Add Grupo
+
+  layout: 
+    sequence: 10
+    region: GRUPOS # 9315271755217740
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:31:P31_EVENTO_ID:&P210_ID.'
+      page: 31 # EVE_GRP_FORM
+      clear-cache: 31
+      values: 
+        p31_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+- # ====== Button: ADD_PLACE ===================================
+  id: 8970107740732848
+  identification: 
+    button-name: ADD_PLACE
+    label: UBICACION
+
+  layout: 
+    sequence: 20
+    region: '&P210_ID. - &P210_TITLE.' # 9347192402335697
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconLeft
+    icon: fa-map-pin
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:13:&SESSION.::&DEBUG.:13:P13_EVENTO_ID:&P210_ID.'
+      page: 13 # EVE_MAPS_PLUGGION
+      clear-cache: 13
+      values: 
+        p13_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: |
+      select 1
+        from EVE_MAPS
+       where EVENTO_ID = :P210_ID
+
+- # ====== Button: ADD_ZONA ====================================
+  id: 9314903341217737
+  identification: 
+    button-name: ADD_ZONA
+    label: Agregar Zona
+
+  layout: 
+    sequence: 10
+    region: '&P210_ID. - &P210_TITLE.' # 9347192402335697
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:211:&SESSION.::&DEBUG.:211:P211_EVENTO_ID:&P210_ID.'
+      page: 211 # EVENTO_ZONA_FORM
+      clear-cache: 211
+      values: 
+        p211_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: DELETE ======================================
+  id: 9427214304962639
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 10
+    region: '&P210_ID. - &P210_TITLE.' # 9347192402335697
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: 'Seguro ? '
+    style: Warning
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: 'select 1 from eve_znas where evento_id = :P210_ID'
+
+- # ====== Button: SAVE ========================================
+  id: 9427329112962640
+  identification: 
+    button-name: SAVE
+    label: GUARDAR
+
+  layout: 
+    sequence: 130
+    region: EVENTO # 9313064887217718
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: 9
+    new-column: true
+    column-span: 2
+    alignment: Left center
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconLeft
+    - t-Button--stretch
+    - t-Button--gapTop
+    icon: fa-save
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+- # ====== Button: ADD_EMPLEADO ================================
+  id: 10814381131498306
+  identification: 
+    button-name: ADD_EMPLEADO
+    label: Add Empleado
+
+  layout: 
+    sequence: 10
+    region: PERSONAL EXTRA # 8967210731732819
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:33:&SESSION.::&DEBUG.:33:P33_EVENTO_ID:&P210_ID.'
+      page: 33 # EVE_EMP_FORM
+      clear-cache: 33
+      values: 
+        p33_evento_id: '&P210_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Item = Value
+    item: P210_STATUS
+    value: 1
+
+- # ====== Button: COTIZACIONES ================================
+  id: 10817298973498335
+  identification: 
+    button-name: COTIZACIONES
+    label: Cotiz
+
+  layout: 
+    sequence: 10
+    region: '&P210_ID. - &P210_TITLE.' # 9347192402335697
+    slot: HELP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-usd
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:902:&SESSION.::&DEBUG.:::'
+      page: 902 # COTIZACIONES
+
+    warn-on-unsaved-changes: Do Not Check
+
+  security: 
+    authorization-scheme: Parameter Edit # 11501343427908206
+
+dynamic-actions: 
+- # ====== Dynamic Action: change P21_ZNA_ID ===================
+  id: 8968886342732835
+  identification: 
+    name: change P21_ZNA_ID
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P210_ZNA_ID
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 8968911849732836
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ZONAS # 9312916979217717
+
+    execution: 
+      sequence: 10
+      event: change P21_ZNA_ID # 8968886342732835
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: region grupo dialog closed ==========
+  id: 8969098556732837
+  identification: 
+    name: region grupo dialog closed
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: GRUPOS # 9315271755217740
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 8969118455732838
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: GRUPOS # 9315271755217740
+
+    execution: 
+      sequence: 10
+      event: region grupo dialog closed # 8969098556732837
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: zonas dialog closed button add ======
+  id: 9423801201962605
+  identification: 
+    name: zonas dialog closed button add
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_ZONA # 9314903341217737
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9423998616962606
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ZONAS # 9312916979217717
+
+    execution: 
+      sequence: 10
+      event: zonas dialog closed button add # 9423801201962605
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: distribucion add button =============
+  id: 9743312482372312
+  identification: 
+    name: distribucion add button
+
+  execution: 
+    sequence: 21
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_DIST # 3966989404638334
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9743412374372313
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DISTRIBUCION # 3965836536638323
+
+    execution: 
+      sequence: 10
+      event: distribucion add button # 9743312482372312
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: add_grupo dialog closed =============
+  id: 9743545815372314
+  identification: 
+    name: add_grupo dialog closed
+
+  execution: 
+    sequence: 31
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_GRUPO # 8968152596732828
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9743662794372315
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: GRUPOS # 9315271755217740
+
+    execution: 
+      sequence: 10
+      event: add_grupo dialog closed # 9743545815372314
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: add_empleado dialog close ===========
+  id: 9743772196372316
+  identification: 
+    name: add_empleado dialog close
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_EMPLEADO # 10814381131498306
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9743870118372317
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PERSONAL EXTRA # 8967210731732819
+
+    execution: 
+      sequence: 10
+      event: add_empleado dialog close # 9743772196372316
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: add material dialog close ===========
+  id: 9743981651372318
+  identification: 
+    name: add material dialog close
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: ADD_MATERIAL # 3614263884197136
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9744072270372319
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MATERIALES # 3612055666197114
+
+    execution: 
+      sequence: 10
+      event: add material dialog close # 9743981651372318
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: materials dialog closed =============
+  id: 9744363381372322
+  identification: 
+    name: materials dialog closed
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: MATERIALES # 3612055666197114
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9744465638372323
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: MATERIALES # 3612055666197114
+
+    execution: 
+      sequence: 10
+      event: materials dialog closed # 9744363381372322
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: distribucion dialog closed ==========
+  id: 9744559984372324
+  identification: 
+    name: distribucion dialog closed
+
+  execution: 
+    sequence: 120
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: DISTRIBUCION # 3965836536638323
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9744685390372325
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DISTRIBUCION # 3965836536638323
+
+    execution: 
+      sequence: 10
+      event: distribucion dialog closed # 9744559984372324
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: EMPLEADO dialog closed ==============
+  id: 10814803919498311
+  identification: 
+    name: EMPLEADO dialog closed
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: PERSONAL EXTRA # 8967210731732819
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 10814940606498312
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: PERSONAL EXTRA # 8967210731732819
+
+    execution: 
+      sequence: 10
+      event: EMPLEADO dialog closed # 10814803919498311
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: zonas dialog closed =================
+  id: 11887630159560229
+  identification: 
+    name: zonas dialog closed
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: ZONAS # 9312916979217717
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 11887718323560230
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: ZONAS # 9312916979217717
+
+    execution: 
+      sequence: 10
+      event: zonas dialog closed # 11887630159560229
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: ubicacion dialog clossed ============
+  id: 11887921644560232
+  identification: 
+    name: ubicacion dialog clossed
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: UBICACION # 8970212184732849
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 11888056913560233
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: UBICACION # 8970212184732849
+
+    execution: 
+      sequence: 10
+      event: ubicacion dialog clossed # 11887921644560232
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P210_ST_ARTS ===========================
+  id: 3683856087766713
+  identification: 
+    item-name: P210_ST_ARTS
+
+  execution: 
+    sequence: 140
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(art_valor) from eve_arts where evento_id =:P210_ID'
+
+- # ====== Computation: P210_ST_ARTS_1 =========================
+  id: 3683964686766714
+  identification: 
+    item-name: P210_ST_ARTS_1
+
+  execution: 
+    sequence: 150
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_ARTS * :P210_COTIZ'
+
+- # ====== Computation: P210_TT_DIST ===========================
+  id: 3684074837766715
+  identification: 
+    item-name: P210_TT_DIST
+
+  execution: 
+    sequence: 180
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      NVL(:P210_ST_DIST,0) +
+      NVL(:P210_ST_EMPS,0) +
+      nvl(:P210_ST_ARTS,0)
+
+- # ====== Computation: P210_TT_DIST_1 =========================
+  id: 3684167519766716
+  identification: 
+    item-name: P210_TT_DIST_1
+
+  execution: 
+    sequence: 190
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_TT_DIST * :P210_COTIZ'
+
+- # ====== Computation: P210_ST_DIST ===========================
+  id: 3967661538638341
+  identification: 
+    item-name: P210_ST_DIST
+
+  execution: 
+    sequence: 160
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(DIST_VALOR) from eve_dist where evento_id =:P210_ID'
+
+- # ====== Computation: P210_ST_DIST_1 =========================
+  id: 3967779348638342
+  identification: 
+    item-name: P210_ST_DIST_1
+
+  execution: 
+    sequence: 170
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_DIST * :P210_COTIZ'
+
+- # ====== Computation: P210_ST_GASOIL_1 =======================
+  id: 6445403047210627
+  identification: 
+    item-name: P210_ST_GASOIL_1
+
+  execution: 
+    sequence: 80
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_GASOIL * :P210_COTIZ'
+
+- # ====== Computation: P210_STATUS ============================
+  id: 6447327716210646
+  identification: 
+    item-name: P210_STATUS
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 2
+
+  server-side-condition: 
+    type: Request = Value
+    value: PRESUP
+
+- # ====== Computation: P210_ST_GRUPOS =========================
+  id: 10815784508498320
+  identification: 
+    item-name: P210_ST_GRUPOS
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(grp_valor) from eve_grps where evento_id =:P210_ID'
+
+- # ====== Computation: P210_ST_EMPS ===========================
+  id: 10816083927498323
+  identification: 
+    item-name: P210_ST_EMPS
+
+  execution: 
+    sequence: 120
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(emp_valor) TOTAL from eve_emps where evento_id =:P210_ID'
+
+- # ====== Computation: P210_ST_FLETES =========================
+  id: 10816183091498324
+  identification: 
+    item-name: P210_ST_FLETES
+
+  execution: 
+    sequence: 50
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(flt_valor) from eve_grps where evento_id =:P210_ID'
+
+- # ====== Computation: P210_TT_GRUPOS =========================
+  id: 10816337654498326
+  identification: 
+    item-name: P210_TT_GRUPOS
+
+  execution: 
+    sequence: 100
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      NVL(:P210_ST_GRUPOS,0) +
+      NVL(:P210_ST_FLETES,0) +
+      nvl(:P210_ST_GASOIL,0)
+
+- # ====== Computation: P210_ST_GRUPOS_1 =======================
+  id: 11613639500259841
+  identification: 
+    item-name: P210_ST_GRUPOS_1
+
+  execution: 
+    sequence: 40
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_GRUPOS * :P210_COTIZ'
+
+- # ====== Computation: P210_COTIZ =============================
+  id: 11613806632259843
+  identification: 
+    item-name: P210_COTIZ
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: SELECT VALOR FROM COTIZ WHERE KEY = '$VEN'
+
+- # ====== Computation: P210_ST_FLETES_1 =======================
+  id: 11613975205259844
+  identification: 
+    item-name: P210_ST_FLETES_1
+
+  execution: 
+    sequence: 60
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_FLETES * :P210_COTIZ'
+
+- # ====== Computation: P210_TT_GRUPOS_1 =======================
+  id: 11614072706259845
+  identification: 
+    item-name: P210_TT_GRUPOS_1
+
+  execution: 
+    sequence: 110
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_TT_GRUPOS * :P210_COTIZ'
+
+- # ====== Computation: P210_ST_GASOIL =========================
+  id: 11614219969259847
+  identification: 
+    item-name: P210_ST_GASOIL
+
+  execution: 
+    sequence: 70
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select sum(GAS_VALOR) from eve_grps where evento_id =:P210_ID'
+
+- # ====== Computation: P210_GASOIL ============================
+  id: 11614577732259850
+  identification: 
+    item-name: P210_GASOIL
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: SELECT VALOR FROM COTIZ WHERE KEY = '$GAS'
+
+- # ====== Computation: P210_ST_EMPS_1 =========================
+  id: 11884995258560202
+  identification: 
+    item-name: P210_ST_EMPS_1
+
+  execution: 
+    sequence: 130
+    point: Before Regions
+
+  computation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P210_ST_EMPS * :P210_COTIZ'
+
+processes: 
+- # ====== Process: Initialize form EVENTO_DASH ================
+  id: 9313113398217719
+  identification: 
+    name: Initialize form EVENTO_DASH
+    type: Form - Initialization
+    execution-chain: None
+    form-region: EVENTO # 9313064887217718
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form &P210_ID. - &P210_TITLE. ======
+  id: 9427113866962638
+  identification: 
+    name: Process form &P210_ID. - &P210_TITLE.
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: EVENTO # 9313064887217718
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+branches: 
+- # ====== Branch: Go To Page 41 ===============================
+  id: 6447667448210649
+  identification: 
+    name: Go To Page 41
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:41:&SESSION.::&DEBUG.::P41_EVENTO_ID:&P210_ID.'
+      page: 41 # PRESUP001
+      values: 
+        p41_evento_id: '&P210_ID.'
+
+  server-side-condition: 
+    when-button-pressed: PRESUP # 6447272926210645
+
+- # ====== Branch: back to eventos =============================
+  id: 11887887318560231
+  identification: 
+    name: back to eventos
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:200:&SESSION.::&DEBUG.:200::'
+      page: 200 # EVENTOS
+      clear-cache: 200
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 9427214304962639
+

@@ -1,0 +1,1248 @@
+---
+# ====== Page: BUSCAR_ARTICULOS ==============================
+id: 11
+identification: 
+  name: BUSCAR_ARTICULOS
+  alias: BUSCAR-ARTICULOS
+  title: BUSCAR_ARTICULOS
+  page-group: 030 ARTICULOS # 1930054017627653
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: BUSCAR ARTICULOS ============================
+  id: 8756070763860177
+  identification: 
+    name: BUSCAR ARTICULOS
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-search
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: SEARCH ======================================
+  id: 17633659303364295
+  identification: 
+    name: SEARCH
+    type: Faceted Search
+
+  source: 
+    filtered-region: ARTICULOS # 32001259338339340
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10
+      show-current-facets: Yes
+      show-total-row-count: No
+      show-charts: No
+
+  facets: 
+  - # ====== Facet: P11_SEARCH ===================================
+    id: 8923536242468296
+    identification: 
+      name: P11_SEARCH
+      type: Search
+
+    label: 
+      label: New
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P11_LARGO ====================================
+    id: 8923867266468316
+    identification: 
+      name: P11_LARGO
+      type: Range
+
+    label: 
+      label: LARGO
+      show-label-for-current-facet: true
+
+    settings: 
+      select-multiple: true
+      manual-entry: false
+
+    layout: 
+      sequence: 20
+
+    list-entries: 
+      compute-counts: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: true
+
+    source: 
+      database-column: LARGO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P11_ANCHO ====================================
+    id: 8924186599468316
+    identification: 
+      name: P11_ANCHO
+      type: Range
+
+    label: 
+      label: ANCHO
+      show-label-for-current-facet: true
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 30
+
+    list-entries: 
+      compute-counts: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: true
+
+    source: 
+      database-column: ANCHO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P11_ALTO =====================================
+    id: 8924636439468316
+    identification: 
+      name: P11_ALTO
+      type: Range
+
+    label: 
+      label: ALTO
+      show-label-for-current-facet: true
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 40
+
+    list-entries: 
+      compute-counts: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: true
+
+    source: 
+      database-column: ALTO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P11_ONDA =====================================
+    id: 8925058522468316
+    identification: 
+      name: P11_ONDA
+      type: Range
+
+    label: 
+      label: ONDA
+      show-label-for-current-facet: true
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 50
+
+    list-entries: 
+      compute-counts: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: true
+
+    source: 
+      database-column: PANCHO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P11_CALIDAD ==================================
+    id: 8925372562468317
+    identification: 
+      name: P11_CALIDAD
+      type: Checkbox Group
+
+    label: 
+      label: Calidad
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 60
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: ART_CALIDAD_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P11_ART_TIPO =================================
+    id: 8925788797468319
+    identification: 
+      name: P11_ART_TIPO
+      type: Checkbox Group
+
+    label: 
+      label: Tipo Articulo
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 70
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: true
+
+    source: 
+      database-column: ART_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P11_STATUS ===================================
+    id: 8926182747468319
+    identification: 
+      name: P11_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: STATUS
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 80
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.STATUS # 12486902465965205
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P11_SEARCH ==================================
+    id: 8923536242468296
+    identification: 
+      name: P11_SEARCH
+      type: Search
+
+    label: 
+      label: New
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P11_LARGO ===================================
+    id: 8923867266468316
+    identification: 
+      name: P11_LARGO
+      type: Range
+
+    label: 
+      label: LARGO
+
+    settings: 
+      select-multiple: true
+      manual-entry: false
+
+    layout: 
+      sequence: 20
+
+    list-entries: 
+      compute-counts: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: LARGO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P11_ANCHO ===================================
+    id: 8924186599468316
+    identification: 
+      name: P11_ANCHO
+      type: Range
+
+    label: 
+      label: ANCHO
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 30
+
+    list-entries: 
+      compute-counts: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ANCHO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P11_ALTO ====================================
+    id: 8924636439468316
+    identification: 
+      name: P11_ALTO
+      type: Range
+
+    label: 
+      label: ALTO
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 40
+
+    list-entries: 
+      compute-counts: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ALTO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P11_ONDA ====================================
+    id: 8925058522468316
+    identification: 
+      name: P11_ONDA
+      type: Range
+
+    label: 
+      label: ONDA
+
+    settings: 
+      select-multiple: false
+      manual-entry: false
+
+    layout: 
+      sequence: 50
+
+    list-entries: 
+      compute-counts: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: PANCHO
+      data-type: NUMBER
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P11_CALIDAD =================================
+    id: 8925372562468317
+    identification: 
+      name: P11_CALIDAD
+      type: Checkbox Group
+
+    label: 
+      label: Calidad
+
+    layout: 
+      sequence: 60
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ART_CALIDAD_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P11_ART_TIPO ================================
+    id: 8925788797468319
+    identification: 
+      name: P11_ART_TIPO
+      type: Checkbox Group
+
+    label: 
+      label: Tipo Articulo
+
+    layout: 
+      sequence: 70
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: ART_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P11_STATUS ==================================
+    id: 8926182747468319
+    identification: 
+      name: P11_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: STATUS
+
+    layout: 
+      sequence: 80
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.STATUS # 12486902465965205
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+- # ====== Region: ARTICULOS ===================================
+  id: 32001259338339340
+  identification: 
+    name: ARTICULOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |2
+        SELECT id
+            ,s_articulo(id) scodigo
+            ,largo
+            ,ancho
+            ,alto
+            ,cliente_id
+            ,s_cliente(cliente_id) scliente
+            ,plargo
+            ,pancho
+            ,art_calidad_id
+            ,trazados
+            ,art_tipo_id
+            ,status
+        FROM arts;
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 8926913041468330
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::P30_ID:#ID#'
+        page: 30 # ART_X
+        values: 
+          p30_id: '#ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-pencil.png" class="apex-edit-pencil" alt="">
+      link-attributes: TARGET="ART"
+
+    column-formatting: 
+      css-style: 
+      - 'color:black;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: LARGO =======================================
+    id: 8927743444468336
+    identification: 
+      column-name: LARGO
+      type: Plain Text
+
+    heading: 
+      heading: Largo
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:blue;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ANCHO =======================================
+    id: 8928155439468338
+    identification: 
+      column-name: ANCHO
+      type: Plain Text
+
+    heading: 
+      heading: Ancho
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:blue;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALTO ========================================
+    id: 8928514083468338
+    identification: 
+      column-name: ALTO
+      type: Plain Text
+
+    heading: 
+      heading: Alto
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:blue;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CLIENTE_ID ==================================
+    id: 8928875279468338
+    identification: 
+      column-name: CLIENTE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 3
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PLARGO ======================================
+    id: 8929321907468339
+    identification: 
+      column-name: PLARGO
+      type: Plain Text
+
+    heading: 
+      heading: LARGO
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:green;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PANCHO ======================================
+    id: 8929667637468339
+    identification: 
+      column-name: PANCHO
+      type: Plain Text
+
+    heading: 
+      heading: ONDA
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:green;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_CALIDAD_ID ==============================
+    id: 8930112908468339
+    identification: 
+      column-name: ART_CALIDAD_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Calidad
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ART_TIPO_ID =================================
+    id: 8930944788468341
+    identification: 
+      column-name: ART_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 8931355626468341
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 13
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TRAZADOS ====================================
+    id: 25537683712422853
+    identification: 
+      column-name: TRAZADOS
+      type: Plain Text
+
+    heading: 
+      heading: Trazados
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:green;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCODIGO =====================================
+    id: 25537833159422854
+    identification: 
+      column-name: SCODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-style: 
+      - 'color:black;font-weight:700;'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SCLIENTE ====================================
+    id: 25537868042422855
+    identification: 
+      column-name: SCLIENTE
+      type: Link
+
+    heading: 
+      heading: CLIENTE
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:140:&SESSION.::&DEBUG.::G_CLIENTE_ID:#CLIENTE_ID#'
+        page: 140 # dash_cliente
+        values: 
+          g_cliente_id: '#CLIENTE_ID#'
+
+      link-text: '#SCLIENTE#'
+      link-attributes: TARGET="P100"
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DERIVED$01 ==================================
+    id: 46819335543259870
+    identification: 
+      column-name: DERIVED$01
+      type: Link
+
+    heading: 
+      heading: '&nbsp;'
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_ID:#ID#'
+        page: 31 # ART_Z
+        values: 
+          p31_id: '#ID#'
+
+      link-text: '#ID#'
+      link-attributes: TARGET="ART"
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+computations: 
+- # ====== Computation: P11_SEARCH =============================
+  id: 8931820470468382
+  identification: 
+    item-name: P11_SEARCH
+
+  execution: 
+    sequence: 10
+    point: After Header
+
+  computation: 
+    type: Item
+    item-name: B01_ARTICULO
+
+  server-side-condition: 
+    type: Item is NOT numeric
+    item: B01_ARTICULO
+

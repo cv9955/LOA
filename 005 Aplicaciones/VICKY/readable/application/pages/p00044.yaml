@@ -1,0 +1,120 @@
+---
+# ====== Page: RECORDATORIOS =================================
+id: 44
+identification: 
+  name: RECORDATORIOS
+  alias: RECORDATORIOS
+  title: RECORDATORIOS
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: RECORDATORIOS ===============================
+  id: 60879996761405361
+  identification: 
+    name: RECORDATORIOS
+    type: Calendar
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,detalle
+            ,fecha
+            ,title_note
+            ,apex_page.get_url(p_page=>49,p_clear_cache=>49,p_items=>'p49_id',p_values=>id)doc_link
+            ,'u-danger' sticky_class
+        FROM sticky_notes
+       WHERE tipo=2
+      UNION ALL
+      SELECT orden_compra_id id
+             , null detalle
+             ,fecha
+            ,'Pedido : '||s_cliente(cliente_id) title_note
+            ,apex_page.get_url(p_page=>19,p_clear_cache=>19,p_items=>'p19_id',p_values=>orden_compra_id)  doc_link
+            ,'u-info' sticky_class
+      FROM PEDIDOS_CON_FECHA_ENTREGA
+       ;
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      display-column: TITLE_NOTE
+      start-date-column: FECHA
+      primary-key-column: ID
+      event-sorting: Automatic
+      show-time: false
+      multiple-line-events: true
+      show-tooltip: true
+      additional-calendar-views: 'list:navigation'
+      drag-and-drop: false
+      create-link: 
+        url: 'f?p=&APP_ID.:50:&SESSION.::&DEBUG.:50:P50_FECHA:&APEX$NEW_START_DATE.'
+        page: 50 # Tipo
+        clear-cache: 50
+        values: 
+          p50_fecha: '&APEX$NEW_START_DATE.'
+
+      view-/-edit-link: '&DOC_LINK.'
+      maximum-events-/-day: 10
+      show-weekend: true
+      css-class: STICKY_CLASS
+
+    performance: 
+      lazy-loading: true
+

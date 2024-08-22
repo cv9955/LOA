@@ -1,0 +1,336 @@
+---
+# ====== Application: PRODUCCION =============================
+id: 201
+identification: 
+  name: PRODUCCION
+  alias: PRODUCCION
+  version: YYYY.MM.DD
+
+row-search: 
+  tokenize: true
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Native Printing
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: true
+  logging: true
+  debugging: true
+  compatibility-mode: 21.2 to 24.1
+  accessible-read-only-items: false
+  pass-ecid: Y
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: Custom Auth # 26413822111272489
+
+authorization: 
+  authorization-scheme: Acceso Basico # 26114326618151607
+  run-on-public-pages: false
+  run-on-background-job: true
+  source-for-role-or-group-schemes: Access Control User Role Assignments
+
+session-management: 
+  rejoin-sessions: Disabled
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Disabled
+  browser-cache: Disabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin
+  html-escaping-mode: Extended
+  runtime-api-usage: 
+  - Modify This Application
+
+database-session: 
+  parsing-schema: LOA
+
+globalization: 
+  primary-language: Spanish (Argentina) (es-ar)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+application-format-masks: 
+  date: DS
+  timestamp: DS
+  timestamp-time-zone: DS
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Image and Text
+  image-url: '#APP_FILES#icons/app-icon-512.png'
+  text: LOA Gráfica
+
+progressive-web-app: 
+  enable: true
+  installable: true
+  display: Standalone
+  screen-orientation: Any
+  ios-status-bar-style: Default
+  enable-push-notifications: true
+  pwa-push-notifications-credentials: App 100 Push Notifications Credentials # 4310518546134701
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
+    page: 1 # Home
+
+  login-url: 
+    url: 'f?p=&APP_ID.:LOGIN:&APP_SESSION.::&DEBUG.:::'
+    page: LOGIN
+
+navigation-menu: 
+  list-template: Top Navigation Mega Menu
+  template-options: 
+  - '#DEFAULT#'
+  - t-MegaMenu--layoutCustom
+  list-position: Top
+  list: Navigation Menu # 25819996891151321
+
+navigation-bar: 
+  implementation: List
+  list: Navigation Bar # 26109021766151583
+  list-template: Navigation Bar
+  template-options: 
+  - '#DEFAULT#'
+
+javascript: 
+  include-jquery-migrate: false
+
+attributes: 
+  theme: Universal Theme # 42
+  global-page: 0
+  enable-end-users-to-choose-theme-style: true
+  add-"built-with-apex"-to-footer: false
+  auto-dismiss-success-messages: false
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 9052222810974258
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: LOA
+
+component-settings: 
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 7636180610322798
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  settings: 
+    attribute-1: separated
+
+  subscription: 
+    version-number: 299413101
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 7635895786322798
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 299413101
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 7635523431322798
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 299413103
+
+- # ====== Component Setting: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP_
+  id: 24431189052713882
+  identification: 
+    name: PLUGIN_COM.JK64.REPORT_GOOGLE_MAP_R1
+    type: Region
+
+  subscription: 
+    version-number: 285681635
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 25815943757151315
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 19145092
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 25816223495151316
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  settings: 
+    attribute-1: 'MONTH-PICKER:YEAR-PICKER:TODAY-BUTTON'
+    attribute-2: VISIBLE
+    attribute-3: 15
+    attribute-4: FOCUS
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 25816542270151316
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+    attribute-2: N
+    attribute-3: 'POPUP:ITEM'
+    attribute-4: default
+    attribute-6: LIST
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 25816870119151316
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 25817092103151317
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 25817396546151317
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-2: N
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 25817682190151317
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 25818033797151317
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  settings: 
+    attribute-1: FULL
+    attribute-2: POPUP
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 25818336593151317
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  settings: 
+    attribute-1: fa-star
+    attribute-4: '#VALUE#'
+
+  subscription: 
+    version-number: 19145093
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 25818671137151317
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  settings: 
+    attribute-1: Y
+    attribute-3: N
+    attribute-5: SWITCH_CB
+
+  subscription: 
+    version-number: 19145093
+
+application-settings: 
+- # ====== Application Setting: FEEDBACK_ATTACHMENTS_YN ========
+  id: 26115180650151610
+  identification: 
+    name: FEEDBACK_ATTACHMENTS_YN
+
+  value: 
+    value: Y
+    required: false
+
+  advanced: 
+    valid-values: Y, N
+    on-upgrade-keep-value: true
+
+  subscription: 
+    version-number: 19146642
+
+  configuration: 
+    build-option: 'Feature: Feedback' # 26111694145151595
+
+- # ====== Application Setting: ACCESS_CONTROL_SCOPE ===========
+  id: 26115555679151612
+  identification: 
+    name: ACCESS_CONTROL_SCOPE
+
+  value: 
+    value: ACL_ONLY
+    required: false
+
+  advanced: 
+    valid-values: ACL_ONLY, ALL_USERS
+    on-upgrade-keep-value: true
+
+  subscription: 
+    version-number: 19202361
+
+  configuration: 
+    build-option: 'Feature: Access Control' # 26111477173151595
+
+  comments: 
+    comments: The default access level given to authenticated users who are not in the access control list
+

@@ -29,7 +29,7 @@ size 100m autoextend on next 10m maxsize 1g
 ### install
 ```
 # cd /opt/oracle/ords
-# ords --config /opt/oracle/ords install 
+# ords --config /opt/oracle/config install 
 ```
 - [1] Tipo de conexión: Básica
 - [2] Conexión básica: HOST=localhost PORT=1521 SERVICE_NAME=pdbloa
@@ -198,3 +198,29 @@ export _JAVA_OPTIONS="-Xms1126M -Xmx1126M"
 ords --config ${ORDS_CONFIG} serve --certificate ~/keystore/rocky8.loagrafica.der --key ~/keystore/rocky8.loagrafica-key.der
 ```
 > arranca el servidor en el puerto 8443, pero tira error 400 INVALID SNI
+
+
+### Cambiar MaxLimit
+```
+WARNING     *** 
+jdbc.MaxLimit en la configuración |ptc|lo| está utilizando un valor de 10. Puede que este valor no se haya ajustado al tamaño correctamente para un entorno de producción ***
+jdbc.InitialLimit en la configuración |ptc|lo| está utilizando un valor de 10. Puede que este valor no se haya ajustado al tamaño correctamente para un entorno de producción ***
+
+
+[oracle@rocky8 ords]$ ords --config /opt/oracle/config config --db-pool loa set jdbc.MaxLimit 50
+Picked up _JAVA_OPTIONS: -Xms1126M -Xmx1126M
+ORDS: versión 24.1 Producción del mar ago. 20 18:42:00 2024
+Copyright (c) 2010, 2024, Oracle.
+Configuración:
+  /opt/oracle/config
+El valor llamado: jdbc.MaxLimit se ha definido en: 50 en la configuración: loa
+
+[oracle@rocky8 ords]$ ords --config /opt/oracle/config config --db-pool loa set jdbc.InitialLimit 50
+Picked up _JAVA_OPTIONS: -Xms1126M -Xmx1126M
+ORDS: versión 24.1 Producción del mar ago. 20 18:42:17 2024
+Copyright (c) 2010, 2024, Oracle.
+Configuración:
+  /opt/oracle/config
+El valor llamado: jdbc.InitialLimit se ha definido en: 50 en la configuración: loa
+
+```

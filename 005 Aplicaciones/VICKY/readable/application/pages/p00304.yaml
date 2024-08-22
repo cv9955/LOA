@@ -1,0 +1,1002 @@
+---
+# ====== Page: BOB_LISTA =====================================
+id: 304
+identification: 
+  name: BOB_LISTA
+  alias: BOB_LISTA
+  title: BOBINAS
+  page-group: 300 BOBINAS # 4255325950619063
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: New =========================================
+  id: 13132091364655458
+  identification: 
+    name: New
+    type: Faceted Search
+
+  source: 
+    filtered-region: LISTADO # 16274430579846015
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      show-current-facets: No
+      show-total-row-count: No
+      show-charts: No
+
+  facets: 
+  - # ====== Facet: P304_BOB_PROV_ID =============================
+    id: 13132183332655459
+    identification: 
+      name: P304_BOB_PROV_ID
+      type: Radio Group
+
+    label: 
+      label: Provedor
+      show-label-for-current-facet: true
+
+    settings: 
+      hide-radio-buttons: false
+
+    layout: 
+      sequence: 10
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_PROVS # 4345746315768574
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: BOB_PROV_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P304_FORMATO =================================
+    id: 13132249836655460
+    identification: 
+      name: P304_FORMATO
+      type: Radio Group
+
+    label: 
+      label: Formato
+      show-label-for-current-facet: true
+
+    settings: 
+      hide-radio-buttons: false
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_FORMATOS # 7200354771401332
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 10
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: FORMATO
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P304_BOB_TIPO_ID =============================
+    id: 13132373576655461
+    identification: 
+      name: P304_BOB_TIPO_ID
+      type: Radio Group
+
+    label: 
+      label: Tipo
+      show-label-for-current-facet: true
+
+    settings: 
+      hide-radio-buttons: false
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.TITLE # 1964908075239213
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: BOB_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P304_STATUS ==================================
+    id: 13132488436655462
+    identification: 
+      name: P304_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Status
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOBINAS.STATUS # 10761204245803843
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 5
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: true
+      initially-collapsed: false
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P304_BOB_PROV_ID ============================
+    id: 13132183332655459
+    identification: 
+      name: P304_BOB_PROV_ID
+      type: Radio Group
+
+    label: 
+      label: Provedor
+
+    layout: 
+      sequence: 10
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_PROVS # 4345746315768574
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: BOB_PROV_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P304_FORMATO ================================
+    id: 13132249836655460
+    identification: 
+      name: P304_FORMATO
+      type: Radio Group
+
+    label: 
+      label: Formato
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_FORMATOS # 7200354771401332
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: FORMATO
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P304_BOB_TIPO_ID ============================
+    id: 13132373576655461
+    identification: 
+      name: P304_BOB_TIPO_ID
+      type: Radio Group
+
+    label: 
+      label: Tipo
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.TITLE # 1964908075239213
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: BOB_TIPO_ID
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P304_STATUS =================================
+    id: 13132488436655462
+    identification: 
+      name: P304_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Status
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOBINAS.STATUS # 10761204245803843
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+- # ====== Region: LISTADO =====================================
+  id: 16274430579846015
+  identification: 
+    name: LISTADO
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             BOB_TIPO_ID,
+             FORMATO,
+             GRAMAJE,
+             PESO,
+             PSTOCK,
+      BOB_ALTA_ID,
+             METROS_ACTUAL,
+             DIAMETRO_ACTUAL,
+             BOB_PROV_ID,
+      FECHA_ALTA       FECHA,
+      ultimouso ultimo_uso,
+      STATUS
+      from BOB_info m
+      WHERE STATUS IN (1,2)
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 20
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlight
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Search Engine 1,2,3,4 (set based pagination)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: true
+      link-text: Download
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: BOB_ALTA_ID =================================
+    id: 129429862133439
+    identification: 
+      column-name: BOB_ALTA_ID
+      type: Hidden
+
+    layout: 
+      sequence: 25
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 13130721251655444
+    identification: 
+      column-name: ID
+      type: Link
+
+    heading: 
+      heading: Id
+      alignment: center
+
+    layout: 
+      sequence: 1
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:305:&SESSION.::&DEBUG.:RP:P305_ID:#ID#'
+        page: 305 # DETALLE BOBINA
+        clear-cache: RP
+        values: 
+          p305_id: '#ID#'
+
+      link-text: '#ID#'
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BOB_TIPO_ID =================================
+    id: 13130809219655445
+    identification: 
+      column-name: BOB_TIPO_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Tipo
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.TITLE # 1964908075239213
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 13130837885655446
+    identification: 
+      column-name: FORMATO
+      type: Plain Text
+
+    heading: 
+      heading: Formato
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GRAMAJE =====================================
+    id: 13130998823655447
+    identification: 
+      column-name: GRAMAJE
+      type: Plain Text
+
+    heading: 
+      heading: Gramaje
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PESO ========================================
+    id: 13131049575655448
+    identification: 
+      column-name: PESO
+      type: Plain Text
+
+    heading: 
+      heading: Peso
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PSTOCK ======================================
+    id: 13131269990655450
+    identification: 
+      column-name: PSTOCK
+      type: Percent Graph
+
+    heading: 
+      heading: Stock
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+  - # ====== Column: METROS_ACTUAL ===============================
+    id: 13131529955655452
+    identification: 
+      column-name: METROS_ACTUAL
+      type: Plain Text
+
+    heading: 
+      heading: Metros
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 99990
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DIAMETRO_ACTUAL =============================
+    id: 13131616861655453
+    identification: 
+      column-name: DIAMETRO_ACTUAL
+      type: Plain Text
+
+    heading: 
+      heading: Diam
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: BOB_PROV_ID =================================
+    id: 13131715591655454
+    identification: 
+      column-name: BOB_PROV_ID
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Provedor
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_PROVS # 4345746315768574
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FECHA =======================================
+    id: 13131814163655455
+    identification: 
+      column-name: FECHA
+      type: Link
+
+    heading: 
+      heading: INGRESO
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:314:&SESSION.::&DEBUG.:RP,:P314_ID:#BOB_ALTA_ID#'
+        page: 314 # BOBINAS INGRESO
+        clear-cache: RP
+        values: 
+          p314_id: '#BOB_ALTA_ID#'
+
+      link-text: '#FECHA#'
+      link-attributes: target="P314"
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ULTIMO_USO ==================================
+    id: 13132015325655457
+    identification: 
+      column-name: ULTIMO_USO
+      type: Link
+
+    heading: 
+      heading: Ultimo Uso
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:303:&SESSION.::&DEBUG.:RP,:P303_FECHA,P303_FILTRO_FORMATO:#ULTIMO_USO#,#FORMATO#'
+        page: 303 # BOBINAS CORRUGADO
+        clear-cache: RP
+        values: 
+          p303_fecha: '#ULTIMO_USO#'
+          p303_filtro_formato: '#FORMATO#'
+
+      link-text: '#ULTIMO_USO#'
+      link-attributes: target="P303"
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STATUS ======================================
+    id: 13132550687655463
+    identification: 
+      column-name: STATUS
+      type: Hidden
+
+    layout: 
+      sequence: 15
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: BOBINAS =====================================
+  id: 50865334459901557
+  identification: 
+    name: BOBINAS
+    type: List
+
+  source: 
+    list: MENU_BOBINAS # 13402772259154749
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-database
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+

@@ -1,0 +1,6698 @@
+---
+# ====== Page: VTA_REMITO ====================================
+id: 502
+identification: 
+  name: VTA_REMITO
+  alias: VTA_REMITO
+  title: REMITO &P502_NRO_REMITO.
+  page-group: 500 VENTAS # 13770079447887120
+
+appearance: 
+  page-mode: Normal
+  page-template: Right Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: DETALLE =====================================
+  id: 10663806391243249
+  identification: 
+    name: DETALLE
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT d.id
+            ,d.vta_remito_id
+            ,d.articulo_id
+            ,s_articulo(d.articulo_id)   codigo
+            ,(SELECT medidas FROM articulos WHERE id=d.articulo_id) medidas
+            ,(SELECT cod_aleta FROM articulos WHERE id=d.articulo_id) cod_aleta
+            ,d.detalle
+            ,d.cantidad
+            ,d.precio
+            ,d.neto
+            ,d.vta_pedido_id
+            ,title_pedido(d.vta_pedido_id)  orden_compra
+            ,d.no_imprimir flg001
+        FROM vta_remito_its d
+       WHERE d.vta_remito_id=:p502_id;
+    page-items-to-submit: 
+    - P502_ID
+    - P502_CLIENTE_ID
+
+  layout: 
+    sequence: 40
+    parent-region: REMITO # 19474386699386518
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form--large
+    - t-Form--stretchInputs
+    css-classes: 
+    - CTA-&P502_CTA.
+    render-components: Below Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (10)'
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 10663912501243250
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+      add-row-if-empty: true
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      show-null-values-as: '-'
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    toolbar: 
+      show: false
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: false
+      define-chart-view: false
+      download: false
+
+    heading: 
+      fixed-to: None
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 13789083482831488
+      identification: 
+        name: Primary Report
+        alias: 18306
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 10663967967243251
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 30
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      query-only: true
+      primary-key: true
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+
+  - # ====== Column: VTA_REMITO_ID ===============================
+    id: 10664131978243252
+    identification: 
+      column-name: VTA_REMITO_ID
+      type: Hidden
+
+    settings: 
+      value-protected: true
+
+    layout: 
+      sequence: 40
+
+    accessibility: 
+      value-identifies-row: false
+
+    source: 
+      type: Database Column
+      database-column: VTA_REMITO_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      type: Item
+      item: P502_ID
+      duplicate-copies-existing-value: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 10664356425243255
+    identification: 
+      column-name: ARTICULO_ID
+      type: Number Field
+
+    heading: 
+      heading: Articulo
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 50
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      icon: fa-package
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: ARTICULO_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CANTIDAD ====================================
+    id: 10664449083243256
+    identification: 
+      column-name: CANTIDAD
+      type: Number Field
+
+    heading: 
+      heading: Cantidad
+      alignment: end
+
+    settings: 
+      minimum-value: 1
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: CANTIDAD
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DETALLE =====================================
+    id: 10664575139243257
+    identification: 
+      column-name: DETALLE
+      type: Text Field
+
+    heading: 
+      heading: Detalle
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: DETALLE
+      data-type: VARCHAR2
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PRECIO ======================================
+    id: 10664636226243258
+    identification: 
+      column-name: PRECIO
+      type: Number Field
+
+    heading: 
+      heading: Precio
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 100
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      icon: fa-usd
+      format-mask: 999G999G999G999G990D00
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PRECIO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: CODIGO ======================================
+    id: 13797024412948824
+    identification: 
+      column-name: CODIGO
+      type: Textarea
+
+    heading: 
+      heading: Codigo
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: CODIGO
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 13797120563948825
+    identification: 
+      column-name: MEDIDAS
+      type: Textarea
+
+    heading: 
+      heading: Medidas
+      alignment: start
+
+    settings: 
+      resizable: true
+      auto-height: false
+      character-counter: false
+      trim-spaces: Leading and Trailing
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 122
+
+    source: 
+      type: Database Column
+      database-column: MEDIDAS
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    session-state: 
+      data-type: VARCHAR2
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: false
+      hide: true
+
+  - # ====== Column: NETO ========================================
+    id: 13797232785948826
+    identification: 
+      column-name: NETO
+      type: Number Field
+
+    heading: 
+      heading: Neto
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 110
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: NETO
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: VTA_PEDIDO_ID ===============================
+    id: 13797269584948827
+    identification: 
+      column-name: VTA_PEDIDO_ID
+      type: Number Field
+
+    heading: 
+      heading: Nº Pedido
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: VTA_PEDIDO_ID
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: ORDEN_COMPRA ================================
+    id: 19474320468386517
+    identification: 
+      column-name: ORDEN_COMPRA
+      type: Text Field
+
+    heading: 
+      heading: O.C.
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 130
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 4000
+
+    source: 
+      type: Database Column
+      database-column: ORDEN_COMPRA
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: COD_ALETA ===================================
+    id: 57519921979286677
+    identification: 
+      column-name: COD_ALETA
+      type: Text Field
+
+    heading: 
+      heading: Cod Externo
+      alignment: start
+
+    settings: 
+      trim-spaces: Leading and Trailing
+      text-case: NO CHANGE
+
+    layout: 
+      sequence: 140
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+      maximum-length: 20
+
+    source: 
+      type: Database Column
+      database-column: COD_ALETA
+      data-type: VARCHAR2
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Distinct Column
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 64239267360816234
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 64239422017816235
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: FLG001 ======================================
+    id: 158372468107818268
+    identification: 
+      column-name: FLG001
+      type: Checkbox Group
+
+    heading: 
+      alignment: start
+
+    settings: 
+      number-of-columns: 1
+
+    multiple-values: 
+      type: Delimited List
+      separator: ':'
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    list-of-values: 
+      type: Static Values
+      static-values: 'STATIC:No Imprimir;1,Imprimir'
+      display-extra-values: false
+
+    source: 
+      type: Database Column
+      database-column: FLG001
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    server-side-condition: 
+      type: Item = Value
+      item: P502_CTA
+      value: 1
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: FACTURAS ====================================
+  id: 14192271771951824
+  identification: 
+    name: FACTURAS
+    type: Slide Tooltip
+
+  source: 
+    sql-query: |
+      SELECT 'fa-usd'        icon
+            ,vta_factura_id id
+            ,fecha
+            ,s_factura(vta_factura_id) cbte
+            ,iva
+            ,iibb
+            ,cai
+            ,neto_gravado
+            ,neto_exento
+            ,total
+            ,importe
+        FROM vta_facturas_rem 
+       WHERE vta_remito_id=:p502_id
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P502_CTA
+    value: 1
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: Slide
+      icon-column: ICON
+      title-column: CBTE
+      link-target: 
+        url: 'f?p=&APP_ID.:70:&SESSION.::&DEBUG.:RP:P70_ID:&ID.'
+        page: 70 # FACTURA_X
+        clear-cache: RP
+        values: 
+          p70_id: '&ID.'
+
+      badge-column: IMPORTE
+
+    heading: 
+      type: Custom Headings
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 14192421560951825
+    identification: 
+      column-name: ID
+      show: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: FECHA =======================================
+    id: 14192457292951826
+    identification: 
+      column-name: FECHA
+      show: true
+
+    heading: 
+      heading: Fecha
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: TOTAL =======================================
+    id: 14193568565951837
+    identification: 
+      column-name: TOTAL
+      show: true
+
+    heading: 
+      heading: Total
+
+    layout: 
+      sequence: 130
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: ICON ========================================
+    id: 14194519788951846
+    identification: 
+      column-name: ICON
+      show: true
+
+    heading: 
+      heading: Icon
+
+    layout: 
+      sequence: 140
+
+  - # ====== Column: CBTE ========================================
+    id: 14195302689951854
+    identification: 
+      column-name: CBTE
+      show: true
+
+    heading: 
+      heading: Cbte
+
+    layout: 
+      sequence: 170
+
+  - # ====== Column: IVA =========================================
+    id: 14539960733973860
+    identification: 
+      column-name: IVA
+      show: true
+
+    heading: 
+      heading: Iva
+
+    layout: 
+      sequence: 230
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: IIBB ========================================
+    id: 14540106867973861
+    identification: 
+      column-name: IIBB
+      show: true
+
+    heading: 
+      heading: Iibb
+
+    layout: 
+      sequence: 240
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: CAI =========================================
+    id: 14540149449973862
+    identification: 
+      column-name: CAI
+      show: true
+
+    heading: 
+      heading: Cai
+
+    layout: 
+      sequence: 250
+
+  - # ====== Column: NETO_GRAVADO ================================
+    id: 14540265089973863
+    identification: 
+      column-name: NETO_GRAVADO
+      show: true
+
+    heading: 
+      heading: Neto Gravado
+
+    layout: 
+      sequence: 210
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: NETO_EXENTO =================================
+    id: 14540350016973864
+    identification: 
+      column-name: NETO_EXENTO
+      show: true
+
+    heading: 
+      heading: Neto Exento
+
+    layout: 
+      sequence: 220
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: IMPORTE =====================================
+    id: 18463493399677947
+    identification: 
+      column-name: IMPORTE
+      show: true
+
+    heading: 
+      heading: Importe
+
+    layout: 
+      sequence: 260
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+- # ====== Region: RECIBOS =====================================
+  id: 14370377050163263
+  identification: 
+    name: RECIBOS
+    type: Slide Tooltip
+
+  source: 
+    sql-query: |
+      SELECT 'fa-usd' icon
+            ,VTA_RECIBO_id
+            ,fecha
+            ,s_recibo(nro_cab)  recibo
+            ,total
+        FROM vta_recibos_rem
+       WHERE vta_remito_id=:p502_id
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P502_CTA
+    value: 2
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: Slide
+      icon-column: ICON
+      title-column: RECIBO
+      link-target: 
+        url: 'f?p=&APP_ID.:541:&SESSION.::&DEBUG.:RP,:P541_ID:&VTA_RECIBO_ID.'
+        page: 541 # VTA_RECIBO
+        clear-cache: RP
+        values: 
+          p541_id: '&VTA_RECIBO_ID.'
+
+      badge-column: TOTAL
+
+    heading: 
+      type: Custom Headings
+
+  columns: 
+  - # ====== Column: TOTAL =======================================
+    id: 14370533755163265
+    identification: 
+      column-name: TOTAL
+      show: true
+
+    heading: 
+      heading: Total
+
+    layout: 
+      sequence: 10
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+  - # ====== Column: ICON ========================================
+    id: 14370715171163266
+    identification: 
+      column-name: ICON
+      show: true
+
+    heading: 
+      heading: Icon
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: FECHA =======================================
+    id: 14410986675710719
+    identification: 
+      column-name: FECHA
+      show: true
+
+    heading: 
+      heading: Fecha
+
+    layout: 
+      sequence: 50
+
+  - # ====== Column: RECIBO ======================================
+    id: 14411167727710721
+    identification: 
+      column-name: RECIBO
+      show: true
+
+    heading: 
+      heading: Recibo
+
+    layout: 
+      sequence: 60
+
+  - # ====== Column: VTA_RECIBO_ID ===============================
+    id: 38688478269062105
+    identification: 
+      column-name: VTA_RECIBO_ID
+      show: true
+
+    heading: 
+      heading: Vta Recibo Id
+
+    layout: 
+      sequence: 70
+
+- # ====== Region: VENTAS ======================================
+  id: 15627733957468151
+  identification: 
+    name: VENTAS
+    type: List
+
+  source: 
+    list: MENU_REMITO # 15704674864752720
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-shopping-cart
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+
+- # ====== Region: REMITO ======================================
+  id: 19474386699386518
+  identification: 
+    name: REMITO
+    type: Form
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,cab_tipo_id
+            ,cliente_id
+            ,cli_dfiscal_id
+            ,cli_cuenta_id
+            ,cli_deposito_id
+            ,cta
+            ,fecha
+            ,flt_viaje_id
+            ,flete_id
+            ,nro_remito
+            ,obs
+            ,status
+            ,neto
+            ,item_sin_precio
+            ,item_sin_cantidad
+            ,cantidad_items
+        FROM vta_remitos
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - CTA-&P502_CTA.
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Pedidos =====================================
+  id: 59580016772145582
+  identification: 
+    name: Pedidos
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT zp.vta_pedido_id id
+            ,zP.ix
+            ,zp.fx
+            ,zp.obs
+            ,zp.orden_compra o_c
+            ,zp.cli_deposito_id
+            ,zp.cli_dfiscal_id
+            
+            ,zp.articulo_id
+            ,S_ARTICULO(zp.articulo_id) scodigo
+            ,S_ARTICULO(zp.articulo_id,'ALETA')cod_aleta
+            ,S_ARTICULO(zp.articulo_id,'MEDIDAS')medidas      
+            ,S_ARTICULO(zp.articulo_id,'CALIDAD_KEY')  scalidad        
+            ,zp.fecha fecha_ped
+            ,zp.fecha_entrega fecha_ent
+            ,zp.cantidad pedido
+            ,zp.precio
+            ,zp.planchas
+            ,zp.produccion
+            ,zp.sin_contar
+            ,CASE WHEN zP.ARTICULO_ID > 1000 THEN zp.stock_terminado END  terminado
+            ,zp.preparado
+            ,zp.en_viaje
+            ,zp.entregado
+              
+       FROM vp004 zp
+      where zp.cliente_id = :P502_CLIENTE_ID
+      
+    page-items-to-submit: 
+    - P502_CLIENTE_ID
+
+  layout: 
+    sequence: 20
+    parent-region: TAB_CONTAINER # 143994824654071154
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (1,3,8,5,9)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - VICTORIA # 285793758003850
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 60608282399194254
+    link: 
+      link-column: Link to Custom Target
+      target: "javascript:$s('P502_PEDIDO_APPLY',\"#FX#\")"
+      link-icon: <span aria-hidden="true" class="fa fa-arrow-up-alt"></span>
+      condition-type: Expression
+      language: PL/SQL
+      pl/sql-expression: ':P502_STATUS IN (1,3,8)'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 60619991318194773
+      identification: 
+        name: Primary Report
+        alias: 320458
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 28601306379861680
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: Nro
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:508:&SESSION.::&DEBUG.::P508_ID:#ID#'
+          page: 508 # PEDIDO_X
+          values: 
+            p508_id: '#ID#'
+
+        link-text: '#ID#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 28602156284861683
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: O_C =========================================
+      id: 28602563589861683
+      identification: 
+        column-name: O_C
+        type: Plain Text
+
+      heading: 
+        heading: O C
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLI_DEPOSITO_ID =============================
+      id: 28602964143861683
+      identification: 
+        column-name: CLI_DEPOSITO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLI_DEPOSITOS.TITLE # 2512982720406887
+
+      heading: 
+        heading: Deposito
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CLI_DFISCAL_ID ==============================
+      id: 28603314561861685
+      identification: 
+        column-name: CLI_DFISCAL_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLI_DFISCAL.TITLE # 2513212878412000
+
+      heading: 
+        heading: D Fiscal
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: ARTICULO_ID =================================
+      id: 28603715861861685
+      identification: 
+        column-name: ARTICULO_ID
+        type: Link
+
+      heading: 
+        heading: Art
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_ID:#ARTICULO_ID#'
+          page: 31 # ART_Z
+          values: 
+            p31_id: '#ARTICULO_ID#'
+
+        link-text: '#ARTICULO_ID#'
+        link-attributes: TARGET="ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MEDIDAS =====================================
+      id: 28604525291861688
+      identification: 
+        column-name: MEDIDAS
+        type: Plain Text
+
+      heading: 
+        heading: Medidas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#MEDIDAS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FECHA_PED ===================================
+      id: 28605667640861689
+      identification: 
+        column-name: FECHA_PED
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: DD/MM
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FECHA_ENT ===================================
+      id: 28606137549861689
+      identification: 
+        column-name: FECHA_ENT
+        type: Plain Text
+
+      heading: 
+        heading: Fecha Ent
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: DD/MM
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PEDIDO ======================================
+      id: 28606489274861691
+      identification: 
+        column-name: PEDIDO
+        type: Plain Text
+
+      heading: 
+        heading: Cant
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class="u-bold">#PEDIDO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRECIO ======================================
+      id: 28606915856861691
+      identification: 
+        column-name: PRECIO
+        type: Plain Text
+
+      heading: 
+        heading: Precio
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: <span class="u-bold u-danger-text">#PRECIO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLANCHAS ====================================
+      id: 28607308956861691
+      identification: 
+        column-name: PLANCHAS
+        type: Plain Text
+
+      heading: 
+        heading: Planchas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRODUCCION ==================================
+      id: 28607701351861696
+      identification: 
+        column-name: PRODUCCION
+        type: Plain Text
+
+      heading: 
+        heading: Produccion
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TERMINADO ===================================
+      id: 28608135522861696
+      identification: 
+        column-name: TERMINADO
+        type: Plain Text
+
+      heading: 
+        heading: Terminado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ENTREGADO ===================================
+      id: 28608543024861697
+      identification: 
+        column-name: ENTREGADO
+        type: Plain Text
+
+      heading: 
+        heading: Entregado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SCODIGO =====================================
+      id: 49104476759752240
+      identification: 
+        column-name: SCODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIN_CONTAR ==================================
+      id: 49104572388752241
+      identification: 
+        column-name: SIN_CONTAR
+        type: Plain Text
+
+      heading: 
+        heading: Sin Contar
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 230
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PREPARADO ===================================
+      id: 49104686280752242
+      identification: 
+        column-name: PREPARADO
+        type: Plain Text
+
+      heading: 
+        heading: Preparado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: EN_VIAJE ====================================
+      id: 49104781106752243
+      identification: 
+        column-name: EN_VIAJE
+        type: Plain Text
+
+      heading: 
+        heading: En Viaje
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 250
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SCALIDAD ====================================
+      id: 49104963268752244
+      identification: 
+        column-name: SCALIDAD
+        type: Plain Text
+
+      heading: 
+        heading: '#'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 260
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 64243693038816278
+      identification: 
+        column-name: IX
+        type: Hidden
+
+      heading: 
+        heading: Ix
+
+      layout: 
+        sequence: 270
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: COD_ALETA ===================================
+      id: 71648667351081534
+      identification: 
+        column-name: COD_ALETA
+        type: Plain Text
+
+      heading: 
+        heading: Cod Aleta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 220
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: FX ==========================================
+      id: 94301630708395756
+      identification: 
+        column-name: FX
+        type: Hidden
+
+      heading: 
+        heading: Fx
+
+      layout: 
+        sequence: 280
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: Pedidos
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: TAB_CONTAINER ===============================
+  id: 143994824654071154
+  identification: 
+    name: TAB_CONTAINER
+    type: Region Display Selector
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Tabs Container
+    template-options: 
+    - '#DEFAULT#'
+    - js-useLocalStorage
+    - t-TabsRegion-mod--simple
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      mode: View Single Region
+      display-region-icons: false
+      include-'show-all': true
+      remember-selection: By Session
+
+- # ====== Region: CONTROL_PRECIOS =============================
+  id: 148795262338992436
+  identification: 
+    name: CONTROL_PRECIOS
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          art.id
+         ,art.cli_grupo_id
+         ,art.cliente_id
+         ,art.parent_id
+         ,art.cod_aleta
+         ,CASE WHEN art.parent_id IS NOT NULL THEN(SELECT codigo FROM articulos WHERE id=art.parent_id)||' :: ' END||art.codigo  codigo
+         ,art.art_tipo_id
+         ,art.largo
+         ,art.ancho
+         ,art.alto
+         ,art.art_calidad_id
+         ,art.plargo
+         ,art.pancho
+         ,art.trazados
+         ,art.slotter
+         ,art.obs
+         ,art.status
+         ,art.aj_precio
+         ,cot.precio                                    precio_actual
+         ,cot.fecha                                     precio_fec
+         ,CASE cot.status
+              WHEN 2  THEN 'precio_status_4'
+              WHEN 1  THEN 'precio_status_1'
+              WHEN 0  THEN 'precio_status_2'
+              ELSE 'precio_status_3'
+           END precio_status
+         ,articulos_pkg.get_precio_articulo(art.id,r.cliente_id) precio_calculado
+        FROM
+          articulos   art
+         ,art_cotiz   cot
+         ,vta_remitos r
+       WHERE
+              cot.articulo_id(+)=art.id 
+          AND cot.cliente_id(+) =r.cliente_id 
+          AND exists  (SELECT 1
+                FROM vta_remito_its
+               WHERE vta_remito_id=r.id 
+               and articulo_id = art.id)
+          AND r.id           =:P502_ID;
+
+  layout: 
+    sequence: 40
+    parent-region: TAB_CONTAINER # 143994824654071154
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (1,3,5,8,9)'
+
+  security: 
+    authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 139790433536260050
+    link: 
+      link-column: Exclude Link Column
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 139842520153290393
+      identification: 
+        name: Primary Report
+        alias: 1386772
+
+    column-groups: 
+    - # ====== Column Group: Cotizacion ============================
+      id: 139489138558755957
+      identification: 
+        name: Cotizacion
+
+      layout: 
+        sequence: 10
+
+    columns: 
+    - # ====== Column: ID ==========================================
+      id: 135228346214174386
+      identification: 
+        column-name: ID
+        type: Link
+
+      heading: 
+        heading: Id
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_ID:#ID#'
+          page: 31 # ART_Z
+          values: 
+            p31_id: '#ID#'
+
+        link-text: '#ID#'
+        link-attributes: TARGET="ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLI_GRUPO_ID ================================
+      id: 135228677353174388
+      identification: 
+        column-name: CLI_GRUPO_ID
+        type: Hidden
+
+      heading: 
+        heading: Grupo
+
+      layout: 
+        sequence: 30
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 135229114524174388
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CODIGO ======================================
+      id: 135229492464174389
+      identification: 
+        column-name: CODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class=art_estado#STATUS# >#CODIGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_TIPO_ID =================================
+      id: 135229929489174389
+      identification: 
+        column-name: ART_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 60
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class=u-italics	 >#ART_TIPO_ID#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: LARGO =======================================
+      id: 135230363822174391
+      identification: 
+        column-name: LARGO
+        type: Plain Text
+
+      heading: 
+        heading: Largo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 70
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja" >#LARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ANCHO =======================================
+      id: 135230740166174391
+      identification: 
+        column-name: ANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Ancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 80
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja" >#ANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ALTO ========================================
+      id: 135231142058174391
+      identification: 
+        column-name: ALTO
+        type: Plain Text
+
+      heading: 
+        heading: Alto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 90
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja" >#ALTO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLARGO ======================================
+      id: 135231502075174392
+      identification: 
+        column-name: PLARGO
+        type: Plain Text
+
+      heading: 
+        heading: Plargo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha" title="#SLOTTER#">#PLARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PANCHO ======================================
+      id: 135231919885174396
+      identification: 
+        column-name: PANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Pancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha" title="#TRAZADOS#">#PANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TRAZADOS ====================================
+      id: 135232284258174397
+      identification: 
+        column-name: TRAZADOS
+        type: Plain Text
+
+      heading: 
+        heading: Trazados
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 140
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha">#SLOTTER#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SLOTTER =====================================
+      id: 135232703528174397
+      identification: 
+        column-name: SLOTTER
+        type: Plain Text
+
+      heading: 
+        heading: Slotter
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha">#TRAZADOS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: OBS =========================================
+      id: 135233467926174399
+      identification: 
+        column-name: OBS
+        type: Plain Text
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: STATUS ======================================
+      id: 135233942870174399
+      identification: 
+        column-name: STATUS
+        type: Plain Text
+
+      heading: 
+        heading: Status
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRECIO_ACTUAL ===============================
+      id: 135234326680174400
+      identification: 
+        column-name: PRECIO_ACTUAL
+        type: Plain Text
+
+      heading: 
+        heading: Precio
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+        group: Cotizacion # 139489138558755957
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      column-formatting: 
+        html-expression: '<span class= #PRECIO_STATUS# >#PRECIO_ACTUAL#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRECIO_FEC ==================================
+      id: 135234702242174400
+      identification: 
+        column-name: PRECIO_FEC
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: center
+        group: Cotizacion # 139489138558755957
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: DD-MM-YY
+
+      column-formatting: 
+        html-expression: '<span class= #PRECIO_STATUS# >#PRECIO_FEC#</span>'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRECIO_STATUS ===============================
+      id: 135235109260174400
+      identification: 
+        column-name: PRECIO_STATUS
+        type: Hidden
+
+      heading: 
+        heading: Precio Status
+
+      layout: 
+        sequence: 210
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: AJ_PRECIO ===================================
+      id: 135235868247174402
+      identification: 
+        column-name: AJ_PRECIO
+        type: Plain Text
+
+      heading: 
+        heading: Aj
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: end
+        group: Cotizacion # 139489138558755957
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ART_CALIDAD_ID ==============================
+      id: 135238267303174405
+      identification: 
+        column-name: ART_CALIDAD_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ART_CALIDAD.CODIGO # 1966651704367350
+
+      heading: 
+        heading: Calidad
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: false
+        sort: false
+        filter: false
+        highlight: false
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+    - # ====== Column: PRECIO_CALCULADO ============================
+      id: 135239541956174407
+      identification: 
+        column-name: PRECIO_CALCULADO
+        type: Link
+
+      heading: 
+        heading: $
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 220
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G990D00
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.:29:P29_CLIENTE_ID,P29_ID:&G_CLIENTE_ID.,#ID#'
+          page: 29 # QUICK_COTIZ
+          clear-cache: 29
+          values: 
+            p29_cliente_id: '&G_CLIENTE_ID.'
+            p29_id: '#ID#'
+
+        link-text: '#PRECIO_CALCULADO#'
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PARENT_ID ===================================
+      id: 135239941767174407
+      identification: 
+        column-name: PARENT_ID
+        type: Hidden
+
+      heading: 
+        heading: Parent Id
+
+      layout: 
+        sequence: 320
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: COD_ALETA ===================================
+      id: 135241122417174408
+      identification: 
+        column-name: COD_ALETA
+        type: Plain Text
+
+      heading: 
+        heading: Ext
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 340
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: CONTROL_PRECIOS
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+- # ====== Region: En Produccion ===============================
+  id: 172842538082845042
+  identification: 
+    name: En Produccion
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+            p.id articulo_id
+            ,S_ARTICULO(P.ID) scodigo
+            ,S_ARTICULO(P.ID,'ALETA')cod_aleta
+            ,S_ARTICULO(P.ID,'MEDIDAS')medidas      
+            ,S_ARTICULO(P.ID,'CALIDAD_KEY')  scalidad      
+            ,p.planchas
+            ,p.produccion
+            ,p.sin_contar
+            ,CASE WHEN P.ID > 1000 THEN p.terminado END  terminado
+              
+       FROM P250_STOCK p
+      where p.cliente_id = :P502_CLIENTE_ID
+    page-items-to-submit: 
+    - P502_CLIENTE_ID
+
+  layout: 
+    sequence: 30
+    parent-region: TAB_CONTAINER # 143994824654071154
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (1,3,8,5,9)'
+
+  security: 
+    authorization-scheme: ACCESS CONTROL - VICTORIA # 285793758003850
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 172842673007845044
+    link: 
+      link-column: Link to Custom Target
+      target: "javascript:$s('P502_ARTICULO_APPLY',\"#ARTICULO_ID#\")"
+      link-icon: <span aria-hidden="true" class="fa fa-arrow-up-alt"></span>
+      condition-type: Expression
+      language: PL/SQL
+      pl/sql-expression: ':P502_STATUS IN (1,3,8)'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: false
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      - Excel
+      - PDF
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 172853365775969702
+      identification: 
+        name: Primary Report
+        alias: 1762891
+
+    columns: 
+    - # ====== Column: SCALIDAD ====================================
+      id: 172842905513845046
+      identification: 
+        column-name: SCALIDAD
+        type: Plain Text
+
+      heading: 
+        heading: '#'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: COD_ALETA ===================================
+      id: 172843083217845048
+      identification: 
+        column-name: COD_ALETA
+        type: Plain Text
+
+      heading: 
+        heading: Cod Aleta
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ARTICULO_ID =================================
+      id: 172843754133845054
+      identification: 
+        column-name: ARTICULO_ID
+        type: Link
+
+      heading: 
+        heading: Art
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_ID:#ARTICULO_ID#'
+          page: 31 # ART_Z
+          values: 
+            p31_id: '#ARTICULO_ID#'
+
+        link-text: '#ARTICULO_ID#'
+        link-attributes: TARGET="ART"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: MEDIDAS =====================================
+      id: 172843773213845055
+      identification: 
+        column-name: MEDIDAS
+        type: Plain Text
+
+      heading: 
+        heading: Medidas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 110
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#MEDIDAS#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLANCHAS ====================================
+      id: 172844364439845060
+      identification: 
+        column-name: PLANCHAS
+        type: Plain Text
+
+      heading: 
+        heading: Planchas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 160
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRODUCCION ==================================
+      id: 172844421173845061
+      identification: 
+        column-name: PRODUCCION
+        type: Plain Text
+
+      heading: 
+        heading: Produccion
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 170
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TERMINADO ===================================
+      id: 172844550567845062
+      identification: 
+        column-name: TERMINADO
+        type: Plain Text
+
+      heading: 
+        heading: Terminado
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 180
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SCODIGO =====================================
+      id: 172844763441845064
+      identification: 
+        column-name: SCODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: SIN_CONTAR ==================================
+      id: 172844838725845065
+      identification: 
+        column-name: SIN_CONTAR
+        type: Plain Text
+
+      heading: 
+        heading: Sin Contar
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    printing: 
+      output: 
+        layout: Default Report Layout
+        view-file-as: Attachment
+
+      page: 
+        size: Letter
+        orientation: Landscape
+        units: Inches
+        width: 11
+        height: 8.5
+        border-width: 0.5
+        border-color: '#666666'
+
+      page-header: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+        page-header-text: En Produccion
+
+      column-headings: 
+        font: Helvetica
+        font-weight: Bold
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#EEEEEE'
+
+      columns: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 10
+        font-color: '#000000'
+        background-color: '#FFFFFF'
+
+      page-footer: 
+        font: Helvetica
+        font-weight: Normal
+        font-size: 12
+        font-color: '#000000'
+        alignment: center
+
+page-items: 
+- # ====== Page Item: P502_FLT_VIAJE_ID ========================
+  id: 8620971443285635
+  identification: 
+    name: P502_FLT_VIAJE_ID
+    type: Number Field
+
+  label: 
+    label: Viaje ID
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 60
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 8
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: FLT_VIAJE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_NETO ================================
+  id: 13796880437948823
+  identification: 
+    name: P502_NETO
+    type: Number Field
+
+  label: 
+    label: Neto
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: DETALLE # 10663806391243249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-usd
+    format-mask: 999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-warning
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: NETO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_PEDIDO_APPLY ========================
+  id: 13871501307719717
+  identification: 
+    name: P502_PEDIDO_APPLY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 50
+    region: DETALLE # 10663806391243249
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_ID ==================================
+  id: 15859149844676821
+  identification: 
+    name: P502_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: REMITO # 19474386699386518
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CAB_TIPO_ID =========================
+  id: 15859295393676822
+  identification: 
+    name: P502_CAB_TIPO_ID
+    type: Select List
+
+  label: 
+    label: CBTE
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CAB_TIPO.TITLE # 13778764956984108
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CAB_TIPO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CLIENTE_ID ==========================
+  id: 15859423128676823
+  identification: 
+    name: P502_CLIENTE_ID
+    type: Select List
+
+  label: 
+    label: Cliente
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: CLIENTES.TITLE # 2084520149913047
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CLIENTE_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (5,9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CLI_DFISCAL_ID ======================
+  id: 15859463218676824
+  identification: 
+    name: P502_CLI_DFISCAL_ID
+    type: Select List
+
+  label: 
+    label: Razon Social
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 110
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'SELECT TITLE,ID FROM CLI_DFISCAL WHERE CLIENTE_ID = :P502_CLIENTE_ID'
+    display-extra-values: false
+    display-null-value: true
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P502_CLIENTE_ID
+    items-to-submit: 
+    - P502_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CLI_DFISCAL_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P502_CTA
+    value: 1
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CLI_DEPOSITO_ID =====================
+  id: 15859590308676825
+  identification: 
+    name: P502_CLI_DEPOSITO_ID
+    type: Select List
+
+  label: 
+    label: Deposito
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 130
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT 'RETIRA CLIENTE' TITLE, 0 ID FROM DUAL 
+      UNION ALL
+      SELECT 
+      
+          title || ' - ' || 
+          REPLACE( REPLACE (DIRECCION,', Buenos Aires',''),', Argentina','') title , ID
+      
+          FROM CLI_DEPOSITOS where cliente_id = :P502_CLIENTE_ID
+          and status >= 0
+    display-extra-values: false
+    display-null-value: true
+    null-display-value: Seleccionar Deposito...
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P502_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CLI_DEPOSITO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): |
+      select id from cli_depositos where cliente_id = :P502_CLIENTE_ID 
+      and status IN (1)
+      
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CTA =================================
+  id: 15859708205676826
+  identification: 
+    name: P502_CTA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: REMITO # 19474386699386518
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CTA
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_FECHA ===============================
+  id: 15859782743676827
+  identification: 
+    name: P502_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 50
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_FLETE_ID ============================
+  id: 15859918485676828
+  identification: 
+    name: P502_FLETE_ID
+    type: Select List
+
+  label: 
+    label: Transporte
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FLETES.TITLE # 10541852161253522
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: FLETE_ID
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_NRO_REMITO ==========================
+  id: 15859938395676829
+  identification: 
+    name: P502_NRO_REMITO
+    type: Number Field
+
+  label: 
+    label: NUMERO
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: NRO_REMITO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_STATUS ==============================
+  id: 15860210853676831
+  identification: 
+    name: P502_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: VTA_REMITO_STATUS # 17795819510016808
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: STATUS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CLI_CUENTA_ID =======================
+  id: 15861428910676843
+  identification: 
+    name: P502_CLI_CUENTA_ID
+    type: Select List
+
+  label: 
+    label: Cuenta
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 120
+    region: REMITO # 19474386699386518
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 4
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: 'SELECT TITLE,ID FROM CLI_CUENTAS WHERE CLIENTE_ID = :P502_CLIENTE_ID'
+    display-extra-values: false
+    display-null-value: true
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P502_CLIENTE_ID
+    items-to-submit: 
+    - P502_CLIENTE_ID
+    parent-required: true
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CLI_CUENTA_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P502_CTA
+    value: 2
+
+  read-only: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9,10)'
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_SALDO_SIN_RECIBO ====================
+  id: 15862654701676856
+  identification: 
+    name: P502_SALDO_SIN_RECIBO
+    type: Display Only
+
+  label: 
+    label: Saldo Pendiente
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: RECIBOS # 14370377050163263
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Above
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-textEnd
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      SELECT (signo * NETO) - NVL(apply2,0) S1 
+      FROM VTA_REMITOS WHERE ID = :P502_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_OBS =================================
+  id: 17760838876731939
+  identification: 
+    name: P502_OBS
+    type: Text Field
+
+  label: 
+    label: Observaciones
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: DETALLE # 10663806391243249
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 6
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: OBS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_SALDO_SIN_FACTURA ===================
+  id: 18463394286677946
+  identification: 
+    name: P502_SALDO_SIN_FACTURA
+    type: Display Only
+
+  label: 
+    label: Saldo Sin Factura
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 30
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-info-text
+    format-mask: 999G999G999G999G990D00
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select signo * neto - nvl(apply1,0) 
+       from vta_remitos
+       WHERE ID = :P502_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_ITEM_SIN_PRECIO =====================
+  id: 36860314025413743
+  identification: 
+    name: P502_ITEM_SIN_PRECIO
+    type: Display Only
+
+  label: 
+    label: Item sin Precio
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 70
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: ITEM_SIN_PRECIO
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_CANTIDAD_ITEMS ======================
+  id: 38471313073901712
+  identification: 
+    name: P502_CANTIDAD_ITEMS
+    type: Display Only
+
+  label: 
+    label: Cantidad de Items
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: CANTIDAD_ITEMS
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_ITEM_SIN_CANTIDAD ===================
+  id: 38687954298062100
+  identification: 
+    name: P502_ITEM_SIN_CANTIDAD
+    type: Display Only
+
+  label: 
+    label: Item Sin Cantidad
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: REMITO # 19474386699386518
+    column: ITEM_SIN_CANTIDAD
+    data-type: NUMBER
+    query-only: true
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_SALDO_CON_FACTURA ===================
+  id: 158370382173818247
+  identification: 
+    name: P502_SALDO_CON_FACTURA
+    type: Display Only
+
+  label: 
+    label: Saldo Facturada
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-info-text
+    format-mask: 999G999G999G999G990D00
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select sum(importe) from vta_facturas_rem
+        WHERE vta_remito_id=:p502_id
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_FACT_SIN_APLICAR ====================
+  id: 158372462267818267
+  identification: 
+    name: P502_FACT_SIN_APLICAR
+    type: Display Only
+
+  label: 
+    label: Facturas Sin Aplicar
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 20
+    region: FACTURAS # 14192271771951824
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - u-danger-text
+    format-mask: 999G999G999G999G990D00
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      
+          SELECT sum(signo * neto_total - nvl(remitido,0))
+            FROM vta_facturas
+           WHERE ctrl_remito = 1
+          AND cli_dfiscal_id=(
+              SELECT cli_dfiscal_id
+                FROM vta_remitos
+               WHERE id=:p502_id
+          )
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P502_ARTICULO_APPLY ======================
+  id: 172845146871845068
+  identification: 
+    name: P502_ARTICULO_APPLY
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 60
+    region: DETALLE # 10663806391243249
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: NEW_REMITO ==================================
+  id: 6780498157077939
+  identification: 
+    button-name: NEW_REMITO
+    label: Remito
+
+  layout: 
+    sequence: 10
+    region: VENTAS # 15627733957468151
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:510:&SESSION.::&DEBUG.:::'
+      page: 510 # Nuevo Remito
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: DESPACHAR ===================================
+  id: 6784461057077978
+  identification: 
+    button-name: DESPACHAR
+    label: Despachar
+
+  layout: 
+    sequence: 30
+    region: REMITO # 19474386699386518
+    slot: HELP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item = Value
+    item: P502_STATUS
+    value: 8
+
+- # ====== Button: CLIENTE =====================================
+  id: 6968202921104148
+  identification: 
+    button-name: CLIENTE
+    label: Cliente
+
+  layout: 
+    sequence: 20
+    region: VENTAS # 15627733957468151
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-user
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:109:&SESSION.::&DEBUG.::G_CLIENTE_ID:&P502_CLIENTE_ID.'
+      page: 109 # CLIENTES_ENTREGAS
+      values: 
+        g_cliente_id: '&P502_CLIENTE_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: APLICACION ==================================
+  id: 14090208881310827
+  identification: 
+    button-name: APLICACION
+    label: Aplicacion
+
+  layout: 
+    sequence: 30
+    region: FACTURAS # 14192271771951824
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconRight
+    icon: fa-arrows-alt
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:503:&SESSION.::&DEBUG.:RP:P503_ID:&P502_ID.'
+      page: 503 # REMITOS_A1
+      clear-cache: RP
+      values: 
+        p503_id: '&P502_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: GUARDAR =====================================
+  id: 14191699220951818
+  identification: 
+    button-name: GUARDAR
+    label: Guardar
+
+  layout: 
+    sequence: 40
+    region: REMITO # 19474386699386518
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS NOT IN (10,-1)'
+
+- # ====== Button: ANULAR ======================================
+  id: 14195685912951858
+  identification: 
+    button-name: ANULAR
+    label: Anular
+
+  layout: 
+    sequence: 80
+    region: REMITO # 19474386699386518
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--iconRight
+    icon: fa-exclamation-triangle
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_CANTIDAD_ITEMS = 0 AND :P502_NRO_REMITO IS NOT NULL'
+
+- # ====== Button: ELIMINAR ====================================
+  id: 14367608204163235
+  identification: 
+    button-name: ELIMINAR
+    label: ELIMINAR
+
+  layout: 
+    sequence: 90
+    region: REMITO # 19474386699386518
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--iconRight
+    icon: fa-exclamation-triangle
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_CANTIDAD_ITEMS = 0 AND :P502_STATUS in (1,3,8,9)'
+
+- # ====== Button: IMPRIMIR ====================================
+  id: 14367931160163238
+  identification: 
+    button-name: IMPRIMIR
+    label: Imprimir
+
+  layout: 
+    sequence: 10
+    region: REMITO # 19474386699386518
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-print
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS in (1,3,5,8,9,10) AND :P502_CANTIDAD_ITEMS > 0'
+
+- # ====== Button: CANCEL ======================================
+  id: 15861600685676845
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 70
+    region: REMITO # 19474386699386518
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: FACTURAR ====================================
+  id: 17670802792694960
+  identification: 
+    button-name: FACTURAR
+    label: Facturar
+
+  layout: 
+    sequence: 10
+    region: FACTURAS # 14192271771951824
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    icon: fa-check-square-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      :P502_STATUS in (9) 
+      AND :P502_SALDO_SIN_FACTURA > 0
+      AND NVL(:P502_SALDO_CON_FACTURA,0) = 0
+      and :P502_ITEM_SIN_PRECIO = 0
+      AND :P502_ITEM_SIN_CANTIDAD = 0
+      and NVL(:P502_FACT_SIN_APLICAR,0) = 0
+
+- # ====== Button: ENTREGADO ===================================
+  id: 17759736301731928
+  identification: 
+    button-name: ENTREGADO
+    label: Entrega OK
+
+  layout: 
+    sequence: 50
+    region: REMITO # 19474386699386518
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    icon: fa-check-circle-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (3,5,8)'
+
+- # ====== Button: UNLOCK ======================================
+  id: 17759996568731930
+  identification: 
+    button-name: UNLOCK
+    label: Desbloquear
+
+  layout: 
+    sequence: 20
+    region: REMITO # 19474386699386518
+    slot: HELP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--warning
+    - t-Button--simple
+    - t-Button--iconRight
+    icon: fa-unlock
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (10,-1)'
+
+- # ====== Button: LISTO =======================================
+  id: 18463537891677948
+  identification: 
+    button-name: LISTO
+    label: LISTO
+
+  layout: 
+    sequence: 20
+    region: FACTURAS # 14192271771951824
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    - t-Button--hoverIconPush
+    icon: fa-check
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS = 9 AND :P502_SALDO_SIN_FACTURA = 0'
+
+- # ====== Button: ENTREGADO_NO ================================
+  id: 28575003840599268
+  identification: 
+    button-name: ENTREGADO_NO
+    label: No Entregado
+
+  layout: 
+    sequence: 60
+    region: REMITO # 19474386699386518
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--iconRight
+    icon: fa-check-circle-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P502_STATUS IN (9)'
+
+- # ====== Button: CARGAR_PRECIOS ==============================
+  id: 145956912676908664
+  identification: 
+    button-name: CARGAR_PRECIOS
+    label: Cargar Precios
+
+  layout: 
+    sequence: 10
+    region: CONTROL_PRECIOS # 148795262338992436
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: false
+
+dynamic-actions: 
+- # ====== Dynamic Action: PEDIDO_APPLY_CHANGE =================
+  id: 13871631623719718
+  identification: 
+    name: PEDIDO_APPLY_CHANGE
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P502_PEDIDO_APPLY
+
+  client-side-condition: 
+    type: Item is not null
+    item: P502_PEDIDO_APPLY
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 13801183308948866
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        INSERT INTO vta_remito_its (
+            vta_pedido_id
+           ,articulo_id
+           ,precio
+           ,vta_remito_id
+           ,cantidad
+        )
+            SELECT zp.vta_pedido_id
+                  ,zp.articulo_id
+                  ,zp.precio
+                  ,:p502_id
+                  ,CASE 
+                      when zp.articulo_id in (10,11) then 1
+                      WHEN zp.stock_terminado > 0 THEN  zp.stock_terminado 
+                     
+                      END CANTIDAD
+            FROM vp004 zp
+            WHERE fx =:p502_pedido_apply;
+      items-to-submit: 
+      - P502_PEDIDO_APPLY
+
+    execution: 
+      sequence: 10
+      event: PEDIDO_APPLY_CHANGE # 13871631623719718
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 13871859653719721
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DETALLE # 10663806391243249
+
+    execution: 
+      sequence: 30
+      event: PEDIDO_APPLY_CHANGE # 13871631623719718
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: FACTURAS ============================
+  id: 14195402401951855
+  identification: 
+    name: FACTURAS
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: APLICACION # 14090208881310827
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 14195528067951856
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: FACTURAS # 14192271771951824
+
+    execution: 
+      sequence: 10
+      event: FACTURAS # 14195402401951855
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: apply_class_to_parent ===============
+  id: 135244847682222749
+  identification: 
+    name: apply_class_to_parent
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: CONTROL_PRECIOS # 148795262338992436
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 135245206860222752
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: apply_class_to_parent # 135244847682222749
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: cargar_precios ======================
+  id: 145957179722908667
+  identification: 
+    name: cargar_precios
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CARGAR_PRECIOS # 145956912676908664
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 38688192730062102
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'select SUM(NETO) from vta_remito_its where vta_remito_id = :P502_ID'
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P502_NETO
+
+    execution: 
+      sequence: 30
+      event: cargar_precios # 145957179722908667
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 145957337134908668
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'articulos_pkg.cargar_precios_remito(:P502_ID);'
+
+    execution: 
+      sequence: 10
+      event: cargar_precios # 145957179722908667
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 145957455652908669
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DETALLE # 10663806391243249
+
+    execution: 
+      sequence: 20
+      event: cargar_precios # 145957179722908667
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 172845218006845069
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P502_ARTICULO_APPLY
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 172845413068845071
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: DETALLE # 10663806391243249
+
+    execution: 
+      sequence: 30
+      event: New_1 # 172845218006845069
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 172845555720845072
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        INSERT INTO t_vta_remito_its (
+            articulo_id
+           ,vta_remito_id
+           ,cantidad
+        )
+            SELECT 
+                  zp.ID articulo_id
+                  ,:P502_ID
+                  ,CASE 
+                      WHEN zp.terminado > 0 THEN zp.terminado 
+                      END CANTIDAD
+            FROM P250_STOCK zp
+            WHERE CLIENTE_ID = :P502_CLIENTE_ID 
+            AND ID =:P502_ARTICULO_APPLY;
+      items-to-submit: 
+      - P502_ARTICULO_APPLY
+      - P502_ID
+      - P502_CLIENTE_ID
+
+    execution: 
+      sequence: 10
+      event: New_1 # 172845218006845069
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+validations: 
+- # ====== Validation: CHECK_DFISCAL ===========================
+  id: 3313200694132217
+  identification: 
+    name: CHECK_DFISCAL
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Item is NOT NULL
+    item: P502_CLI_DFISCAL_ID
+    always-execute: false
+
+  error: 
+    error-message: Falta Cuenta
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+    type: Item = Value
+    item: P502_CTA
+    value: 1
+
+- # ====== Validation: CHECK_CUENTA ============================
+  id: 3313300417132218
+  identification: 
+    name: CHECK_CUENTA
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Item is NOT NULL
+    item: P502_CLI_CUENTA_ID
+    always-execute: false
+
+  error: 
+    error-message: Falta Cuenta
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+    type: Item = Value
+    item: P502_CTA
+    value: 2
+
+- # ====== Validation: CHECK_DEPOSITO ==========================
+  id: 3313351820132219
+  identification: 
+    name: CHECK_DEPOSITO
+
+  execution: 
+    sequence: 30
+
+  validation: 
+    type: Item is NOT NULL
+    item: P502_CLI_DEPOSITO_ID
+    always-execute: false
+
+  error: 
+    error-message: FALTA DEPOSITO
+    display-location: Inline with Field and in Notification
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+
+computations: 
+- # ====== Computation: P502_STATUS ============================
+  id: 6784492113077979
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 50
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 5
+
+  server-side-condition: 
+    type: Request = Value
+    value: DESPACHAR
+
+- # ====== Computation: P502_STATUS ============================
+  id: 9175572815112668
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 40
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 9
+
+  server-side-condition: 
+    type: Request = Value
+    value: ENTREGADO
+
+- # ====== Computation: P502_STATUS ============================
+  id: 9468498462537739
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 30
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: '-1'
+
+  server-side-condition: 
+    type: Request = Value
+    value: ANULAR
+
+- # ====== Computation: G_CLIENTE_ID ===========================
+  id: 15861821604676847
+  identification: 
+    item-name: G_CLIENTE_ID
+
+  execution: 
+    sequence: 10
+    point: After Header
+
+  computation: 
+    type: Item
+    item-name: P502_CLIENTE_ID
+
+- # ====== Computation: P502_STATUS ============================
+  id: 15861850208676848
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 10
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 9
+
+  server-side-condition: 
+    type: Request = Value
+    value: UNLOCK
+
+- # ====== Computation: P502_STATUS ============================
+  id: 16590073372496377
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 20
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 10
+
+  server-side-condition: 
+    type: Request = Value
+    value: LISTO
+
+- # ====== Computation: P502_STATUS ============================
+  id: 28575109116599269
+  identification: 
+    item-name: P502_STATUS
+
+  execution: 
+    sequence: 60
+    point: After Submit
+
+  computation: 
+    type: Static Value
+    static-value: 8
+
+  server-side-condition: 
+    type: Request = Value
+    value: ENTREGADO_NO
+
+processes: 
+- # ====== Process: NRO_REMITO =================================
+  id: 1052753071445933
+  identification: 
+    name: NRO_REMITO
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      BEGIN
+      if :P502_STATUS in (9,10) then
+        return;
+      end if;  
+        
+      IF :P502_NRO_REMITO IS NULL THEN 
+         IF :P502_CTA = 2 THEN
+            SELECT MAX(NRO_REMITO) +1 
+                INTO :P502_NRO_REMITO
+              FROM VTA_REMITOS WHERE CTA = 2;
+         ELSE
+               SELECT MAX(NRO_REMITO) +1 
+                INTO :P502_NRO_REMITO
+              FROM VTA_REMITOS WHERE CAB_TIPO_ID = :P502_CAB_TIPO_ID;
+         END IF;
+       END IF;
+       IF :P502_FECHA IS NULL THEN
+          :P502_FECHA := SYSDATE;
+       END IF;
+      
+           IF :P502_CLI_DEPOSITO_ID = 0 THEN 
+               :P502_STATUS := 9;
+           ELSE
+               :P502_STATUS := 3;
+           END IF;  
+      
+      END;
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+
+- # ====== Process: Initialize form VTA_REMITO =================
+  id: 15775542090244926
+  identification: 
+    name: Initialize form VTA_REMITO
+    type: Form - Initialization
+    execution-chain: None
+    form-region: REMITO # 19474386699386518
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: SAVE VTA_REMITOS ===========================
+  id: 15861486671676844
+  identification: 
+    name: SAVE VTA_REMITOS
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: guardar # 38688034982062101
+    form-region: REMITO # 19474386699386518
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: No
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 70
+
+  server-side-condition: 
+    type: Request is NOT contained in Value
+    value: CANCEL
+
+- # ====== Process: guardar ====================================
+  id: 38688034982062101
+  identification: 
+    name: guardar
+    type: Execution Chain
+    execution-chain: None
+
+  settings: 
+    run-in-background: false
+
+  execution: 
+    sequence: 60
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: neto =======================================
+  id: 38689140481062112
+  identification: 
+    name: neto
+    type: Execute Code
+    execution-chain: guardar # 38688034982062101
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      SELECT SUM(PRECIO*CANTIDAD) INTO :P502_NETO 
+      FROM VTA_REMITO_ITS WHERE VTA_REMITO_ID = :P502_ID;
+
+  execution: 
+    sequence: 60
+
+- # ====== Process: DETALLE - Save Interactive Grid Data =======
+  id: 64239520630816236
+  identification: 
+    name: DETALLE - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: guardar # 38688034982062101
+    editable-region: DETALLE # 10663806391243249
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 50
+
+  server-side-condition: 
+    execution-scope: For Created and Modified Rows
+
+branches: 
+- # ====== Branch: GO TO REMITOS ===============================
+  id: 14367692422163236
+  identification: 
+    name: GO TO REMITOS
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:511:&SESSION.::&DEBUG.:RP,81::&success_msg=#SUCCESS_MSG#'
+      page: 511 # ENTREGAS
+      clear-cache: RP,81
+
+  server-side-condition: 
+    when-button-pressed: ELIMINAR # 14367608204163235
+
+- # ====== Branch: IMPRIMIR 1 ==================================
+  id: 17531415938527144
+  identification: 
+    name: IMPRIMIR 1
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:145:&SESSION.::&DEBUG.:RP:P145_ID:&P502_ID.&success_msg=#SUCCESS_MSG#'
+      page: 145 # PRINT_REMITO_1
+      clear-cache: RP
+      values: 
+        p145_id: '&P502_ID.'
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+    type: Item = Value
+    item: P502_CTA
+    value: 1
+
+- # ====== Branch: IMPRIMIR 2 ==================================
+  id: 17531643391527147
+  identification: 
+    name: IMPRIMIR 2
+
+  execution: 
+    sequence: 30
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:143:&SESSION.::&DEBUG.:RP,143:P143_ID:&P502_ID.&success_msg=#SUCCESS_MSG#'
+      page: 143 # PRINT_REMITO_2
+      clear-cache: RP,143
+      values: 
+        p143_id: '&P502_ID.'
+
+  server-side-condition: 
+    when-button-pressed: IMPRIMIR # 14367931160163238
+    type: Item = Value
+    item: P502_CTA
+    value: 2
+
+- # ====== Branch: FACTURAR ====================================
+  id: 22605180680075920
+  identification: 
+    name: FACTURAR
+
+  execution: 
+    sequence: 40
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:421:&SESSION.::&DEBUG.:RP,421,422:P421_VTA_REMITO_ID:&P502_ID.&success_msg=#SUCCESS_MSG#'
+      page: 421 # Step 1
+      clear-cache: RP,421,422
+      values: 
+        p421_vta_remito_id: '&P502_ID.'
+
+  server-side-condition: 
+    when-button-pressed: FACTURAR # 17670802792694960
+

@@ -1,0 +1,240 @@
+---
+# ====== Page: STOCK_2 =======================================
+id: 4
+identification: 
+  name: STOCK_2
+  alias: STOCK-2
+  title: STOCK_2
+  page-group: Bobinas # 12671386400879323
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: STOCK DE PAPEL ==============================
+  id: 353306187888330278
+  identification: 
+    name: STOCK DE PAPEL
+    type: List View
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          tipo,
+          round(metros)       metros,
+          cantidad    || ' BOBINAS ENTERAS  -  '
+          || puchos    || ' PUCHOS'        info,
+          T.TITLE
+      FROM
+          (
+              SELECT
+                  bob_tipo_id        tipo,
+                  SUM(metros_actual) metros,
+                  COUNT( CASE WHEN status = 1 THEN 1 END) cantidad,
+                  COUNT( CASE WHEN status = 2 THEN 1 END ) puchos
+              FROM
+                  BOB_INFO
+              WHERE
+                  status IN ( 1, 2 )
+              AND FORMATO = :P4_FORMATO  
+              GROUP BY bob_tipo_id
+          )         b
+          LEFT JOIN bob_tipos t ON b.tipo = t.id
+      ORDER BY    1
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      text-column: TITLE
+      supplemental-information-column: INFO
+      counter-column: METROS
+      link-target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.::P5_FORMATO,P5_TIPO:&P4_FORMATO.,&TIPO.'
+        page: 5 # STOCK_3
+        values: 
+          p5_formato: '&P4_FORMATO.'
+          p5_tipo: '&TIPO.'
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+page-items: 
+- # ====== Page Item: P4_FORMATO ===============================
+  id: 176666356975782002
+  identification: 
+    name: P4_FORMATO
+    type: Select List
+
+  label: 
+    label: FORMATO
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: true
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: STOCK DE PAPEL # 353306187888330278
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--xlarge
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select DISTINCT(FORMATO) ID ,FORMATO
+        from BOBINAS
+        WHERE STATUS IN (1,2)
+       ORDER BY 1
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: BACK ========================================
+  id: 176666458826782003
+  identification: 
+    button-name: BACK
+    label: BACK
+
+  layout: 
+    sequence: 10
+    region: STOCK DE PAPEL # 353306187888330278
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+branches: 
+- # ====== Branch: Go To Page 3 ================================
+  id: 176666529436782004
+  identification: 
+    name: Go To Page 3
+
+  execution: 
+    sequence: 10
+    point: Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 3 # STOCK DE PAPEL
+
+  server-side-condition: 
+    when-button-pressed: BACK # 176666458826782003
+

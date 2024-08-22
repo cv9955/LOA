@@ -97,6 +97,35 @@ public (active)
 ```
 
 
+### montar disco
+```
+# mount /dev/sdb1 /mnt/fra
+
+# chown oracle:oinstall /mnt/fra
+
+
+[oracle@rocky8 win]$ lsblk
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda           8:0    0 111,8G  0 disk
+├─sda1        8:1    0     1G  0 part /boot
+└─sda2        8:2    0 110,8G  0 part
+  ├─rl-root 253:0    0    70G  0 lvm  /
+  ├─rl-swap 253:1    0   5,9G  0 lvm  [SWAP]
+  └─rl-home 253:2    0    35G  0 lvm  /home
+sdb           8:16   0 931,5G  0 disk
+├─sdb1        8:17   0   200G  0 part
+├─sdb2        8:18   0   200G  0 part
+└─sdb3        8:19   0 531,5G  0 part
+
+
+
+## fstab >> montar al arranque
+sudo nano /etc/fstab
+/dev/vdb1 /mnt/1 ext4 defaults 0 0
+
+```
+
+
 ### montar DISCO NTFS
 ```
 # yum install epel-release
@@ -120,7 +149,6 @@ tmpfs                 1,2G    32K  1,2G   1% /run/user/1000
 # mount -t ntfs-3g /dev/sda1 /mnt/win
 
 umount /mnt/win
-```
 
 
 
@@ -146,3 +174,9 @@ unzip file.zip -d /dir
 ```
 [Rocky-8.8-x86_64-dvd1]: https://docs.rockylinux.org/guides/8_6_installation/
 [Firewall]: https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos
+
+### ACTUALIZAR LINUX
+
+sudo dnf check-update
+sudo dnf update
+

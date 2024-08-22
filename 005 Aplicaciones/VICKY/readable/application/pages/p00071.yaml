@@ -1,0 +1,423 @@
+---
+# ====== Page: PRINT_FACTURA =================================
+id: 71
+identification: 
+  name: PRINT_FACTURA
+  alias: PRINT-FACTURA
+  title: PRINT_FACTURA
+
+appearance: 
+  page-mode: Normal
+  page-template: CAV_OFABRI
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+css: 
+  file-urls: 
+  - '#WORKSPACE_FILES#css/p71_print_factura#MIN#.css'
+  inline: |
+    body{
+    background-color : white;
+    }
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Factura =====================================
+  id: 66342084331824628
+  identification: 
+    name: Factura
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      BEGIN
+       RETURN PRINT_FACTURA(:P71_ID);
+      END;
+    page-items-to-submit: 
+    - P71_ID
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    column-attributes: 
+    - 'style="overflow:visible;height:3000px;"'
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+
+- # ====== Region: Footer ======================================
+  id: 66342714467824634
+  identification: 
+    name: Footer
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - footer
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P71_ID ===================================
+  id: 66342164871824629
+  identification: 
+    name: P71_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Factura # 66342084331824628
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P71_LOGO_AFIP ============================
+  id: 66342767511824635
+  identification: 
+    name: P71_LOGO_AFIP
+    type: Display Image
+
+  label: 
+    label: Logo Afip
+    alignment: Left
+
+  settings: 
+    based-on: Image URL stored in Page Item Value
+
+  layout: 
+    sequence: 40
+    region: Footer # 66342714467824634
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 5
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;"'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '#APP_FILES#img/facturas_footer.png'
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P71_QR ===================================
+  id: 66342855390824636
+  identification: 
+    name: P71_QR
+    type: QR Code
+
+  label: 
+    alignment: Left
+
+  settings: 
+    value-protected: true
+
+  qr-code: 
+    data-type: PLAIN TEXT
+    size: Large
+
+  layout: 
+    sequence: 30
+    region: Footer # 66342714467824634
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): |
+      SELECT 
+      'https://www.afip.gob.ar/fe/qr/?p=' || 
+      
+      TO_BASE64('{"ver":1,"fecha":"' || TO_CHAR(fc.FECHA,'YYYY-MM-DD') || '",' ||
+      '"cuit":30676175179'|| 
+      ',"ptoVta":'|| fc.punto_venta||
+      ',"tipoCmp":'|| cbte.id ||
+      ',"nroCmp":'|| fc.nro_cab ||
+      ',"importe":'|| fc.total ||
+      ',"moneda":"PES"'||
+      ',"ctz":1'||
+      ',"tipoDocRec":80'||
+      ',"nroDocRec":'|| fc.cuit ||
+      ',"tipoCodAut":"E"'||
+      ',"codAut":'|| FC.cae || '}') QRTEXT
+        FROM t_vta_facturas fc
+          ,table(afip_pkg.cbtetipo) cbte
+          where fc.cbtetipo = cbte.id
+         and fc.id = :P71_ID;
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P71_CAI ==================================
+  id: 66342961077824637
+  identification: 
+    name: P71_CAI
+    type: Display Only
+
+  label: 
+    label: Cai
+    alignment: Left
+
+  settings: 
+    format: HTML
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: Footer # 66342714467824634
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    custom-attributes: 
+    - 'border:none;'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select '<div class="cae"><div style="text-align: right;"><b>CAE Nº:</b></div><div>' || cae || 
+              '</div><div style="text-align: right;"><b>Vencimiento:</b></div><div>' || to_char(cae_vto,'DD/MM/YYYY') ||
+              '</div></div>' div_Cae
+        FROM t_vta_facturas fc
+        where fc.id = :P71_ID
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P71_LOGO_EMPRESA =========================
+  id: 66343336287824641
+  identification: 
+    name: P71_LOGO_EMPRESA
+    type: Display Image
+
+  label: 
+    label: Logo Afip
+    alignment: Left
+
+  settings: 
+    based-on: Image URL stored in Page Item Value
+
+  layout: 
+    sequence: 10
+    region: Factura # 66342084331824628
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;"'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '#APP_FILES#app-420-logo.png'
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P71_MARCA_AGUA ===========================
+  id: 66343524398824642
+  identification: 
+    name: P71_MARCA_AGUA
+    type: Display Image
+
+  label: 
+    label: Logo Afip
+    alignment: Left
+
+  settings: 
+    based-on: Image URL stored in Page Item Value
+
+  layout: 
+    sequence: 20
+    region: Factura # 66342084331824628
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: 0
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    custom-attributes: 
+    - 'style="width:100%;"'
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Static Value
+    static-value: '#APP_FILES#app-420-logo.png'
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+

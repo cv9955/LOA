@@ -1,0 +1,880 @@
+---
+# ====== Page: BUSCAR_CLIENTE ================================
+id: 101
+identification: 
+  name: BUSCAR_CLIENTE
+  alias: BUSCAR_CLIENTE
+  title: CLIENTES
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Normal
+  page-template: Right Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  inline: |
+    
+    
+
+security: 
+  authorization-scheme: Must Not Be Public User
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Search ======================================
+  id: 9591400460877621
+  identification: 
+    name: Search
+    type: Faceted Search
+
+  source: 
+    filtered-region: Clientes # 11488421885694110
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      show-current-facets: No
+      show-total-row-count: No
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P101_SEARCH ==================================
+    id: 5420092228604099
+    identification: 
+      name: P101_SEARCH
+      type: Search
+
+    label: 
+      label: Buscar
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): ALIAS,TITLE,TAGS
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Facet: P101_VENDEDOR ================================
+    id: 5420876150604101
+    identification: 
+      name: P101_VENDEDOR
+      type: Radio Group
+
+    label: 
+      label: Vendedor
+      show-label-for-current-facet: true
+
+    settings: 
+      hide-radio-buttons: false
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: VENDEDOR.TITLE # 1450671573559921
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Disable
+      sort-by-top-counts: true
+      show-selected-first: false
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: CARD_SUBTITLE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Facet: P101_STATUS ==================================
+    id: 5421235856604102
+    identification: 
+      name: P101_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Estado
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_STATUS_EMPRESAS # 59432140020336376
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Show Last
+      sort-by-top-counts: false
+      show-selected-first: true
+      maximum-displayed-entries: 10
+      display-filter-initially: true
+
+    actions-menu: 
+      filter: false
+      chart: false
+
+    advanced: 
+      display-toggling: false
+      collapsible: false
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    default: 
+      type: Static
+      static-value: '1:5:7:0'
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P101_SEARCH =================================
+    id: 5420092228604099
+    identification: 
+      name: P101_SEARCH
+      type: Search
+
+    label: 
+      label: Buscar
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    source: 
+      database-column(s): ALIAS,TITLE,TAGS
+
+    security: 
+      store-value-encrypted-in-session-state: false
+
+  - # ====== Filter: P101_VENDEDOR ===============================
+    id: 5420876150604101
+    identification: 
+      name: P101_VENDEDOR
+      type: Radio Group
+
+    label: 
+      label: Vendedor
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: VENDEDOR.TITLE # 1450671573559921
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Disable
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: CARD_SUBTITLE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+  - # ====== Filter: P101_STATUS =================================
+    id: 5421235856604102
+    identification: 
+      name: P101_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Estado
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: LOV_STATUS_EMPRESAS # 59432140020336376
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Show Last
+      sort-by-top-counts: false
+      show-selected-first: true
+      client-side-filtering: true
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STATUS
+      data-type: NUMBER
+
+    multiple-values: 
+      type: No
+
+    default: 
+      type: Static
+      static-value: '1:5:7:0'
+
+    security: 
+      store-value-encrypted-in-session-state: false
+      escape-special-characters: true
+
+- # ====== Region: Clientes ====================================
+  id: 11488421885694110
+  identification: 
+    name: Clientes
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT clientes.ID 
+          ,TITLE CARD_TITLE
+          ,ALIAS,TITLE,TAGS
+          ,clientes.STATUS
+          ,VENDEDOR_ID CARD_SUBTITLE
+          ,TO_CHAR(ID,'000') CARD_INITIALS
+          ,s_status(clientes.status,'ICON')    CARD_ICON
+          ,s_status(clientes.status,'COLOR')    CARD_COLOR
+              ,apex_page.get_url( 
+                    p_page => 140, 
+                    p_clear_cache => 140, 
+                    p_items => 'g_cliente_id', 
+                    p_values =>  ID
+                  ) CARD_LINK
+      FROM CLIENTES
+      
+       -- WHERE VENDEDOR_ID = NVL(:U_VENDEDOR_ID,VENDEDOR_ID)
+        ORDER BY TITLE
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hiddenOverflow
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 100
+
+    appearance: 
+      template-type: Theme
+      template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - t-Cards--displaySubtitle
+      - t-Cards--compact
+      - t-Cards--displayInitials
+      - t-Cards--5cols
+      - t-Cards--hideBody
+      - t-Cards--animRaiseCard
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: STATUS ======================================
+    id: 5424346290604119
+    identification: 
+      column-name: STATUS
+      type: Plain Text
+
+    heading: 
+      heading: Status
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_TITLE ==================================
+    id: 59402322691294916
+    identification: 
+      column-name: CARD_TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Card Title
+      alignment: start
+
+    layout: 
+      sequence: 19
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ALIAS =======================================
+    id: 59402367536294917
+    identification: 
+      column-name: ALIAS
+      type: Plain Text
+
+    heading: 
+      heading: Alias
+      alignment: start
+
+    layout: 
+      sequence: 29
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 59402517296294918
+    identification: 
+      column-name: TITLE
+      type: Plain Text
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 39
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TAGS ========================================
+    id: 59402594770294919
+    identification: 
+      column-name: TAGS
+      type: Plain Text
+
+    heading: 
+      heading: Tags
+      alignment: start
+
+    layout: 
+      sequence: 49
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_INITIALS ===============================
+    id: 59402772039294921
+    identification: 
+      column-name: CARD_INITIALS
+      type: Plain Text
+
+    heading: 
+      heading: Card Initials
+      alignment: end
+
+    layout: 
+      sequence: 59
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_ICON ===================================
+    id: 59403023821294923
+    identification: 
+      column-name: CARD_ICON
+      type: Plain Text
+
+    heading: 
+      heading: Card Icon
+      alignment: start
+
+    layout: 
+      sequence: 79
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 59403110727294924
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 89
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_LINK ===================================
+    id: 59403170543294925
+    identification: 
+      column-name: CARD_LINK
+      type: Plain Text
+
+    heading: 
+      heading: Card Link
+      alignment: start
+
+    layout: 
+      sequence: 99
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_SUBTITLE ===============================
+    id: 59403265151294926
+    identification: 
+      column-name: CARD_SUBTITLE
+      type: Plain Text (based on List of Values)
+
+    heading: 
+      heading: Card Subtitle
+      alignment: end
+
+    layout: 
+      sequence: 109
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: VENDEDOR.TITLE # 1450671573559921
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: CARD_COLOR ==================================
+    id: 59403428692294927
+    identification: 
+      column-name: CARD_COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Card Color
+      alignment: start
+
+    layout: 
+      sequence: 119
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Menu Principal ==============================
+  id: 13129902373655436
+  identification: 
+    name: Menu Principal
+    type: List
+
+  source: 
+    list: MENU_INICIO # 5829844276418607
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-users
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+buttons: 
+- # ====== Button: Nuevo_Cliente ===============================
+  id: 5426766575604121
+  identification: 
+    button-name: Nuevo_Cliente
+    label: Nuevo Cliente
+
+  layout: 
+    sequence: 10
+    region: Clientes # 11488421885694110
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:120:&SESSION.::&DEBUG.:RP,120::'
+      page: 120 # CLIENTES_NUEVO
+      clear-cache: RP,120
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: NUEVO_CLIENTE_CLOSE =================
+  id: 6014805616188736
+  identification: 
+    name: NUEVO_CLIENTE_CLOSE
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: Nuevo_Cliente # 5426766575604121
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 6014918621188737
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Clientes # 11488421885694110
+
+    execution: 
+      sequence: 10
+      event: NUEVO_CLIENTE_CLOSE # 6014805616188736
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

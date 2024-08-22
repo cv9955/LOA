@@ -1,0 +1,172 @@
+---
+# ====== Page: Eventos =======================================
+id: 1
+identification: 
+  name: Eventos
+  alias: HOME
+  title: Eventos
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PTC2023 =====================================
+  id: 2303816214196475
+  identification: 
+    name: PTC2023
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  image: 
+    file-url: '#APP_FILES#icons/app-icon-512.png'
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: New =========================================
+  id: 9427471969962641
+  identification: 
+    name: New
+    type: Calendar
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select ID,
+             TITLE,
+             EVE_CAT_ID,
+             STATUS,
+             CLIENTE_ID,
+             CLI_DFISCAL_ID,
+             FEC_INI,
+             FEC_FIN,
+             JORNADAS
+      
+        from EVENTOS
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    escape-special-characters: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      display-column: TITLE
+      start-date-column: FEC_INI
+      end-date-column: FEC_FIN
+      primary-key-column: ID
+      event-sorting: Automatic
+      show-time: false
+      supplemental-information: '&CLI_DFISCAL_ID.'
+      multiple-line-events: true
+      show-tooltip: true
+      additional-calendar-views: 'list:navigation'
+      drag-and-drop: true
+      drag-and-drop-pl/sql-code: |
+        begin
+             update EVENTOS
+                set FEC_INI = to_date(:APEX$NEW_START_DATE, 'YYYYMMDDHH24MISS'),
+                    FEC_FIN = to_date(:APEX$NEW_END_DATE, 'YYYYMMDDHH24MISS')
+              where id = :APEX$PK_VALUE;
+         end;
+      create-link: 
+        url: 'f?p=&APP_ID.:201:&SESSION.::&DEBUG.:201:P201_FEC_INI,P201_FEC_FIN:&APEX$NEW_START_DATE.,&APEX$NEW_END_DATE.'
+        page: 201 # EVENTOS_FORM
+        clear-cache: 201
+        values: 
+          p201_fec_ini: '&APEX$NEW_START_DATE.'
+          p201_fec_fin: '&APEX$NEW_END_DATE.'
+
+      view-/-edit-link: 
+        url: 'f?p=&APP_ID.:210:&SESSION.::&DEBUG.::P210_ID:&ID.'
+        page: 210 # EVENTO_DASH
+        values: 
+          p210_id: '&ID.'
+
+      maximum-events-/-day: 10
+      show-weekend: true
+
+    performance: 
+      lazy-loading: false
+

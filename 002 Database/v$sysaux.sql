@@ -1,0 +1,1 @@
+select * from V$SYSAUX_OCCUPANTS;

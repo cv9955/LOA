@@ -1,0 +1,238 @@
+---
+# ====== Page: CORRUGADO =====================================
+id: 163
+identification: 
+  name: CORRUGADO
+  title: PLANILLA CORRUGADO
+  page-group: 200 PRODUCCION # 4255674501624938
+
+appearance: 
+  page-mode: Normal
+  page-template: PRINT_BASE_2
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+    
+
+css: 
+  inline: |
+    @page {
+            size: portrait;
+    }
+    
+    .grid-pedido {
+        display: inline-grid;
+        position : relative;
+        page-break-inside:avoid; 
+        border: 2px ridge ;
+        margin-bottom: 25px;
+        grid-template-columns: 20cm;
+        font-family: Arial, Helvetica, sans-serif;
+    
+    }  
+    
+    .grid-info  {
+      display: grid;
+      grid-template-columns: 2cm 3cm 2cm 2cm auto 2cm 3cm;      
+      font-size: 14px; 
+      background-color : LAVENDER;
+      border-bottom : 2px ridge;
+      padding : 2px;
+    }
+    
+    .tc { text-align : center;}
+    .tbold { font-weight: 700;}
+    .tgris { font-weight: 700; color:gray;}
+    .tborde { border : 1px solid lightgray;}
+    .nborde { border : 0px ;}
+    
+    .grid-articulo {
+      display: grid;
+      margin-top: 5px;
+      margin-bottom : 5px;  
+      grid-template-columns: 1cm 3cm 4cm 1cm 1cm 1cm 1cm 1cm 1cm auto;  
+      font-size: 12px;  
+        
+    }
+    
+    .grid-trazado {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto ;
+      text-align: center;
+    }
+    
+    .grid-slitter {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto; 
+      text-align: center;  
+      font-size: 12px;
+      margin-left : 2cm;
+      margin-right : 2cm;  
+    }
+    
+    .grid-slitter > div {
+        padding : 1px;
+        border-top: 1px solid;
+    
+    }
+    .guia {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+        
+    }
+    
+    .corte {
+        background-color : LAVENDER; 
+        font-weight: bold;
+        border-left : 1px solid;
+        border-right: 1px solid;
+    }
+    
+    .grid-trazado div{
+      border: 1px solid lightgray;
+    }
+    
+    .grid-articulo div {
+       white-space: nowrap; 
+       text-overflow: ellipsis;
+       overflow: hidden;
+       padding : 1px;
+    }
+    
+    
+    
+    
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Imprimir ====================================
+  id: 64961817289851634
+  identification: 
+    name: Imprimir
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      P163_CORRUGADO(:P163_FECHA)
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P163_FECHA ===============================
+  id: 3112373399983250
+  identification: 
+    name: P163_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: Imprimir # 64961817289851634
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: print ===============================
+  id: 9121184500331613
+  identification: 
+    name: print
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 9121729483331617
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: window.print();
+
+    affected-elements: 
+      selection-type: Event Source
+
+    execution: 
+      sequence: 10
+      event: print # 9121184500331613
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

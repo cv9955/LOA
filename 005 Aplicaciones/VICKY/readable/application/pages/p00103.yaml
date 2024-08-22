@@ -1,0 +1,106 @@
+---
+# ====== Page: CLIENTES_MAPA =================================
+id: 103
+identification: 
+  name: CLIENTES_MAPA
+  alias: CLIENTES-MAPA
+  title: CLIENTES_MAPA
+  page-group: 100_CLIENTES # 5799268718869932
+
+appearance: 
+  page-mode: Non-Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  width: 800
+  height: 800
+  chained: false
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: MAPA CLIENTES ===============================
+  id: 13929375941504110
+  identification: 
+    name: MAPA CLIENTES
+    type: JK64 Report Google Map
+
+  source: 
+    sql-query: |
+      SELECT lat
+            ,lng
+            ,s_cliente(dep.cliente_id)||'-'||dep.title label
+            ,id
+        FROM cli_depositos dep
+          where id in (select cli_deposito_id from depositos_con_pedido_pendiente)
+      ;
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--removeHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      min.-map-height: 600
+      zoom-level-on-click: 13
+      marker-icon: fa-industry
+      initial-map-position: '-34.8097527,-58.4574414'
+      pan-on-click: false
+      geolocate: false
+      directions: (NONE)
+      attribute1: Label
+      default-map-type: Roadmap
+      gesture-handling: auto
+
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 500
+

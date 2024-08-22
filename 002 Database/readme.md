@@ -1,7 +1,9 @@
 # DATABASE
-> Este archivo documenta la configuracion de la base de datos, usuarios, permisos
+> Este archivo documenta la configuracion y el mantenimiento periodico de la base de datos
 
-## PDBS
+
+## PDBS - pluggable databases
+> 
 ```
 SQL> show pdbs;
 
@@ -11,11 +13,9 @@ SQL> show pdbs;
          3 PDBLOA                         READ WRITE NO
 ```
 
-
-
-## SCHEMAS
-
 ## USUARIOS
+[create_users](create_users.sql)
+
 ```SQL
 select * from dba_users
 where account_status = 'OPEN';
@@ -36,3 +36,12 @@ where account_status = 'OPEN';
 
 ## ARCHIVELOGS
 
+
+
+
+## Copia Pdb de PTC
+CREATE PLUGGABLE DATABASE pdbPTC USING '/opt/oracle/oradata/XE/XEPDB1/XEPDB1.xml' 
+  SOURCE_FILE_DIRECTORY = '/opt/oracle/oradata/XE/XEPDB1/'  
+  MOVE
+  FILE_NAME_CONVERT = ('/opt/oracle/oradata/XE/XEPDB1/', '/opt/oracle/oradata/XE/PDBPTC/')
+  STORAGE (MAXSIZE 8G);

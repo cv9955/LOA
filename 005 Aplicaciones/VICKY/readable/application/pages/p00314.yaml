@@ -1,0 +1,1226 @@
+---
+# ====== Page: BOBINAS INGRESO ===============================
+id: 314
+identification: 
+  name: BOBINAS INGRESO
+  alias: BOB_ORDEN_X
+  title: BOBINAS INGRESO
+  page-group: 300 BOBINAS # 4255325950619063
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: ORDEN =======================================
+  id: 5306156235109934
+  identification: 
+    name: ORDEN
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: BOB_ALTAS
+    include-rowid-column: false
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: ORDEN DE INGRESO ============================
+  id: 9077758289359765
+  identification: 
+    name: ORDEN DE INGRESO
+    type: Interactive Grid
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT id
+            ,bob_tipo_id tipo
+            ,formato
+            ,gramaje
+            ,peso
+            ,diametro
+            ,pstock
+      --      ,obs
+            ,b.diametro * sqrt(b.pstock / 100) diametro_actual
+            ,b.peso * b.pstock / 100 peso_actual
+            ,b.peso * b.pstock / b.gramaje / b.formato * 1000 metros_actual
+        FROM BOBINAS B
+      where bob_alta_id = :P314_ID 
+      
+      
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 9078315553359766
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Update Row
+      lost-update-type: Row Values
+
+    performance: 
+      lazy-loading: false
+
+    appearance: 
+      show-null-values-as: '-'
+      select-first-row: false
+      fixed-row-height: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    toolbar: 
+      show: false
+
+    enable-users-to: 
+      save-public-report: false
+      flashback: false
+      define-chart-view: false
+      download: false
+
+    heading: 
+      fixed-to: None
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: STOCK =================================
+      id: 9078710076359767
+      identification: 
+        name: STOCK
+        alias: STOCK
+
+  column-groups: 
+  - # ====== Column Group: INGRESO ===============================
+    id: 10427618774562462
+    heading: 
+      heading: INGRESO
+
+  - # ====== Column Group: EXISTENCIA ============================
+    id: 10427659764562463
+    heading: 
+      heading: EXISTENCIA
+
+  columns: 
+  - # ====== Column: APEX$ROW_ACTION =============================
+    id: 9000381605442870
+    identification: 
+      column-name: APEX$ROW_ACTION
+      type: Actions Menu
+
+    layout: 
+      sequence: 20
+
+  - # ====== Column: APEX$ROW_SELECTOR ===========================
+    id: 9000508437442871
+    identification: 
+      column-name: APEX$ROW_SELECTOR
+      type: Row Selector
+
+    settings: 
+      enable-multi-select: true
+      show-select-all: true
+      hide-control: false
+
+    layout: 
+      sequence: 10
+
+  - # ====== Column: ID ==========================================
+    id: 9079625540359775
+    identification: 
+      column-name: ID
+      type: Number Field
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      query-only: true
+      primary-key: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: FORMATO =====================================
+    id: 9080762632359777
+    identification: 
+      column-name: FORMATO
+      type: Number Field
+
+    heading: 
+      heading: Formato
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: FORMATO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: GRAMAJE =====================================
+    id: 9081387345359778
+    identification: 
+      column-name: GRAMAJE
+      type: Number Field
+
+    heading: 
+      heading: Gramaje
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 70
+      column-alignment: end
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    source: 
+      type: Database Column
+      database-column: GRAMAJE
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PESO ========================================
+    id: 9082026597359779
+    identification: 
+      column-name: PESO
+      type: Number Field
+
+    heading: 
+      heading: Peso
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      css-classes: 
+      - u-bold
+      format-mask: 999G999G999G999G999G999G990
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PESO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: false
+
+    column-filter: 
+      enabled: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: false
+
+  - # ====== Column: DIAMETRO ====================================
+    id: 9082630548359780
+    identification: 
+      column-name: DIAMETRO
+      type: Number Field
+
+    heading: 
+      heading: Diametro
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 90
+      column-alignment: end
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: DIAMETRO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: PSTOCK ======================================
+    id: 9083172342359781
+    identification: 
+      column-name: PSTOCK
+      type: Percent Graph
+
+    heading: 
+      heading: Stock
+      alignment: end
+
+    settings: 
+      show-value: true
+
+    layout: 
+      sequence: 100
+      column-alignment: end
+      group: EXISTENCIA # 10427659764562463
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    appearance: 
+      format-mask: 999G999G999G999G990D00
+
+    source: 
+      type: Database Column
+      database-column: PSTOCK
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+  - # ====== Column: DIAMETRO_ACTUAL =============================
+    id: 10427297326562459
+    identification: 
+      column-name: DIAMETRO_ACTUAL
+      type: Number Field
+
+    heading: 
+      heading: Diametro
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 120
+      column-alignment: end
+      group: EXISTENCIA # 10427659764562463
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: DIAMETRO_ACTUAL
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: PESO_ACTUAL =================================
+    id: 10427375749562460
+    identification: 
+      column-name: PESO_ACTUAL
+      type: Number Field
+
+    heading: 
+      heading: KILOS
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 130
+      column-alignment: end
+      group: EXISTENCIA # 10427659764562463
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: PESO_ACTUAL
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: METROS_ACTUAL ===============================
+    id: 10427443829562461
+    identification: 
+      column-name: METROS_ACTUAL
+      type: Number Field
+
+    heading: 
+      heading: METROS
+      alignment: end
+
+    settings: 
+      number-alignment: Start
+      virtual-keyboard: Decimal
+
+    layout: 
+      sequence: 140
+      column-alignment: end
+      group: EXISTENCIA # 10427659764562463
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    validation: 
+      value-required: false
+
+    source: 
+      type: Database Column
+      database-column: METROS_ACTUAL
+      data-type: NUMBER
+      query-only: true
+      primary-key: false
+
+    column-filter: 
+      enabled: true
+      lov-type: None
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+    read-only: 
+      type: Always
+      execute: Once
+
+  - # ====== Column: TIPO ========================================
+    id: 10924119403695541
+    identification: 
+      column-name: TIPO
+      type: Select List
+
+    heading: 
+      heading: Tipo
+      alignment: start
+
+    layout: 
+      sequence: 150
+      column-alignment: start
+      group: INGRESO # 10427618774562462
+      use-group-for: Both
+      stretch: Use Report Setting
+
+    accessibility: 
+      value-identifies-row: false
+
+    validation: 
+      value-required: true
+
+    list-of-values: 
+      type: Shared Component
+      list-of-values: BOB_TIPO.TITLE # 1964908075239213
+      display-extra-values: false
+      display-null-value: false
+
+    source: 
+      type: Database Column
+      database-column: TIPO
+      data-type: NUMBER
+      query-only: false
+      primary-key: false
+
+    default: 
+      duplicate-copies-existing-value: true
+
+    column-filter: 
+      enabled: true
+      performance-impacting-operators: 
+      - Contains
+      - Starts With
+      - Case Insensitive
+      - Regular Expression
+      text-case: Mixed
+      lov-type: Use List of Values
+      exact-match: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    enable-users-to: 
+      sort: true
+      control-break/aggregate: true
+      hide: true
+
+- # ====== Region: BOBINAS =====================================
+  id: 52903699076394847
+  identification: 
+    name: BOBINAS
+    type: List
+
+  source: 
+    list: MENU_BOBINAS # 13402772259154749
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    icon: fa-database
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+page-items: 
+- # ====== Page Item: P314_ID ==================================
+  id: 6217546298975190
+  identification: 
+    name: P314_ID
+    type: Display Only
+
+  label: 
+    label: Nro
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 10
+    region: ORDEN # 5306156235109934
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ORDEN # 5306156235109934
+    column: ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P314_BOB_PROV_ID =========================
+  id: 6217995948975192
+  identification: 
+    name: P314_BOB_PROV_ID
+    type: Select List
+
+  label: 
+    label: Proveedor
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: ORDEN # 5306156235109934
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: BOB_PROVS # 4345746315768574
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ORDEN # 5306156235109934
+    column: BOB_PROV_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P314_REMITO ==============================
+  id: 6218421190975192
+  identification: 
+    name: P314_REMITO
+    type: Number Field
+
+  label: 
+    label: Remito
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 30
+    region: ORDEN # 5306156235109934
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 10
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ORDEN # 5306156235109934
+    column: REMITO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P314_FECHA ===============================
+  id: 6218809190975194
+  identification: 
+    name: P314_FECHA
+    type: Date Picker
+
+  label: 
+    label: Fecha
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: true
+
+  layout: 
+    sequence: 40
+    region: ORDEN # 5306156235109934
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 10
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: ORDEN # 5306156235109934
+    column: FECHA
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: ETIQUETAS ===================================
+  id: 6215959643975186
+  identification: 
+    button-name: ETIQUETAS
+    label: Etiquetas
+
+  layout: 
+    sequence: 40
+    region: ORDEN # 5306156235109934
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    - t-Button--pillEnd
+    icon: fa-print
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:316:&SESSION.::&DEBUG.:316,RIR:P316_ID:&P314_ID.'
+      page: 316 # PRINT_ETIQUETA
+      clear-cache: 316,RIR
+      values: 
+        p316_id: '&P314_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: PLANILLA ====================================
+  id: 6216354372975188
+  identification: 
+    button-name: PLANILLA
+    label: Planilla
+
+  layout: 
+    sequence: 30
+    region: ORDEN # 5306156235109934
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--primary
+    - t-Button--iconRight
+    - t-Button--pillStart
+    icon: fa-print
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:315:&SESSION.::&DEBUG.:315,RIR:P315_ID:&P314_ID.'
+      page: 315 # PRINT_PLANILLA
+      clear-cache: 315,RIR
+      values: 
+        p315_id: '&P314_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: ELIMINAR ====================================
+  id: 6216807420975188
+  identification: 
+    button-name: ELIMINAR
+    label: Eliminar
+
+  layout: 
+    sequence: 10
+    region: ORDEN # 5306156235109934
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--danger
+    - t-Button--iconLeft
+    - t-Button--pillStart
+    icon: fa-times-circle
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: 'SELECT 1 FROM BOBINAS WHERE  BOB_ALTA_ID= :P314_ID and peso > 0'
+
+- # ====== Button: GUARDAR =====================================
+  id: 6217220812975189
+  identification: 
+    button-name: GUARDAR
+    label: Guardar
+
+  layout: 
+    sequence: 20
+    region: ORDEN # 5306156235109934
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--success
+    - t-Button--iconRight
+    - t-Button--pillEnd
+    - t-Button--gapRight
+    icon: fa-floppy-o
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+processes: 
+- # ====== Process: Initialize form BOBINAS INGRESO ============
+  id: 5306286728109935
+  identification: 
+    name: Initialize form BOBINAS INGRESO
+    type: Form - Initialization
+    execution-chain: None
+    form-region: ORDEN # 5306156235109934
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form ORDEN =========================
+  id: 5306740873109940
+  identification: 
+    name: Process form ORDEN
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: ORDEN # 5306156235109934
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: BOB - Save Interactive Grid Data ===========
+  id: 6215299855975176
+  identification: 
+    name: BOB - Save Interactive Grid Data
+    type: Interactive Grid - Automatic Row Processing (DML)
+    execution-chain: None
+    editable-region: ORDEN DE INGRESO # 9077758289359765
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: GUARDAR # 6217220812975189
+    execution-scope: For Created and Modified Rows
+
+branches: 
+- # ====== Branch: Back to Page 310 ============================
+  id: 6220063457975195
+  identification: 
+    name: Back to Page 310
+
+  execution: 
+    sequence: 20
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:310:&SESSION.::&DEBUG.:RP,310::&success_msg=#SUCCESS_MSG#'
+      page: 310 # BOBINAS COMPRAS
+      clear-cache: RP,310
+
+  server-side-condition: 
+    when-button-pressed: ELIMINAR # 6216807420975188
+

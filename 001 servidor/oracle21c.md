@@ -118,33 +118,6 @@ sudo /usr/lib/systemd/systemd-sysv-install enable oracle-xe-21c
 ```
 $ sqlplus / as sysdba
 
-SQL> startup;
-ORACLE instance started.
-
-Total System Global Area 1610612120 bytes
-Fixed Size                  9686424 bytes
-Variable Size             436207616 bytes
-Database Buffers         1157627904 bytes
-Redo Buffers                7090176 bytes
-Base de datos montada.
-Base de datos abierta.
-
-SQL> show pdbs
-
-    CON_ID CON_NAME                       OPEN MODE  RESTRICTED
----------- ------------------------------ ---------- ----------
-         2 PDB$SEED                       READ ONLY  NO
-         3 PDBLOA                         MOUNTED
-
-SQL> alter session set container=pdbloa;
-Sesion modificada.
-
-SQL> startup
-Base de datos de conexion abierta.
-```
-
-### PDBLOA auto start
-```
 SYS@XE >startup
 ORACLE instance started.
 
@@ -155,18 +128,22 @@ Database Buffers         1207959552 bytes
 Redo Buffers                7090176 bytes
 Base de datos montada.
 Base de datos abierta.
-SYS@XE >show pdbs
 
+SYS@XE >show pdbs;
     CON_ID CON_NAME                       OPEN MODE  RESTRICTED
 ---------- ------------------------------ ---------- ----------
-         2 PDB$SEED                       READ ONLY  NO
-         3 PDBLOA                         MOUNTED
-SYS@XE >alter pluggable database pdbloa open;
+         2 PDB$SEED                       READ ONLY  NO        
+         3 PDBLOA                         READ WRITE NO        
+         4 PDBPTC                         READ WRITE NO  
+```
 
+
+### PDB auto start
+```
+SYS@XE >alter pluggable database #PDB_NAME# open;
 Base de datos de conexion modificada.
 
-SYS@XE >alter pluggable database pdbloa save state;
-
+SYS@XE >alter pluggable database #PDB_NAME# save state;
 Base de datos de conexion modificada.
 ```
 
@@ -254,11 +231,6 @@ XE =
   )
 
 ```
-
-
-
-
-
 ### Referencias
 [Oracle21c-preinstall]: https://yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/getPackage/oracle-database-preinstall-21c-1.0-1.el8.x86_64.rpm 
 [Oracle21c]: oracle-database-xe-21c-1.0-1.ol8.x86_64.rpm

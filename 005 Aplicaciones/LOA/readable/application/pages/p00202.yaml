@@ -1,0 +1,884 @@
+---
+# ====== Page: PROVEEDOR DASH ================================
+id: 202
+identification: 
+  name: PROVEEDOR DASH
+  alias: PROVEEDOR-DASH
+  title: '&P202_PROVEDOR_TITLE.'
+  page-group: REQ 01 03 PROVEEDORES # 9045212566938365
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: CUENTAS =====================================
+  id: 32030081253773955
+  identification: 
+    name: CUENTAS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT ID,title,
+          cuit description
+                ,'fa fa-2x fa-address-book-o'  icon_class
+                      ,null icon_html
+          ,'<i class="fa fa-times"></i>' actions
+       FROM DFISCALES
+      WHERE PROVEDOR_ID = :P202_PROVEDOR_ID
+      order by title
+    page-items-to-submit: 
+    - P202_PROVEDOR_ID
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 4
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--accent4
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Content Row
+      template-options: 
+      - '#DEFAULT#'
+      - t-ContentRow--styleCompact
+      - t-Report--hideNoPagination
+      - t-ContentRow--hideSelection
+      - t-ContentRow--hideMisc
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 9023216343723307
+    identification: 
+      column-name: ID
+      type: Plain Text
+
+    heading: 
+      heading: Id
+      alignment: end
+
+    layout: 
+      sequence: 60
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TITLE =======================================
+    id: 9023603264723307
+    identification: 
+      column-name: TITLE
+      type: Link
+
+    heading: 
+      heading: Title
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: true
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:102:&SESSION.::&DEBUG.::P102_ID:#ID#'
+        page: 102 # DATOS FISCALES
+        values: 
+          p102_id: '#ID#'
+
+      link-text: '#TITLE#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 9024034937723308
+    identification: 
+      column-name: DESCRIPTION
+      type: Plain Text
+
+    heading: 
+      heading: Description
+      alignment: start
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_CLASS ==================================
+    id: 9024439230723308
+    identification: 
+      column-name: ICON_CLASS
+      type: Plain Text
+
+    heading: 
+      heading: Icon Class
+      alignment: start
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ICON_HTML ===================================
+    id: 9024890977723308
+    identification: 
+      column-name: ICON_HTML
+      type: Plain Text
+
+    heading: 
+      heading: Icon Html
+      alignment: start
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ACTIONS =====================================
+    id: 9025267418723308
+    identification: 
+      column-name: ACTIONS
+      type: Link
+
+    heading: 
+      heading: Actions
+      alignment: start
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 'javascript:$s("P108_DEL_CLIENTE",#ID#)'
+      link-text: '#ACTIONS#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+- # ====== Region: &P202_PROVEDOR_TITLE. =======================
+  id: 33428823904916337
+  identification: 
+    name: '&P202_PROVEDOR_TITLE.'
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-clipboard-wrench
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P202_PROVEDOR_TITLE ======================
+  id: 26031791890585418
+  identification: 
+    name: P202_PROVEDOR_TITLE
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P202_PROVEDOR_ID =========================
+  id: 32036165682773996
+  identification: 
+    name: P202_PROVEDOR_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P202_DEL_PROVEDOR ========================
+  id: 33279467566914876
+  identification: 
+    name: P202_DEL_PROVEDOR
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: agregar_cuit ================================
+  id: 9025607593723308
+  identification: 
+    button-name: agregar_cuit
+    label: Agregar Cuit
+
+  layout: 
+    sequence: 10
+    region: CUENTAS # 32030081253773955
+    slot: EDIT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:111:P111_PROVEDOR_ID:&P202_PROVEDOR_ID.'
+      page: 111 # Dialog_asociar
+      clear-cache: 111
+      values: 
+        p111_provedor_id: '&P202_PROVEDOR_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: validar_cuit ========================
+  id: 9028303932723318
+  identification: 
+    name: validar_cuit
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P202_CUIT
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 9028898297723319
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: 'dfiscales_pkg.validar_cuit(:P202_CUIT)'
+      items-to-submit: 
+      - P202_CUIT
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P202_CUIT_VALIDO
+
+    execution: 
+      sequence: 10
+      event: validar_cuit # 9028303932723318
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: BUSCAR CUIT =========================
+  id: 9029293290723320
+  identification: 
+    name: BUSCAR CUIT
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P202_CUIT_VALIDO
+
+  client-side-condition: 
+    type: Item = Value
+    item: P202_CUIT_VALIDO
+    value: 1
+
+  actions: 
+  - # ====== Action: nro incorrecto ==============================
+    id: 9029737025723320
+    identification: 
+      name: nro incorrecto
+      action: Alert
+
+    settings: 
+      title: Cuit No Valido
+      message: numero de cuit incorrecto
+      style: Default
+
+    execution: 
+      sequence: 10
+      event: BUSCAR CUIT # 9029293290723320
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+  - # ====== Action: DFISCALES_PKG.BUSCAR_CUIT ===================
+    id: 9030230016723320
+    identification: 
+      name: DFISCALES_PKG.BUSCAR_CUIT
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |2
+         DFISCALES_PKG.BUSCAR_CUIT(:P202_CUIT,:P202_DFISCAL_ID,:P202_RAZON_SOCIAL) ;
+        
+      items-to-submit: 
+      - P202_CUIT
+      items-to-return: 
+      - P202_RAZON_SOCIAL
+      - P202_DFISCAL_ID
+      suppress-change-event: false
+
+    execution: 
+      sequence: 20
+      event: BUSCAR CUIT # 9029293290723320
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: dfiscal_encontrado ==================
+  id: 9030699858723320
+  identification: 
+    name: dfiscal_encontrado
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P202_DFISCAL_ID
+
+  client-side-condition: 
+    type: Item > Value
+    item: P202_DFISCAL_ID
+    value: 0
+
+  actions: 
+  - # ====== Action: BUSCAR OTRO CLIENTE =========================
+    id: 9031155825723320
+    identification: 
+      name: BUSCAR OTRO CLIENTE
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        BEGIN 
+        IF dfiscales_pkg.buscar_cliente(:P202_DFISCAL_ID,:P202_OTRO_CLIENTE) = FALSE THEN 
+            :P202_OTRO_CLIENTE := -1;
+        END IF;
+        END;
+           
+        
+      items-to-submit: 
+      - P202_DFISCAL_ID
+      items-to-return: 
+      - P202_OTRO_CLIENTE
+      suppress-change-event: false
+
+    execution: 
+      sequence: 20
+      event: dfiscal_encontrado # 9030699858723320
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: confirm agregar manual ======================
+    id: 9031667998723321
+    identification: 
+      name: confirm agregar manual
+      action: Confirm
+
+    settings: 
+      title: CUIT NO EXISTE EN PADRON
+      message: 'Desea agregarlo igualmente? '
+      style: Default
+
+    execution: 
+      sequence: 20
+      event: dfiscal_encontrado # 9030699858723320
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+  - # ====== Action: dfiscal_id -5 ===============================
+    id: 9032198265723321
+    identification: 
+      name: dfiscal_id -5
+      action: Set Value
+
+    settings: 
+      set-type: Static Assignment
+      value: '-5'
+      suppress-change-event: true
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P202_DFISCAL_ID
+
+    execution: 
+      sequence: 40
+      event: dfiscal_encontrado # 9030699858723320
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: focus in Razon social =======================
+    id: 9032639399723321
+    identification: 
+      name: focus in Razon social
+      action: Set Focus
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P202_RAZON_SOCIAL
+
+    execution: 
+      sequence: 60
+      event: dfiscal_encontrado # 9030699858723320
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: habilitar Agregar ===================
+  id: 9033084407723321
+  identification: 
+    name: habilitar Agregar
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P202_OTRO_CLIENTE
+
+  client-side-condition: 
+    type: Item <= Value
+    item: P202_OTRO_CLIENTE
+    value: 0
+
+  actions: 
+  - # ====== Action: otro cliente ================================
+    id: 9033503568723321
+    identification: 
+      name: otro cliente
+      action: Alert
+
+    settings: 
+      title: CUIT REGISTRADO EN OTRO CLIENTE
+      message: No se puede agregar ese cuit , ya se encuentra asociado a otro cliente
+      style: Danger
+
+    execution: 
+      sequence: 10
+      event: habilitar Agregar # 9033084407723321
+      fire-when-event-result-is: False
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: BORRAR_CUENTA =======================
+  id: 9033914457723322
+  identification: 
+    name: BORRAR_CUENTA
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P202_DEL_PROVEDOR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 9034426380723322
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'DFISCALES_PKG.desasociar_cliente(:P202_DEL_CLIENTE);'
+      items-to-submit: 
+      - P202_DEL_PROVEDOR
+
+    execution: 
+      sequence: 10
+      event: BORRAR_CUENTA # 9033914457723322
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+  - # ====== Action: Refresh =====================================
+    id: 9034933605723322
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTAS # 32030081253773955
+
+    execution: 
+      sequence: 20
+      event: BORRAR_CUENTA # 9033914457723322
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New =================================
+  id: 9035386649723322
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 110
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Button
+    button: agregar_cuit # 9025607593723308
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 9035854203723322
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: CUENTAS # 32030081253773955
+
+    execution: 
+      sequence: 10
+      event: New # 9035386649723322
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+computations: 
+- # ====== Computation: P202_PROVEDOR_TITLE ====================
+  id: 9027215639723318
+  identification: 
+    item-name: P202_PROVEDOR_TITLE
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'select title from provs where id = :P202_PROVEDOR_ID'
+
+- # ====== Computation: G_CLIENTE_ID ===========================
+  id: 9027661347723318
+  identification: 
+    item-name: G_CLIENTE_ID
+
+  execution: 
+    sequence: 20
+    point: Before Header
+
+  computation: 
+    type: Item
+    item-name: P202_PROVEDOR_ID
+
+- # ====== Computation: G_CLIENTE_TITLE ========================
+  id: 9028019704723318
+  identification: 
+    item-name: G_CLIENTE_TITLE
+
+  execution: 
+    sequence: 30
+    point: Before Header
+
+  computation: 
+    type: Item
+    item-name: P202_PROVEDOR_TITLE
+

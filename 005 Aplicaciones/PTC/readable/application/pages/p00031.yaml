@@ -1,0 +1,2268 @@
+---
+# ====== Page: EVE_GRP_FORM ==================================
+id: 31
+identification: 
+  name: EVE_GRP_FORM
+  alias: EVE-GRP-FORM
+  title: Cotizacion Grupos
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Modal Dialog
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  width: 1200
+  maximum-width: 1200
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: EVE_GRP_FORM ================================
+  id: 4814046781520189
+  identification: 
+    name: EVE_GRP_FORM
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: EVE_GRPS
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 4822060285520221
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Item = Value
+    item: P31_STATUS
+    value: 1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P31_EVENTO_ID ============================
+  id: 4814380217520192
+  identification: 
+    name: P31_EVENTO_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: EVENTO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_IX ===================================
+  id: 4814742365520198
+  identification: 
+    name: P31_IX
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: IX
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GRP_CAT_ID ===========================
+  id: 4815113707520203
+  identification: 
+    name: P31_GRP_CAT_ID
+    type: Select List
+
+  label: 
+    label: Potencia
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    icon: fa-code
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GRUPOS.CAT # 4621224300351050
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GRP_CAT_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_CAT_ID ===========================
+  id: 4816377376520209
+  identification: 
+    name: P31_FLT_CAT_ID
+    type: Select List
+
+  label: 
+    label: Transporte
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 130
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    icon: fa-truck
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FLETES.CAT # 4621495778355634
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_CAT_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GRP_VALOR ============================
+  id: 4817183597520210
+  identification: 
+    name: P31_GRP_VALOR
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 120
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    - margin-right-lg
+    css-classes: 
+    - u-color-20
+    icon: fa-usd
+    format-mask: 999G999G999G999G990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GRP_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_VALOR ============================
+  id: 4817517589520210
+  identification: 
+    name: P31_FLT_VALOR
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 190
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    - margin-right-lg
+    icon: fa-usd
+    format-mask: 999G999G999G999G990D00
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_STATUS ===============================
+  id: 4818349195520212
+  identification: 
+    name: P31_STATUS
+    type: Select List
+
+  label: 
+    label: Status
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: EVE.STATUS # 5748218114679882
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+  read-only: 
+    type: Always
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_EVE_ZNA_ID ===========================
+  id: 8968289456732829
+  identification: 
+    name: P31_EVE_ZNA_ID
+    type: Select List
+
+  label: 
+    label: ZONA
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-map-marker-check-o
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select 
+             CASE WHEN z.TITLE IS NULL THEN get_param_title(p_KEY => 'ZNA_TIPO',p_ID =>z.ZNA_TIPO_ID) ELSE z.TITLE END zna_title
+             ,z.ix
+      
+        from eve_znas z
+         where  z.EVENTO_ID = :P31_EVENTO_ID
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: EVE_ZNA_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GRP_CONF_ID ==========================
+  id: 8968375167732830
+  identification: 
+    name: P31_GRP_CONF_ID
+    type: Select List
+
+  label: 
+    label: Configuracion
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GRP_CONF_LOV # 10454129571892807
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GRP_CONF_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): select valor_def from params where pid = 0 and key = 'GAS_CONF'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GRP_TIME_ID ==========================
+  id: 8968420800732831
+  identification: 
+    name: P31_GRP_TIME_ID
+    type: Select List
+
+  label: 
+    label: Tiempo
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 100
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GRP_TIME_LOV # 10454351423894291
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GRP_TIME_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): select valor_def from params where pid = 0 and key = 'GRP_TIME'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_MODO_ID ==========================
+  id: 8968554072732832
+  identification: 
+    name: P31_FLT_MODO_ID
+    type: Select List
+
+  label: 
+    label: Modo
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 150
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FLT_MODO_LOV # 10454587571895414
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_MODO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): select valor_def from params where pid = 0 and key = 'FLT_MODO'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_VALOR_1 ==============================
+  id: 10817989081498342
+  identification: 
+    name: P31_VALOR_1
+    type: Display Only
+
+  label: 
+    label: Lista
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: false
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 80
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-usd
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GRP_AJ ===============================
+  id: 11885015500560203
+  identification: 
+    name: P31_GRP_AJ
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 110
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 10
+    new-column: true
+    column-span: 1
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-20
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    icon: fa-percent
+    width: 30
+    value-placeholder: 100
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GRP_AJ
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_DIST_ID ==========================
+  id: 11885129429560204
+  identification: 
+    name: P31_FLT_DIST_ID
+    type: Select List
+
+  label: 
+    label: Distancia
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 160
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: FLT_DIST_LOV # 12221604667284079
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_DIST_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_DIST_KM ==========================
+  id: 11885295893560205
+  identification: 
+    name: P31_FLT_DIST_KM
+    type: Number Field
+
+  label: 
+    label: Kms
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 170
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_DIST_KM
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_FLT_AJ ===============================
+  id: 11885327607560206
+  identification: 
+    name: P31_FLT_AJ
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 180
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 10
+    new-column: true
+    column-span: 1
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    icon: fa-percent
+    width: 30
+    value-placeholder: 100
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: FLT_AJ
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GAS_MODO_ID ==========================
+  id: 11885424055560207
+  identification: 
+    name: P31_GAS_MODO_ID
+    type: Select List
+
+  label: 
+    label: Consumo de Gasoil
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 220
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 2
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: GAS_MODO_LOV # 12215950524804089
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GAS_MODO_ID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): select valor_def from params where pid = 0 and key = 'GAS_MODO'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GAS_HORAS ============================
+  id: 11885577541560208
+  identification: 
+    name: P31_GAS_HORAS
+    type: Number Field
+
+  label: 
+    label: Horas Estimadas
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 230
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GAS_HORAS
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GAS_VALOR ============================
+  id: 11885621673560209
+  identification: 
+    name: P31_GAS_VALOR
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: End
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 250
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 11
+    new-column: true
+    column-span: 2
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    - margin-right-lg
+    icon: fa-usd
+    format-mask: 999G999G999G999G990D00
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    css-classes: 
+    - u-bold
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GAS_VALOR
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_GAS_AJ ===============================
+  id: 11885794159560210
+  identification: 
+    name: P31_GAS_AJ
+    type: Number Field
+
+  label: 
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 240
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: 10
+    new-column: true
+    column-span: 1
+    label-column-span: 0
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--xlarge
+    icon: fa-percent
+    width: 30
+    value-placeholder: 100
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: EVE_GRP_FORM # 4814046781520189
+    column: GAS_AJ
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_CONSUMO_POR_HORA =====================
+  id: 11888986006560242
+  identification: 
+    name: P31_CONSUMO_POR_HORA
+    type: Display Only
+
+  label: 
+    label: FULL POTENCIA
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: false
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 200
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: 3
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - margin-left-lg
+    icon: fa-tint
+
+  advanced: 
+    post-text-: Lts/h
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_PRECIO_GASOIL ========================
+  id: 11889281756560245
+  identification: 
+    name: P31_PRECIO_GASOIL
+    type: Display Only
+
+  label: 
+    label: Gasoil
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: false
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 210
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-18
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-usd
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P31_VALOR_2 ==============================
+  id: 13649215441610507
+  identification: 
+    name: P31_VALOR_2
+    type: Display Only
+
+  label: 
+    label: Lista
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: false
+    send-on-page-submit: false
+
+  layout: 
+    sequence: 140
+    region: EVE_GRP_FORM # 4814046781520189
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: 1
+    label-column-span: Page Template Default
+    column-css-classes: 
+    - u-color-19
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-usd
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 4822437050520221
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Buttons # 4822060285520221
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: DELETE ======================================
+  id: 4823836972520228
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 20
+    region: Buttons # 4822060285520221
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: false
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  confirmation: 
+    message: '&APP_TEXT$DELETE_MSG!RAW.'
+    style: Danger
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+- # ====== Button: SAVE ========================================
+  id: 4824225801520228
+  identification: 
+    button-name: SAVE
+    label: Apply Changes
+
+  layout: 
+    sequence: 30
+    region: Buttons # 4822060285520221
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P31_IX
+
+- # ====== Button: CREATE ======================================
+  id: 4824634115520228
+  identification: 
+    button-name: CREATE
+    label: Create
+
+  layout: 
+    sequence: 40
+    region: Buttons # 4822060285520221
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P31_IX
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 4822598661520221
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 4822437050520221
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 4823363066520226
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 4822598661520221
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: LOAD_FLETE ==========================
+  id: 10817586265498338
+  identification: 
+    name: LOAD_FLETE
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_GRP_CAT_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 10817453645498337
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT FLT_CAT_ID FROM GRP_CATS WHERE ID = :P31_GRP_CAT_ID'
+      items-to-submit: 
+      - P31_GRP_CAT_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_FLT_CAT_ID
+
+    execution: 
+      sequence: 10
+      event: LOAD_FLETE # 10817586265498338
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: CALCULO GASOIL ======================
+  id: 10817739522498340
+  identification: 
+    name: CALCULO GASOIL
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_GAS_MODO_ID
+    - P31_GAS_HORAS
+    - P31_CONSUMO_POR_HORA
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 10817860290498341
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ":P31_PRECIO_GASOIL * :P31_CONSUMO_POR_HORA * get_param_valor('GAS_MODO', :P31_GAS_MODO_ID) * :P31_GAS_HORAS * nvl(:P31_GAS_AJ,100)/100"
+      items-to-submit: 
+      - P31_CONSUMO_POR_HORA
+      - P31_GAS_MODO_ID
+      - P31_GAS_HORAS
+      - P31_GAS_AJ
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_GAS_VALOR
+
+    execution: 
+      sequence: 10
+      event: CALCULO GASOIL # 10817739522498340
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: LOAD_VALOR ==========================
+  id: 10818017996498343
+  identification: 
+    name: LOAD_VALOR
+
+  execution: 
+    sequence: 60
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_GRP_CAT_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 10818162161498344
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT VALOR FROM GRP_CATS WHERE ID = :P31_GRP_CAT_ID'
+      items-to-submit: 
+      - P31_GRP_CAT_ID
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_VALOR_1
+
+    execution: 
+      sequence: 10
+      event: LOAD_VALOR # 10818017996498343
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+- # ====== Dynamic Action: TOTAL_GRP ===========================
+  id: 10818202918498345
+  identification: 
+    name: TOTAL_GRP
+
+  execution: 
+    sequence: 70
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_VALOR_1
+    - P31_GRP_CONF_ID
+    - P31_GRP_TIME_ID
+    - P31_GRP_AJ
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 10818391388498346
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Expression
+      pl/sql-expression: ":P31_VALOR_1 * get_param_valor('GRP_CONF', :P31_GRP_CONF_ID) * get_param_valor('GRP_TIME', :P31_GRP_TIME_ID) * nvl(:P31_GRP_AJ,100)/100"
+      items-to-submit: 
+      - P31_VALOR_1
+      - P31_GRP_CONF_ID
+      - P31_GRP_TIME_ID
+      - P31_GRP_AJ
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_GRP_VALOR
+
+    execution: 
+      sequence: 10
+      event: TOTAL_GRP # 10818202918498345
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: SHOW KM =============================
+  id: 10818604513498349
+  identification: 
+    name: SHOW KM
+
+  execution: 
+    sequence: 80
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_FLT_DIST_ID
+
+  client-side-condition: 
+    type: Item != Value
+    item: P31_FLT_DIST_ID
+    value: 1
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 10818745099498350
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_FLT_DIST_KM
+
+    execution: 
+      sequence: 10
+      event: SHOW KM # 10818604513498349
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 13648691224610501
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_FLT_DIST_KM
+
+    execution: 
+      sequence: 10
+      event: SHOW KM # 10818604513498349
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: SHOW_GASOIL =========================
+  id: 11888598356560238
+  identification: 
+    name: SHOW_GASOIL
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_GAS_MODO_ID
+
+  client-side-condition: 
+    type: Item != Value
+    item: P31_GAS_MODO_ID
+    value: 0
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 11888612630560239
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_GAS_HORAS
+      - P31_GAS_VALOR
+      - P31_GAS_AJ
+
+    execution: 
+      sequence: 10
+      event: SHOW_GASOIL # 11888598356560238
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Hide ========================================
+    id: 11888881573560241
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_GAS_HORAS
+      - P31_GAS_VALOR
+      - P31_GAS_AJ
+
+    execution: 
+      sequence: 20
+      event: SHOW_GASOIL # 11888598356560238
+      fire-when-event-result-is: False
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: LOAD_CONSUMO ========================
+  id: 11889046040560243
+  identification: 
+    name: LOAD_CONSUMO
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_GRP_CAT_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 11889145045560244
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT LITROS FROM GRP_CATS WHERE ID = :P31_GRP_CAT_ID;'
+      items-to-submit: 
+      - P31_GRP_CAT_ID
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_CONSUMO_POR_HORA
+
+    execution: 
+      sequence: 10
+      event: LOAD_CONSUMO # 11889046040560243
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: New =================================
+  id: 13649377786610508
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 90
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_FLT_CAT_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 13649470402610509
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'SELECT VALOR FROM FLT_CATS WHERE ID =:P31_FLT_CAT_ID'
+      items-to-submit: 
+      - P31_FLT_CAT_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_VALOR_2
+
+    execution: 
+      sequence: 10
+      event: New # 13649377786610508
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+- # ====== Dynamic Action: TOTAL_FLT ===========================
+  id: 13649619604610511
+  identification: 
+    name: TOTAL_FLT
+
+  execution: 
+    sequence: 100
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P31_VALOR_2
+    - P31_FLT_MODO_ID
+    - P31_FLT_DIST_ID
+    - P31_FLT_DIST_KM
+    - P31_FLT_AJ
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 13649783003610512
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: PL/SQL Function Body
+      pl/sql-function-body: |
+        BEGIN
+         IF :P31_FLT_DIST_ID = 1 THEN
+            RETURN :P31_VALOR_2  * GET_PARAM_VALOR('FLT_MODO',:P31_FLT_MODO_ID)* NVL(:P31_FLT_AJ,100) / 100;
+         ELSE
+            RETURN :P31_VALOR_2 * GET_PARAM_VALOR('FLT_DIST',:P31_FLT_DIST_ID) * NVL(:P31_FLT_DIST_KM,0) * NVL(:P31_FLT_AJ,100) / 100;
+         END IF;
+        END;
+      items-to-submit: 
+      - P31_VALOR_2
+      - P31_FLT_MODO_ID
+      - P31_FLT_DIST_ID
+      - P31_FLT_DIST_KM
+      - P31_FLT_AJ
+      escape-special-characters: false
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P31_FLT_VALOR
+
+    execution: 
+      sequence: 10
+      event: TOTAL_FLT # 13649619604610511
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: false
+
+computations: 
+- # ====== Computation: P31_STATUS =============================
+  id: 6447735060210650
+  identification: 
+    item-name: P31_STATUS
+
+  execution: 
+    sequence: 50
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT status FROM EVENTOS WHERE ID=:P31_EVENTO_ID'
+
+- # ====== Computation: P31_CONSUMO_POR_HORA ===================
+  id: 10818421869498347
+  identification: 
+    item-name: P31_CONSUMO_POR_HORA
+
+  execution: 
+    sequence: 20
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT LITROS FROM GRP_CATS WHERE ID = :P31_GRP_CAT_ID;'
+
+- # ====== Computation: P31_VALOR_1 ============================
+  id: 10818501916498348
+  identification: 
+    item-name: P31_VALOR_1
+
+  execution: 
+    sequence: 30
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT VALOR FROM GRP_CATS WHERE ID = :P31_GRP_CAT_ID'
+
+- # ====== Computation: P31_PRECIO_GASOIL ======================
+  id: 11889310835560246
+  identification: 
+    item-name: P31_PRECIO_GASOIL
+
+  execution: 
+    sequence: 10
+    point: Before Regions
+
+  computation: 
+    type: Function Body
+    language: PL/SQL
+    pl/sql-function-body: |
+      DECLARE
+          P_GAS NUMBER;
+          P_DOLAR NUMBER;
+      BEGIN
+      
+      SELECT VALOR INTO P_GAS FROM COTIZ WHERE KEY = '$GAS';
+      SELECT VALOR INTO P_DOLAR FROM COTIZ WHERE KEY = '$VEN';
+      
+      RETURN ROUND(P_GAS/P_DOLAR,3);
+      
+      END;
+
+- # ====== Computation: P31_VALOR_2 ============================
+  id: 13649579858610510
+  identification: 
+    item-name: P31_VALOR_2
+
+  execution: 
+    sequence: 40
+    point: Before Regions
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: 'SELECT VALOR FROM FLT_CATS WHERE ID =:P31_FLT_CAT_ID'
+
+processes: 
+- # ====== Process: Initialize form EVE_GRP_FORM ===============
+  id: 4825061396520229
+  identification: 
+    name: Initialize form EVE_GRP_FORM
+    type: Form - Initialization
+    execution-chain: None
+    form-region: EVE_GRP_FORM # 4814046781520189
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form EVE_GRP_FORM ==================
+  id: 4825412052520231
+  identification: 
+    name: Process form EVE_GRP_FORM
+    type: Form - Automatic Row Processing (DML)
+    execution-chain: None
+    form-region: EVE_GRP_FORM # 4814046781520189
+
+  settings: 
+    target-type: Region Source
+    prevent-lost-updates: true
+    lock-row: Yes
+    return-primary-key(s)-after-insert: true
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+- # ====== Process: Close Dialog ===============================
+  id: 4825881406520231
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: false
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

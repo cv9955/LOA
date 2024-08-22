@@ -1,0 +1,122 @@
+---
+- # ====== Authorization: Configurador =========================
+  id: 8538860384112721
+  identification: 
+    name: Configurador
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'Configurador') ;"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+- # ====== Authorization: EditorDatosFiscales ==================
+  id: 17003068849809132
+  identification: 
+    name: EditorDatosFiscales
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'EditorDatosFiscales') ;"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+- # ====== Authorization: TESTER ===============================
+  id: 24004205711520095
+  identification: 
+    name: TESTER
+
+  subscription: 
+    master: 
+      app: 200 # DEVELOP
+      referenced-id: 7201480517642454 # TESTER
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'Tester') ;"
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+- # ====== Authorization: Administrador ========================
+  id: 26114256916151607
+  identification: 
+    name: Administrador
+
+  subscription: 
+    master: 
+      app: 200 # DEVELOP
+      referenced-id: 9311531722273966 # Administrador
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: "return access_control_pkg.USER_IN_ROL(:SESSION_USERNAME,'Administrador') ;"
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: Acceso Basico ========================
+  id: 26114326618151607
+  identification: 
+    name: Acceso Basico
+
+  subscription: 
+    master: 
+      app: 200 # DEVELOP
+      referenced-id: 9311601424273966 # Acceso Basico
+
+  authorization-scheme: 
+    type: Exists SQL Query
+
+  settings: 
+    sql-query: 'SELECT 1 FROM T_USERS WHERE ID = :SESSION_USER_ID;'
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: You are not authorized to view this application, either because you have not been granted access, or your account has been locked. Please contact the application administrator.
+
+- # ====== Authorization: Only CAV =============================
+  id: 27014920676126723
+  identification: 
+    name: Only CAV
+
+  subscription: 
+    master: 
+      app: 200 # DEVELOP
+      referenced-id: 10212195482249082 # Only CAV
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      RETURN apex_util.get_session_state(p_item => 'SESSION_USERNAME') = 'CAV';
+      
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: No eres el elegido
+

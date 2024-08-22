@@ -1,0 +1,1384 @@
+---
+# ====== Page: SLOTTER =======================================
+id: 240
+identification: 
+  name: SLOTTER
+  title: SLOTTER
+  page-group: 200 PRODUCCION # 4255674501624938
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PRODUCCION ==================================
+  id: 52978206755687375
+  identification: 
+    name: PRODUCCION
+    type: List
+
+  source: 
+    list: MENU_FABRI # 743079948322539
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    - t-HeroRegion--noPadding
+    - margin-left-lg
+    - margin-right-lg
+    icon: fa-gears
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Menu Bar
+      template-options: 
+      - '#DEFAULT#'
+      - js-tabLike
+      - js-addActions
+      - js-menu-callout
+
+- # ====== Region: SLOTTER =====================================
+  id: 64243967035816281
+  identification: 
+    name: SLOTTER
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT pr.id
+            ,pr.fecha
+            ,pr.articulo_id
+            ,nvl(pr.cantidad,pr.cantidad_calculada) cantidad
+            ,pr.prod_tipo_id                            proceso_id
+            ,  case when pr.obs is not null then '<div>'||pr.obs||'</div>' end
+            || case when  a.obs is not null then  '<div>'||a.obs||'</div>' end obs
+            ,CASE
+                  WHEN pr.ix IS NULL THEN '<i class="fa fa-gear fa-anim-spin u-color-8-text"></i>'
+                  ELSE '<span style="white-space: nowrap;">'||to_char(pr.ix,'00')||'<a href=javascript:$s(P240_ORDEN_A_SUBIR,'||pr.id||') class="fa fa-arrow-up"></a>'
+                  ||'<a href=javascript:$s(P240_ORDEN_A_BAJAR,'||pr.id||') class="fa fa-arrow-down"></a>'||'</span>'
+              END                                        ix
+            ,s_articulo(a.id)                            scodigo
+            ,a.cliente_id
+            ,s_calidad(a.art_calidad_id,'KEY')           calidad_codigo
+            ,s_calidad(a.art_calidad_id,'CALIDAD_STYLE') calidad_style      
+      
+            ,a.largo
+            ,a.ancho
+            ,a.alto
+            ,a.plargo
+            ,a.pancho
+            ,a.trazados
+            ,a.slotter
+            ,a.impresion
+            ,a.art_tipo_id
+            ,1                                          print_of
+            ,1                                          print_et
+            ,div_planchas_produccion(pr.id,'APP')              planchas_div
+        FROM prods pr
+            ,arts      a
+       WHERE pr.articulo_id=a.id AND pr.status IN(0,1)
+       ORDER BY pr.prod_tipo_id
+               ,pr.ix
+               ,pr.id
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 64244068801816282
+    link: 
+      link-column: Link to Custom Target
+      target: 
+        url: 'f?p=&APP_ID.:42:&SESSION.::&DEBUG.::P42_ID:#ID#'
+        page: 42 # ORDER DE FABRICACION
+        values: 
+          p42_id: '#ID#'
+
+      link-icon: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000000
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: true
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: false
+      select-columns: true
+      rows-per-page: false
+      sort: false
+      control-break: true
+      highlight: true
+      compute: false
+      aggregate: false
+      chart: false
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      save-public-report-authorization: CAV - EXCLUSIVO # 47047883483758502
+      reset: true
+      help: false
+      download: false
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 67259118636645725
+      identification: 
+        name: Primary Report
+        alias: 706949
+
+    columns: 
+    - # ====== Column: PLANCHAS_DIV ================================
+      id: 4218913233712619
+      identification: 
+        column-name: PLANCHAS_DIV
+        type: Plain Text
+
+      heading: 
+        heading: Planchas
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 380
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: None
+
+      enable-users-to: 
+        hide: true
+        sort: false
+        filter: true
+        highlight: true
+        control-break: false
+        aggregate: false
+        compute: false
+        chart: false
+        group-by: false
+        pivot: false
+
+      security: 
+        authorization-scheme: CAV - EXCLUSIVO # 47047883483758502
+        escape-special-characters: false
+
+    - # ====== Column: ID ==========================================
+      id: 67239985472644933
+      identification: 
+        column-name: ID
+        type: Hidden
+
+      heading: 
+        heading: Id
+
+      layout: 
+        sequence: 10
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: FECHA =======================================
+      id: 67240159521644934
+      identification: 
+        column-name: FECHA
+        type: Plain Text
+
+      heading: 
+        heading: Fecha
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 20
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+        date-ranges: All
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ARTICULO_ID =================================
+      id: 67240245550644935
+      identification: 
+        column-name: ARTICULO_ID
+        type: Link
+
+      heading: 
+        heading: ID
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 30
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_ID:#ARTICULO_ID#'
+          page: 31 # ART_Z
+          values: 
+            p31_id: '#ARTICULO_ID#'
+
+        link-text: '#ARTICULO_ID#'
+        link-attributes: TARGET="P31"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CANTIDAD ====================================
+      id: 67240334810644936
+      identification: 
+        column-name: CANTIDAD
+        type: Plain Text
+
+      heading: 
+        heading: Cantidad
+        alignment: start
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 40
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: PROCESO_ID ==================================
+      id: 67240429425644937
+      identification: 
+        column-name: PROCESO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: PROD_TIPO.TITLE # 221431734215559
+
+      heading: 
+        heading: Proc
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 50
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: OBS =========================================
+      id: 67240924426644942
+      identification: 
+        column-name: OBS
+        type: Remove HTML
+
+      heading: 
+        heading: Obs
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 100
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: SCODIGO =====================================
+      id: 67241134728644944
+      identification: 
+        column-name: SCODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Codigo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 120
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span class=prod_estado#STATUS#>#SCODIGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: CLIENTE_ID ==================================
+      id: 67241201881644945
+      identification: 
+        column-name: CLIENTE_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: CLIENTES.TITLE # 2084520149913047
+
+      heading: 
+        heading: Cliente
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 130
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CALIDAD_CODIGO ==============================
+      id: 67241370695644947
+      identification: 
+        column-name: CALIDAD_CODIGO
+        type: Plain Text
+
+      heading: 
+        heading: Calidad
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 150
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="#CALIDAD_STYLE# u-bold u-textCenter" >#CALIDAD_CODIGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: LARGO =======================================
+      id: 67241839153644951
+      identification: 
+        column-name: LARGO
+        type: Plain Text
+
+      heading: 
+        heading: Largo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 200
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#LARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ANCHO =======================================
+      id: 67241885513644952
+      identification: 
+        column-name: ANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Ancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 210
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#ANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: ALTO ========================================
+      id: 67242033063644953
+      identification: 
+        column-name: ALTO
+        type: Plain Text
+
+      heading: 
+        heading: Alto
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 220
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_caja">#ALTO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PLARGO ======================================
+      id: 67242161151644954
+      identification: 
+        column-name: PLARGO
+        type: Plain Text
+
+      heading: 
+        heading: Plargo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 230
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha" title="#SLOTTER#">#PLARGO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PANCHO ======================================
+      id: 67242259444644955
+      identification: 
+        column-name: PANCHO
+        type: Plain Text
+
+      heading: 
+        heading: Pancho
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 240
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="medida_plancha" title="#TRAZADOS#">#PANCHO#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: TRAZADOS ====================================
+      id: 67242359699644956
+      identification: 
+        column-name: TRAZADOS
+        type: Hidden
+
+      heading: 
+        heading: Trazados
+
+      layout: 
+        sequence: 250
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: ART_TIPO_ID =================================
+      id: 67242606928644959
+      identification: 
+        column-name: ART_TIPO_ID
+        type: Plain Text (based on List of Values)
+
+      list-of-values: 
+        list-of-values: ARTICULOS.TIPO # 1892364726520679
+
+      heading: 
+        heading: Tipo
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 190
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      column-formatting: 
+        html-expression: <span parent-class="col_tipo">#ART_TIPO_ID#</span>
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Use Named List of Values to Filter Exact Match
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+    - # ====== Column: CALIDAD_STYLE ===============================
+      id: 67242724046644960
+      identification: 
+        column-name: CALIDAD_STYLE
+        type: Hidden
+
+      heading: 
+        heading: Calidad Style
+
+      layout: 
+        sequence: 280
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: SLOTTER =====================================
+      id: 67242987551644963
+      identification: 
+        column-name: SLOTTER
+        type: Hidden
+
+      heading: 
+        heading: Slotter
+
+      layout: 
+        sequence: 290
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: IMPRESION ===================================
+      id: 67243146257644964
+      identification: 
+        column-name: IMPRESION
+        type: Plain Text
+
+      heading: 
+        heading: imp
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 300
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: PRINT_OF ====================================
+      id: 71651818293081565
+      identification: 
+        column-name: PRINT_OF
+        type: Link
+
+      heading: 
+        heading: Of
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 310
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:160:&SESSION.::&DEBUG.::P160_ID:#ARTICULO_ID#'
+          page: 160 # PRINT_ARTICULO
+          values: 
+            p160_id: '#ARTICULO_ID#'
+
+        link-text: <i class="fa fa-print fam-play">
+        link-attributes: target="P160"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRINT_ET ====================================
+      id: 71651921937081566
+      identification: 
+        column-name: PRINT_ET
+        type: Link
+
+      heading: 
+        heading: ET
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 320
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      link: 
+        target: 
+          url: 'f?p=&APP_ID.:318:&SESSION.::&DEBUG.::P318_ID:#ARTICULO_ID#'
+          page: 318 # PRINT_ETIQUETA_PALLET
+          values: 
+            p318_id: '#ARTICULO_ID#'
+
+        link-text: <i class="fa fa-print fam-play fam-is-warning">
+        link-attributes: target="P318"
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: IX ==========================================
+      id: 175980520908617051
+      identification: 
+        column-name: IX
+        type: Plain Text
+
+      heading: 
+        heading: Orden
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 360
+        column-alignment: center
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: false
+
+page-items: 
+- # ====== Page Item: P240_ORDEN_A_BAJAR =======================
+  id: 175980656297617052
+  identification: 
+    name: P240_ORDEN_A_BAJAR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 10
+    region: SLOTTER # 64243967035816281
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P240_ORDEN_A_SUBIR =======================
+  id: 175980716224617053
+  identification: 
+    name: P240_ORDEN_A_SUBIR
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: SLOTTER # 64243967035816281
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: REGISTO =====================================
+  id: 175982254384617068
+  identification: 
+    button-name: REGISTO
+    label: Registo
+
+  layout: 
+    sequence: 10
+    region: SLOTTER # 64243967035816281
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:37:&SESSION.::&DEBUG.:::'
+      page: 37 # CONTROL_SLOTTER
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: apply_class_to_parent ===============
+  id: 67242846281644961
+  identification: 
+    name: apply_class_to_parent
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: After Refresh
+    selection-type: Region
+    region: SLOTTER # 64243967035816281
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 67242908665644962
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: apply_class_to_parent();
+
+    execution: 
+      sequence: 10
+      event: apply_class_to_parent # 67242846281644961
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+- # ====== Dynamic Action: New =================================
+  id: 175980805922617054
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P240_ORDEN_A_BAJAR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 175980869445617055
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'MOVIL_APP.PRODUCCION_BAJAR(:P240_ORDEN_A_BAJAR);'
+      items-to-submit: 
+      - P240_ORDEN_A_BAJAR
+
+    execution: 
+      sequence: 10
+      event: New # 175980805922617054
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 175981011021617056
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SLOTTER # 64243967035816281
+
+    execution: 
+      sequence: 30
+      event: New # 175980805922617054
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_2 ===============================
+  id: 175981459200617060
+  identification: 
+    name: New_2
+
+  execution: 
+    sequence: 40
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P240_ORDEN_A_SUBIR
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 175981116185617057
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: 'MOVIL_APP.PRODUCCION_SUBIR(:P240_ORDEN_A_SUBIR);'
+      items-to-submit: 
+      - P240_ORDEN_A_SUBIR
+
+    execution: 
+      sequence: 10
+      event: New_2 # 175981459200617060
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+  - # ====== Action: Refresh =====================================
+    id: 175981576747617062
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SLOTTER # 64243967035816281
+
+    execution: 
+      sequence: 20
+      event: New_2 # 175981459200617060
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: New_1 ===============================
+  id: 175981990659617066
+  identification: 
+    name: New_1
+
+  execution: 
+    sequence: 50
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed
+    selection-type: Region
+    region: SLOTTER # 64243967035816281
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 175982151436617067
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: SLOTTER # 64243967035816281
+
+    execution: 
+      sequence: 10
+      event: New_1 # 175981990659617066
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

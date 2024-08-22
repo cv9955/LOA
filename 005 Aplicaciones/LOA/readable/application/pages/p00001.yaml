@@ -1,0 +1,342 @@
+---
+# ====== Page: Home ==========================================
+id: 1
+identification: 
+  name: Home
+  alias: HOME
+  title: LOA - DEVELOP
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Novedades ===================================
+  id: 7257684198709
+  identification: 
+    name: Novedades
+    type: Comments
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select * from (
+      select ID,
+             TITLE,
+             DESCRIPTION,
+             CREATED,
+             CREATED_BY,
+             UPDATED,
+             UPDATED_BY
+        from T_NOVEDADES
+      order by id desc) where rownum = 1
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_08
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Alert
+    template-options: 
+    - '#DEFAULT#'
+    - t-Alert--horizontal
+    - t-Alert--defaultIcons
+    - t-Alert--warning
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Single (Partial)
+
+    settings: 
+      comment-text: DESCRIPTION
+      user-name: CREATED_BY
+      date: CREATED
+      display-avatar: true
+
+    avatar: 
+      type: Icon
+      icon: fa-user
+      shape: Rounded
+
+    performance: 
+      lazy-loading: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 690043626398042
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: true
+
+  - # ====== Column: TITLE =======================================
+    id: 690128766398043
+    identification: 
+      name: TITLE
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: TITLE
+      data-type: VARCHAR2
+      primary-key: false
+
+  - # ====== Column: DESCRIPTION =================================
+    id: 690205828398044
+    identification: 
+      name: DESCRIPTION
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: DESCRIPTION
+      data-type: VARCHAR2
+      primary-key: false
+
+  - # ====== Column: CREATED =====================================
+    id: 690286280398045
+    identification: 
+      name: CREATED
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: CREATED
+      data-type: DATE
+      primary-key: false
+
+  - # ====== Column: CREATED_BY ==================================
+    id: 690377775398046
+    identification: 
+      name: CREATED_BY
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: CREATED_BY
+      data-type: VARCHAR2
+      primary-key: false
+
+  - # ====== Column: UPDATED =====================================
+    id: 690519764398047
+    identification: 
+      name: UPDATED
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: UPDATED
+      data-type: DATE
+      primary-key: false
+
+  - # ====== Column: UPDATED_BY ==================================
+    id: 690632159398048
+    identification: 
+      name: UPDATED_BY
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: UPDATED_BY
+      data-type: VARCHAR2
+      primary-key: false
+
+- # ====== Region: APLICACIONES ================================
+  id: 23006081143050642
+  identification: 
+    name: APLICACIONES
+    type: List
+
+  source: 
+    list: MenuPrincipal # 16818776048558288
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      list-template: Cards
+      template-options: 
+      - '#DEFAULT#'
+      - u-colors
+      - t-Cards--featured t-Cards--block force-fa-lg
+      - t-Cards--displayIcons
+      - t-Cards--5cols
+      - t-Cards--hideBody
+      - t-Cards--animColorFill
+
+- # ====== Region: TESTER ======================================
+  id: 23006152847050643
+  identification: 
+    name: TESTER
+    type: Static Content
+
+  source: 
+    html-code: este Mensaje solo lo puede ver un tester
+
+  layout: 
+    sequence: 40
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  security: 
+    authorization-scheme: TESTER # 24004205711520095
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: INICIO ======================================
+  id: 26123728155151641
+  identification: 
+    name: INICIO
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Hero
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-home
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+

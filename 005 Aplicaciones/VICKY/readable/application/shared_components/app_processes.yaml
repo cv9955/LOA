@@ -1,0 +1,247 @@
+---
+- # ====== Application Process: CLIENTE SEARCH PAGE BRANCH =====
+  id: 3286121371024068
+  identification: 
+    name: CLIENTE SEARCH PAGE BRANCH
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        l_url VARCHAR2(1000);
+        p_cliente_id NUMBER;
+        p_cantidad NUMBER; -- 1 VA DIRECTO A PAG CLIENTES 
+      BEGIN
+       -- IS NUMERIC ??
+        IF LENGTH(TRIM(TRANSLATE(:P0_SEARCH_CLIENTE, '0123456789', ' '))) is null then 
+            SELECT count(1),max(id) into p_cantidad,p_cliente_id
+                FROM CLIENTES  where id = :P0_SEARCH_CLIENTE;
+        ELSE
+            SELECT count(1),max(id) into p_cantidad,p_cliente_id
+                FROM CLIENTES 
+                WHERE UPPER(NOMBRE) LIKE '%'||UPPER(:P0_SEARCH_CLIENTE)||'%'
+                OR UPPER(ALIAS) LIKE '%'||upper(:P0_SEARCH_CLIENTE)||'%'
+                OR UPPER(TAGS) LIKE '%'||upper(:P0_SEARCH_CLIENTE)||'%';
+        END IF;
+        
+        IF p_cantidad = 1 then 
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 140,
+                   				 p_request      => '',
+                                   p_clear_cache => 140, 
+                                   p_items       => 'G_CLIENTE_ID',
+                                   p_values      => p_cliente_id ); 
+         else
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 101,
+                   				 p_request      => '',
+                                   p_clear_cache => 101, 
+                                   p_items       => 'P101_SEARCH', 
+                                   p_values      => :P0_SEARCH_CLIENTE) ;
+         end if ;
+              htp.init;
+              apex_util.redirect_url(l_url);
+      END;
+
+  execution: 
+    sequence: 1
+    point: After Submit
+
+  error: 
+    error-message: error brach cliente
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: P0_SEARCH_CLIENTE
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Process: ARTICULO SEARCH PAGE BRANCH ====
+  id: 3286325185033061
+  identification: 
+    name: ARTICULO SEARCH PAGE BRANCH
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        l_url VARCHAR2(1000);
+        p_id NUMBER;
+        p_cantidad NUMBER; -- 1 VA DIRECTO A PAG CLIENTES 
+      BEGIN
+       -- IS NUMERIC ??
+        IF :P0_SEARCH_ARTICULO = '9999' THEN
+            :A001_CTA := 2;
+        ELSE     
+      
+      -- IS NUMERIC ??
+        IF LENGTH(TRIM(TRANSLATE(:P0_SEARCH_ARTICULO, '0123456789', ' '))) is null then 
+            SELECT count(1),max(id) into p_cantidad,p_id
+                FROM ARTICULOS where id = :P0_SEARCH_ARTICULO;
+        ELSE
+            SELECT count(1),max(id) into p_cantidad,p_id
+                FROM ARTICULOS 
+      		  WHERE UPPER(CODIGO) LIKE UPPER('%&P0_SEARCH_ARTICULO.%');
+        END IF;
+        
+        IF p_cantidad = 1 then 
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 31,
+                   				 p_request      => '',
+                                   p_clear_cache => 31, 
+                                   p_items       => 'P31_ID',
+                                   p_values      => p_id ); 
+         else
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 11,
+                   				 p_request      => '',
+                                   p_clear_cache => 11, 
+                                   p_items       => 'P11_SEARCH', 
+                                   p_values      => :P0_SEARCH_ARTICULO) ;
+         end if ;
+              htp.init;
+              apex_util.redirect_url(l_url);
+        END IF;
+      END;
+
+  execution: 
+    sequence: 2
+    point: After Submit
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: P0_SEARCH_ARTICULO
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Process: BOBINA SEARCH PAGE BRANCH ======
+  id: 5826346196600153
+  identification: 
+    name: BOBINA SEARCH PAGE BRANCH
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        l_url VARCHAR2(1000);
+        --
+      BEGIN
+        -- url
+        l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => '305', -- your search result page
+                                   p_clear_cache => '305', -- clear cache search result page
+                                   p_items       => 'P305_ID', -- target page search item
+                                   p_values      => REPLACE(:p0_search_bobina,
+                                                            ',',
+                                                            '')); -- our page 0 search item without comma
+        htp.init;
+        -- redirect
+        apex_util.redirect_url(l_url);
+      END;
+
+  execution: 
+    sequence: 3
+    point: After Submit
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: P0_SEARCH_BOBINA
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Process: preparar_mapa ==================
+  id: 7654223571846776
+  identification: 
+    name: preparar_mapa
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |2
+          APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION(
+              p_collection_name => 'MAPAS');
+
+  execution: 
+    sequence: 1
+    point: After Authentication
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Process: DISEÑO SEARCH PAGE =============
+  id: 88057985565817432
+  identification: 
+    name: DISEÑO SEARCH PAGE
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      DECLARE
+        l_url VARCHAR2(1000);
+        p_id NUMBER;
+        p_cantidad NUMBER; -- 1 VA DIRECTO A PAG CLIENTES 
+      BEGIN
+      
+      -- IS NUMERIC ??
+        IF LENGTH(TRIM(TRANSLATE(:P0_SEARCH_DISENO, '0123456789', ' '))) is null then 
+            SELECT count(1),max(id) into p_cantidad,p_id
+                FROM ARTICULOS where id = :P0_SEARCH_DISENO;
+        ELSE
+            SELECT count(1),max(id) into p_cantidad,p_id
+                FROM ARTICULOS 
+      		  WHERE UPPER(CODIGO) LIKE UPPER('%&P0_SEARCH_DISENO.%');
+        END IF;
+        
+        IF p_cantidad = 1 then 
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 30,
+                   				 p_request      => '',
+                                   p_clear_cache => 30, 
+                                   p_items       => 'P30_ID',
+                                   p_values      => p_id ); 
+         else
+                l_url := apex_page.get_url(p_application => :app_id,
+                                   p_page        => 11,
+                   				 p_request      => '',
+                                   p_clear_cache => 11, 
+                                   p_items       => 'P11_SEARCH', 
+                                   p_values      => :P0_SEARCH_DISENO) ;
+         end if ;
+              htp.init;
+              apex_util.redirect_url(l_url);
+       
+      END;
+
+  execution: 
+    sequence: 4
+    point: After Submit
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request = Value
+    value: P0_SEARCH_DISENO
+
+  subscription: 
+    version-number: 1
+

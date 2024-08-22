@@ -1,0 +1,214 @@
+---
+# ====== Page: PRINT_ORDEN_CORRUGADO =========================
+id: 162
+identification: 
+  name: PRINT_ORDEN_CORRUGADO
+  title: CORRUGADO
+  page-group: 200 PRODUCCION # 4255674501624938
+
+appearance: 
+  page-mode: Normal
+  page-template: PRINT_BASE_2
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+javascript: 
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message='"DELETE_CONFIRM_MSG"';
+    
+
+css: 
+  inline: |
+    @page {
+            size: landscape
+    }
+    
+    .grid-pedido {
+        display: inline-grid;
+        position : relative;
+        page-break-inside:avoid; 
+    
+        align-items: stretch; 
+        border-bottom: 2px ridge ;
+        margin-bottom: 20px;
+        grid-template-columns: 3cm 2cm 2cm 15cm 3cm 3cm;
+        font-family: Arial;
+        font-size: larger;
+        text-align: center;
+    }  
+    
+    .grid-articulo {
+      font-size: small;
+      display: grid;
+      margin-left : 20px;  
+      grid-template-columns: 1cm 7cm 1cm 2cm 3cm 1cm ;  
+      text-align: left; 
+    }
+    
+    
+    
+    .tbold {  font-weight: 700;}
+    
+    .pedido-info  {
+      grid-row: 1/10;
+      text-align:center; 
+      border-right:1px solid;
+      padding: 15px;  
+    }
+    .pedido-metros {
+      grid-row: 1/10;
+      text-align:right ; 
+      border-left:1px solid; 
+      padding:15px; 
+    
+    }
+    
+    
+    
+    .grid-articulo div {
+       white-space: nowrap; 
+       text-overflow: ellipsis;
+       overflow: hidden;
+          padding : 1px;
+    }
+    
+    .metros{
+        text-align:right;
+        margin-right:20px;
+    }
+    
+    .grid-container {
+      display: grid;
+      padding : 0px;  
+      margin-bottom : 10px; 
+     
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Imprimir ====================================
+  id: 54123914302653433
+  identification: 
+    name: Imprimir
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      P162_CORRUGADO(:P162_FECHA)
+      
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P162_FECHA ===============================
+  id: 8981762575146246
+  identification: 
+    name: P162_FECHA
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Imprimir # 54123914302653433
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: print ===============================
+  id: 9070191979360485
+  identification: 
+    name: print
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  server-side-condition: 
+    type: Never
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 9070697669360488
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: window.print();
+
+    affected-elements: 
+      selection-type: Event Source
+
+    execution: 
+      sequence: 10
+      event: print # 9070191979360485
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

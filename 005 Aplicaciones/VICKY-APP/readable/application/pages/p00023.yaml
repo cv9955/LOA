@@ -1,0 +1,745 @@
+---
+# ====== Page: FABRI_PEDIDOS =================================
+id: 23
+identification: 
+  name: FABRI_PEDIDOS
+  alias: FABRI-PEDIDOS
+  title: FABRI_PEDIDOS
+  page-group: Manager # 12674564738895649
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - '#APP_FILES#css/articulos#MIN#.css'
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: PEDIDOS =====================================
+  id: 232287116603436453
+  identification: 
+    name: PEDIDOS
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT zp.vta_pedido_id
+            ,zp.articulo_id
+            ,s_articulo(zp.articulo_id,'CLIENTE')                                                                               "CLIENTE"
+            ,s_articulo(zp.articulo_id)                                                                                         "CODIGO"
+            ,zp.obs
+            ,S_PEDIDO(ZP.VTA_PEDIDO_ID,'DIV_FECHA') fecha
+            ,zp.cantidad                                                                                                       pedido
+            ,CASE WHEN zp.combinado IS NOT NULL THEN '<DIV class="u-warning-text u-bold">'||zp.combinado||'</DIV>' END   
+             ||
+             CASE WHEN zp.corrugado IS NOT NULL THEN '<DIV class="u-info-text u-bold">'||zp.corrugado||'</DIV>' END   corr
+            ,CASE WHEN zp.planchas=zp.planchas_hash THEN '<div>'||zp.planchas||'</div>'
+                  WHEN nvl(zp.planchas,0)!=nvl(zp.planchas_hash,0) THEN '<div class="stock_plancha">'||zp.planchas||'</div><div>('||zp.planchas_hash||')</div>'  END planchas
+            ,zp.planchas pl1
+            ,zp.produccion
+            ,zp.produccion_id
+            ,zp.sin_contar_id
+            ,CASE WHEN zp.sin_contar IS NOT NULL THEN '<DIV class="u-warning-text u-bold">'||zp.sin_contar||'</DIV>' END
+             ||
+             CASE WHEN zp.stock_terminado IS NOT NULL THEN '<DIV class="u-success-text u-bold">'||zp.stock_terminado||'</DIV>' END   terminado
+            ,CASE WHEN zp.preparado IS NOT NULL THEN '<DIV class="u-warning-text u-bold">'||zp.preparado||'</DIV>' END
+             ||
+             CASE WHEN zp.en_viaje IS NOT NULL THEN '<DIV class="u-info-text u-bold">'||zp.en_viaje||'</DIV>' END
+             ||
+             CASE WHEN zp.entregado IS NOT NULL THEN '<DIV class="u-success-text u-bold">'||zp.entregado||'</DIV>' END   entregado
+            ,div_articulo(zp.articulo_id,'MEDIDAS')                                                                             medidas
+            ,div_articulo(zp.articulo_id,'PLANCHA')                                                                             plancha
+            ,s_articulo(zp.articulo_id,'IMPRESION')                                                                             color
+        FROM vp004 zp
+       WHERE zp.articulo_id>100 AND nvl(zp.fecha_entrega,sysdate)<sysdate+30
+       ORDER BY cliente ,codigo
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    - margin-top-none
+    - margin-bottom-none
+    - margin-left-none
+    - margin-right-none
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 200
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--altRowsDefault
+      - t-Report--rowHighlightOff
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: VTA_PEDIDO_ID ===============================
+    id: 182750454928782130
+    identification: 
+      column-name: VTA_PEDIDO_ID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARTICULO_ID =================================
+    id: 182750570325782131
+    identification: 
+      column-name: ARTICULO_ID
+      type: Link
+
+    heading: 
+      heading: ArtID
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.::P16_ID:#ARTICULO_ID#'
+        page: 16 # PRINT_ARTICULO
+        values: 
+          p16_id: '#ARTICULO_ID#'
+
+      link-text: <img src="#IMAGE_PREFIX#app_ui/img/icons/apex-edit-view.png" class="apex-edit-view" alt="">
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OBS =========================================
+    id: 182751040408782136
+    identification: 
+      column-name: OBS
+      type: Plain Text
+
+    heading: 
+      heading: Obs
+      alignment: center
+
+    layout: 
+      sequence: 24
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-danger-text
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PEDIDO ======================================
+    id: 182751507336782141
+    identification: 
+      column-name: PEDIDO
+      type: Plain Text
+
+    heading: 
+      heading: Ped
+      alignment: center
+
+    layout: 
+      sequence: 16
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    column-formatting: 
+      css-classes: 
+      - u-bold
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PLANCHAS ====================================
+    id: 182752153190782147
+    identification: 
+      column-name: PLANCHAS
+      type: Link
+
+    heading: 
+      heading: Pl
+      alignment: center
+
+    layout: 
+      sequence: 18
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&SESSION.::&DEBUG.:24:P24_ARTICULO_ID,P24_PLANCHA_ID,P24_CANT_PL,P24_OBS:#ARTICULO_ID#,#ARTICULO_ID#,#PL1#,#OBS#'
+        page: 24 # QUICK_END
+        clear-cache: 24
+        values: 
+          p24_articulo_id: '#ARTICULO_ID#'
+          p24_plancha_id: '#ARTICULO_ID#'
+          p24_cant_pl: '#PL1#'
+          p24_obs: '#OBS#'
+
+      link-text: '#PLANCHAS#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PRODUCCION ==================================
+    id: 182752496886782150
+    identification: 
+      column-name: PRODUCCION
+      type: Link
+
+    heading: 
+      heading: Prod
+      alignment: center
+
+    layout: 
+      sequence: 19
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.::P25_ID:#PRODUCCION_ID#'
+        page: 25 # PROCESO
+        values: 
+          p25_id: '#PRODUCCION_ID#'
+
+      link-text: '#PRODUCCION#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCCION_ID ===============================
+    id: 182890174844817201
+    identification: 
+      column-name: PRODUCCION_ID
+      type: Hidden
+
+    layout: 
+      sequence: 5
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SIN_CONTAR_ID ===============================
+    id: 182890314891817203
+    identification: 
+      column-name: SIN_CONTAR_ID
+      type: Hidden
+
+    layout: 
+      sequence: 6
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ENTREGADO ===================================
+    id: 182890707819817207
+    identification: 
+      column-name: ENTREGADO
+      type: Plain Text
+
+    heading: 
+      heading: Entr
+      alignment: center
+
+    layout: 
+      sequence: 21
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CODIGO ======================================
+    id: 182891316473817213
+    identification: 
+      column-name: CODIGO
+      type: Plain Text
+
+    heading: 
+      heading: Codigo
+      alignment: center
+
+    layout: 
+      sequence: 11
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: MEDIDAS =====================================
+    id: 182891630639817216
+    identification: 
+      column-name: MEDIDAS
+      type: Plain Text
+
+    heading: 
+      heading: Medidas
+      alignment: center
+
+    layout: 
+      sequence: 12
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PLANCHA =====================================
+    id: 182891756825817217
+    identification: 
+      column-name: PLANCHA
+      type: Plain Text
+
+    heading: 
+      heading: Plancha
+      alignment: center
+
+    layout: 
+      sequence: 13
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CLIENTE =====================================
+    id: 182893631263817236
+    identification: 
+      column-name: CLIENTE
+      type: Plain Text
+
+    heading: 
+      heading: Cliente
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: FECHA =======================================
+    id: 182893873318817238
+    identification: 
+      column-name: FECHA
+      type: Plain Text
+
+    heading: 
+      heading: Fecha
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: CORR ========================================
+    id: 182893989594817239
+    identification: 
+      column-name: CORR
+      type: Plain Text
+
+    heading: 
+      heading: Corr
+      alignment: center
+
+    layout: 
+      sequence: 17
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: TERMINADO ===================================
+    id: 182894008867817240
+    identification: 
+      column-name: TERMINADO
+      type: Plain Text
+
+    heading: 
+      heading: Term
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: COLOR =======================================
+    id: 182894165132817241
+    identification: 
+      column-name: COLOR
+      type: Plain Text
+
+    heading: 
+      heading: Color
+      alignment: center
+
+    layout: 
+      sequence: 14
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: false
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: false
+
+  - # ====== Column: PL1 =========================================
+    id: 182894205344817242
+    identification: 
+      column-name: PL1
+      type: Hidden
+
+    layout: 
+      sequence: 4
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: PEDIDO_OK ===========================
+  id: 182877348151494989
+  identification: 
+    name: PEDIDO_OK
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P23_PEDIDO_COMPLETO
+
+  actions: 
+  - # ====== Action: Execute Server-side Code ====================
+    id: 182877821083494990
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: |
+        update pedidos
+        set status = 3
+        where id = :P23_PEDIDO_COMPLETO;
+      items-to-submit: 
+      - P23_PEDIDO_COMPLETO
+
+    execution: 
+      sequence: 10
+      event: PEDIDO_OK # 182877348151494989
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: false
+      wait-for-result: true
+

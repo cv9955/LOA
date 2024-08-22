@@ -1,0 +1,108 @@
+---
+- # ====== Authorization: ACCESS CONTROL - VENDEDOR ============
+  id: 1059280082509961
+  identification: 
+    name: ACCESS CONTROL - VENDEDOR
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): soy_vendedor
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Este acceso requiere cuenta de Vendedor
+
+- # ====== Authorization: ACCESS CONTROL - GERENCIA ============
+  id: 285585236988156
+  identification: 
+    name: ACCESS CONTROL - GERENCIA
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): GERENCIA,gerencia,FIRMA_ARTICULOS
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Solo Administrativos
+
+- # ====== Authorization: ACCESS CONTROL - VICTORIA ============
+  id: 285793758003850
+  identification: 
+    name: ACCESS CONTROL - VICTORIA
+
+  subscription: 
+    master: 
+      referenced-id: 2003451866854840
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): administracion
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: CONTROL ROL GERENCIA
+
+- # ====== Authorization: AMIL - EXCLUSIVO =====================
+  id: 4553329773633362
+  identification: 
+    name: AMIL - EXCLUSIVO
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): AMIL
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: Autorización exclusiva para Amilcar
+
+- # ====== Authorization: CAV - EXCLUSIVO ======================
+  id: 47047883483758502
+  identification: 
+    name: CAV - EXCLUSIVO
+
+  subscription: 
+    version-number: 1
+
+  authorization-scheme: 
+    type: Is In Role or Group
+
+  settings: 
+    type: Application Role
+    name(s): CAV
+
+  server-cache: 
+    evaluation-point: Once per Session
+
+  error: 
+    error-message: USER NO CAV
+
