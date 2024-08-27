@@ -1,0 +1,67 @@
+CREATE TABLE "LOA"."T_ART_TIPOS" 
+   (	"ID" NUMBER(*,0) NOT NULL ENABLE, 
+        "TITLE" VARCHAR2(80), 
+        "DETALLE" VARCHAR2(400), 
+        "STATUS" NUMBER(*,0), 
+	    PRIMARY KEY ("ID")  USING INDEX  ENABLE
+   ) ;
+
+
+CREATE TABLE "LOA"."T_ARTICULOS" 
+   (	"ID" NUMBER(*,0) NOT NULL ENABLE, 
+        "CODIGO" VARCHAR2(80), 
+        "DETALLE" VARCHAR2(400), 
+        "STATUS" NUMBER(*,0), 
+        "ART_TIPO_ID" NUMBER(*,0), 
+        "CREATED" DATE, 
+        "CREATED_BY" VARCHAR2(80), 
+        "UPDATED" DATE, 
+        "UPDATED_BY" VARCHAR2(80), 
+	    PRIMARY KEY ("ID")  USING INDEX  ENABLE, 
+	    CONSTRAINT "ARTICULOS_FK1" FOREIGN KEY ("ART_TIPO_ID") REFERENCES "LOA"."T_ART_TIPOS" ("ID") ENABLE
+   ) ;
+
+
+
+/* VISTAS */ 
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "LOA"."V_ART_TIPOS" ("ID", "TITLE", "DETALLE", "STATUS") AS 
+  SELECT ID,TITLE,DETALLE,STATUS FROM T_ART_TIPOS;
+
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "LOA"."V_ARTICULOS" ("ID", "CODIGO", "DETALLE", "ART_TIPO_ID", "STATUS") AS 
+  SELECT ID,CODIGO,DETALLE,ART_TIPO_ID,STATUS FROM T_ARTICULOS;
+
+/* SECUENCIAS */ 
+CREATE SEQUENCE ARTICULOS_SEQ START WITH 1001 NOCACHE;
+CREATE SEQUENCE ART_TIPOS_SEQ NOCACHE;
+
+/* TRIGGER */ 
+CREATE OR REPLACE TRIGGER "ART_TIPOS_T1" BEFORE
+    INSERT  ON "T_ART_TIPOS" FOR EACH ROW
+BEGIN
+    IF inserting THEN
+        :new.status :=1;
+        IF:new.id IS NULL THEN
+            SELECT ART_TIPOS_SEQ.nextval INTO:new.id
+            FROM sys.dual;
+        END IF;
+    END IF;
+END;
+
+CREATE OR REPLACE TRIGGER "ARTICULOS_T1" BEFORE
+    INSERT OR UPDATE  ON "T_ARTICULOS" FOR EACH ROW
+BEGIN
+    IF inserting THEN
+        :new.created :=sysdate;
+        :new.created_by :=nvl(v('APP_USER'),user);
+        :new.status :=1;
+        IF:new.id IS NULL THEN
+            SELECT ARTICULOS_SEQ.nextval INTO:new.id
+            FROM sys.dual;
+        END IF;
+    END IF;
+
+    IF updating THEN
+        :new.updated :=sysdate;
+        :new.updated_by :=nvl(v('APP_USER'),user);
+    END IF;
+END;
