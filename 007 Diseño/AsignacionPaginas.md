@@ -1,21 +1,24 @@
 ## Page Grups
 
-| Rango | PAGE GROUP        | Req   | Icon Menu          | Detalle
-|-------|-------------------|-------|--------------------|--------------------------
-|   0xx | Main - Menu       |       |                    | Pagina Principal  / Pruebas 
-|  1xx  | Clientes          | 01 01 |                    | Entidades Ventas
-|  2xx  | Produccion        | 01 01 |                    | Entidades Ventas
-|  3xx  | Bobinas           | 01 01 |                    | Entidades Ventas
-|  4xx  | Compras           | 01 01 |                    | Entidades Ventas
-|  5xx  | Ventas            | 01 01 |                    | Entidades Ventas
-|  6xx  | Contaduria        | 01 01 |                    | Entidades Ventas
-|  2xxx | Produccion        | 02    |                    | Produccion 
-|  21xx | Articulos         | 02 01 | fa-package         | Articulos 
-|  9xxx | Configuracion     |       | fa-database-wrench | Administracion Usuarios
-|  91xx | Plan de Cuentas   | 00 01 |                    | Administracion Usuarios
-|  99xx | Access Control    | 00 01 |                    | Administracion Usuarios
-| 10xxx | PG                |       |                    | Administracion
-| 20xxx | USER SETTINGS     |       |                    | User Settings 
+| Rango | PAGE GROUP        | Req   Detalle
+|-------|-------------------|--------------------------------
+|   0xx | Main - Menu       |       Pagina Principal  / Pruebas 
+|  1xx  | Clientes          | 01 01 Entidades Ventas
+|  2xx  | Produccion        | 01 01 Entidades Ventas
+|  3xx  | Bobinas           | 01 01 Entidades Ventas
+|  4xx  | Compras           | 01 01 Entidades Ventas
+|  5xx  | Ventas            | 01 01 Entidades Ventas
+|  6xx  | Contaduria        | 01 01 Entidades Ventas
+|  2xxx | Produccion        | *02 MODULO Produccion* 
+|  21xx | Articulos         | 02 01 Articulos                    | fa-package
+|  4xxx | Compras           | *04 MODULO COMPRAS*  
+|  40xx | Proveedores       | 01 03 Proveedores   
+|  41xx | Cbte Compras      | 04 01 Facturas ND NC de compras 
+|  9xxx | Configuracion     |       Administracion Usuarios      | fa-database-wrench
+|  91xx | Plan de Cuentas   | 00 01 Administracion Usuarios
+|  99xx | Access Control    | 00 01 Administracion Usuarios
+| 10xxx | PG                |       Administracion
+| 20xxx | USER SETTINGS     |       User Settings 
          
          
 ## Page Assignment
@@ -48,11 +51,16 @@
 
 
 
-### Group: REQ 01 03 PROVEEDORES
-- 200	listado-de-proveedores	Listado de Proveedores
-- 201	form-proveedores	Form Proveedores
-- 202	proveedor-dash	PROVEEDOR DASH
-
+### Group: 40 COMPRAS
+- 4000  COMPRAS_MAIN
+- 4001  PROVEEDORES_LIST 
+- 4002  PROVEEDORES_ABM
+- 4010  PROVEEDOR_DASH
+- 4100  COMPRAS_CBTE_LIST
+- 4101  COMPRAS_CBTE_ADD
+- 4102  COMPRAS_CBTE_ABM
+ 
+- 4200  PAGOS
 
 
 

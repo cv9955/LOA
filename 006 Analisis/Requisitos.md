@@ -5,6 +5,7 @@
 - REQ 00 01 : [ACCESS CONTROL](<REQ 00 GLOBAL/REQ 00 01 Access Control.md>)
 - REQ 00 02 : [LISTAS GLOBALES](<REQ 00 GLOBAL/REQ 00 02 ListasGlobales.md>)
 - REQ 00 03 : [PLAN DE CUENTAS](<REQ 00 GLOBAL/REQ 00 03 Plan de Cuentas.md>)
+- REQ 00 04 : [WEBSERVICE AFIP](<REQ 00 GLOBAL/REQ 00 03 Plan de Cuentas.md>)
 
 ## REQ 01 : Entidades
 - REQ 01 01 : [DATOS FISCALES](<REQ 01 ENTIDADES/Req 01 01 Datos Fiscales.md>)

@@ -23,7 +23,7 @@ create or replace TYPE TREE_TYP AS OBJECT
 create or replace TYPE cbte_afip_typ AS OBJECT 
 (
     id  INTEGER
-   ,title INTEGER
+   ,title VARCHAR2(400)
    ,letra CHAR
 )
 

@@ -9,7 +9,7 @@ Acceso : PAGINA PROVEEDOR
 
 Flujo Principal 
 1) el Usuario accede a la pagina del Proveedor
-2) presiona BTN_AGREGAR_FACTURA
+2) presiona BTN_AGREGAR_CBTE
 3) el sistema abre ventana para carga de datos (ver datos precargados)
 4) el usuario Ingresa Punto de Venta y Nro Factura
 5) el Usuario selecciona Cuit de la lista desplegable 
@@ -20,8 +20,9 @@ Flujo Principal
 10) el usuario Carga Selecciona Tributo correspondiente e ingresa el valor
 11) El sistema actualiza Totales
 12) Finalizada la carga, el usuario presiona BTN_SUBMIT
-13) el sistema Inserta los datos en la Base de Datos
-14) Se cierra la ventana y devuelve el control al la Pagina PROVEEDOR
+13) el sistema Inserta los datos en la Base de Datos 
+14) el sistema calcula los totales
+15) Se cierra la ventana y devuelve el control al la Pagina PROVEEDOR
 
 
 Tabla 
