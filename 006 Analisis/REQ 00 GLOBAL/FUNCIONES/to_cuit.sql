@@ -1,0 +1,14 @@
+CREATE OR REPLACE FUNCTION TO_CUIT(
+    PCUIT IN VARCHAR2
+)RETURN VARCHAR AS
+    CUIT VARCHAR(20);
+    VRET VARCHAR(20);
+BEGIN
+    CUIT :=REPLACE(PCUIT, '-', '');
+    VRET :=SUBSTR(CUIT, 0, 2)
+           ||'-'
+           ||SUBSTR(CUIT, 3, 8)
+             ||'-'
+             ||SUBSTR(CUIT, -1);
+    RETURN VRET;
+END TO_CUIT;

@@ -65,9 +65,9 @@
 
 
 ### Group: 90 CONFIGURACION
-- 9100 901	PC_MAIN 	Plan de Cuentas
-- 9101 902	PC_CUENTAS	ABM Cuentas
-
+- 9100 - PC_MAIN 	        Plan de Cuentas
+- 9101 - PC_CUENTAS	        ABM Cuentas
+- 9110 - CBTE_TIPOS_CONFIG  Configuracion de Comprobantes
 
 ### Group: 99 Access Control [99xx] 
 - 9900 - ACL_MAIN : Lista de Usuarios
