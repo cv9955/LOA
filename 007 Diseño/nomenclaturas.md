@@ -1,5 +1,8 @@
 TABLAS t_tablename
 
+
+
+
 ## CAMPOS
 ```SQL
 "ID" NUMBER NOT NULL, 

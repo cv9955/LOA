@@ -44,5 +44,19 @@ Insert into T_PC_RUBROS (ID,PARENT_ID,DETALLE) values ('411','41','Ingresos por 
 Insert into T_PC_RUBROS (ID,PARENT_ID,DETALLE) values ('511','51','Gastos Administrativos');
 Insert into T_PC_RUBROS (ID,PARENT_ID,DETALLE) values ('521','52','Honorarios');
 
+/*
+ID RAMA RUBRO_TITLE                 RUBRO_CONFIG 
+111  11 Caja                        VAL_CAJA    
+112  11 Banco                                   
+113  11 Creditos por Ventas                     
+114  11 Otros Creditos                          
+121  12 Inversiones No Corrientes               
+122  12 Bienes de uso                           
+211  21 Cta cte Proveedores         TOTAL_CPA   
+311  31 Aportes                                 
+312  31 Reservas                                
+313  31 Resultados                              
+411  41 Ingresos por Ventas                     
+511  51 Gastos Administrativos      DEST_CPA    
 
-
+*/

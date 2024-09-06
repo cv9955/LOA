@@ -25,5 +25,5 @@ Flujo Principal
 15) Se cierra la ventana y devuelve el control al la Pagina PROVEEDOR
 
 
-Tabla 
-T_PROV_COMPRAS
+
+
