@@ -67,10 +67,10 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE EDITIONABLE TRIGGER COMPRAS_CBTES_T2 BEFORE
+CREATE OR REPLACE TRIGGER COMPRAS_CBTES_T2 BEFORE
     UPDATE ON T_COMPRAS_CBTES FOR EACH ROW
 BEGIN
-    if :new.status := 3 then 
+    if :new.status = 3 then 
         :new.updated :=sysdate;
         :new.updated_by :=nvl(v('APP_USER'),user);
     else
@@ -78,15 +78,17 @@ BEGIN
         :new.status :=2;
     end if;
 
+    SELECT CUIT INTO :NEW.CUIT FROM T_DFISCALES WHERE ID= :NEW.DFISCAL_ID;
+
     SELECT SUM(NETO),SUM(IVA) INTO :NEW.ImpNeto,:NEW.ImpIVA
         FROM T_COMPRAS_ITEMS
         WHERE CBTE_ID = :NEW.ID;
 
-    SELECT SUM(VALOR) INT0 :NEW.ImpTrib
+    SELECT SUM(VALOR) INTO :NEW.ImpTrib
         FROM T_COMPRAS_TRIBS
         WHERE CBTE_ID = :NEW.ID;
 
-    :NEW.ImpTotal := nvl(:new.ImpNeto) + nvl(:new.ImpIVA) + nvl(:new.ImpTrib) + nvl(:new.ImpOpEx) + nvl(:new.ImpTotConc); 
+    :NEW.ImpTotal := nvl(:new.ImpNeto,0) + nvl(:new.ImpIVA,0) + nvl(:new.ImpTrib,0) + nvl(:new.ImpOpEx,0) + nvl(:new.ImpTotConc,0); 
 
 end;
 
