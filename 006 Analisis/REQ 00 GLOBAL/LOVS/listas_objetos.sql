@@ -8,7 +8,13 @@ create or replace TYPE ID_TITLE_VALUE_TYP AS OBJECT
     , title    VARCHAR2(400)
     , value NUMBER
     );
-
+/
+create or replace TYPE ID_KEY_TITLE_TYP AS OBJECT
+    ( ID      NUMBER
+     ,key      VARCHAR2(20)
+     ,title    VARCHAR2(400)
+    );   
+/
 create or replace TYPE KEY_TITLE_TYP AS OBJECT
     ( key      VARCHAR2(20)
     , title    VARCHAR2(400)
@@ -26,7 +32,10 @@ create or replace TYPE cbte_afip_typ AS OBJECT
    ,title VARCHAR2(400)
    ,letra CHAR
 )
+/
+create or replace TYPE list_id_key IS TABLE OF ID_KEY_TITLE_TYP;
 
+/
 create or replace TYPE list_cbte_afip IS TABLE OF cbte_afip_typ;
 
 
