@@ -11,10 +11,10 @@ Flujo Principal
 1) el Usuario accede a la pagina del Proveedor
 2) presiona BTN_AGREGAR_CBTE
 3) el sistema abre ventana para carga de datos (ver datos precargados)
-4) el usuario Ingresa Punto de Venta y Nro Factura
-5) el Usuario selecciona Cuit de la lista desplegable 
-6) el sistema muestra Razon Social 
-7) el usuario selecciona Cuenta de Impacto ( LOV PC_DESTINO_COMPRAS )
+4) el Usuario selecciona Razon Socia de la lista desplegable 
+5) el sistema muestra CUIT
+6) el usuario Ingresa Punto de Venta y Nro Factura
+7) el usuario selecciona Cuenta de Impacto (LOV PC_DESTINO_COMPRAS )
 8) el usuario Carga Importes Netos y selecciona la correspondiente alicuota de iva
 9) El sistema Agrega el item al detalle y muestra valores de IVA y subtotales
 10) el usuario Carga Selecciona Tributo correspondiente e ingresa el valor
@@ -22,7 +22,7 @@ Flujo Principal
 12) Finalizada la carga, el usuario presiona BTN_SUBMIT
 13) el sistema Inserta los datos en la Base de Datos 
 14) el sistema calcula los totales
-15) Se cierra la ventana y devuelve el control al la Pagina PROVEEDOR
+15) Se cierra la ventana y devuelve el control a la Pagina PROVEEDOR
 
 
 

@@ -20,19 +20,26 @@
 - REQ 02 01 : [ARTICULOS](<REQ 02 PRODUCCION/REQ 02 01 Articulos.md>)
 
 
-## REQ 03 : Documentos
-- REQ 03 01 : Valores  
-- REQ 03 02 : Movimientos Bancarios 
-- REQ 03 03 : Cheques 
-- REQ 03 04 : Impuestos
-- REQ 03 05 : Retenciones
-- REQ 03 06 : Anotaciones
+## REQ 03 : Ventas
+- REQ 03 03 : FACTURACION 
 
-## REQ 04 : Comprobantes
-- REQ 04 01 : [Compras](<REQ 04 COMPROBANTES/REQ 04 01 compras.md>)
-- REQ 04 02 : Ventas 
-- REQ 04 03 : Pagos 
-- REQ 04 04 : Cobranzas 
-- REQ 04 05 : Movimientos de Caja
+
+
+## REQ 04 : Compras
+- REQ 04 01 : ABM PROVEEDOR
+- REQ 04 02 : LISTAR PROVEEDORES
+- REQ 04 03 : INGRESAR COMPROBANTES DE COMPRAS
+- REQ 04 04 : LISTAR CBTES PENDIENTES
+- REQ 04 05 : GENERAR ORDEN DE PAGO
+- REQ 04 06 : IMPRIMIR ORDEN DE PAGO
+- REQ 04 07 : APLICAR PAGO A COMPROBANTES
+- REQ 04 08 : BLOQUEAR COMPROBANTES SALDADOS 
+
   
-
+- REQ 0? 01 : Valores  
+- REQ 0? 02 : Movimientos Bancarios 
+- REQ 0? 03 : Cheques 
+- REQ 0? 04 : Impuestos
+- REQ 0? 05 : Retenciones
+- REQ 0? 06 : Anotaciones
+- REQ 0? 07 : Medios de Pago

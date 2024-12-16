@@ -11,10 +11,17 @@
 |  6xx  | Contaduria        | 01 01 Entidades Ventas
 |  2xxx | Produccion        | *02 MODULO Produccion* 
 |  21xx | Articulos         | 02 01 Articulos                    | fa-package
+|  3xxx | Ventas            | *03 MODULO VENTAS*  
+|  30xx | Clientes          | 03 01 Proveedores   
+|  31xx | Clientes          | 03 01 Proveedores   
+|  32xx | Pedidos           | 03 01 Proveedores   
+|  33xx | Entregas          | 03 01 Proveedores   
+|  34xx | Facturacion       | 03 01 Proveedores   
 |  4xxx | Compras           | *04 MODULO COMPRAS*  
-|  40xx | Proveedores       | 01 03 Proveedores   
-|  41xx | Cbte Compras      | 04 01 Facturas ND NC de compras 
-|  9xxx | Configuracion     |       Administracion Usuarios      | fa-database-wrench
+|  40xx | Proveedores       | 04 01 Proveedores   
+|  41xx | Cbte Compras      | 04 02 Facturas ND NC de compras 
+|  42xx | Pagos a Prov      | 04 01 Facturas ND NC de compras 
+|  9xxx | Configuracion     | Administracion Usuarios      | fa-database-wrench
 |  91xx | Plan de Cuentas   | 00 01 Administracion Usuarios
 |  99xx | Access Control    | 00 01 Administracion Usuarios
 | 10xxx | PG                |       Administracion
@@ -56,12 +63,18 @@
 - 110	direcciones	DIRECCIONES
 
 
+### Group: 3 - VENTAS
+PEDIDOS / presupuestos
+ENTREGAS / remitos 
+FACTURACION 
+COBRANZAS
 
 
-### Group: 40 COMPRAS
+### Group: 4 - COMPRAS
 - 4000  COMPRAS_MAIN
 - 4001  PROVEEDORES_LIST 
 - 4002  PROVEEDORES_ABM
+- 
 - 4010  PROVEEDOR_DASH
 - 
 - 4100  COMPRAS_CBTE_LIST
@@ -72,7 +85,10 @@
 - 4201  COMPRAS_PAGOS_ADD
 - 4202  COMPRAS_PAGOS_ABM
 
-
+- 4300  COMPRAS2_LIST
+- 4301  COMPRAS2_CBTE_ADD
+- 4302  COMPRAS2_CBTE_ABM
+- 4303  COMPRAS2_PAGOS_ABM
 
 
 
