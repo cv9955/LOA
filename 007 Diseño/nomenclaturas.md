@@ -1,5 +1,18 @@
 TABLAS t_tablename
 
+VISTAS v_tablename
+- ID
+- TITLE
+- DESCRIPTION
+- STATUS
+
+
+PAQUETES packagename_PKG
+
+TRIGGER  tablename_TRG .. BI BU BLQ BD
+
+SECUENCIAS tablename_SEQ
+
 
 
 
@@ -53,14 +66,6 @@ TABLAS t_tablename
 "ImpTotal" NUMBER(*,2) NOT NULL ENABLE,     --// Importe total del comprobante
 ```
 
-VISTAS v_tablename
-- ID
-- TITLE
-- DESCRIPTION
-- STATUS
-
-
-PAQUETES pkg_packagename
 
 
 
@@ -72,52 +77,3 @@ PAQUETES pkg_packagename
 > Page : &P2110_BACK.
 
 
-tablas en comun
-
-### COMPROBANTES
-
-T_VTA_FACTURAS
-T_VTA_RECIBOS
-T_VTA_REMITOS
-
-T_PROV_COMPRAS / T_COMPRAS_CBTES
-T_PROV_PAGOS   / T_COMPRAS_PAGOS
-
-
-ID           NOT NULL NUMBER        
-CBTETIPO_ID           NUMBER        
-PTOVTA                NUMBER        
-DOCNRO                NUMBER        
-CBTEFCH      NOT NULL DATE       
-SIGNO                 NUMBER(38)    
-CTA          NOT NULL NUMBER        
-
-CAB_TIPO_ID  NOT NULL NUMBER        
-CONCEPTO_ID           NUMBER        
-
-CLIENTE_ID   NOT NULL NUMBER        
-PROVEDOR_ID  NOT NULL NUMBER        
-CLI_CUENTA_ID         NUMBER        
-DFISCAL_ID            NUMBER        
-CUIT                  VARCHAR2(20)  
-
-PC_CUENTA_ID NOT NULL NUMBER        
-PC_MES       NOT NULL VARCHAR2(6)   
-
-IMPOPEX               NUMBER        
-IMPNETO      NOT NULL NUMBER(38,2)  
-IMPTRIB               NUMBER        
-IMPIVA       NOT NULL NUMBER(38,2)  
-IMPTOTAL     NOT NULL NUMBER(38,2)  
-
-SALDO_PENDIENTE  NOT NULL NUMBER(38,2)   // SALDO 0 SE ARCHIVA !!!
-
-
-OBS                   VARCHAR2(200) 
-STATUS                NUMBER        
-
-CREATED               DATE          
-CREATED_BY            VARCHAR2(20)  
-
-UPDATED               DATE          
-UPDATED_BY            VARCHAR2(20)  

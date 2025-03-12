@@ -17,6 +17,7 @@
 |  32xx | Pedidos           | 03 01 Proveedores   
 |  33xx | Entregas          | 03 01 Proveedores   
 |  34xx | Facturacion       | 03 01 Proveedores   
+|  35xx | Recibos           | 03 05 Recibos   
 |  4xxx | Compras           | *04 MODULO COMPRAS*  
 |  40xx | Proveedores       | 04 01 Proveedores   
 |  41xx | Cbte Compras      | 04 02 Facturas ND NC de compras 
@@ -93,8 +94,8 @@ COBRANZAS
 
 
 ### Group: 90 CONFIGURACION
-- 9100 901	PC_MAIN 	Plan de Cuentas
-- 9101 902	PC_CUENTAS	ABM Cuentas
+- 9100 901	PLAN_DE_CUENTAS_CONFIG 	Plan de Cuentas
+- 9101 902	PLAN_DE_CUENTAS_ABM 	ABM Cuentas
 - 
 - 9110 CBTE_TIPOS_CONFIG    V_CBTE_TIPOS
 - 9120 DOCS_TIPOS_CONFIG    V_DOC_TIPOS
@@ -114,7 +115,7 @@ COBRANZAS
 > Menu Principal
 - 0 - Global Page
 - 1 - Home
-- 9000 configuracion	Configuracion  
+- 9000 CONFIG_MAIN	Configuracion  
     > Menu Configuracion List
 
 
