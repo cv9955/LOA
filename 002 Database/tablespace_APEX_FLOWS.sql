@@ -57,4 +57,12 @@ ALTER DATABASE DATAFILE '/opt/oracle/oradata/XE/XEPDB1/apexflow.dbf' RESIZE 10M;
 
 alter tablespace APEX offline;
 
+/* borrar las tablas */ 
+BEGIN
+FOR c IN (SELECT table_name FROM ALL_TABLES WHERE TABLESPACE_NAME = 'APEX23') LOOP
+EXECUTE IMMEDIATE ('DROP TABLE APEX_230100.' || c.table_name || ' CASCADE CONSTRAINTS');
+END LOOP;
+END;
+
+/* eliminar tablespace y datafiles */
 drop tablespace APEX INCLUDING CONTENTS AND DATAFILES ;
