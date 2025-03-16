@@ -1,5 +1,18 @@
 TABLAS t_tablename
 
+VISTAS v_tablename
+- ID
+- TITLE
+- DESCRIPTION
+- STATUS
+
+
+PAQUETES packagename_PKG
+
+TRIGGER  tablename_TRG .. BI BU BLQ BD
+
+SECUENCIAS tablename_SEQ
+
 
 
 
@@ -53,14 +66,6 @@ TABLAS t_tablename
 "ImpTotal" NUMBER(*,2) NOT NULL ENABLE,     --// Importe total del comprobante
 ```
 
-VISTAS v_tablename
-- ID
-- TITLE
-- DESCRIPTION
-- STATUS
-
-
-PAQUETES pkg_packagename
 
 
 
@@ -70,3 +75,5 @@ PAQUETES pkg_packagename
 
 ## Buttons - Back
 > Page : &P2110_BACK.
+
+

@@ -17,3 +17,12 @@ TITLE_BAR :
 - Name
 
 
+
+
+## INTERACTIVE GRID 
+
+- las columnas llevan STATIC ID
+- cantidad y precio sin formato, sino tira "NaN error" 
+- subtotales solo lectura, calculados por js
+  - dinamic actions >> SET VALUE >> $v('V_CANTIDAD') * $v('V_PRECIO')
+
