@@ -1,20 +1,36 @@
 # Discos
 
+## [oracle@rocky8-victoriacor-com-ar ~]$ df -h
+S.ficheros               Tamaño Usados  Disp Uso% Montado en
+devtmpfs                   3,5G      0  3,5G   0% /dev
+tmpfs                      3,5G      0  3,5G   0% /dev/shm
+tmpfs                      3,5G    26M  3,5G   1% /run
+tmpfs                      3,5G      0  3,5G   0% /sys/fs/cgroup
+/dev/mapper/rl-root        559G    62G  497G  11% /
+/dev/sda1                 1014M   588M  427M  58% /boot
+/dev/sdb1                  458G    96G  339G  22% /mnt/fra
+/dev/mapper/rl-home--new   145G   5,2G  140G   4% /home
+tmpfs                      713M      0  713M   0% /run/user/54321
+tmpfs                      713M    28K  713M   1% /run/user/1000
+
+
+
 
 ## [CAV@rocky8-victoriacor-com-ar oracle]$ lsblk
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-sda           8:0    0 223,6G  0 disk
-├─sda1        8:1    0     1G  0 part /boot
-└─sda2        8:2    0 222,6G  0 part
-  ├─rl-root 253:0    0    70G  0 lvm  /
-  ├─rl-swap 253:1    0   7,3G  0 lvm  [SWAP]
-  └─rl-home 253:2    0 145,2G  0 lvm  /home
-sdb           8:16   0 465,8G  0 disk
-└─sdb1        8:17   0 465,8G  0 part /mnt/fra
-sdc           8:32   0 931,5G  0 disk
-├─sdc1        8:33   0   350M  0 part
-├─sdc2        8:34   0   488G  0 part
-└─sdc3        8:35   0 443,2G  0 part
+NAME             MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda                8:0    0 223,6G  0 disk
+├─sda1             8:1    0     1G  0 part /boot
+└─sda2             8:2    0 222,6G  0 part
+  ├─rl-root      253:0    0 558,2G  0 lvm  /
+  └─rl-swap      253:1    0   7,3G  0 lvm  [SWAP]
+sdb                8:16   0 465,8G  0 disk
+└─sdb1             8:17   0 465,8G  0 part /mnt/fra
+sdc                8:32   0 931,5G  0 disk
+├─sdc1             8:33   0   350M  0 part
+├─sdc2             8:34   0   488G  0 part
+│ ├─rl-root      253:0    0 558,2G  0 lvm  /
+│ └─rl-home--new 253:2    0   145G  0 lvm  /home
+└─sdc3             8:35   0 443,2G  0 part
 
 ## [CAV@rocky8-victoriacor-com-ar oracle]$ lsblk -f
 NAME        FSTYPE      LABEL                     UUID                                   MOUNTPOINT
