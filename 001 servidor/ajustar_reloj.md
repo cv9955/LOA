@@ -4,6 +4,9 @@
 echo "Configurando RTC en UTC..."
 timedatectl set-local-rtc 0
 
+timedatectl set-timezone America/Argentina/Buenos_Aires
+
+
 echo "Activando sincronización NTP..."
 timedatectl set-ntp true
 

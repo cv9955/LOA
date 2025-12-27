@@ -109,7 +109,7 @@ $ oraenv
 
 ```
 systemctl start oracle-xe-21c
-### este comando no funciono ### systemctl enable oracle-xe-21c
+
 sudo /usr/lib/systemd/systemd-sysv-install enable oracle-xe-21c
 ```
 

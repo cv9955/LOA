@@ -149,6 +149,39 @@ tmpfs                 1,2G    32K  1,2G   1% /run/user/1000
 # mount -t ntfs-3g /dev/sda1 /mnt/win
 
 umount /mnt/win
+```
+
+
+2. **Verificar UUID del disco** (más seguro que usar `/dev/sdc3` directamente):
+   ```bash
+   sudo blkid /dev/sdc3
+   ```
+   Ejemplo de salida:
+   ```
+   /dev/sdc3: UUID="1234-ABCD" TYPE="ntfs"
+   ```
+
+3. **Editar `/etc/fstab`**:
+   ```bash
+   sudo nano /etc/fstab
+   ```
+   Agregá una línea como esta (usando tu UUID real):
+
+   ```
+   UUID=1234-ABCD   /srv/samba/share   ntfs-3g   defaults,permissions   0   0
+   ```
+
+   - `ntfs-3g` → driver recomendado para NTFS en Linux.  
+   - `defaults,permissions` → permite que Samba respete permisos de usuario/grupo.  
+   - `/srv/samba/share` → punto de montaje que definiste antes.  
+
+4. **Probar montaje sin reiniciar**:
+   ```bash
+   sudo mount -a
+   ```
+   Si no da error, quedó bien configurado.
+
+---
 
 
 

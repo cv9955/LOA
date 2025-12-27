@@ -26,7 +26,7 @@ tmpfs                  766M    44K  766M   1% /run/user/1000
 
 
 ## Nombre de RED
-localhost.localdomain
+rocky8.helguera
 
 ## Configuracion
 ### Desactivación de hugepages transparentes
@@ -56,5 +56,46 @@ se habilito desde el icono de inicio
 /etc/selinux # setenforce Permissive
 /etc/selinux # nano config 
 ```
+
+
+### Servicios 
+#### Cockpit - Terminal web para administrador - puerto 9090
+``` 
+# dnf install cockpit
+# systemctl enable --now cockpit.socket
+# firewall-cmd --permanent --zone=public --add-service=cockpit
+# firewall-cmd --reload
+```
+
+### Firewall
+```
+[root@rocky8 transparent_hugepage]# firewall-cmd --permanent --zone=public --add-service=cockpit
+Warning: ALREADY_ENABLED: cockpit
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --reload
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --zone=public --add-port=1521/tcp
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --zone=public --add-port=8080/tcp
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --zone=public --add-port=8443/tcp
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --runtime-to-permanent
+success
+[root@rocky8 transparent_hugepage]# firewall-cmd --list-all
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: enp2s0
+  sources:
+  services: cockpit dhcpv6-client ssh
+  ports: 1521/tcp 8080/tcp 8443/tcp
+  protocols:
+  forward: no
+  masquerade: no
+  forward-ports:
+  source-ports:
+  icmp-blocks:
+  rich rules:
 
 
